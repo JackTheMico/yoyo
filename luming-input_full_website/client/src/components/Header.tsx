@@ -8,19 +8,45 @@ import { Link, useLocation } from "wouter";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const navItems = [
-  { label: "首页", href: "/" },
-  { label: "快速入门", href: "#intro" },
+const branches = [
+  { label: "纯形·麓鸣", href: "/" },
+  { label: "音形·呦呦", href: "/yinxing" },
+  { label: "重码测评", href: "/benchmark" },
+];
+
+const chunxingNav = [
+  { label: "入门", href: "#intro" },
   { label: "两套功法", href: "#methods" },
-  { label: "折梅", href: "#fingering" },
+  { label: "六脉神剑", href: "#fingering" },
   { label: "字根表", href: "#zigen" },
-  { label: "练习工具", href: "#practice" },
+  { label: "练习", href: "#practice" },
+];
+
+const yinxingNav = [
+  { label: "优势", href: "#yx-intro" },
+  { label: "原理", href: "#yinxing" },
+  { label: "打法", href: "#yinxing-methods" },
+  { label: "折梅", href: "#yx-zigen" },
+  { label: "练习", href: "#yx-practice" },
+];
+
+const benchmarkNav = [
+  { label: "对照表", href: "#collision-table" },
+  { label: "击数性能", href: "#stroke-performance" },
+  { label: "测评口径", href: "#methodology" },
 ];
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [location] = useLocation();
+  const isYinXing = location.startsWith("/yinxing");
+  const isBenchmark = location.startsWith("/benchmark");
+  const navItems = isBenchmark
+    ? benchmarkNav
+    : isYinXing
+      ? yinxingNav
+      : chunxingNav;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,6 +55,21 @@ export default function Header() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+    const hash = window.location.hash;
+    if (hash) {
+      const scrollToHash = () => {
+        document.querySelector(hash)?.scrollIntoView();
+      };
+      requestAnimationFrame(scrollToHash);
+      const timeout = window.setTimeout(scrollToHash, 600);
+      return () => window.clearTimeout(timeout);
+    } else {
+      window.scrollTo({ top: 0 });
+    }
+  }, [location]);
 
   const handleNavClick = (href: string) => {
     setIsMobileMenuOpen(false);
@@ -61,7 +102,29 @@ export default function Header() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden lg:flex items-center gap-5">
+            <div className="flex items-center border border-border bg-background/70 p-1">
+              {branches.map((branch) => {
+                const active =
+                  branch.href === "/"
+                    ? location === "/"
+                    : location.startsWith(branch.href);
+                return (
+                  <Link
+                    key={branch.href}
+                    href={branch.href}
+                    className={`px-3 py-1.5 text-sm transition-colors ${
+                      active
+                        ? "bg-foreground text-background"
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    {branch.label}
+                  </Link>
+                );
+              })}
+            </div>
+            <span className="w-px h-5 bg-border" aria-hidden="true" />
             {navItems.map((item) => (
               <a
                 key={item.href}
@@ -72,7 +135,7 @@ export default function Header() {
                     handleNavClick(item.href);
                   }
                 }}
-                className="relative text-sm font-medium text-foreground/80 hover:text-foreground transition-colors duration-300 group"
+                className="relative text-sm font-medium text-foreground/75 hover:text-foreground transition-colors duration-300 group"
               >
                 {item.label}
                 <span className="absolute -bottom-1 left-0 w-0 h-px bg-foreground transition-all duration-300 group-hover:w-full" />
@@ -83,7 +146,7 @@ export default function Header() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-2 -mr-2"
+            className="lg:hidden p-2 -mr-2"
             aria-label="Toggle menu"
           >
             {isMobileMenuOpen ? (
@@ -103,9 +166,30 @@ export default function Header() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="md:hidden bg-background/98 backdrop-blur-sm border-t border-border"
+            className="lg:hidden bg-background/98 backdrop-blur-sm border-t border-border"
           >
             <div className="container py-4">
+              <div className="grid grid-cols-3 gap-2 pb-4 mb-2 border-b border-border">
+                {branches.map((branch) => {
+                  const active =
+                    branch.href === "/"
+                      ? location === "/"
+                      : location.startsWith(branch.href);
+                  return (
+                    <Link
+                      key={branch.href}
+                      href={branch.href}
+                      className={`px-3 py-3 text-center font-medium border transition-colors ${
+                        active
+                          ? "bg-foreground text-background border-foreground"
+                          : "bg-background text-foreground/75 border-border"
+                      }`}
+                    >
+                      {branch.label}
+                    </Link>
+                  );
+                })}
+              </div>
               {navItems.map((item, index) => (
                 <motion.a
                   key={item.href}

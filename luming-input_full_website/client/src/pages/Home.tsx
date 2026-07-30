@@ -1,8 +1,9 @@
 /**
- * Home 首页
- * 设计风格：武侠水墨 - 麓鸣输入法介绍网站
+ * Home 纯形分支首页
+ * 设计风格：武侠水墨 - 麓鸣纯形输入法介绍
  */
 
+import { useEffect } from "react";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import Features from "@/components/Features";
@@ -15,6 +16,10 @@ import PracticeTool from "@/components/PracticeTool";
 import Footer from "@/components/Footer";
 
 export default function Home() {
+  useEffect(() => {
+    document.title = "麓鸣纯形 · 麓鸣输入法";
+  }, []);
+
   return (
     <div className="min-h-screen">
       <Header />

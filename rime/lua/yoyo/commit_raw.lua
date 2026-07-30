@@ -1,5 +1,5 @@
--- 纯码元上屏处理器：使用 Shift 键提交当前输入的纯码元
--- 例如：未上屏的输入是"[pp]=P"，按下Shift键后，只上屏"ppP"
+-- 纯码元上屏处理器：使用 Ctrl 键提交当前输入的纯码元
+-- 例如：未上屏的输入是"[pp]=P"，按下Ctrl键后，只上屏"ppP"
 
 local yoyo = require "yoyo.yoyo"
 local processor = {}
@@ -14,8 +14,8 @@ end
 function processor.func(key_event, env)
   if env.processing then return yoyo.kNoop end
   
-  -- 只处理纯Shift键按下事件
-  if not key_event:release() and key_event:shift() and not (key_event:alt() or key_event:ctrl() or key_event:caps()) then
+  -- 只处理纯Ctrl键按下事件
+  if not key_event:release() and key_event:ctrl() and not (key_event:alt() or key_event:shift() or key_event:caps()) then
     local context = env.engine.context
     local input = yoyo.current(context)
     

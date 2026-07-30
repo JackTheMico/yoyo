@@ -4,6 +4,7 @@
 
 - 前端：位于 `client/` 目录，由 Vite 构建，产物输出到 `dist/public`
 - 后端：位于 `server/index.ts`，使用 Express 提供静态资源和前端路由
+- 页面：`/` 为纯形·麓鸣，`/yinxing` 为音形·呦呦，`/benchmark` 为两支共用的重码对照与简码击数测评
 
 本文档将详细说明从本地开发、构建到生产部署的完整流程。
 
@@ -51,6 +52,23 @@ pnpm install
 pnpm dev
 ```
 
+启动前会自动同步两类派生资源：
+
+- `scripts/sync-yx-assets.mjs` 从同级的 `practice_tool/` 和 `zigen_table/` 同步音形页面；
+- `scripts/generate-collision-benchmark.mjs` 从 `rime/yoyo-bm.dict.yaml` 重新计算纯形重码，并与已打包的音形 Chai 测评快照合成重码对照；击数表同时生成纯形 Chai、音形 Chai 和音形白霜三组多字简码数据，单字数据保持两方案对照。
+
+如果只部署了本目录，两个脚本都会继续使用仓库中已经打包的页面与测评数据。
+
+音形 Chai 原始测评不随网站重复打包；本地重新生成 `zi.jsonl`、`word.jsonl` 后，可显式刷新快照：
+
+```bash
+node scripts/generate-collision-benchmark.mjs \
+  --yinxing-jsonl-dir "/path/to/output/chai"
+```
+
+该目录必须同时包含 `zi.jsonl` 和 `word.jsonl`。命令会同步更新音形重码数据与
+Chai 多字简码击数分布，后续 `pnpm dev` / `pnpm build` 直接复用新快照。
+
 默认会在本机 3000 端口启动 Vite 开发服务器：
 
 - 开发地址（可能会自动选取 3000 以后的空闲端口）：
@@ -74,7 +92,7 @@ pnpm build
 
 该命令做两件事：
 
-1. 使用 Vite 构建前端
+1. 同步音形静态资源、生成重码对照数据，然后使用 Vite 构建前端
    - 入口：`client/`
    - 构建配置：`vite.config.ts`
    - 输出目录：`dist/public`
@@ -118,7 +136,9 @@ NODE_ENV=production node dist/index.js
 
 访问地址示例：
 
-- http://localhost:3000/
+- 纯形页：http://localhost:3000/
+- 音形页：http://localhost:3000/yinxing
+- 重码测评：http://localhost:3000/benchmark
 
 ### 5.2 使用 Node + 进程守护（如 PM2）
 

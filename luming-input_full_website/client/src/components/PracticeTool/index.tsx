@@ -354,9 +354,7 @@ export default function PracticeTool() {
                       ? (Array.isArray(MAYUAN[state.currentChar].code)
                          ? `左手：${MAYUAN[state.currentChar].code[0]}，右手：${MAYUAN[state.currentChar].code[1]}`
                          : MAYUAN[state.currentChar].code)
-                      : (Array.isArray(ZIGEN_DATA[state.currentChar].code) 
-                         ? (ZIGEN_DATA[state.currentChar].code as string[]).join(' / ')
-                         : ZIGEN_DATA[state.currentChar].code)
+                      : ZIGEN_DATA[state.currentChar].code
                     }</span>
                   </motion.div>
                 )}

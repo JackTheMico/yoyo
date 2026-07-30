@@ -1,5 +1,6 @@
 /**
- * Fingering 折梅指法介绍组件
+ * Fingering 纯形指法「六脉神剑」介绍组件
+ * 该指法原名「折梅」，现「折梅」指音形分支的 180 码元指法。
  * 设计风格：武侠水墨 - 指法系统展示
  */
 
@@ -18,7 +19,7 @@ export default function Fingering() {
           className="text-center mb-16"
         >
           <h2 className="ink-title text-3xl sm:text-4xl md:text-5xl mb-4">
-            通用指法「折梅」
+            纯形指法「六脉神剑」
           </h2>
           <p className="text-lg text-muted-foreground font-serif italic">
             平移 & 镜像
@@ -36,7 +37,7 @@ export default function Fingering() {
           >
             <img
               src="/images/liumai-card.png"
-              alt="折梅"
+              alt="六脉神剑"
               className="w-48 h-48 md:w-64 md:h-64 object-cover opacity-90"
             />
           </motion.div>
@@ -50,7 +51,7 @@ export default function Fingering() {
             className="ink-card p-6 md:p-8 mb-8"
           >
             <blockquote className="border-l-4 border-foreground/30 pl-4 mb-6 text-lg font-serif italic">
-              逍遥派核心武学，六路折梅手包罗万有，可化用天下武功招数。
+              大理天龙寺无上法门，以一阳指力化无形剑气。
             </blockquote>
             <p className="text-lg leading-relaxed mb-6">
               <strong>指法更固定：</strong>每一行码元的指法都是一致的。只需记住基于 <code className="px-2 py-1 bg-secondary border">QWERT</code> 五个键的指法，通过<strong>平移和镜像</strong>的推理即可记住其它码位。

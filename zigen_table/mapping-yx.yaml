@@ -1,0 +1,1447 @@
+# 音形（yoyo-yx）码表
+# 由 generate_yx_mapping.py 从 elements.txt 与 yoyo-yx-char.dict.yaml 反推生成，请勿手改。
+#
+# 码元 = 声母键（小写）+ 韵母指法（大写），如 vC。字根码元同样是两个字母。
+# 声母 24 个 / 韵母 36 个 / 字根 466 个。
+
+# 声母 → 键位
+声母:
+  a: [n, zh]
+  b: [s, 零声母]
+  c: [l]
+  d: [d, r]
+  e: [p, sh]
+  f: [y]
+  g: [q, z]
+  q: [ch, m]
+  r: [b]
+  s: [h]
+  t: [f, x]
+  v: [j, k]
+  w: [c, w]
+  x: [g]
+  z: [t]
+
+# 韵母 → 指法
+韵母:
+  A: [ang, ia, ua, ve]
+  B: [en, ie, ng, uo]
+  C: [ou, u]
+  D: [ao, ian]
+  E: [i]
+  F: [e, ing]
+  G: [a, iang, uai, ue]
+  H: [an, in]
+  I: [iao, o, ong, un]
+  J: [ai, iu, uang]
+  K: [eng, er, iong, m, uan, v]
+  L: [ei, ui]
+
+# 音形用 1-6 代表六种基本笔画
+笔画:
+  '1': 一
+  '2': 丨
+  '3': 丿
+  '4': 丶
+  '5': 乛
+  '6': 乙
+
+# 字根 → 码元
+mapping:
+  '付':
+    code: aA
+    examples: 府 附 符
+  '':
+    code: aA
+    examples: 丈 仗 吏
+  '':
+    code: aA
+    examples: 更 甦
+  '习':
+    code: aB
+  '其':
+    code: aB
+    examples: 期 斯 基
+  '直':
+    code: aB
+    examples: 值 置 植
+  '金':
+    code: aB
+    examples: 鑫 鉴 銮
+  '钅':
+    code: aB
+    examples: 钱 镇 银
+  '龺':
+    code: aB
+    examples: 韩 朝 翰
+  '':
+    code: aB
+    examples: 釜 滏
+  '戉':
+    code: aC
+    examples: 越 钺 樾
+  '戊':
+    code: aC
+    examples: 成 感 威
+  '竹':
+    code: aC
+  '舟':
+    code: aC
+    examples: 盘 般 航
+  '豆':
+    code: aC
+    examples: 短 登 橙
+  '':
+    code: aC
+    examples: 等 第 算
+  '':
+    code: aC
+    examples: 臧
+  '廿':
+    code: aD
+    examples: 世 燕 贳
+  '爪':
+    code: aD
+    examples: 抓 爬 笊
+  '爫':
+    code: aD
+    examples: 采 彩 乳
+  '龷':
+    code: aD
+    examples: 共 散 巷
+  '夊':
+    code: aE
+    examples: 各 处 条
+  '执':
+    code: aE
+    examples: 热 势 垫
+  '马':
+    code: aE
+    examples: 吗 妈 码
+  '5':
+    code: aF
+    stroke: 乛
+    examples: 买 那 书
+  '耂':
+    code: aF
+    examples: 老 考 教
+  '者':
+    code: aF
+    examples: 都 著 煮
+  '乍':
+    code: aG
+    examples: 作 炸 怎
+  '占':
+    code: aH
+    examples: 点 店 站
+  '鸟':
+    code: aI
+    examples: 鸡 鸭 鹏
+  '':
+    code: aI
+    examples: 岛 枭 袅
+  '乃':
+    code: aJ
+    examples: 仍 秀 奶
+  '牛':
+    code: aJ
+    examples: 制 件 解
+  '牜':
+    code: aJ
+    examples: 特 物 牧
+  '':
+    code: aJ
+    examples: 先 选 靠
+  '':
+    code: aJ
+    examples: 凸
+  '女':
+    code: aK
+    examples: 好 要 她
+  '内':
+    code: aL
+    examples: 肉 纳 病
+  '禸':
+    code: aL
+    examples: 离 璃 禽
+  '隹':
+    code: aL
+    examples: 集 谁 难
+  '':
+    code: aL
+    examples: 属 偶 禹
+  '木':
+    code: bB
+    examples: 想 菜 机
+  '朩':
+    code: bB
+    examples: 条 茶 亲
+  '林':
+    code: bB
+    examples: 森 梦 楚
+  '':
+    code: bB
+    examples: 刺 枣 棘
+  '几':
+    code: bC
+    examples: 机 微 亮
+  '尤':
+    code: bC
+    examples: 就 优 忧
+  '矢':
+    code: bC
+    examples: 知 医 短
+  '':
+    code: bC
+    examples: 风 凤 凰
+  '糸':
+    code: bD
+    examples: 系 索 素
+  '纟':
+    code: bD
+    examples: 给 经 线
+  '力':
+    code: bE
+    examples: 加 动 男
+  '厶':
+    code: bE
+    examples: 去 能 公
+  '巳':
+    code: bE
+    examples: 包 跑 港
+  '龰':
+    code: bE
+    examples: 捷 婕 睫
+  '龴':
+    code: bE
+    examples: 通 勇 甬
+  '':
+    code: bE
+    examples: 步 涉 陟
+  '':
+    code: bE
+    examples: 此 正 些
+  '不':
+    code: bG
+    examples: 还 杯 环
+  '卅':
+    code: bG
+  '未':
+    code: bG
+    examples: 来 味 朱
+  '言':
+    code: bG
+    examples: 信 警 詹
+  '讠':
+    code: bG
+    examples: 说 让 该
+  '鬼':
+    code: bG
+    examples: 魔 魏 魂
+  '':
+    code: bG
+    examples: 带
+  '三':
+    code: bH
+    examples: 兰 烂 承
+  '氵':
+    code: bH
+    examples: 没 法 海
+  '':
+    code: bH
+    examples: 举 兴 誉
+  '6':
+    code: bJ
+    stroke: 乙
+    examples: 吃 亿 艺
+  '比':
+    code: bJ
+    examples: 批 混 皆
+  '爱':
+    code: bJ
+    examples: 暧 嗳 瑷
+  '':
+    code: bJ
+    examples: 受 舜
+  '二':
+    code: bK
+    examples: 元 些 远
+  '子':
+    code: bK
+    examples: 好 学 李
+  '已':
+    code: bL
+  '落':
+    code: cB
+  '':
+    code: cB
+    examples: 范 薄 莎
+  '鹿':
+    code: cC
+    examples: 麓 麝 麂
+  '':
+    code: cC
+    examples: 麟 麒 鄜
+  '劳':
+    code: cD
+    examples: 捞 唠 涝
+  '千':
+    code: cD
+    examples: 重 牌 迁
+  '夕':
+    code: cD
+    examples: 多 名 外
+  '':
+    code: cD
+    examples: 营 蒙 荣
+  '󲰪':
+    code: cD
+    examples: 蓉 莞 萱
+  '立':
+    code: cE
+    examples: 新 部 位
+  '':
+    code: cE
+    examples: 产 颜 彦
+  '了':
+    code: cF
+    examples: 疗 辽 亨
+  '而':
+    code: cF
+    examples: 需 瑞 端
+  '两':
+    code: cG
+    examples: 满 辆 俩
+  '仑':
+    code: cI
+    examples: 论 轮 伦
+  '侖':
+    code: cI
+    examples: 龢 龠
+  '龙':
+    code: cI
+    examples: 笼 袭 宠
+  '六':
+    code: cJ
+    examples: 冥 兖 螟
+  '卵':
+    code: cK
+    examples: 孵
+  '耒':
+    code: cL
+    examples: 耗 耕 耙
+  '七':
+    code: dB
+    examples: 切 托 宅
+  '又':
+    code: dB
+    examples: 对 最 度
+  '非':
+    code: dB
+    examples: 排 靠 菲
+  '':
+    code: dB
+    examples: 东 鸫
+  '':
+    code: dB
+    examples: 劲 颈 迳
+  '𡈼':
+    code: dB
+    examples: 任 丢 廷
+  '乡':
+    code: dC
+    examples: 飨 芗
+  '入':
+    code: dC
+    examples: 汆 籴
+  '斗':
+    code: dC
+    examples: 科 料 斜
+  '无':
+    code: dC
+    examples: 抚 芜 庑
+  '旡':
+    code: dC
+    examples: 既 概 慨
+  '甫':
+    code: dC
+    examples: 铺 浦 辅
+  '由':
+    code: dC
+    examples: 油 迪 届
+  '4':
+    code: dD
+    stroke: 丶
+    examples: 的 为 太
+  '刀':
+    code: dD
+    examples: 切 初 券
+  '刂':
+    code: dD
+    examples: 到 前 则
+  '电':
+    code: dD
+    examples: 俺 绳 腌
+  '':
+    code: dD
+    examples: 临 紧 监
+  '':
+    code: dD
+    examples: 师 归 帅
+  '':
+    code: dD
+    examples: 班 辨
+  '':
+    code: dD
+    examples: 价 养 界
+  '':
+    code: dD
+    examples: 龟 阄
+  '':
+    code: dD
+    examples: 曳
+  '':
+    code: dD
+    examples: 万 厉 砺
+  '之':
+    code: dE
+    examples: 泛 芝 乏
+  '日':
+    code: dE
+    examples: 是 时 更
+  '':
+    code: dE
+    examples: 冒 冕 勖
+  '':
+    code: dE
+    examples: 临
+  '丁':
+    code: dF
+    examples: 打 停 宁
+  '大':
+    code: dG
+    examples: 太 买 天
+  '':
+    code: dG
+    examples: 爽 夷 奭
+  '亻':
+    code: dH
+    examples: 你 他 但
+  '民':
+    code: dI
+    examples: 眠 珉 抿
+  '矛':
+    code: dI
+    examples: 柔 茅 婺
+  '歹':
+    code: dJ
+    examples: 死 列 烈
+  '歺':
+    code: dJ
+    examples: 餐 粲
+  '':
+    code: dJ
+    examples: 睿 壑
+  '尚':
+    code: eA
+    examples: 躺 趟 敞
+  '龸':
+    code: eA
+    examples: 尝
+  '':
+    code: eA
+    examples: 商
+  '':
+    code: eA
+    examples: 帝 旁 啻
+  '':
+    code: eA
+    examples: 常 党 堂
+  '':
+    code: eA
+    examples: 学 觉 鲎
+  '3':
+    code: eB
+    stroke: 丿
+    examples: 我 才 少
+  '㐆':
+    code: eB
+    examples: 殷
+  '身':
+    code: eB
+    examples: 射 躺 躲
+  '2':
+    code: eC
+    stroke: 丨
+    examples: 中 个 种
+  '手':
+    code: eC
+    examples: 拿 摩 撑
+  '扌':
+    code: eC
+    examples: 把 打 挺
+  '鼠':
+    code: eC
+    examples: 鼬 鼩 鼹
+  '龵':
+    code: eC
+    examples: 看 拜 掰
+  '':
+    code: eC
+    examples: 半 举 棒
+  '':
+    code: eC
+    examples: 鬣 镴 躐
+  '':
+    code: eC
+    examples: 段
+  '片':
+    code: eD
+    examples: 版 牌 牒
+  '弋':
+    code: eE
+    examples: 式 代 忒
+  '戈':
+    code: eE
+    examples: 我 或 线
+  '疋':
+    code: eE
+    examples: 蛋 楚 疑
+  '皮':
+    code: eE
+    examples: 被 波 破
+  '豕':
+    code: eE
+    examples: 家 蒙 豪
+  '':
+    code: eE
+    examples: 是 提 定
+  '':
+    code: eE
+    examples: 尧 翘
+  '':
+    code: eE
+    examples: 延
+  '':
+    code: eE
+    examples: 疏
+  '':
+    code: eE
+    examples: 像 象 缘
+  '舌':
+    code: eF
+    examples: 话 活 甜
+  '':
+    code: eF
+    examples: 啥 舍 猞
+  '丬':
+    code: eH
+    examples: 将 装 奖
+  '山':
+    code: eH
+    examples: 岁 岛 峰
+  '彡':
+    code: eH
+    examples: 影 形 修
+  '爿':
+    code: eH
+    examples: 奘 戕 牂
+  '':
+    code: eH
+    examples: 北 背 冀
+  '':
+    code: eH
+    examples: 鼎 鼐 鼒
+  '':
+    code: eH
+    examples: 场 汤 易
+  '镸':
+    code: eI
+    examples: 套 肆
+  '长':
+    code: eI
+    examples: 张 涨 账
+  '髟':
+    code: eI
+    examples: 髦 髻 鬓
+  '':
+    code: eI
+    examples: 说 元 先
+  '双':
+    code: eJ
+    examples: 摄 轰 聂
+  '生':
+    code: eK
+    examples: 性 星 胜
+  '亼':
+    code: eL
+    examples: 命 剑 逾
+  '合':
+    code: eL
+    examples: 给 拿 哈
+  '水':
+    code: eL
+    examples: 冰 泉 尿
+  '氺':
+    code: eL
+    examples: 康 泰 绿
+  '':
+    code: eL
+    examples: 永 脉 泳
+  '':
+    code: eL
+    examples: 鳏
+  '':
+    code: eL
+    examples: 益 蠲 鹢
+  '':
+    code: eL
+    examples: 聚 骤
+  '曰':
+    code: fA
+    examples: 汩
+  '羊':
+    code: fA
+    examples: 样 群 鲜
+  '':
+    code: fA
+    examples: 南 幸 楠
+  '':
+    code: fA
+    examples: 着 差 养
+  '':
+    code: fA
+    examples: 美 盖 姜
+  '小':
+    code: fC
+    examples: 你 原 东
+  '酉':
+    code: fC
+    examples: 配 酒 酸
+  '':
+    code: fC
+    examples: 当 肖 削
+  '':
+    code: fC
+    examples: 练 炼 拣
+  '':
+    code: fC
+    examples: 少 省 劣
+  '幺':
+    code: fD
+    examples: 兹 幼 玄
+  '亦':
+    code: fE
+    examples: 迹 奕 弈
+  '至':
+    code: fE
+    examples: 到 致 室
+  '':
+    code: fE
+    examples: 变 蛮 恋
+  '':
+    code: fE
+    examples: 赫 赤 哧
+  '也':
+    code: fF
+    examples: 他 地 她
+  '四':
+    code: fF
+    examples: 泗 驷
+  '罒':
+    code: fF
+    examples: 罗 置 罪
+  '牙':
+    code: fG
+    examples: 穿 呀 雅
+  '廴':
+    code: fH
+    examples: 挺 建 健
+  '音':
+    code: fH
+    examples: 意 章 暗
+  '云':
+    code: fI
+    examples: 会 动 层
+  '用':
+    code: fI
+    examples: 拥 甩 佣
+  '':
+    code: fI
+    examples: 育 充 弃
+  '':
+    code: fI
+    examples: 痛 桶 涌
+  '羽':
+    code: fK
+    examples: 翻 翼 翔
+  '斤':
+    code: gA
+    examples: 新 所 斯
+  '':
+    code: gA
+    examples: 兵 岳 邱
+  '且':
+    code: gB
+    examples: 县 组 助
+  '予':
+    code: gB
+    examples: 预 野 舒
+  '耳':
+    code: gB
+    examples: 联 取 职
+  '走':
+    code: gC
+    examples: 起 越 超
+  '足':
+    code: gC
+    examples: 促 捉 蹩
+  '':
+    code: gC
+    examples: 跟 路 跑
+  '欠':
+    code: gD
+    examples: 次 款 歌
+  '臣':
+    code: gD
+    examples: 藏 卧 臧
+  '':
+    code: gD
+    examples: 姬 熙 颐
+  '自':
+    code: gE
+    examples: 首 息 鼻
+  '食':
+    code: gF
+    examples: 餐 饕 飨
+  '饣':
+    code: gF
+    examples: 饭 馆 饰
+  '父':
+    code: gH
+    examples: 较 交 校
+  '':
+    code: gI
+    examples: 壳 壶 壹
+  '':
+    code: gI
+    examples: 榖 彀 縠
+  '':
+    code: gI
+    examples: 囊 蠹 橐
+  '':
+    code: gI
+    examples: 索 勃 孛
+  '载':
+    code: gJ
+  '':
+    code: gJ
+    examples: 戴 截 裁
+  '匕':
+    code: gK
+    examples: 能 它 呢
+  '曲':
+    code: gK
+    examples: 蛐 𪨰
+  '犬':
+    code: gK
+    examples: 获 状 哭
+  '犭':
+    code: gK
+    examples: 狗 猫 猪
+  '豸':
+    code: gK
+    examples: 貌 豹 貂
+  '':
+    code: gK
+    examples: 化 花 靴
+  '':
+    code: gK
+    examples: 遭 曹
+  '':
+    code: gK
+    examples: 顷
+  '':
+    code: gK
+    examples: 以
+  '业':
+    code: qA
+    examples: 亚 显 湿
+  '厂':
+    code: qA
+    examples: 原 产 压
+  '古':
+    code: qA
+    examples: 据 克 居
+  '':
+    code: qA
+    examples: 后 反 质
+  '':
+    code: qA
+    examples: 赚 兼 嫌
+  '戶':
+    code: qB
+    examples: 所
+  '户':
+    code: qB
+    examples: 房 护 启
+  '辶':
+    code: qB
+    examples: 这 还 过
+  '门':
+    code: qB
+    examples: 们 问 间
+  '亍':
+    code: qC
+    examples: 街 衡 衍
+  '毋':
+    code: qC
+    examples: 毐
+  '母':
+    code: qC
+    examples: 每 海 梅
+  '卯':
+    code: qD
+    examples: 聊 柳 卿
+  '及':
+    code: qD
+    examples: 级 极 吸
+  '宀':
+    code: qD
+    examples: 家 它 完
+  '里':
+    code: qD
+    examples: 量 理 重
+  '面':
+    code: qD
+    examples: 缅 靥 腼
+  '':
+    code: qD
+    examples: 留 贸 遛
+  '冖':
+    code: qE
+    examples: 写 军 农
+  '彳':
+    code: qE
+    examples: 很 得 德
+  '米':
+    code: qE
+    examples: 类 数 粉
+  '':
+    code: qE
+    examples: 鬯
+  '':
+    code: qE
+    examples: 微 徽 徵
+  '':
+    code: qE
+    examples: 赢 嬴 羸
+  '光':
+    code: qF
+    examples: 辉 耀 晃
+  '屮':
+    code: qF
+    examples: 出 祟 蚩
+  '車':
+    code: qF
+    examples: 墼
+  '车':
+    code: qF
+    examples: 连 军 库
+  '':
+    code: qF
+    examples: 发
+  '':
+    code: qF
+    examples: 纯 吨 炖
+  '':
+    code: qF
+    examples: 转 较 轻
+  '束':
+    code: qG
+    examples: 整 辣 速
+  '麻':
+    code: qG
+    examples: 嘛 魔 摩
+  '皿':
+    code: qH
+    examples: 盘 血 盐
+  '石':
+    code: qH
+    examples: 破 研 碗
+  '虫':
+    code: qI
+    examples: 强 蛮 融
+  '':
+    code: qI
+    examples: 贵 遗 遣
+  '巛':
+    code: qK
+    examples: 巡 巢 剿
+  '巜':
+    code: qK
+    examples: 粼
+  '川':
+    code: qK
+    examples: 州 顺 洲
+  '':
+    code: qK
+    examples: 流 荒 硫
+  '':
+    code: qK
+    examples: 州
+  '毛':
+    code: qL
+    examples: 笔 尾 耗
+  '':
+    code: qL
+    examples: 年 每 复
+  '本':
+    code: rB
+    examples: 体 笨 苯
+  '勹':
+    code: rD
+    examples: 包 忽 勾
+  '弓':
+    code: rD
+    examples: 张 强 引
+  '㐅':
+    code: rE
+    examples: 区 网 风
+  '聿':
+    code: rE
+    examples: 建 津 律
+  '肀':
+    code: rE
+    examples: 肃 鹔
+  '辟':
+    code: rE
+    examples: 避 壁 臂
+  '':
+    code: rE
+    examples: 净 静 争
+  '':
+    code: rE
+    examples: 群 君 郡
+  '':
+    code: rE
+    examples: 事
+  '冫':
+    code: rF
+    examples: 次 资 均
+  '疒':
+    code: rF
+    examples: 病 痛 症
+  '':
+    code: rF
+    examples: 图 头 尽
+  '':
+    code: rF
+    examples: 跳 挑 姚
+  '巴':
+    code: rG
+    examples: 把 吧 色
+  '卜':
+    code: rI
+    examples: 下 外 卡
+  '':
+    code: rI
+    examples: 上 卡 卢
+  '氏':
+    code: rJ
+    examples: 纸 昏 邸
+  '白':
+    code: rJ
+    examples: 的 拍 百
+  '贝':
+    code: rL
+    examples: 则 资 贵
+  '火':
+    code: sB
+    examples: 烤 炒 谈
+  '灬':
+    code: sB
+    examples: 点 热 然
+  '虍':
+    code: sC
+    examples: 虚 虑 虐
+  '虎':
+    code: sC
+    examples: 彪 唬 琥
+  '䒑':
+    code: sF
+    examples: 并 前 道
+  '丷':
+    code: sF
+    examples: 来 总 平
+  '八':
+    code: sF
+    examples: 只 公 共
+  '禾':
+    code: sF
+    examples: 和 科 利
+  '谷':
+    code: sF
+    examples: 容 欲 裕
+  '':
+    code: sF
+    examples: 除 余 徐
+  '':
+    code: sF
+    examples: 办 苏 协
+  '':
+    code: sF
+    examples: 乘 剩 秉
+  '':
+    code: sF
+    examples: 真 镇 具
+  '夫':
+    code: sH
+    examples: 规 铁 跌
+  '巾':
+    code: sI
+    examples: 市 带 帮
+  '亥':
+    code: sJ
+    examples: 该 核 孩
+  '黄':
+    code: sJ
+    examples: 横 簧 璜
+  '':
+    code: sJ
+    examples: 演 寅 夤
+  '1':
+    code: sK
+    stroke: 一
+    examples: 一 上 与
+  '兔':
+    code: sL
+    examples: 逸 冤 菟
+  '黑':
+    code: sL
+    examples: 默 墨 黛
+  '':
+    code: sL
+    examples: 象 免 勉
+  '方':
+    code: tA
+    examples: 放 房 防
+  '穴':
+    code: tA
+    examples: 穿 空 突
+  '分':
+    code: tB
+    examples: 份 粉 盆
+  '弗':
+    code: tC
+    examples: 费 佛 氟
+  '缶':
+    code: tC
+    examples: 缺 陶 淘
+  '':
+    code: tC
+    examples: 卸
+  '':
+    code: tC
+    examples: 第 弟 梯
+  '癶':
+    code: tD
+    examples: 登 凳 癸
+  '祭':
+    code: tD
+    examples: 蔡 擦 察
+  '西':
+    code: tE
+    examples: 晒 栖 洒
+  '覀':
+    code: tE
+    examples: 要 票 贾
+  '行':
+    code: tF
+    examples: 珩 桁 鸻
+  '':
+    code: tG
+    examples: 向 奥
+  '攴':
+    code: tH
+    examples: 敲 寇 蔻
+  '攵':
+    code: tH
+    examples: 做 放 数
+  '示':
+    code: tH
+    examples: 标 票 宗
+  '礻':
+    code: tH
+    examples: 神 社 视
+  '辛':
+    code: tH
+    examples: 薛 辞 锌
+  '':
+    code: tH
+    examples: 辣 辩 辨
+  '心':
+    code: tI
+    examples: 想 您 总
+  '忄':
+    code: tI
+    examples: 性 快 情
+  '':
+    code: tI
+    examples: 添 慕 恭
+  '㠯':
+    code: tK
+    examples: 管 官 馆
+  '丰':
+    code: tK
+    examples: 峰 慧 锋
+  '乌':
+    code: tK
+    examples: 坞 呜 钨
+  '吅':
+    code: tK
+    examples: 品 器 哭
+  '龶':
+    code: tK
+    examples: 表 青 素
+  '':
+    code: tK
+    examples: 帮 邦 寿
+  '':
+    code: tK
+    examples: 春 泰 秦
+  '飞':
+    code: tL
+  '㐄':
+    code: vA
+    examples: 降 舞 麟
+  '十':
+    code: vA
+    examples: 真 南 率
+  '甲':
+    code: vA
+    examples: 鸭 钾 押
+  '':
+    code: vA
+    examples: 在 有 布
+  '':
+    code: vA
+    examples: 年
+  '':
+    code: vA
+    examples: 于 才 宇
+  '㔾':
+    code: vB
+    examples: 圈 卷 碗
+  '卩':
+    code: vB
+    examples: 却 即 脚
+  '阝':
+    code: vB
+    examples: 都 那 部
+  '':
+    code: vB
+    examples: 姊 笫 秭
+  '':
+    code: vB
+    examples: 节 卫 爷
+  '口':
+    code: vC
+    examples: 和 中 后
+  '干':
+    code: vC
+    examples: 平 赶 肝
+  '人':
+    code: vD
+    examples: 以 从 快
+  '见':
+    code: vD
+    examples: 现 视 观
+  '':
+    code: vD
+    examples: 会 个 全
+  '吉':
+    code: vE
+    examples: 结 喜 嘉
+  '彐':
+    code: vE
+    examples: 当 雪 归
+  '彑':
+    code: vE
+    examples: 互 彝 蠡
+  '':
+    code: vE
+    examples: 虐 疟 谑
+  '':
+    code: vE
+    examples: 录 剥 逯
+  '':
+    code: vE
+    examples: 周 调 稠
+  '九':
+    code: vF
+    examples: 究 轨 杂
+  '井':
+    code: vF
+    examples: 进 讲 耕
+  '可':
+    code: vF
+    examples: 啊 阿 河
+  '':
+    code: vF
+    examples: 遘 觏 斠
+  '今':
+    code: vH
+    examples: 领 含 令
+  '月':
+    code: vI
+    examples: 期 股 明
+  '气':
+    code: vI
+    examples: 汽 氧 氢
+  '角':
+    code: vI
+    examples: 解 确 嘴
+  '':
+    code: vI
+    examples: 尔 色 负
+  '':
+    code: vI
+    examples: 夜 液 腋
+  '':
+    code: vI
+    examples: 然 炙
+  '':
+    code: vI
+    examples: 有 请 清
+  '':
+    code: vI
+    examples: 久 灸
+  '':
+    code: vI
+    examples: 丽 俪 骊
+  '丩':
+    code: vJ
+    examples: 叫 收 纠
+  '匚':
+    code: vJ
+    examples: 区 医 欧
+  '囗':
+    code: vJ
+    examples: 国 因 图
+  '臼':
+    code: vJ
+    examples: 插 馅 毁
+  '':
+    code: vJ
+    examples: 夬
+  '':
+    code: vJ
+    examples: 巨 距 柜
+  '':
+    code: vJ
+    examples: 印 迎 卬
+  '':
+    code: vJ
+    examples: 乐
+  '':
+    code: vJ
+    examples: 舆 爨 盥
+  '句':
+    code: vK
+    examples: 够 狗 驹
+  '':
+    code: vK
+    examples: 瞿 矍 氍
+  '亡':
+    code: wA
+    examples: 望 忘 忙
+  '亾':
+    code: wA
+    examples: 喝 葛 噶
+  '页':
+    code: wA
+    examples: 项 题 领
+  '':
+    code: wA
+    examples: 夏 戛 奡
+  '文':
+    code: wB
+    examples: 这 刘 齐
+  '五':
+    code: wC
+    examples: 伍 吾 敔
+  '丌':
+    code: wD
+    examples: 鼻 痹 擤
+  '卝':
+    code: wD
+    examples: 芈
+  '尢':
+    code: wD
+    examples: 尬 尴 尪
+  '廾':
+    code: wD
+    examples: 并 开 算
+  '艹':
+    code: wD
+    examples: 菜 花 节
+  '支':
+    code: wE
+    examples: 技 鼓 枝
+  '册':
+    code: wF
+    examples: 删 珊 栅
+  '目':
+    code: wF
+    examples: 看 着 省
+  '':
+    code: wF
+    examples: 篇 偏 编
+  '':
+    code: wF
+    examples: 具
+  '':
+    code: wF
+    examples: 典
+  '瓦':
+    code: wG
+    examples: 瓶 瓷 甄
+  '尸':
+    code: wH
+    examples: 局 展 属
+  '鱼':
+    code: wH
+    examples: 鲜 鲁 鲍
+  '':
+    code: wH
+    examples: 声 眉 鹛
+  '':
+    code: wH
+    examples: 遐 叚
+  '寸':
+    code: wI
+    examples: 对 等 时
+  '己':
+    code: wL
+    examples: 起 记 改
+  '韦':
+    code: wL
+    examples: 韩 伟 围
+  '瓜':
+    code: xA
+    examples: 狐 孤 瓣
+  '王':
+    code: xB
+    examples: 全 现 主
+  '艮':
+    code: xB
+    examples: 很 跟 银
+  '':
+    code: xB
+    examples: 即 既 暨
+  '':
+    code: xB
+    examples: 再 噩
+  '骨':
+    code: xC
+    examples: 滑 髓 髋
+  '士':
+    code: xD
+    examples: 款 声 志
+  '高':
+    code: xD
+    examples: 搞 稿 敲
+  '':
+    code: xD
+    examples: 就 京 郭
+  '':
+    code: xD
+    examples: 膏
+  '':
+    code: xD
+    examples: 亮 豪 亭
+  '革':
+    code: xF
+    examples: 勒 鞋 勤
+  '鬲':
+    code: xF
+    examples: 融 隔 镉
+  '甘':
+    code: xH
+    examples: 某 甜 钳
+  '工':
+    code: xI
+    examples: 经 式 差
+  '广':
+    code: xJ
+    examples: 店 应 度
+  '关':
+    code: xK
+    examples: 送 联 郑
+  '毌':
+    code: xK
+    examples: 贯
+  '龹':
+    code: xK
+    examples: 卷 券 拳
+  '圭':
+    code: xL
+    examples: 佳 挂 封
+  '':
+    code: xL
+    examples: 垚
+  '亠':
+    code: zC
+    examples: 市 率 交
+  '土':
+    code: zC
+    examples: 在 去 地
+  '殳':
+    code: zC
+    examples: 没 股 投
+  '':
+    code: zC
+    examples: 丑 纽 扭
+  '田':
+    code: zD
+    examples: 男 果 留
+  '雨':
+    code: zD
+    examples: 漏
+  '':
+    code: zD
+    examples: 需 雷 雪
+  '衣':
+    code: zE
+    examples: 装 依 袋
+  '衤':
+    code: zE
+    examples: 被 补 初
+  '':
+    code: zE
+    examples: 派 旅 哌
+  '':
+    code: zE
+    examples: 表 农 浓
+  '':
+    code: zE
+    examples: 展 震 振
+  '冂':
+    code: zI
+    examples: 再 网 刚
+  '凵':
+    code: zI
+    examples: 出 画 击
+  '同':
+    code: zI
+    examples: 洞 铜 桐
+  '':
+    code: zI
+    examples: 周 丹 雕
+  '':
+    code: zI
+    examples: 凹 兕
+  '':
+    code: zI
+    examples: 央 盎 鸯

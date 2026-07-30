@@ -8,9 +8,10 @@ config_version: '2025-12-15'
 
 # 方案列表
 schema_list:
-  - schema: yoyo-bm
-  - schema: yoyo-wx
-  - schema: yoyo-practice
+  - schema: yoyo-bm       # 纯形·北冥（单字派）
+  - schema: yoyo-wx       # 纯形·无相（主词派）
+  - schema: yoyo-yx       # 音形·呦呦
+  - schema: yoyo-practice # 纯形字根练习
 
 # 菜单
 menu:

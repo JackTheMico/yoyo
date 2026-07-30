@@ -18,10 +18,10 @@ export default function Footer() {
         >
           {/* Logo */}
           <h2 className="text-3xl md:text-4xl font-serif font-bold mb-4">
-            麓鸣
+            麓鸣 · 呦呦
           </h2>
           <p className="text-background/70 mb-8 max-w-xl mx-auto">
-            一款兼顾极简规则和极致性能的纯形顶功并击输入法
+            纯形与音形两条分支，共用并击指法与顶功框架
           </p>
 
           {/* 分隔线 */}
