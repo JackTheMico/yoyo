@@ -22,97 +22,21 @@ function OpenStandalone({ href, label }: { href: string; label: string }) {
 
 function ZhemeiCard() {
   return (
-    <svg
-      viewBox="0 0 320 320"
-      role="img"
-      aria-label="折梅水墨意象"
-      className="w-48 h-48 md:w-64 md:h-64 opacity-90"
+    <div
+      className="w-72 h-72 md:w-96 md:h-96"
+      style={{
+        maskImage:
+          "radial-gradient(ellipse at center, black 55%, transparent 85%)",
+        WebkitMaskImage:
+          "radial-gradient(ellipse at center, black 55%, transparent 85%)",
+      }}
     >
-      <defs>
-        <filter id="zhemei-ink">
-          <feTurbulence
-            type="fractalNoise"
-            baseFrequency="0.018"
-            numOctaves="3"
-            seed="12"
-            result="noise"
-          />
-          <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.8" />
-        </filter>
-        <radialGradient id="zhemei-paper" cx="50%" cy="45%" r="70%">
-          <stop offset="0%" stopColor="#fbfaf5" />
-          <stop offset="100%" stopColor="#eee9dd" />
-        </radialGradient>
-        <g id="zhemei-blossom">
-          {[0, 72, 144, 216, 288].map((angle) => (
-            <ellipse
-              key={angle}
-              cx="0"
-              cy="-8"
-              rx="5.5"
-              ry="8.5"
-              fill="#9d332b"
-              opacity="0.88"
-              transform={`rotate(${angle})`}
-            />
-          ))}
-          <circle r="3" fill="#37251f" />
-        </g>
-      </defs>
-
-      <rect width="320" height="320" fill="url(#zhemei-paper)" />
-      <path
-        d="M55 253 C105 240 105 198 147 177 C188 157 232 151 276 75"
-        fill="none"
-        stroke="#191815"
-        strokeWidth="15"
-        strokeLinecap="round"
-        opacity="0.88"
-        filter="url(#zhemei-ink)"
+      <img
+        src="/images/zhemei-card.png"
+        alt="折梅水墨意象"
+        className="w-full h-full object-contain opacity-95"
       />
-      <path
-        d="M141 181 C132 145 116 120 89 98 M184 161 C203 189 226 211 258 218 M224 139 C247 133 269 116 282 94"
-        fill="none"
-        stroke="#25231f"
-        strokeWidth="7"
-        strokeLinecap="round"
-        opacity="0.76"
-        filter="url(#zhemei-ink)"
-      />
-      <path
-        d="M48 260 C111 285 215 276 278 212"
-        fill="none"
-        stroke="#211f1b"
-        strokeWidth="3"
-        strokeLinecap="round"
-        opacity="0.18"
-        filter="url(#zhemei-ink)"
-      />
-
-      <use href="#zhemei-blossom" transform="translate(89 98) scale(1.15)" />
-      <use href="#zhemei-blossom" transform="translate(131 149) scale(.85)" />
-      <use href="#zhemei-blossom" transform="translate(185 160) scale(1.05)" />
-      <use href="#zhemei-blossom" transform="translate(240 128) scale(.9)" />
-      <use href="#zhemei-blossom" transform="translate(278 82) scale(1.2)" />
-      <use href="#zhemei-blossom" transform="translate(258 218) scale(.78)" />
-
-      {[
-        [66, 230, 2.4],
-        [78, 217, 1.4],
-        [113, 266, 1.8],
-        [207, 75, 1.5],
-        [288, 145, 2.1],
-      ].map(([cx, cy, radius]) => (
-        <circle
-          key={`${cx}-${cy}`}
-          cx={cx}
-          cy={cy}
-          r={radius}
-          fill="#171613"
-          opacity="0.38"
-        />
-      ))}
-    </svg>
+    </div>
   );
 }
 
