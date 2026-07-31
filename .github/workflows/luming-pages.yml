@@ -1,5 +1,6 @@
 name: Deploy luming website
 
+# Publish luming-input_full_website to GitHub Pages (static dist/public).
 on:
   push:
     branches: [main]
