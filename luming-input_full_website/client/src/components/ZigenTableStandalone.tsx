@@ -1,3 +1,4 @@
+import { assetUrl } from "@/lib/utils";
 import { useEffect, useRef, useState, useCallback } from "react";
 
 export default function ZigenTableStandalone() {
@@ -34,7 +35,7 @@ export default function ZigenTableStandalone() {
 
             <iframe
               ref={iframeRef}
-              src="/zigen-table.html"
+              src={assetUrl("zigen-table.html")}
               width="100%"
               height={iframeHeight}
               style={{

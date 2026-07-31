@@ -1,11 +1,13 @@
+import { assetUrl } from "@/lib/utils";
+
 // 完整数据结构映射
 export const getCharImageUrl = (char: string) => {
   // 处理空格字符，返回一个占位符图片或者透明图片
   if (char === ' ') {
-    return `/char_images/empty.png`;
+    return assetUrl("char_images/empty.png");
   }
   const unicode = char.codePointAt(0)?.toString(16).toLowerCase();
-  return `/char_images/${unicode}.png`;
+  return assetUrl(`char_images/${unicode}.png`);
 };
 
 export const ZIGEN_DATA: Record<string, { code: string; name: string }> = {

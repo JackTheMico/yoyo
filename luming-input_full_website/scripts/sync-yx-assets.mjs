@@ -95,7 +95,7 @@ let practiceJs = readFileSync(
 practiceJs = replaceRequired(
   practiceJs,
   "../zigen_table/char_images/",
-  "/char_images/",
+  "../char_images/",
   "yx_practice.js",
 );
 writeFileSync(resolve(publicYx, "yx_practice.js"), practiceJs);
@@ -127,7 +127,7 @@ let zigenHtml = readFileSync(
 zigenHtml = replaceRequired(
   zigenHtml,
   'src="char_images/',
-  'src="/char_images/',
+  'src="../char_images/',
   "zigen_table-yx.html",
 );
 zigenHtml = zigenHtml.replace("</body>", `${zigenResizeBridge}</body>`);

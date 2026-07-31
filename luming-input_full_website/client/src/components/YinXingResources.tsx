@@ -1,3 +1,4 @@
+import { assetUrl } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -32,7 +33,7 @@ function ZhemeiCard() {
       }}
     >
       <img
-        src="/images/zhemei-card.png"
+        src={assetUrl("images/zhemei-card.png")}
         alt="折梅水墨意象"
         className="w-full h-full object-contain opacity-95"
       />
@@ -135,13 +136,13 @@ export default function YinXingResources() {
             </p>
             <div className="flex justify-end mb-4">
               <OpenStandalone
-                href="/yx/zigen-table.html"
+                href={assetUrl("yx/zigen-table.html")}
                 label="在新窗口打开字根表"
               />
             </div>
             <iframe
               ref={zigenRef}
-              src="/yx/zigen-table.html"
+              src={assetUrl("yx/zigen-table.html")}
               title="呦呦音形字根表"
               loading="lazy"
               width="100%"
@@ -170,13 +171,13 @@ export default function YinXingResources() {
           <div className="ink-card p-3 md:p-6">
             <div className="flex justify-end mb-4">
               <OpenStandalone
-                href="/yx/practice.html"
+                href={assetUrl("yx/practice.html")}
                 label="在新窗口专注练习"
               />
             </div>
             <iframe
               ref={practiceRef}
-              src="/yx/practice.html"
+              src={assetUrl("yx/practice.html")}
               title="呦呦音形并击练习"
               loading="lazy"
               width="100%"

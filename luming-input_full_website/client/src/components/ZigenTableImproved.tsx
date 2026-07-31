@@ -14,6 +14,7 @@ import { useState, useEffect } from 'react';
 import { Search, X, ChevronDown } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
+import { assetUrl } from '@/lib/utils';
 
 interface ZigenData {
   [key: string]: string;
@@ -54,7 +55,7 @@ export default function ZigenTableImproved() {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const response = await fetch('/data/mapping.yaml');
+        const response = await fetch(assetUrl('data/mapping.yaml'));
         const text = await response.text();
         
         // 简单的 YAML 解析（仅用于 mapping 部分）

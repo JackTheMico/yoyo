@@ -2,7 +2,8 @@ import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
 import { lazy, Suspense } from "react";
-import { Route, Switch } from "wouter";
+import { Route, Router as WouterRouter, Switch } from "wouter";
+import { useHashLocation } from "wouter/use-hash-location";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
@@ -10,7 +11,7 @@ import YinXingPage from "./pages/YinXingPage";
 
 const BenchmarkPage = lazy(() => import("./pages/BenchmarkPage"));
 
-function Router() {
+function AppRoutes() {
   return (
     <Switch>
       <Route path={"/"} component={Home} />
@@ -44,7 +45,9 @@ function App() {
               </div>
             }
           >
-            <Router />
+            <WouterRouter hook={useHashLocation}>
+              <AppRoutes />
+            </WouterRouter>
           </Suspense>
         </TooltipProvider>
       </ThemeProvider>

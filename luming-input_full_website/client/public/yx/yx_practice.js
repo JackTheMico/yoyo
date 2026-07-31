@@ -71,7 +71,7 @@ function zigenGlyph(root) {
   const hex = root.codePointAt(0).toString(16);
   const isPua = root.length === 1 && root.codePointAt(0) >= 0xe000 && root.codePointAt(0) <= 0xf8ff;
   if (root.length === 1) {
-    return `<img class="yx-glyph-img" src="/char_images/${hex}.png" alt="${isPua ? '' : root}"
+    return `<img class="yx-glyph-img" src="../char_images/${hex}.png" alt="${isPua ? '' : root}"
              onerror="this.replaceWith(Object.assign(document.createElement('span'),
                       {className:'yx-glyph-text${isPua ? ' yx-pua' : ''}',textContent:${JSON.stringify(root)}}))">`;
   }

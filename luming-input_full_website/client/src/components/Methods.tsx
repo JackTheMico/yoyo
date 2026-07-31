@@ -3,6 +3,7 @@
  * 设计风格：武侠水墨 - 北冥与无相功法展示
  */
 
+import { assetUrl } from "@/lib/utils";
 import { motion } from "framer-motion";
 
 export default function Methods() {
@@ -75,7 +76,7 @@ export default function Methods() {
               {/* 功法图 */}
               <div className="mb-6 flex justify-center">
                 <img
-                  src="/images/beiming-card.png"
+                  src={assetUrl("images/beiming-card.png")}
                   alt="北冥神功"
                   className="w-40 h-40 md:w-48 md:h-48 object-cover rounded-full opacity-90"
                 />
@@ -129,7 +130,7 @@ export default function Methods() {
               {/* 功法图 */}
               <div className="mb-6 flex justify-center">
                 <img
-                  src="/images/wuxiang-card.png"
+                  src={assetUrl("images/wuxiang-card.png")}
                   alt="小无相功"
                   className="w-40 h-40 md:w-48 md:h-48 object-cover rounded-full opacity-90"
                 />

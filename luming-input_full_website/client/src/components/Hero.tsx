@@ -3,6 +3,7 @@
  * 设计风格：武侠水墨 - 大气的首屏展示
  */
 
+import { assetUrl } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 
@@ -19,7 +20,7 @@ export default function Hero() {
       {/* 背景图 */}
       <div className="absolute inset-0 z-0">
         <img
-          src="/images/hero-bg.png"
+          src={assetUrl("images/hero-bg.png")}
           alt=""
           className="w-full h-full object-cover object-bottom opacity-60"
         />

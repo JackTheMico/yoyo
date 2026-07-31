@@ -3,6 +3,7 @@
  * 设计风格：武侠水墨 - 字根表图片展示
  */
 
+import { assetUrl } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { Download, ZoomIn } from "lucide-react";
 import { useState } from "react";
@@ -49,7 +50,7 @@ export default function ZigenTable() {
                   {isZoomed ? "缩小" : "放大"}
                 </button>
                 <a
-                  href="/images/zigen-table.pdf"
+                  href={assetUrl("images/zigen-table.pdf")}
                   download="麓鸣字根表.pdf"
                   className="flex items-center gap-2 px-3 py-2 text-sm border border-border hover:bg-secondary transition-colors"
                 >
@@ -66,7 +67,7 @@ export default function ZigenTable() {
               }`}
             >
               <img
-                src="/images/zigen-table.png"
+                src={assetUrl("images/zigen-table.png")}
                 alt="麓鸣字根表"
                 className={`w-full h-auto transition-transform duration-300 ${
                   isZoomed ? "cursor-zoom-out" : "cursor-zoom-in"

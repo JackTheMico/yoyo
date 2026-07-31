@@ -3,6 +3,7 @@
  * 设计风格：武侠水墨 - 卡片式特性展示
  */
 
+import { assetUrl } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { Zap, Target, Brain, Sparkles } from "lucide-react";
 
@@ -156,7 +157,7 @@ export default function Features({
         {/* 分隔线 */}
         <div className="flex justify-center mb-16">
           <img
-            src="/images/section-divider.png"
+            src={assetUrl("images/section-divider.png")}
             alt=""
             className="w-64 h-auto opacity-40"
           />

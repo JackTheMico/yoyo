@@ -4,6 +4,7 @@
  * 设计风格：武侠水墨 - 指法系统展示
  */
 
+import { assetUrl } from "@/lib/utils";
 import { motion } from "framer-motion";
 
 export default function Fingering() {
@@ -36,7 +37,7 @@ export default function Fingering() {
             className="flex justify-center mb-12"
           >
             <img
-              src="/images/liumai-card.png"
+              src={assetUrl("images/liumai-card.png")}
               alt="六脉神剑"
               className="w-48 h-48 md:w-64 md:h-64 object-cover opacity-90"
             />

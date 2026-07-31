@@ -7,7 +7,12 @@ import { defineConfig } from "vite";
 
 const plugins = [react(), tailwindcss(), jsxLocPlugin()];
 
+const rawBase = process.env.VITE_BASE_PATH?.trim() || "/";
+const base =
+  rawBase === "/" ? "/" : `/${rawBase.replace(/^\/+|\/+$/g, "")}/`;
+
 export default defineConfig({
+  base,
   plugins,
   resolve: {
     alias: {
