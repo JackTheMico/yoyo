@@ -1,4 +1,4 @@
-网站首页
+![网站首页](rime/intro.png)
 
 # 麓鸣输入法
 
@@ -7,6 +7,12 @@
 麓鸣——一款兼顾极简规则和极致性能的顶功并击输入法。
 
 本项目包含麓鸣（YoYo）输入方案的 Rime 配置以及用于展示和练习字根的 HTML 可视化工具。
+
+## 在线网站
+> 内含字根表和练习工具。
+- 纯形·麓鸣：https://rayalizing.github.io/yoyo/
+- 音形·呦呦：https://rayalizing.github.io/yoyo/#/yinxing
+- 重码测评：https://rayalizing.github.io/yoyo/#/benchmark
 
 ## 两支方案，选一个开始
 
