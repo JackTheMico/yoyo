@@ -217,6 +217,32 @@ const BANKS = {
       answer: info.code,
     })),
 
+  // 一键字直出（60）：只看 aA、sA 等只有 A 码的单字，不校验通道
+  jian_zi: () =>
+    YX_JIAN.filter((item) => item.code[1] === 'A' && item.text.length === 1)
+      .slice(0, 60)
+      .map((item) => ({
+        key: item.text,
+        target: [item.code],
+        prompt: `<div class="yx-word">${item.text}</div>`,
+        hint: `一键字直出，按 A 码 <b>${item.code}</b>（左右手均可）`,
+        answer: item.code,
+        anyHand: true,
+      })),
+
+  // 一键词直出（60）：只看 aA、sA 等只有 A 码的词语，不校验通道
+  jian_ci: () =>
+    YX_JIAN.filter((item) => item.code[1] === 'A' && item.text.length > 1)
+      .slice(0, 60)
+      .map((item) => ({
+        key: item.text,
+        target: [item.code],
+        prompt: `<div class="yx-word">${item.text}</div>`,
+        hint: `一键词直出，按 A 码 <b>${item.code}</b>（左右手均可）`,
+        answer: item.code,
+        anyHand: true,
+      })),
+
   // 一简：一击直出，通道（哪只手、带不带空格）也必须对
   jian: () =>
     YX_JIAN.map((item) => ({
@@ -226,23 +252,6 @@ const BANKS = {
       prompt: `<div class="yx-word">${item.text}</div>`,
       hint: `一击直出，无需空格确认　·　通道 <b>${item.channel}</b>：${CHANNEL_NAME[item.channel]}`,
       answer: item.code,
-    })),
-
-  // 单字：走真实路径 —— 双手带空格出前两码，需要时再单手带空格补第三码
-  char: () =>
-    YX_CHARS.filter((c) => c.level >= 2).map((c) => ({
-      key: c.char,
-      steps:
-        c.level >= 3
-          ? [
-              { target: [c.code.slice(0, 2), c.code.slice(2, 4)], channel: 'a' },
-              { target: [c.code.slice(4, 6)], channel: 'bc' },
-            ]
-          : [{ target: [c.code.slice(0, 2), c.code.slice(2, 4)], channel: 'a' }],
-      prompt: `<div class="yx-word">${c.char}</div>`,
-      hint: `音节 <b>${c.syllable}</b>　·　首字根 ${c.first || '—'}　·　末字根 ${c.last || '—'}`
-        + (c.level <= 2 ? '　·　<span class="yx-badge">两码即唯一，一击搞定</span>' : ''),
-      answer: c.code,
     })),
 };
 
