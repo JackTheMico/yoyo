@@ -110,6 +110,16 @@
         .yx-help td:first-child {
             font-family: 'SF Mono', ui-monospace, monospace; color: var(--text-deer);
         }
+
+        .yx-shengmu-step { margin-bottom: 10px; }
+        .yx-shengmu-label { font-size: 16px; color: var(--text-secondary); margin-top: 6px; }
+
+        .yx-shengyun { display: flex; align-items: center; justify-content: center; gap: 18px; }
+        .yx-shengyun-sheng, .yx-shengyun-yun {
+            font-size: 64px; font-weight: 600; letter-spacing: 2px;
+            font-family: 'SF Mono', ui-monospace, monospace; color: var(--text-forest);
+        }
+        .yx-shengyun-arrow { font-size: 36px; color: var(--text-secondary); }
     </style>
 </head>
 <body>
@@ -124,7 +134,9 @@
         </div>
 
         <div class="yx-modes">
-            <button class="yx-mode active" data-mode="yuanma">码元指法（180）</button>
+            <button class="yx-mode active" data-mode="shengmu">码元指法（180）</button>
+            <button class="yx-mode" data-mode="yuanma">码元乱序</button>
+            <button class="yx-mode" data-mode="shengyun">声韵练习</button>
             <button class="yx-mode" data-mode="zigen">字根（466）</button>
             <button class="yx-mode" data-mode="jian">一简直出（700）</button>
             <button class="yx-mode" data-mode="char">单字全码</button>
@@ -145,9 +157,11 @@
             <h2>怎么用</h2>
             按 <kbd>Enter</kbd> 看答案并点亮键位（这一题不再计入「一遍过」），按 <kbd>Tab</kbd> 跳过。
             答错时也会自动点亮键位。默认不点亮，否则等于替你记住了指法。
-            <h2 style="margin-top:14px">四个模式练什么</h2>
+            <h2 style="margin-top:14px">六个模式练什么</h2>
             <table>
-                <tr><td>码元指法</td><td>看到 <code>qF</code> 能按出来。这是全部编码的地基，180 个码元练熟，后面都是查表。</td></tr>
+                <tr><td>码元指法（180）</td><td>先练单个声母键位，再练该声母下从 <code>A</code> 到 <code>L</code> 的 11 个韵母指法，逐个声母过关。</td></tr>
+                <tr><td>码元乱序</td><td>看到 <code>qF</code> 能按出来。180 个码元随机出现，练熟综合指法。</td></tr>
+                <tr><td>声韵练习</td><td>先显示真实声母（如 <code>b</code>），按对应键位；再显示该声母下的真实音节（如 <code>ba</code>），按声母+韵母组合击出。</td></tr>
                 <tr><td>字根</td><td>看到「口」能打出 <code>vC</code>。字根图片与纯形共用同一套。</td></tr>
                 <tr><td>一简直出</td><td>700 个一击上屏的字词。这里会校验<b>通道</b>：哪只手、带不带空格都得对。</td></tr>
                 <tr><td>单字全码</td><td>走真实路径：双手带空格（通道 <code>a</code>）出前两码，需要时再单手带空格补第三码。</td></tr>

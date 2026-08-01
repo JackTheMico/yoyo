@@ -79,7 +79,7 @@ function zigenGlyph(root) {
 }
 
 const BANKS = {
-  // 180 个码元，练的是「看到码元能按出来」，即声母键 + 韵母指法的肌肉记忆
+  // 码元乱序：看到完整码元能直接按出来
   yuanma: () =>
     Object.keys(YX_BEST_CHORD)
       .sort()
@@ -91,6 +91,120 @@ const BANKS = {
           + `韵母指法 <b>${code[1]}</b> → ${(YX_YUNMU[code[1]] || []).join(' / ')}`,
         anyHand: true,
       })),
+
+  // 码元指法（180）：先练单个声母键位，再练该声母下的全部韵母指法
+  shengmu: () => {
+    const groups = {};
+    for (const code of Object.keys(YX_BEST_CHORD).sort()) {
+      const sm = code[0];
+      if (!groups[sm]) groups[sm] = [];
+      groups[sm].push(code);
+    }
+    return Object.entries(groups)
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([sm, codes]) => ({
+        key: sm,
+        steps: [
+          {
+            target: [`${sm}A`],
+            prompt: `<div class="yx-shengmu-step"><div class="yx-code-big">${sm}</div><div class="yx-shengmu-label">声母键位</div></div>`,
+            hint: `先按声母键 <b>${sm}</b>（单独一击）→ ${(YX_SHENGMU[sm] || []).join(' / ')}`,
+          },
+          ...codes.slice(1).map((code) => ({
+            target: [code],
+            prompt: `<div class="yx-code-big">${code}</div>`,
+            hint: `声母键 <b>${code[0]}</b> → ${(YX_SHENGMU[code[0]] || []).join(' / ')}　·　`
+              + `韵母指法 <b>${code[1]}</b> → ${(YX_YUNMU[code[1]] || []).join(' / ')}`,
+          })),
+        ],
+      }));
+  },
+
+  // 声韵练习：先显示真实声母名（如 b / ch / 零声母），按对应键；
+  // 再显示该声母下的真实音节（如 ba / bo / bi），按声母键 + 韵母指法。
+  shengyun: () => {
+    // 反向映射：韵母 → 指法
+    const finalToFinger = {};
+    for (const [finger, finals] of Object.entries(YX_YUNMU)) {
+      for (const f of finals) finalToFinger[f] = finger;
+    }
+    // 声母名 → 键位
+    const smToKey = {};
+    for (const [key, names] of Object.entries(YX_SHENGMU)) {
+      for (const n of names) smToKey[n] = key;
+    }
+    // 每个声母对应的真实汉语音节列表
+    const INITIAL_SYLLABLES = {
+      'b':  ['ba', 'bo', 'bi', 'bu', 'bai', 'bei', 'bao', 'ban', 'ben', 'bang', 'beng', 'bing'],
+      'p':  ['pa', 'po', 'pi', 'pu', 'pai', 'pei', 'pao', 'pan', 'pen', 'pang', 'peng', 'ping'],
+      'm':  ['ma', 'mo', 'mi', 'mu', 'mai', 'mei', 'mao', 'man', 'men', 'mang', 'meng', 'ming'],
+      'f':  ['fa', 'fo', 'fu', 'fei', 'fan', 'fen', 'fang', 'feng'],
+      'd':  ['da', 'de', 'di', 'du', 'dai', 'dei', 'dao', 'dou', 'dan', 'dang', 'deng', 'ding', 'dong', 'duan', 'dui', 'dun'],
+      't':  ['ta', 'te', 'ti', 'tu', 'tai', 'tao', 'tou', 'tan', 'tang', 'teng', 'ting', 'tong', 'tuan', 'tui', 'tun'],
+      'n':  ['na', 'ne', 'ni', 'nu', 'nv', 'nai', 'nei', 'nao', 'nan', 'nen', 'nang', 'neng', 'ning', 'nong', 'nian', 'niang', 'niao', 'nin', 'nuan', 'nve'],
+      'l':  ['la', 'le', 'li', 'lu', 'lv', 'lai', 'lei', 'lao', 'lou', 'lan', 'lang', 'leng', 'ling', 'long', 'lia', 'lie', 'liao', 'liu', 'lian', 'lin', 'liang', 'luan', 'lun', 'lve'],
+      'g':  ['ga', 'ge', 'gu', 'gai', 'gei', 'gao', 'gou', 'gan', 'gen', 'gang', 'geng', 'gong', 'gua', 'guo', 'guai', 'gui', 'guan', 'gun', 'guang'],
+      'k':  ['ka', 'ke', 'ku', 'kai', 'kao', 'kou', 'kan', 'ken', 'kang', 'keng', 'kong', 'kua', 'kuo', 'kuai', 'kui', 'kuan', 'kun', 'kuang'],
+      'h':  ['ha', 'he', 'hu', 'hai', 'hei', 'hao', 'hou', 'han', 'hen', 'hang', 'heng', 'hong', 'hua', 'huo', 'huai', 'hui', 'huan', 'hun', 'huang'],
+      'j':  ['ji', 'ju', 'jia', 'jie', 'jiao', 'jiu', 'jian', 'jin', 'jiang', 'jing', 'jiong', 'juan', 'jun', 'jue'],
+      'q':  ['qi', 'qu', 'qia', 'qie', 'qiao', 'qiu', 'qian', 'qin', 'qiang', 'qing', 'qiong', 'quan', 'qun', 'que'],
+      'x':  ['xi', 'xu', 'xia', 'xie', 'xiao', 'xiu', 'xian', 'xin', 'xiang', 'xing', 'xiong', 'xuan', 'xun', 'xue'],
+      'zh': ['zha', 'zhe', 'zhi', 'zhu', 'zhai', 'zhao', 'zhou', 'zhan', 'zhen', 'zhang', 'zheng', 'zhong', 'zhua', 'zhuo', 'zhuai', 'zhui', 'zhuan', 'zhun', 'zhuang'],
+      'ch': ['cha', 'che', 'chi', 'chu', 'chai', 'chao', 'chou', 'chan', 'chen', 'chang', 'cheng', 'chong', 'chuo', 'chuai', 'chui', 'chuan', 'chun', 'chuang'],
+      'sh': ['sha', 'she', 'shi', 'shu', 'shai', 'shao', 'shou', 'shan', 'shen', 'shang', 'sheng', 'shua', 'shuo', 'shuai', 'shui', 'shuan', 'shun', 'shuang'],
+      'r':  ['re', 'ri', 'ru', 'rao', 'rou', 'ran', 'ren', 'rang', 'reng', 'rong', 'ruo', 'rui', 'ruan', 'run'],
+      'z':  ['za', 'ze', 'zi', 'zu', 'zai', 'zei', 'zao', 'zou', 'zan', 'zen', 'zang', 'zeng', 'zong', 'zuan', 'zui', 'zun'],
+      'c':  ['ca', 'ce', 'ci', 'cu', 'cai', 'cao', 'cou', 'can', 'cen', 'cang', 'ceng', 'cong', 'cuan', 'cui', 'cun'],
+      's':  ['sa', 'se', 'si', 'su', 'sai', 'sao', 'sou', 'san', 'sen', 'sang', 'seng', 'song', 'suan', 'sui', 'sun'],
+      'y':  ['ya', 'ye', 'yi', 'yu', 'yao', 'you', 'yan', 'yin', 'yang', 'ying', 'yong', 'yuan', 'yun', 'yue'],
+      'w':  ['wa', 'wo', 'wu', 'wai', 'wei', 'wan', 'wen', 'wang', 'weng'],
+      '零声母': ['a', 'o', 'e', 'ai', 'ei', 'ao', 'ou', 'an', 'en', 'ang', 'eng', 'er'],
+    };
+    // 解析音节：分离声母和韵母
+    function parseSyllable(syl, initial) {
+      if (initial === '零声母') return { final: syl };
+      return { final: syl.slice(initial.length) };
+    }
+    // 为每个声母构建练习项
+    const items = [];
+    const INITIAL_ORDER = ['b', 'p', 'm', 'f', 'd', 't', 'n', 'l', 'g', 'k', 'h',
+      'j', 'q', 'x', 'zh', 'ch', 'sh', 'r', 'z', 'c', 's', 'y', 'w', '零声母'];
+    for (const initial of INITIAL_ORDER) {
+      const syllables = INITIAL_SYLLABLES[initial];
+      if (!syllables) continue;
+      const key = smToKey[initial];
+      if (!key) continue;
+      const usedCodes = new Set();
+      const validSteps = [];
+      for (const syl of syllables) {
+        const { final } = parseSyllable(syl, initial);
+        const finger = finalToFinger[final];
+        if (!finger) continue;
+        const code = key + finger;
+        if (!YX_BEST_CHORD[code]) continue;
+        if (usedCodes.has(code)) continue;
+        usedCodes.add(code);
+        validSteps.push({ code, syl });
+      }
+      if (validSteps.length === 0) continue;
+      items.push({
+        key: initial,
+        steps: [
+          {
+            target: [`${key}A`],
+            prompt: `<div class="yx-shengmu-step"><div class="yx-code-big">${initial}</div><div class="yx-shengmu-label">声母</div></div>`,
+            hint: `按声母键 <b>${key}</b>（${initial}）`,
+          },
+          ...validSteps.map(({ code, syl }) => ({
+            target: [code],
+            prompt: `<div class="yx-shengyun"><span class="yx-shengyun-sheng">${initial}</span><span class="yx-shengyun-arrow">→</span><span class="yx-shengyun-yun">${syl}</span></div>`,
+            hint: `声母键 <b>${key}</b>（${initial}）　·　韵母指法 <b>${code[1]}</b> → ${(YX_YUNMU[code[1]] || []).join(' / ')}`,
+          })),
+        ],
+      });
+    }
+    return items;
+  },
 
   // 466 个字根，练的是「看到字根能打出它的码元」
   zigen: () =>
@@ -270,8 +384,8 @@ function render() {
   const step = currentStep();
   if (!item) return;
 
-  document.getElementById('yx-prompt').innerHTML = item.prompt;
-  document.getElementById('yx-hint').innerHTML = item.hint || '';
+  document.getElementById('yx-prompt').innerHTML = step && step.prompt ? step.prompt : item.prompt;
+  document.getElementById('yx-hint').innerHTML = step && step.hint ? step.hint : (item.hint || '');
 
   const need = step ? step.target.join('') : '';
   document.getElementById('yx-progress-code').innerHTML = state.typed.length
@@ -363,5 +477,5 @@ document.addEventListener('DOMContentLoaded', () => {
       loadMode(button.dataset.mode);
     });
   });
-  loadMode('yuanma');
+  loadMode('shengmu');
 });
