@@ -257,10 +257,22 @@ const BANKS = {
 
 // ---------------------------------------------------------------- 状态
 
+// 间隔重复：除「码元指法（180）」外，其余模式都采用间隔重复。
+// 仿照麓鸣指法练习：每个条目带一个连续正确计数 count（初始 -1），
+// 答对一次 count+1 并按间隔表后移；答错或跳过 count 重置为 -1 并移到队首附近。
+const SPACED_MODES = new Set(['yuanma', 'shengyun', 'zigen', 'jian_zi', 'jian_ci', 'jian']);
+const MASTERY_COUNT = 3;        // 连续答对 3 次视为「已掌握」
+const SPACED_INTERVALS = [2, 4, 8, 12, 20, 40, 60, 100]; // count → 后移位置
+
 const state = {
-  mode: 'yuanma',
+  mode: 'shengmu',
+  // 码元指法（180）仍用乱序队列 + 游标
   queue: [],
   index: 0,
+  // 间隔重复模式：bank 是题目全集，progress 是 [{index, count}, ...]，队首为当前题
+  bank: [],
+  progress: [],
+  progressByMode: {}, // 持久化：{mode: [{index, count}, ...]}
   step: 0,
   typed: [],
   stats: { done: 0, right: 0, wrong: 0 },
@@ -281,7 +293,67 @@ function shuffle(list) {
   return out;
 }
 
+function isSpacedMode(mode) {
+  return SPACED_MODES.has(mode || state.mode);
+}
+
+function loadSpacedProgress() {
+  try {
+    const saved = localStorage.getItem('yxPracticeProgress');
+    if (saved) state.progressByMode = JSON.parse(saved) || {};
+  } catch (e) {
+    state.progressByMode = {};
+  }
+}
+
+function saveSpacedProgress() {
+  try {
+    localStorage.setItem('yxPracticeProgress', JSON.stringify(state.progressByMode));
+  } catch (e) { /* 忽略写入失败 */ }
+}
+
+function initProgressList(length) {
+  return Array.from({ length }, (_, i) => ({ index: i, count: -1 }));
+}
+
+// 根据连续答对次数返回应后移到的位置
+function spacedInterval(count) {
+  if (count < 0) return SPACED_INTERVALS[0];
+  return SPACED_INTERVALS[count] || SPACED_INTERVALS[SPACED_INTERVALS.length - 1];
+}
+
+// 答对/答错后重排队列：队首条目按间隔表后移
+function rearrangeProgress(correct) {
+  const list = state.progress.slice();
+  if (list.length === 0) return;
+  const first = list.shift();
+  if (correct) first.count += 1;
+  else first.count = -1;
+  const pos = Math.min(spacedInterval(first.count), list.length);
+  list.splice(pos, 0, first);
+  state.progress = list;
+  state.progressByMode[state.mode] = list;
+  saveSpacedProgress();
+}
+
+function countMastered() {
+  return state.progress.filter((p) => p.count >= MASTERY_COUNT).length;
+}
+
+function resetSpacedProgress(mode) {
+  if (mode) {
+    delete state.progressByMode[mode];
+  } else {
+    state.progressByMode = {};
+  }
+  saveSpacedProgress();
+}
+
 function currentItem() {
+  if (isSpacedMode()) {
+    if (!state.progress || state.progress.length === 0) return null;
+    return state.bank[state.progress[0].index];
+  }
   return state.queue[state.index];
 }
 
@@ -294,8 +366,20 @@ function currentStep() {
 function loadMode(mode, { random = true } = {}) {
   state.mode = mode;
   const bank = BANKS[mode]();
-  state.queue = random ? shuffle(bank) : bank;
-  state.index = 0;
+  if (isSpacedMode(mode)) {
+    state.bank = bank;
+    const saved = state.progressByMode[mode];
+    if (saved && saved.length === bank.length) {
+      state.progress = saved;
+    } else {
+      state.progress = initProgressList(bank.length);
+      state.progressByMode[mode] = state.progress;
+      saveSpacedProgress();
+    }
+  } else {
+    state.queue = random ? shuffle(bank) : bank;
+    state.index = 0;
+  }
   state.step = 0;
   state.typed = [];
   state.stats = { done: 0, right: 0, wrong: 0 };
@@ -308,7 +392,11 @@ function nextItem(correct) {
   state.stats.done += 1;
   if (correct) state.stats.right += 1;
   else state.stats.wrong += 1;
-  state.index = (state.index + 1) % state.queue.length;
+  if (isSpacedMode()) {
+    rearrangeProgress(correct);
+  } else {
+    state.index = (state.index + 1) % state.queue.length;
+  }
   state.step = 0;
   state.typed = [];
   state.wrongOnThis = false;
@@ -426,9 +514,17 @@ function render() {
     : '单手并击即可，左右手都行（本模式不校验通道）';
 
   const { done, right, wrong } = state.stats;
-  document.getElementById('yx-stats').textContent =
-    `第 ${state.index + 1} / ${state.queue.length} 题　已练 ${done}　一遍过 ${right}　出错 ${wrong}`
-    + (done ? `　正确率 ${Math.round((right / done) * 100)}%` : '');
+  if (isSpacedMode()) {
+    const mastered = countMastered();
+    const total = state.progress.length;
+    document.getElementById('yx-stats').textContent =
+      `已掌握 ${mastered} / ${total}　·　本轮 已练 ${done}　一遍过 ${right}　出错 ${wrong}`
+      + (done ? `　正确率 ${Math.round((right / done) * 100)}%` : '');
+  } else {
+    document.getElementById('yx-stats').textContent =
+      `第 ${state.index + 1} / ${state.queue.length} 题　已练 ${done}　一遍过 ${right}　出错 ${wrong}`
+      + (done ? `　正确率 ${Math.round((right / done) * 100)}%` : '');
+  }
 }
 
 // ---------------------------------------------------------------- 输入捕获
@@ -479,6 +575,7 @@ window.addEventListener('blur', () => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
+  loadSpacedProgress();
   document.querySelectorAll('[data-mode]').forEach((button) => {
     button.addEventListener('click', () => {
       document.querySelectorAll('[data-mode]').forEach((b) => b.classList.remove('active'));
@@ -486,5 +583,13 @@ document.addEventListener('DOMContentLoaded', () => {
       loadMode(button.dataset.mode);
     });
   });
+  const resetBtn = document.getElementById('yx-reset-progress');
+  if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
+      resetSpacedProgress();
+      loadMode(state.mode);
+      flash('间隔重复进度已重置', 'good');
+    });
+  }
   loadMode('shengmu');
 });
