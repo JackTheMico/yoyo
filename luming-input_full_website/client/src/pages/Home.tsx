@@ -13,6 +13,7 @@ import Fingering from "@/components/Fingering";
 import WordRules from "@/components/WordRules";
 import ZigenTableStandalone from "@/components/ZigenTableStandalone";
 import PracticeTool from "@/components/PracticeTool";
+import Install from "@/components/Install";
 import Footer from "@/components/Footer";
 
 export default function Home() {
@@ -36,6 +37,7 @@ export default function Home() {
             <PracticeTool />
           </div>
         </section>
+        <Install />
       </main>
       <Footer />
     </div>

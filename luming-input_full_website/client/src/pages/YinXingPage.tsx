@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import YinXing from "@/components/YinXing";
 import YinXingMethods from "@/components/YinXingMethods";
 import YinXingResources from "@/components/YinXingResources";
+import Install from "@/components/Install";
 import { useEffect } from "react";
 
 export default function YinXingPage() {
@@ -24,10 +25,10 @@ export default function YinXingPage() {
               呦呦音形
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground mb-6">
-              先打音，再取形；一击两个码元
+              先打音，再取形；一击两个字
             </p>
             <p className="max-w-2xl mx-auto text-muted-foreground leading-relaxed mb-10">
-              单字三码定长、词四码定长。180 个码元由左右手镜像并击，
+              单字三码定长、一击顶功，词二击顶功。180 个码元由左右手镜像并击，
               字词从第一击开始分流。
             </p>
             <div className="flex flex-wrap justify-center gap-3 mb-10">
@@ -66,6 +67,7 @@ export default function YinXingPage() {
         <YinXing />
         <YinXingMethods />
         <YinXingResources />
+        <Install />
       </main>
       <Footer />
     </div>

@@ -5,8 +5,11 @@
 
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ExternalLink } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { INSTALL_URL } from "@/lib/utils";
+
+type NavItem = { label: string; href: string; external?: boolean };
 
 const branches = [
   { label: "纯形·麓鸣", href: "/" },
@@ -14,26 +17,31 @@ const branches = [
   { label: "重码测评", href: "/benchmark" },
 ];
 
-const chunxingNav = [
+const installNav: NavItem = { label: "安装", href: INSTALL_URL, external: true };
+
+const chunxingNav: NavItem[] = [
   { label: "入门", href: "#intro" },
   { label: "两套功法", href: "#methods" },
   { label: "六脉神剑", href: "#fingering" },
   { label: "字根表", href: "#zigen" },
   { label: "练习", href: "#practice" },
+  installNav,
 ];
 
-const yinxingNav = [
+const yinxingNav: NavItem[] = [
   { label: "优势", href: "#yx-intro" },
   { label: "原理", href: "#yinxing" },
   { label: "打法", href: "#yinxing-methods" },
   { label: "折梅", href: "#yx-zigen" },
   { label: "练习", href: "#yx-practice" },
+  installNav,
 ];
 
-const benchmarkNav = [
+const benchmarkNav: NavItem[] = [
   { label: "对照表", href: "#collision-table" },
   { label: "击数性能", href: "#stroke-performance" },
   { label: "测评口径", href: "#methodology" },
+  installNav,
 ];
 
 export default function Header() {
@@ -129,15 +137,21 @@ export default function Header() {
               <a
                 key={item.href}
                 href={item.href}
+                {...(item.external
+                  ? { target: "_blank", rel: "noopener noreferrer" }
+                  : {})}
                 onClick={(e) => {
                   if (item.href.startsWith("#")) {
                     e.preventDefault();
                     handleNavClick(item.href);
                   }
                 }}
-                className="relative text-sm font-medium text-foreground/75 hover:text-foreground transition-colors duration-300 group"
+                className="relative inline-flex items-center gap-1 text-sm font-medium text-foreground/75 hover:text-foreground transition-colors duration-300 group"
               >
                 {item.label}
+                {item.external && (
+                  <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
+                )}
                 <span className="absolute -bottom-1 left-0 w-0 h-px bg-foreground transition-all duration-300 group-hover:w-full" />
               </a>
             ))}
@@ -194,6 +208,9 @@ export default function Header() {
                 <motion.a
                   key={item.href}
                   href={item.href}
+                  {...(item.external
+                    ? { target: "_blank", rel: "noopener noreferrer" }
+                    : {})}
                   onClick={(e) => {
                     if (item.href.startsWith("#")) {
                       e.preventDefault();
@@ -203,9 +220,12 @@ export default function Header() {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.05 }}
-                  className="block py-3 text-lg font-medium text-foreground/80 hover:text-foreground transition-colors border-b border-border/50 last:border-0"
+                  className="flex items-center gap-2 py-3 text-lg font-medium text-foreground/80 hover:text-foreground transition-colors border-b border-border/50 last:border-0"
                 >
                   {item.label}
+                  {item.external && (
+                    <ExternalLink className="w-4 h-4" aria-hidden="true" />
+                  )}
                 </motion.a>
               ))}
             </div>

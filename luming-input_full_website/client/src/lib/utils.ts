@@ -11,3 +11,7 @@ export function assetUrl(path: string) {
   const clean = path.replace(/^\/+/, "");
   return `${base}${clean}`;
 }
+
+/** 仓库「如何使用」章节，用于安装引导。 */
+export const INSTALL_URL =
+  "https://github.com/Rayalizing/yoyo/tree/main#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8";

@@ -21,7 +21,7 @@ export default function Footer() {
             麓鸣 · 呦呦
           </h2>
           <p className="text-background/70 mb-8 max-w-xl mx-auto">
-            纯形与音形两条分支，共用并击指法与顶功框架
+            纯形与音形两条分支，共用字根与顶功框架
           </p>
 
           {/* 分隔线 */}
