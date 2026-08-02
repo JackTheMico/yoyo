@@ -49,12 +49,16 @@ export default function YinXingPage() {
               >
                 从原理开始
               </a>
-              <a
-                href="#yx-practice"
+              <button
+                onClick={() =>
+                  document
+                    .getElementById("yx-practice")
+                    ?.scrollIntoView({ behavior: "smooth" })
+                }
                 className="px-6 py-3 bg-background border border-foreground hover:bg-secondary transition-colors"
               >
                 直接练习
-              </a>
+              </button>
             </div>
           </div>
         </section>

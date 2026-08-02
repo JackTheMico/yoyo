@@ -66,14 +66,65 @@ function fingeringOf(code) {
 
 // ---------------------------------------------------------------- 题库
 
+// 真实汉语音节表（用于把码元反查为可读音节）
+const INITIAL_SYLLABLES = {
+  'b':  ['ba', 'bo', 'bi', 'bu', 'bai', 'bei', 'bao', 'ban', 'ben', 'bang', 'beng', 'bing'],
+  'p':  ['pa', 'po', 'pi', 'pu', 'pai', 'pei', 'pao', 'pan', 'pen', 'pang', 'peng', 'ping'],
+  'm':  ['ma', 'mo', 'mi', 'mu', 'mai', 'mei', 'mao', 'man', 'men', 'mang', 'meng', 'ming'],
+  'f':  ['fa', 'fo', 'fu', 'fei', 'fan', 'fen', 'fang', 'feng'],
+  'd':  ['da', 'de', 'di', 'du', 'dai', 'dei', 'dao', 'dou', 'dan', 'dang', 'deng', 'ding', 'dong', 'duan', 'dui', 'dun'],
+  't':  ['ta', 'te', 'ti', 'tu', 'tai', 'tao', 'tou', 'tan', 'tang', 'teng', 'ting', 'tong', 'tuan', 'tui', 'tun'],
+  'n':  ['na', 'ne', 'ni', 'nu', 'nv', 'nai', 'nei', 'nao', 'nan', 'nen', 'nang', 'neng', 'ning', 'nong', 'nian', 'niang', 'niao', 'nin', 'nuan', 'nve'],
+  'l':  ['la', 'le', 'li', 'lu', 'lv', 'lai', 'lei', 'lao', 'lou', 'lan', 'lang', 'leng', 'ling', 'long', 'lia', 'lie', 'liao', 'liu', 'lian', 'lin', 'liang', 'luan', 'lun', 'lve'],
+  'g':  ['ga', 'ge', 'gu', 'gai', 'gei', 'gao', 'gou', 'gan', 'gen', 'gang', 'geng', 'gong', 'gua', 'guo', 'guai', 'gui', 'guan', 'gun', 'guang'],
+  'k':  ['ka', 'ke', 'ku', 'kai', 'kao', 'kou', 'kan', 'ken', 'kang', 'keng', 'kong', 'kua', 'kuo', 'kuai', 'kui', 'kuan', 'kun', 'kuang'],
+  'h':  ['ha', 'he', 'hu', 'hai', 'hei', 'hao', 'hou', 'han', 'hen', 'hang', 'heng', 'hong', 'hua', 'huo', 'huai', 'hui', 'huan', 'hun', 'huang'],
+  'j':  ['ji', 'ju', 'jia', 'jie', 'jiao', 'jiu', 'jian', 'jin', 'jiang', 'jing', 'jiong', 'juan', 'jun', 'jue'],
+  'q':  ['qi', 'qu', 'qia', 'qie', 'qiao', 'qiu', 'qian', 'qin', 'qiang', 'qing', 'qiong', 'quan', 'qun', 'que'],
+  'x':  ['xi', 'xu', 'xia', 'xie', 'xiao', 'xiu', 'xian', 'xin', 'xiang', 'xing', 'xiong', 'xuan', 'xun', 'xue'],
+  'zh': ['zha', 'zhe', 'zhi', 'zhu', 'zhai', 'zhao', 'zhou', 'zhan', 'zhen', 'zhang', 'zheng', 'zhong', 'zhua', 'zhuo', 'zhuai', 'zhui', 'zhuan', 'zhun', 'zhuang'],
+  'ch': ['cha', 'che', 'chi', 'chu', 'chai', 'chao', 'chou', 'chan', 'chen', 'chang', 'cheng', 'chong', 'chuo', 'chuai', 'chui', 'chuan', 'chun', 'chuang'],
+  'sh': ['sha', 'she', 'shi', 'shu', 'shai', 'shao', 'shou', 'shan', 'shen', 'shang', 'sheng', 'shua', 'shuo', 'shuai', 'shui', 'shuan', 'shun', 'shuang'],
+  'r':  ['re', 'ri', 'ru', 'rao', 'rou', 'ran', 'ren', 'rang', 'reng', 'rong', 'ruo', 'rui', 'ruan', 'run'],
+  'z':  ['za', 'ze', 'zi', 'zu', 'zai', 'zei', 'zao', 'zou', 'zan', 'zen', 'zang', 'zeng', 'zong', 'zuan', 'zui', 'zun'],
+  'c':  ['ca', 'ce', 'ci', 'cu', 'cai', 'cao', 'cou', 'can', 'cen', 'cang', 'ceng', 'cong', 'cuan', 'cui', 'cun'],
+  's':  ['sa', 'se', 'si', 'su', 'sai', 'sao', 'sou', 'san', 'sen', 'sang', 'seng', 'song', 'suan', 'sui', 'sun'],
+  'y':  ['ya', 'ye', 'yi', 'yu', 'yao', 'you', 'yan', 'yin', 'yang', 'ying', 'yong', 'yuan', 'yun', 'yue'],
+  'w':  ['wa', 'wo', 'wu', 'wai', 'wei', 'wan', 'wen', 'wang', 'weng'],
+  '零声母': ['a', 'o', 'e', 'ai', 'ei', 'ao', 'ou', 'an', 'en', 'ang', 'eng', 'er'],
+};
+
+// 扁平化为集合，方便快速校验
+const VALID_SYLLABLES = new Set(Object.values(INITIAL_SYLLABLES).flat());
+
+/** 把码元（如 "dD"）反查为可读音节（如 "dian"），返回所有匹配的音节。 */
+function codeToSyllables(code) {
+  const key = code[0];
+  const finger = code[1];
+  const initials = YX_SHENGMU[key] || [];
+  const finals = YX_YUNMU[finger] || [];
+  const result = [];
+  for (const init of initials) {
+    for (const fin of finals) {
+      if (init === '零声母') {
+        if (VALID_SYLLABLES.has(fin)) result.push(fin);
+      } else {
+        const syl = init + fin;
+        if (VALID_SYLLABLES.has(syl)) result.push(syl);
+      }
+    }
+  }
+  return result;
+}
+
 /** 字根显示：多数字根有 png，PUA 字根靠 ChaiPUA 字体兜底。 */
 function zigenGlyph(root) {
   const hex = root.codePointAt(0).toString(16);
   const isPua = root.length === 1 && root.codePointAt(0) >= 0xe000 && root.codePointAt(0) <= 0xf8ff;
   if (root.length === 1) {
+    const cls = isPua ? 'yx-glyph-text yx-pua' : 'yx-glyph-text';
     return `<img class="yx-glyph-img" src="../char_images/${hex}.png" alt="${isPua ? '' : root}"
-             onerror="this.replaceWith(Object.assign(document.createElement('span'),
-                      {className:'yx-glyph-text${isPua ? ' yx-pua' : ''}',textContent:${JSON.stringify(root)}}))">`;
+             onerror="this.outerHTML=this.dataset.fb" data-fb='<span class="${cls}">${root}</span>'>`;
   }
   return `<span class="yx-glyph-text">${root}</span>`;
 }
@@ -133,33 +184,6 @@ const BANKS = {
     for (const [key, names] of Object.entries(YX_SHENGMU)) {
       for (const n of names) smToKey[n] = key;
     }
-    // 每个声母对应的真实汉语音节列表
-    const INITIAL_SYLLABLES = {
-      'b':  ['ba', 'bo', 'bi', 'bu', 'bai', 'bei', 'bao', 'ban', 'ben', 'bang', 'beng', 'bing'],
-      'p':  ['pa', 'po', 'pi', 'pu', 'pai', 'pei', 'pao', 'pan', 'pen', 'pang', 'peng', 'ping'],
-      'm':  ['ma', 'mo', 'mi', 'mu', 'mai', 'mei', 'mao', 'man', 'men', 'mang', 'meng', 'ming'],
-      'f':  ['fa', 'fo', 'fu', 'fei', 'fan', 'fen', 'fang', 'feng'],
-      'd':  ['da', 'de', 'di', 'du', 'dai', 'dei', 'dao', 'dou', 'dan', 'dang', 'deng', 'ding', 'dong', 'duan', 'dui', 'dun'],
-      't':  ['ta', 'te', 'ti', 'tu', 'tai', 'tao', 'tou', 'tan', 'tang', 'teng', 'ting', 'tong', 'tuan', 'tui', 'tun'],
-      'n':  ['na', 'ne', 'ni', 'nu', 'nv', 'nai', 'nei', 'nao', 'nan', 'nen', 'nang', 'neng', 'ning', 'nong', 'nian', 'niang', 'niao', 'nin', 'nuan', 'nve'],
-      'l':  ['la', 'le', 'li', 'lu', 'lv', 'lai', 'lei', 'lao', 'lou', 'lan', 'lang', 'leng', 'ling', 'long', 'lia', 'lie', 'liao', 'liu', 'lian', 'lin', 'liang', 'luan', 'lun', 'lve'],
-      'g':  ['ga', 'ge', 'gu', 'gai', 'gei', 'gao', 'gou', 'gan', 'gen', 'gang', 'geng', 'gong', 'gua', 'guo', 'guai', 'gui', 'guan', 'gun', 'guang'],
-      'k':  ['ka', 'ke', 'ku', 'kai', 'kao', 'kou', 'kan', 'ken', 'kang', 'keng', 'kong', 'kua', 'kuo', 'kuai', 'kui', 'kuan', 'kun', 'kuang'],
-      'h':  ['ha', 'he', 'hu', 'hai', 'hei', 'hao', 'hou', 'han', 'hen', 'hang', 'heng', 'hong', 'hua', 'huo', 'huai', 'hui', 'huan', 'hun', 'huang'],
-      'j':  ['ji', 'ju', 'jia', 'jie', 'jiao', 'jiu', 'jian', 'jin', 'jiang', 'jing', 'jiong', 'juan', 'jun', 'jue'],
-      'q':  ['qi', 'qu', 'qia', 'qie', 'qiao', 'qiu', 'qian', 'qin', 'qiang', 'qing', 'qiong', 'quan', 'qun', 'que'],
-      'x':  ['xi', 'xu', 'xia', 'xie', 'xiao', 'xiu', 'xian', 'xin', 'xiang', 'xing', 'xiong', 'xuan', 'xun', 'xue'],
-      'zh': ['zha', 'zhe', 'zhi', 'zhu', 'zhai', 'zhao', 'zhou', 'zhan', 'zhen', 'zhang', 'zheng', 'zhong', 'zhua', 'zhuo', 'zhuai', 'zhui', 'zhuan', 'zhun', 'zhuang'],
-      'ch': ['cha', 'che', 'chi', 'chu', 'chai', 'chao', 'chou', 'chan', 'chen', 'chang', 'cheng', 'chong', 'chuo', 'chuai', 'chui', 'chuan', 'chun', 'chuang'],
-      'sh': ['sha', 'she', 'shi', 'shu', 'shai', 'shao', 'shou', 'shan', 'shen', 'shang', 'sheng', 'shua', 'shuo', 'shuai', 'shui', 'shuan', 'shun', 'shuang'],
-      'r':  ['re', 'ri', 'ru', 'rao', 'rou', 'ran', 'ren', 'rang', 'reng', 'rong', 'ruo', 'rui', 'ruan', 'run'],
-      'z':  ['za', 'ze', 'zi', 'zu', 'zai', 'zei', 'zao', 'zou', 'zan', 'zen', 'zang', 'zeng', 'zong', 'zuan', 'zui', 'zun'],
-      'c':  ['ca', 'ce', 'ci', 'cu', 'cai', 'cao', 'cou', 'can', 'cen', 'cang', 'ceng', 'cong', 'cuan', 'cui', 'cun'],
-      's':  ['sa', 'se', 'si', 'su', 'sai', 'sao', 'sou', 'san', 'sen', 'sang', 'seng', 'song', 'suan', 'sui', 'sun'],
-      'y':  ['ya', 'ye', 'yi', 'yu', 'yao', 'you', 'yan', 'yin', 'yang', 'ying', 'yong', 'yuan', 'yun', 'yue'],
-      'w':  ['wa', 'wo', 'wu', 'wai', 'wei', 'wan', 'wen', 'wang', 'weng'],
-      '零声母': ['a', 'o', 'e', 'ai', 'ei', 'ao', 'ou', 'an', 'en', 'ang', 'eng', 'er'],
-    };
     // 解析音节：分离声母和韵母
     function parseSyllable(syl, initial) {
       if (initial === '零声母') return { final: syl };
@@ -208,14 +232,18 @@ const BANKS = {
 
   // 466 个字根，练的是「看到字根能打出它的码元」
   zigen: () =>
-    Object.entries(YX_ZIGEN).map(([root, info]) => ({
-      key: root,
-      target: [info.code],
-      prompt: `<div class="yx-glyph">${zigenGlyph(root)}</div>`,
-      hint: info.examples ? `示例：${info.examples}` : (info.stroke ? `笔画「${info.stroke}」` : ''),
-      anyHand: true,
-      answer: info.code,
-    })),
+    Object.entries(YX_ZIGEN).map(([root, info]) => {
+      const syls = codeToSyllables(info.code);
+      const sylText = syls.length ? `${syls.join(' / ')}，` : '';
+      return {
+        key: root,
+        target: [info.code],
+        prompt: `<div class="yx-glyph">${zigenGlyph(root)}</div>`,
+        hint: info.examples ? `示例：${info.examples}` : (info.stroke ? `笔画「${info.stroke}」` : ''),
+        anyHand: true,
+        answer: `${sylText}${info.code}`,
+      };
+    }),
 
   // 一键字直出（60）：只看 aA、sA 等只有 A 码的单字，不校验通道
   jian_zi: () =>
@@ -438,6 +466,8 @@ function settleStroke() {
       nextItem(!state.wrongOnThis && !state.revealed);
     } else {
       state.step += 1;
+      state.wrongOnThis = false;
+      state.revealed = false;
     }
   } else {
     state.wrongOnThis = true;
@@ -482,14 +512,12 @@ function render() {
   if (!item) return;
 
   document.getElementById('yx-prompt').innerHTML = step && step.prompt ? step.prompt : item.prompt;
-  document.getElementById('yx-hint').innerHTML = step && step.hint ? step.hint : (item.hint || '');
 
   const need = step ? step.target.join('') : '';
-  document.getElementById('yx-progress-code').innerHTML = state.typed.length
-    ? `已打出 <b>${state.typed.join('')}</b>`
-    : '';
 
   const showAnswer = state.revealed || state.wrongOnThis;
+  const hintText = step && step.hint ? step.hint : (item.hint || '');
+  document.getElementById('yx-hint').innerHTML = showAnswer ? hintText : '';
   document.getElementById('yx-answer').innerHTML = showAnswer
     ? `本题答案 <b>${item.answer || need}</b>${item.steps ? `　当前第 ${state.step + 1} 击：<b>${need}</b>` : ''}`
     : '';
