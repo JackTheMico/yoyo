@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
 """生成音形练习工具的数据模块 yx_data_module.js。
 
-并击表的来源只有一个：rime/yoyo.yaml 的「折梅」段。那是一串 xform 重写规则，
-**Rime 运行时真正执行的就是它**。练习工具教错指法比不教更糟，所以本脚本不抄任何
-副本，而是直接模拟这些规则：枚举左手所有 1–5 键组合，按 chord_composer 的
+并击表的来源只有一个：rime/yoyo.yaml 的「折梅」或「寒梅」段。那是一串 xform 重写
+规则，**Rime 运行时真正执行的就是它**。练习工具教错指法比不教更糟，所以本脚本不抄
+任何副本，而是直接模拟这些规则：枚举左手所有 1–5 键组合，按 chord_composer 的
 alphabet 次序归一化，逐条套用 xform，看哪些组合落到合法码元（小写声母键 + 大写
 指法字母）上。
 
-右手不单独枚举：折梅开头的镜像规则把右手键改写成左手键，两手输出同一批码元。
+右手不单独枚举：方案开头的镜像规则把右手键改写成左手键，两手输出同一批码元。
+
+用 --variant hm 生成寒梅（yoyo-yx-hm）版本的同一套数据。
 
 校验的不变量是「字典里用到的每个码元都必须能被折梅打出来」——这是唯一真正要紧
 的性质，脚本会读字表词表核对，缺一个就报错退出。
@@ -32,18 +34,36 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parent
 
-# chord_composer.alphabet（见 rime/yoyo-yx.schema.yaml），决定同一击内按键的归一化次序
-ALPHABET = "123456qwertasdfgzxcvb 7890-=uiop[hjkl;ynm,."
-# 左手物理键：数字 12345 + 三行字母。6 只作折梅内部的「数字对」代号，不是物理键。
-LEFT_KEYS = "12345qwertasdfgzxcvb"
-# 左手键 → 右手镜像键（取自折梅开头的镜像规则）
-MIRROR = dict(
-    zip(
-        "12345qwertasdfgzxcvb",
-        ["=", "-", "0", "9", "8"] + list("[poiu;lkjh.,mny"),
-    )
-)
-CODE_RE = re.compile(r"^[a-z][A-L]$")
+# 指法变体：yx = 折梅（数字行参与），hm = 寒梅（纯字母、直列键盘人体工程、右手 / 补全）。
+# 每档各自定义 chord_composer.alphabet、左手物理键、镜像规则与产物文件名。
+VARIANTS = {
+    "yx": {
+        "label": "折梅",
+        "section": "折梅",
+        "alphabet": "123456qwertasdfgzxcvb 7890-=uiop[hjkl;ynm,.",
+        "left_keys": "12345qwertasdfgzxcvb",
+        "mirror": dict(zip("12345qwertasdfgzxcvb", ["=", "-", "0", "9", "8"] + list("[poiu;lkjh.,mny"))),
+        "code_re": re.compile(r"^[a-z][A-L]$"),
+        "data_module": "yx_data_module.js",
+        "fingering": "fingering-yx.json",
+    },
+    "hm": {
+        "label": "寒梅",
+        "section": "寒梅",
+        "alphabet": "123456qwertasdfgzxcvb 7890-=uiop[hjkl;ynm,./",
+        "left_keys": "qwertasdfgzxcvb",
+        "mirror": dict(zip("qwertasdfgzxcvb", "poiuy;lkjh/.,mn")),
+        "code_re": re.compile(r"^[a-z][A-L]$"),
+        "data_module": "yx_data_module_hm.js",
+        "fingering": "fingering-hm.json",
+    },
+}
+
+# 当前变体的运行时配置（parse_args 后由 main 设置；函数引用模块级全局）
+ALPHABET = VARIANTS["yx"]["alphabet"]
+LEFT_KEYS = VARIANTS["yx"]["left_keys"]
+MIRROR = VARIANTS["yx"]["mirror"]
+CODE_RE = VARIANTS["yx"]["code_re"]
 
 
 def parse_args() -> argparse.Namespace:
@@ -58,20 +78,26 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--chars", type=Path, default=REPO / "zigen_table" / "yx-chars.txt"
     )
-    parser.add_argument("--output", type=Path, default=HERE / "yx_data_module.js")
+    parser.add_argument(
+        "--variant",
+        choices=["yx", "hm"],
+        default="yx",
+        help="指法变体：yx=折梅（默认），hm=寒梅（纯字母）",
+    )
+    parser.add_argument("--output", type=Path, default=None, help="默认按变体取 yx_data_module[_hm].js")
     parser.add_argument(
         "--fingering-output",
         type=Path,
-        default=REPO / "zigen_table" / "fingering-yx.json",
+        default=None,
         help="码元 → 左手指法，供字根表 HTML 复用同一份推导结果",
     )
     return parser.parse_args()
 
 
-def load_rules(path: Path) -> list[tuple[str, str]]:
-    """抽出「折梅」段里的 xform 规则，保持原有顺序。"""
+def load_rules(path: Path, section: str = "折梅") -> list[tuple[str, str]]:
+    """抽出指定方案（折梅/寒梅）段里的 xform 规则，保持原有顺序。"""
     lines = path.read_text(encoding="utf-8").splitlines()
-    start = next(i for i, l in enumerate(lines) if l.startswith("折梅:"))
+    start = next(i for i, l in enumerate(lines) if l.startswith(section + ":"))
     rules = []
     for line in lines[start + 1 :]:
         if line and not line[0].isspace():
@@ -192,10 +218,10 @@ def check_coverage(derived: dict[str, str], used: set[str]) -> None:
         )
         print("  " + " ".join(missing[:40]), file=sys.stderr)
         sys.exit(1)
-    print(f"覆盖校验通过：字典用到的 {len(used)} 个码元全部可由折梅打出")
+    print(f"覆盖校验通过：字典用到的 {len(used)} 个码元全部可由当前变体打出")
     spare = sorted(reachable - used)
     if spare:
-        print(f"折梅另有 {len(spare)} 个码元未被字典使用（预留）：{' '.join(spare[:20])}")
+        print(f"当前变体另有 {len(spare)} 个码元未被字典使用（预留）：{' '.join(spare[:20])}")
 
 
 def report_lua_drift(derived: dict[str, str], lua: dict[str, str]) -> None:
@@ -241,9 +267,21 @@ def js_literal(obj) -> str:
 
 def main() -> None:
     args = parse_args()
-    rules = load_rules(args.yoyo_yaml)
+    global ALPHABET, LEFT_KEYS, MIRROR, CODE_RE
+    variant = VARIANTS[args.variant]
+    ALPHABET, LEFT_KEYS, MIRROR, CODE_RE = (
+        variant["alphabet"],
+        variant["left_keys"],
+        variant["mirror"],
+        variant["code_re"],
+    )
+    if args.output is None:
+        args.output = HERE / variant["data_module"]
+    if args.fingering_output is None:
+        args.fingering_output = REPO / "zigen_table" / variant["fingering"]
+    rules = load_rules(args.yoyo_yaml, variant["section"])
     derived = derive_chords(rules)
-    print(f"折梅规则覆盖 {len(derived)} 种左手组合 → {len(set(derived.values()))} 个码元")
+    print(f"{variant['label']}规则覆盖 {len(derived)} 种左手组合 → {len(set(derived.values()))} 个码元")
     check_coverage(
         derived,
         codes_used_by_dicts(
@@ -287,8 +325,8 @@ def main() -> None:
         )
 
     out = [
-        "// 音形（yoyo-yx）练习数据 —— 由 generate_yx_data.py 生成，请勿手改。",
-        "// 并击表由 rime/yoyo.yaml 的「折梅」规则模拟得出，并校验过字表词表用到的码元全部可达。",
+        "// 音形（yoyo-yx/yoyo-yx-hm）练习数据 —— 由 generate_yx_data.py 生成，请勿手改。",
+        "// 并击表由 rime/yoyo.yaml 的「折梅」/「寒梅」规则模拟得出，并校验过字表词表用到的码元全部可达。",
         "",
         f"// 左手按键组合 → 码元（{len(derived)} 种组合，含等价写法）",
         f"const YX_CHORDS = {js_literal(derived)};",

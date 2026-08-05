@@ -24,28 +24,62 @@ SHENGMU_ROWS = ["qwert", "asdfg", "zxcvb"]
 SHENGMU_KEYS = "".join(SHENGMU_ROWS)
 YUNMU_KEYS = "ABCDEFGHIJKL"
 
-# 并击用到的四行按键，画指法示意图用
-KEY_GRID = ["12345", "qwert", "asdfg", "zxcvb"]
-# 右手对应位置按物理镜像排列；与折梅开头的右手 → 左手转换规则一致
-RIGHT_KEY_GRID = ["=-098", "[poiu", ";lkjh", ".,mny"]
-MIRROR_KEYS = dict(zip("".join(KEY_GRID), "".join(RIGHT_KEY_GRID)))
+# 指法变体：yx = 折梅（含数字行），hm = 寒梅（纯字母三行、右手 / 补全 z 的对称）。
+# 各档定义画指法示意图用的按键网格、bA–bL 专用左右手指法及产物文件名。
+VARIANTS = {
+    "yx": {
+        "label": "折梅",
+        "key_grid": ["12345", "qwert", "asdfg", "zxcvb"],
+        "right_key_grid": ["=-098", "[poiu", ";lkjh", ".,mny"],
+        "b_left": "b gb fb db sb vb fgb dfb sdb dgb sfb dxb".split(),
+        "b_right": "y 7y 8y 9y 0y yu 78y 89y 90y 79y 80y 9yo".split(),
+        "fingering": "fingering-yx.json",
+        "output": "zigen_table-yx.html",
+        "title": "呦呦 · 音形字根表",
+        "grid_rows": "四行",
+        "grid_label": "12345 / qwert / asdfg / zxcvb",
+        "subtitle_note": "",
+    },
+    "hm": {
+        "label": "寒梅",
+        "key_grid": ["qwert", "asdfg", "zxcvb"],
+        "right_key_grid": ["poiuy", ";lkjh", "/.,mn"],
+        "b_left": "b qb ab scb gb wb xb dxb eb cb sb sdb".split(),
+        "b_right": "n pn ;n l,n hn on .n k.n in ,n ln lkn".split(),
+        "fingering": "fingering-hm.json",
+        "output": "zigen_table-yx-hm.html",
+        "title": "呦呦 · 音形字根表 · 寒梅",
+        "grid_rows": "三行",
+        "grid_label": "qwert / asdfg / zxcvb",
+        "subtitle_note": "（寒梅指法：不使用 0-9 与 - = [ ]，右手 / 补全 z 的对称输入）",
+    },
+}
 
-# bA–bL 使用指定的左右手标准指法，不参与“最短可用组合”的自动选择。
+# 当前变体的运行时配置（parse_args 后由 main 设置）
+KEY_GRID = VARIANTS["yx"]["key_grid"]
+RIGHT_KEY_GRID = VARIANTS["yx"]["right_key_grid"]
+MIRROR_KEYS = dict(zip("".join(KEY_GRID), "".join(RIGHT_KEY_GRID)))
 B_FINGERING = {
     f"b{finger}": (left, right)
-    for finger, left, right in zip(
-        YUNMU_KEYS,
-        "b gb fb db sb vb fgb dfb sdb dgb sfb dxb".split(),
-        "y 7y 8y 9y 0y yu 78y 89y 90y 79y 80y 9yo".split(),
-    )
+    for finger, left, right in zip(YUNMU_KEYS, VARIANTS["yx"]["b_left"], VARIANTS["yx"]["b_right"])
 }
+TITLE = VARIANTS["yx"]["title"]
+GRID_ROWS = VARIANTS["yx"]["grid_rows"]
+GRID_LABEL = VARIANTS["yx"]["grid_label"]
+SUBTITLE_NOTE = VARIANTS["yx"]["subtitle_note"]
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--variant",
+        choices=["yx", "hm"],
+        default="yx",
+        help="指法变体：yx=折梅（默认），hm=寒梅（纯字母）",
+    )
     parser.add_argument("--mapping", type=Path, default=HERE / "mapping-yx.yaml")
-    parser.add_argument("--fingering", type=Path, default=HERE / "fingering-yx.json")
-    parser.add_argument("--output", type=Path, default=HERE / "zigen_table-yx.html")
+    parser.add_argument("--fingering", type=Path, default=None)
+    parser.add_argument("--output", type=Path, default=None)
     return parser.parse_args()
 
 
@@ -193,7 +227,7 @@ def generate(shengmu, yunmu, roots, fingering) -> str:
         .root-text {{ font-size: 18px; line-height: 24px; cursor: pointer; }}
         .root-text.pua {{ font-family: "ChaiPUA", "Noto Sans SC", sans-serif; }}
 
-        /* 指法示意：4 行 5 列，对应 12345 / qwert / asdfg / zxcvb */
+        /* 指法示意：并击按键网格（yx 四行 / hm 三行） */
         .fingering {{
             display: grid; grid-template-columns: repeat(5, 4px);
             grid-auto-rows: 4px; gap: 1px; flex-shrink: 0; cursor: help;
@@ -239,12 +273,12 @@ def generate(shengmu, yunmu, roots, fingering) -> str:
 </head>
 <body>
 <div class="container">
-    <h1>呦呦 · 音形字根表</h1>
+    <h1>{TITLE}</h1>
     <div class="subtitle">
         码元 = 声母键（列，小写 15 个）+ 韵母指法（行，大写 12 个），共 180 个码元，
-        承载 {total_roots} 个字根，占用 {filled} 个码位。<br>
+        承载 {total_roots} 个字根，占用 {filled} 个码位。{SUBTITLE_NOTE}<br>
         每格左上角的小方阵是这个码元的左手并击指法，<b style="color:var(--cinnabar-red)">红点</b>为要按下的键
-        （四行对应 <code>12345 / qwert / asdfg / zxcvb</code>，鼠标悬停可看具体按键）。
+        （{GRID_ROWS}对应 <code>{GRID_LABEL}</code>，鼠标悬停可看具体按键）。
         右手通常镜像等价，<code>bA–bL</code> 采用悬停所示的专用右手指法。
     </div>
     <table>
@@ -405,6 +439,25 @@ document.addEventListener('keydown', (event) => {
 
 def main() -> None:
     args = parse_args()
+    global KEY_GRID, RIGHT_KEY_GRID, MIRROR_KEYS, B_FINGERING, TITLE, GRID_ROWS, GRID_LABEL, SUBTITLE_NOTE
+    variant = VARIANTS[args.variant]
+    KEY_GRID = variant["key_grid"]
+    RIGHT_KEY_GRID = variant["right_key_grid"]
+    MIRROR_KEYS = dict(zip("".join(KEY_GRID), "".join(RIGHT_KEY_GRID)))
+    B_FINGERING = {
+        f"b{finger}": (left, right)
+        for finger, left, right in zip(YUNMU_KEYS, variant["b_left"], variant["b_right"])
+    }
+    assert len(variant["b_left"]) == len(YUNMU_KEYS) == len(variant["b_right"]), (
+        f"{args.variant} b 硬编码表长度须为 {len(YUNMU_KEYS)}"
+    )
+    TITLE, GRID_ROWS, GRID_LABEL, SUBTITLE_NOTE = (
+        variant["title"], variant["grid_rows"], variant["grid_label"], variant["subtitle_note"],
+    )
+    if args.fingering is None:
+        args.fingering = HERE / variant["fingering"]
+    if args.output is None:
+        args.output = HERE / variant["output"]
     shengmu, yunmu, roots = load_mapping(args.mapping)
     fingering = json.loads(args.fingering.read_text(encoding="utf-8"))
 
