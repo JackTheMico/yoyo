@@ -4,3 +4,4 @@ node_modules/
 release/
 dist/
 deep_crawl/
+/.python-version

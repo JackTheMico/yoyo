@@ -62,6 +62,21 @@ python3 "rime/scripts/编码生成和重码可视化/main.py"
 每次运行会覆盖同名结果。输出目录只保存派生物，不应提交 Git；任何结果都应能由
 仓库内输入重新生成。
 
+### 多音字修复数据（随 Git 跟踪，不归 `output/`）
+
+`fix_polyphone_codes.py`（修复 `rime/yoyo-yx-word.dict.yaml` 多音字错误编码，
+见 commit 346858c）使用/产出的两个数据文件放在本目录而非 `output/`，因为
+它们是修复的**输入依赖与人工复核交付物**：
+
+| 路径 | 内容 |
+|---|---|
+| `zi-full.jsonl` | `(字, 无声调拼音) → 编码` 查表，8538 条。由 `output/zi.jsonl`
+  补全 87 个缺失读音（如 六 lu、乘 sheng）合成而来，是修复脚本的读音依据 |
+| `fix-polyphone-review.txt` | 768 个同词多读音词的人工复核清单：候选读音、
+  权重、编码与脚本决策，供人工确认取舍（如 密钥→mì yuè、打的→dǎ dī） |
+
+重新生成 `zi-full.jsonl` 的方法见 `rime/scripts/fix_polyphone_codes.py` 顶部说明。
+
 ## 重要：这里输出的是布局处理前的初始字典
 
 `main.py` 负责“从拆分数据得到编码并统计重码”，不会执行声韵母重排、A 位指定、

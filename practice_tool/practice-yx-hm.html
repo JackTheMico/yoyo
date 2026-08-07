@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🦌 呦呦音形并击练习 · 寒梅</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        @font-face {
+            font-family: 'ChaiPUA';
+            src: url('../zigen_table/ChaiPUA-0.2.7.ttf') format('truetype');
+        }
+
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Noto Sans SC', -apple-system, sans-serif;
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        .yx-wrap { max-width: 880px; margin: 0 auto; padding: 32px 20px 64px; }
+
+        .yx-header h1 { font-size: 24px; margin: 0 0 6px; color: var(--text-forest); }
+        .yx-header p { margin: 0; color: var(--text-secondary); font-size: 14px; line-height: 1.7; }
+
+        .yx-modes { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0 20px; }
+        .yx-mode {
+            padding: 8px 16px; border-radius: 10px; cursor: pointer; font-size: 14px;
+            background: var(--bg-secondary); color: var(--text-secondary);
+            border: 1px solid var(--border-color); transition: all .15s;
+        }
+        .yx-mode:hover { border-color: var(--border-forest); color: var(--text-forest); }
+        .yx-mode.active {
+            background: var(--color-forest); color: #fff; border-color: var(--color-forest);
+        }
+
+        .yx-card {
+            background: var(--bg-card); border: 1px solid var(--border-color);
+            border-radius: 16px; padding: 28px; box-shadow: var(--shadow-md); text-align: center;
+        }
+
+        .yx-code-big {
+            font-size: 64px; font-weight: 600; letter-spacing: 4px;
+            font-family: 'SF Mono', ui-monospace, monospace; color: var(--text-forest);
+        }
+        .yx-syllables {
+            margin-top: 10px; font-size: 14px; color: var(--text-secondary); letter-spacing: 1px;
+        }
+        .yx-word { font-size: 56px; font-weight: 500; color: var(--text-primary); }
+        .yx-glyph { min-height: 96px; display: flex; align-items: center; justify-content: center; }
+        .yx-glyph-img { height: 88px; width: auto; }
+        .yx-glyph-text { font-size: 64px; }
+        .yx-pua { font-family: 'ChaiPUA', 'Noto Sans SC', sans-serif; }
+
+        .yx-hint { margin-top: 14px; font-size: 14px; color: var(--text-secondary); line-height: 1.8; }
+        .yx-hint b { color: var(--text-deer); font-family: 'SF Mono', ui-monospace, monospace; }
+        .yx-badge {
+            display: inline-block; padding: 1px 8px; border-radius: 6px; font-size: 12px;
+            background: var(--bg-forest); color: var(--text-forest);
+        }
+
+        .yx-channel {
+            margin-top: 18px; padding: 10px 14px; border-radius: 10px;
+            background: var(--bg-deer); color: var(--text-deer); font-size: 13px;
+        }
+        .yx-channel b { font-family: 'SF Mono', ui-monospace, monospace; }
+
+        .yx-feedback { min-height: 24px; margin-top: 16px; font-size: 15px; font-weight: 500; }
+        .yx-feedback.good { color: var(--color-success); }
+        .yx-feedback.bad { color: var(--color-danger); }
+
+        .yx-progress-code, .yx-answer {
+            margin-top: 8px; font-size: 14px; color: var(--text-secondary);
+        }
+        .yx-answer b, .yx-progress-code b {
+            color: var(--color-accent); font-family: 'SF Mono', ui-monospace, monospace; font-size: 16px;
+        }
+
+        .yx-keyboard { margin: 26px auto 0; display: inline-block; }
+        .yx-kb-row { display: flex; align-items: center; margin-bottom: 6px; }
+        .yx-hand { display: flex; gap: 6px; }
+        .yx-gap { width: 40px; }
+        .yx-key {
+            width: 38px; height: 38px; line-height: 38px; border-radius: 8px;
+            font-family: 'SF Mono', ui-monospace, monospace; font-size: 14px;
+            background: var(--bg-tertiary); color: var(--text-tertiary);
+            border: 1px solid var(--border-light); transition: all .1s;
+        }
+        .yx-key.on {
+            background: var(--color-forest-light); color: #fff;
+            border-color: var(--color-forest); font-weight: 600;
+        }
+        .yx-key.down {
+            background: var(--color-accent); color: #fff; border-color: var(--color-accent);
+            transform: translateY(1px);
+        }
+
+        .yx-stats { margin-top: 22px; font-size: 13px; color: var(--text-tertiary); }
+
+        .yx-help {
+            margin-top: 28px; padding: 18px 22px; border-radius: 14px;
+            background: var(--bg-secondary); border: 1px solid var(--border-color);
+            font-size: 13px; color: var(--text-secondary); line-height: 1.9;
+        }
+        .yx-help h2 { font-size: 14px; margin: 0 0 8px; color: var(--text-forest); }
+        .yx-help kbd {
+            padding: 1px 6px; border-radius: 4px; background: var(--bg-tertiary);
+            font-family: 'SF Mono', ui-monospace, monospace; font-size: 12px;
+        }
+        .yx-help table { border-collapse: collapse; margin-top: 8px; }
+        .yx-help td { padding: 2px 12px 2px 0; vertical-align: top; }
+        .yx-help td:first-child {
+            font-family: 'SF Mono', ui-monospace, monospace; color: var(--text-deer);
+        }
+
+        .yx-shengmu-step { margin-bottom: 10px; }
+        .yx-shengmu-label { font-size: 16px; color: var(--text-secondary); margin-top: 6px; }
+
+        .yx-shengyun { display: flex; align-items: center; justify-content: center; gap: 18px; }
+        .yx-shengyun-sheng, .yx-shengyun-yun {
+            font-size: 64px; font-weight: 600; letter-spacing: 2px;
+            font-family: 'SF Mono', ui-monospace, monospace; color: var(--text-forest);
+        }
+        .yx-shengyun-arrow { font-size: 36px; color: var(--text-secondary); }
+    </style>
+</head>
+<body>
+    <div class="yx-wrap">
+        <div class="yx-header">
+            <h1>🦌 呦呦音形并击练习 · 寒梅</h1>
+            <p>
+                音形的一码就是一个<b>码元</b>：声母键（小写）+ 韵母指法（大写），一次单手并击打出一个。
+                本页在浏览器里复刻了一次「击」的判定——同时按下的键会被当成一击，全部松开才结算，
+                所以按键先后顺序无关。指法数据直接来自 <code>rime/yoyo.yaml</code> 的「寒梅」规则——
+                不使用 0-9 与 - = [ ] 键，直列键盘人体工程（同排/相近排优先、无同列三键），
+                左右手标准 QWERTY 对称（右手 <code>/</code> 补全 <code>z</code> 的对称输入）。
+            </p>
+        </div>
+
+        <div class="yx-modes">
+            <button class="yx-mode active" data-mode="shengmu">码元指法（180）</button>
+            <button class="yx-mode" data-mode="yuanma">码元乱序</button>
+            <button class="yx-mode" data-mode="shengyun">声韵练习</button>
+            <button class="yx-mode" data-mode="zigen">字根（466）</button>
+            <button class="yx-mode" data-mode="jian_zi">一键字直出（60）</button>
+            <button class="yx-mode" data-mode="jian_ci">一键词直出（60）</button>
+            <button class="yx-mode" data-mode="jian">一简直出（700）</button>
+        </div>
+
+        <div class="yx-card">
+            <div id="yx-prompt"></div>
+            <div id="yx-hint" class="yx-hint"></div>
+            <div id="yx-channel" class="yx-channel"></div>
+            <div id="yx-feedback" class="yx-feedback"></div>
+            <div id="yx-progress-code" class="yx-progress-code"></div>
+            <div id="yx-answer" class="yx-answer"></div>
+            <div id="yx-keyboard" class="yx-keyboard"></div>
+            <div id="yx-stats" class="yx-stats"></div>
+        </div>
+
+        <div class="yx-help">
+            <h2>怎么用</h2>
+            按 <kbd>Enter</kbd> 看答案并点亮键位（这一题不再计入「一遍过」），按 <kbd>Tab</kbd> 跳过。
+            答错时也会自动点亮键位。默认不点亮，否则等于替你记住了指法。
+            <h2 style="margin-top:14px">间隔重复</h2>
+            除「码元指法（180）」外，其余模式都采用<b>间隔重复</b>：答对的题会按
+            <code>2 → 4 → 8 → 12 → 20 → 40 → 60 → 100</code> 的间隔往后排，连续答对 3 次算「已掌握」；
+            答错或跳过的题计数归零，很快会再出现。进度自动存在浏览器里，刷新不丢。
+            <button id="yx-reset-progress" style="margin-top:8px;padding:4px 12px;border-radius:8px;cursor:pointer;border:1px solid var(--border-color);background:var(--bg-tertiary);color:var(--text-secondary);font-size:13px;">重置间隔重复进度</button>
+            <h2 style="margin-top:14px">七个模式练什么</h2>
+            <table>
+                <tr><td>码元指法（180）</td><td>先练单个声母键位，再练该声母下从 <code>A</code> 到 <code>L</code> 的 11 个韵母指法，逐个声母过关。码元下方常驻显示它能拼出的全部声韵母组合。</td></tr>
+                <tr><td>码元乱序</td><td>看到 <code>qF</code> 能按出来。180 个码元按间隔重复出现，练熟综合指法。码元下方同样常驻显示可拼音节。</td></tr>
+                <tr><td>声韵练习</td><td>先显示真实声母（如 <code>b</code>），按对应键位；再显示该声母下的真实音节（如 <code>ba</code>），按声母+韵母组合击出。</td></tr>
+                <tr><td>字根</td><td>看到「口」能打出 <code>vC</code>。字根图片与纯形共用同一套。</td></tr>
+                <tr><td>一键字直出（60）</td><td>只看 60 个 aA、sA 等只有 A 码的<b>单字</b>，一击直出，不校验左右手通道。</td></tr>
+                <tr><td>一键词直出（60）</td><td>只看 60 个 aA、sA 等只有 A 码的<b>词语</b>，一击直出，不校验左右手通道。</td></tr>
+                <tr><td>一简直出（700）</td><td>700 个一击上屏的字词。这里会校验<b>通道</b>：哪只手、带不带空格都得对。</td></tr>
+            </table>
+            <h2 style="margin-top:14px">六条通道</h2>
+            大写不带 <kbd>Space</kbd>，小写带 <kbd>Space</kbd>；<code>A/a</code> 双手，<code>B/b</code> 左手，<code>C/c</code> 右手。
+            音形把它们分给四件事：<code>B/C</code> 一简字、<code>b/c</code> 一简词或单字第三码、
+            <code>A</code> 打词、<code>a</code> 单字前两码或词的第五六码。
+        </div>
+    </div>
+
+    <script src="yx_data_module_hm.js"></script>
+    <script src="yx_practice_hm.js"></script>
+</body>
+</html>
