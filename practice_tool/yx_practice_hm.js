@@ -117,6 +117,18 @@ function codeToSyllables(code) {
   return result;
 }
 
+/** 码元可读音节文本：如 "vI" → "jiao / jiong / jun / kong / kun"；无音节码元返回空串。 */
+function syllableText(code) {
+  const syls = codeToSyllables(code);
+  return syls.length ? syls.join(' / ') : '';
+}
+
+/** 码元音节展示 HTML：常驻显示在码元下方；无音节码元返回空串。 */
+function syllablesHtml(code) {
+  const text = syllableText(code);
+  return text ? `<div class="yx-syllables">${text}</div>` : '';
+}
+
 /** 字根显示：多数字根有 png，PUA 字根靠 ChaiPUA 字体兜底。 */
 function zigenGlyph(root) {
   const hex = root.codePointAt(0).toString(16);
@@ -137,7 +149,7 @@ const BANKS = {
       .map((code) => ({
         key: code,
         target: [code],
-        prompt: `<div class="yx-code-big">${code}</div>`,
+        prompt: `<div class="yx-code-big">${code}</div>${syllablesHtml(code)}`,
         hint: `声母键 <b>${code[0]}</b> → ${(YX_SHENGMU[code[0]] || []).join(' / ')}　·　`
           + `韵母指法 <b>${code[1]}</b> → ${(YX_YUNMU[code[1]] || []).join(' / ')}`,
         anyHand: true,
@@ -163,7 +175,7 @@ const BANKS = {
           },
           ...codes.slice(1).map((code) => ({
             target: [code],
-            prompt: `<div class="yx-code-big">${code}</div>`,
+            prompt: `<div class="yx-code-big">${code}</div>${syllablesHtml(code)}`,
             hint: `声母键 <b>${code[0]}</b> → ${(YX_SHENGMU[code[0]] || []).join(' / ')}　·　`
               + `韵母指法 <b>${code[1]}</b> → ${(YX_YUNMU[code[1]] || []).join(' / ')}`,
           })),

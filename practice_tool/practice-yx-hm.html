@@ -44,6 +44,9 @@
             font-size: 64px; font-weight: 600; letter-spacing: 4px;
             font-family: 'SF Mono', ui-monospace, monospace; color: var(--text-forest);
         }
+        .yx-syllables {
+            margin-top: 10px; font-size: 14px; color: var(--text-secondary); letter-spacing: 1px;
+        }
         .yx-word { font-size: 56px; font-weight: 500; color: var(--text-primary); }
         .yx-glyph { min-height: 96px; display: flex; align-items: center; justify-content: center; }
         .yx-glyph-img { height: 88px; width: auto; }
@@ -167,8 +170,8 @@
             <button id="yx-reset-progress" style="margin-top:8px;padding:4px 12px;border-radius:8px;cursor:pointer;border:1px solid var(--border-color);background:var(--bg-tertiary);color:var(--text-secondary);font-size:13px;">重置间隔重复进度</button>
             <h2 style="margin-top:14px">七个模式练什么</h2>
             <table>
-                <tr><td>码元指法（180）</td><td>先练单个声母键位，再练该声母下从 <code>A</code> 到 <code>L</code> 的 11 个韵母指法，逐个声母过关。</td></tr>
-                <tr><td>码元乱序</td><td>看到 <code>qF</code> 能按出来。180 个码元按间隔重复出现，练熟综合指法。</td></tr>
+                <tr><td>码元指法（180）</td><td>先练单个声母键位，再练该声母下从 <code>A</code> 到 <code>L</code> 的 11 个韵母指法，逐个声母过关。码元下方常驻显示它能拼出的全部声韵母组合。</td></tr>
+                <tr><td>码元乱序</td><td>看到 <code>qF</code> 能按出来。180 个码元按间隔重复出现，练熟综合指法。码元下方同样常驻显示可拼音节。</td></tr>
                 <tr><td>声韵练习</td><td>先显示真实声母（如 <code>b</code>），按对应键位；再显示该声母下的真实音节（如 <code>ba</code>），按声母+韵母组合击出。</td></tr>
                 <tr><td>字根</td><td>看到「口」能打出 <code>vC</code>。字根图片与纯形共用同一套。</td></tr>
                 <tr><td>一键字直出（60）</td><td>只看 60 个 aA、sA 等只有 A 码的<b>单字</b>，一击直出，不校验左右手通道。</td></tr>
