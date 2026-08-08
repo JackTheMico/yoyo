@@ -301,21 +301,33 @@ def has_shorter_code(store: Store, codec: Codec, text: str, level: int, reading:
 
 
 def demote(store: Store, codec: Codec, text: str, level: int) -> None:
-    """把 text 从 level 挤到下一层；目标层的占用者递归下挤。"""
+    """把 text 从 level 挤到下一层；目标层的占用者递归下挤。
+
+    同层多条码（多音字常见）必须逐条顺延，并用该条字母前缀作 hint 消歧全码。
+    若两码层 hint 留空，full_letters 会误取第一条全码，把权重并进错误读音
+    （如「卡」qiǎ 的 +gA 被顺延时误占 kǎ 的 !vGrI@，导致 !gArI@ 缺失）。
+    """
     own = codes_at(store, codec, text, level)
     if not own:
         return
-    hint = letters(own[0].code) if level > codec.levels[0] else ""
-    full = full_letters(store, codec, text, hint)
-    weight = max((store.kill(e) for e in own), default=0)
     target = codec.next_level(level)
     if target is None:
         return
-    _occupy(store, codec, text, full, target, weight)
+    for entry in list(own):
+        if not entry.alive:
+            continue
+        hint = letters(entry.code)
+        full = full_letters(store, codec, text, hint)
+        weight = store.kill(entry)
+        _occupy(store, codec, text, full, target, weight)
 
 
 def _occupy(store: Store, codec: Codec, text: str, full: str, level: int, weight: int) -> None:
-    """让 text 取得 level 层码位；已在此的其他文本递归下挤。"""
+    """让 text 取得 level 层码位。
+
+    同码位已有其他文本时按权重裁决：权重严格更高者占住较短码，较低者继续
+    降到下一层；权重相同则保留已有占用者（避免腾空次序决定胜负）。
+    """
     code = codec.render(full[:level])
     if level == codec.full_level:
         # 全码条目恒存在，不新建，只把权重并入。
@@ -326,8 +338,23 @@ def _occupy(store: Store, codec: Codec, text: str, full: str, level: int, weight
         store.add(text, code, weight)
         return
 
-    for other in sorted({e.text for e in store.live_by_code(code) if e.text != text}):
-        demote(store, codec, other, level)
+    others = sorted({e.text for e in store.live_by_code(code) if e.text != text})
+    if others:
+        best_other_weight = max(
+            (
+                max((e.weight for e in codes_at(store, codec, other, level)), default=0)
+                for other in others
+            ),
+            default=0,
+        )
+        if best_other_weight >= weight:
+            deeper = codec.next_level(level)
+            if deeper is not None:
+                _occupy(store, codec, text, full, deeper, weight)
+            return
+        for other in others:
+            demote(store, codec, other, level)
+
     for e in list(store.live_by_code(code)):
         if e.text == text:
             store.kill(e)
@@ -368,6 +395,13 @@ def promote(store: Store, codec: Codec, slot_letters: str, level: int,
         if any(x.code == code for x in store.live_by_text(e.text)):
             continue
         if has_shorter_code(store, codec, e.text, source_level, slot_letters[:2]):
+            continue
+        # 多音字不重复进二简：整字已有任意两码则不再上提另一读
+        if (
+            level == codec.levels[0]
+            and codec.multi_reading
+            and codes_at(store, codec, e.text, codec.levels[0])
+        ):
             continue
         if best is None or e.weight > best.weight:
             best = e

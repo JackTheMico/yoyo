@@ -76,29 +76,16 @@ let practiceHtml = readFileSync(
   resolve(practiceRoot, "practice-yx.html"),
   "utf8",
 );
-practiceHtml = replaceRequired(
-  practiceHtml,
-  "../zigen_table/ChaiPUA-0.2.7.ttf",
-  "ChaiPUA-0.2.7.ttf",
-  "practice-yx.html",
-);
 practiceHtml = practiceHtml.replace(
   "</body>",
   `${practiceResizeBridge}</body>`,
 );
 writeFileSync(resolve(publicYx, "practice.html"), practiceHtml);
 
-let practiceJs = readFileSync(
+copy(
   resolve(practiceRoot, "yx_practice.js"),
-  "utf8",
+  resolve(publicYx, "yx_practice.js"),
 );
-practiceJs = replaceRequired(
-  practiceJs,
-  "../zigen_table/char_images/",
-  "../char_images/",
-  "yx_practice.js",
-);
-writeFileSync(resolve(publicYx, "yx_practice.js"), practiceJs);
 
 copy(
   resolve(practiceRoot, "yx_data_module.js"),

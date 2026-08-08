@@ -29,6 +29,8 @@ python main.py -j
 python main.py -a
 """
 
+from __future__ import annotations
+
 import gzip
 import json
 import re
@@ -183,6 +185,16 @@ def tone_mark_to_number(syllable):
     if tone > 0:
         result.append(str(tone))
     return ''.join(result)
+
+
+def strip_tone(pinyin: str) -> str:
+    """去掉数字声调，并规范化 ü → v，供无调匹配。"""
+    if not pinyin:
+        return ''
+    s = pinyin.replace('ü', 'v').replace('Ü', 'v').lower()
+    if s[-1] in '01234':
+        s = s[:-1]
+    return s
 
 
 # ==================== 数据加载 ====================
@@ -383,20 +395,65 @@ def load_ciku(filepath: str, format_type: str):
 
 # ==================== 编码生成 ====================
 def load_zi_data(filepath: str):
-    """加载单字编码数据"""
+    """加载单字编码数据，支持精确/无调/按读音权重回退匹配。
+
+    返回:
+      exact_map: (字, 带调拼音) → 全码
+      toneless_map: (字, 无调拼音) → [(weight, code), ...]，按 weight 降序
+      char_readings: 字 → [(weight, code), ...]，按 weight 降序
+    """
     exact_map = {}
-    char_map = defaultdict(list)
+    toneless_map = defaultdict(list)
+    char_readings = defaultdict(list)
     with open(filepath, 'r', encoding='utf-8') as f:
         for line in f:
             line = line.strip()
             if not line:
                 continue
             data = json.loads(line)
-            key = (data['name'], data['pinyin'])
-            exact_map[key] = data['full_code']
-            if data['full_code'] not in char_map[data['name']]:
-                char_map[data['name']].append(data['full_code'])
-    return exact_map, dict(char_map)
+            char = data['name']
+            pinyin = data['pinyin']
+            code = data['full_code']
+            try:
+                weight = int(data.get('weight', 0))
+            except (TypeError, ValueError):
+                weight = 0
+            exact_map[(char, pinyin)] = code
+            entry = (weight, code)
+            toneless_map[(char, strip_tone(pinyin))].append(entry)
+            char_readings[char].append(entry)
+
+    for key in toneless_map:
+        toneless_map[key].sort(key=lambda item: item[0], reverse=True)
+    for char in char_readings:
+        char_readings[char].sort(key=lambda item: item[0], reverse=True)
+
+    return exact_map, dict(toneless_map), dict(char_readings)
+
+
+def resolve_char_code(char: str, pinyin: str, exact_map: dict,
+                      toneless_map: dict, char_readings: dict):
+    """按 精确带调 → 无调匹配 → 该字最高权读音 解析单字全码。
+
+    返回 (全码, 匹配方式)；匹配方式为 exact / toneless / weight；失败为 (None, None)。
+    无调仍对应多个读音时，取 weight 最高者。
+    """
+    if not char:
+        return None, None
+
+    exact = exact_map.get((char, pinyin))
+    if exact is not None:
+        return exact, 'exact'
+
+    toneless = strip_tone(pinyin)
+    candidates = toneless_map.get((char, toneless))
+    if candidates:
+        return candidates[0][1], 'toneless'
+
+    readings = char_readings.get(char)
+    if readings:
+        return readings[0][1], 'weight'
+    return None, None
 
 
 def parse_formula(formula_str: str):
@@ -553,7 +610,7 @@ def generate_word_codes(zi_jsonl_path: str, ciku_path: str, config: dict,
                         output_path: str, format_type: str):
     """生成多字词编码"""
     print("加载单字词编码数据...")
-    exact_map, char_map = load_zi_data(zi_jsonl_path)
+    exact_map, toneless_map, char_readings = load_zi_data(zi_jsonl_path)
     print(f"加载了 {len(exact_map)} 个单字编码")
 
     print(f"解析词库 ({format_type} 格式)...")
@@ -563,6 +620,7 @@ def generate_word_codes(zi_jsonl_path: str, ciku_path: str, config: dict,
     print("生成全码...")
     results = []
     skipped = 0
+    match_counts = {'exact': 0, 'toneless': 0, 'weight': 0}
 
     for word_data in ciku_words:
         word = word_data['name']
@@ -593,14 +651,14 @@ def generate_word_codes(zi_jsonl_path: str, ciku_path: str, config: dict,
                 tone_num_pinyin = pinyin_parts[i] if i < len(pinyin_parts) else ''
             else:
                 tone_num_pinyin = tone_mark_to_number(pinyin_parts[i])
-            key = (ch, tone_num_pinyin)
-            if key in exact_map:
-                char_codes.append(exact_map[key])
-            elif ch in char_map:
-                char_codes.append(char_map[ch][0])
-            else:
+            code, how = resolve_char_code(
+                ch, tone_num_pinyin, exact_map, toneless_map, char_readings
+            )
+            if code is None:
                 skip = True
                 break
+            match_counts[how] += 1
+            char_codes.append(code)
 
         if skip or len(char_codes) != word_len:
             skipped += 1
@@ -626,7 +684,12 @@ def generate_word_codes(zi_jsonl_path: str, ciku_path: str, config: dict,
             'weight': weight,
         })
 
-    print(f"成功生成 {len(results)} 个全码，跳过 {skipped} 个")
+    print(
+        f"成功生成 {len(results)} 个全码，跳过 {skipped} 个；"
+        f"音节匹配 exact={match_counts['exact']} "
+        f"toneless={match_counts['toneless']} "
+        f"weight={match_counts['weight']}"
+    )
 
     print("生成简码...")
     generate_short_codes(results, config)
@@ -824,9 +887,42 @@ def load_codes_for_stats(jsonl_path: str):
 
 
 # ==================== YAML输出 ====================
-def convert_to_yaml(input_jsonl: str, output_yaml: str, dict_name: str):
-    """将 JSONL 转换为 YAML 格式（Rime字典格式）"""
-    word_entries = {}
+def _decorate_letters(code: str, kind: str, prefix: str | None = None) -> str:
+    """把裸字母码转成 remap/assign/fill 所需的 Rime schema 码型。
+
+    字：2=`_XX`/`+XX`，4=`!XXXX@`，6=`!XXXX@-XX`
+    词：2=`<XX`/`>XX`，更长码保持裸字母
+    """
+    if not code or not code.isalpha():
+        return code
+    n = len(code)
+    if kind == 'char':
+        if n == 2:
+            if prefix not in ('_', '+'):
+                raise ValueError(f'单字两码需要 _/+ 前缀，得到 {prefix!r}')
+            return f'{prefix}{code}'
+        if n == 4:
+            return f'!{code}@'
+        if n == 6:
+            return f'!{code[:4]}@-{code[4:]}'
+        return code
+    if n == 2:
+        if prefix not in ('<', '>'):
+            raise ValueError(f'词两码需要 </> 前缀，得到 {prefix!r}')
+        return f'{prefix}{code}'
+    return code
+
+
+def convert_to_yaml(input_jsonl: str, output_yaml: str, dict_name: str,
+                    kind: str | None = None):
+    """将 JSONL 转换为 YAML 格式（Rime字典格式，含 schema 码型装饰）。"""
+    if kind is None:
+        kind = 'char' if 'char' in dict_name else 'word'
+    if kind not in ('char', 'word'):
+        raise ValueError(f'kind 必须是 char 或 word，得到 {kind!r}')
+
+    two_prefixes = ('_', '+') if kind == 'char' else ('<', '>')
+    records = []
     with open(input_jsonl, 'r', encoding='utf-8') as f:
         for line in f:
             line = line.strip()
@@ -834,20 +930,76 @@ def convert_to_yaml(input_jsonl: str, output_yaml: str, dict_name: str):
                 continue
             data = json.loads(line)
             name = data.get('name')
-            full_code = data.get('full_code')
-            short_code = data.get('short_code')
-            weight = data.get('weight', 0)
+            full_code = data.get('full_code') or ''
+            short_code = data.get('short_code') or ''
+            try:
+                weight = int(data.get('weight', 0))
+            except (TypeError, ValueError):
+                weight = 0
+            if not name or not full_code:
+                continue
+            records.append({
+                'name': name,
+                'full_code': full_code,
+                'short_code': short_code,
+                'weight': weight,
+                'two_prefix': None,
+            })
 
-            if name not in word_entries:
-                word_entries[name] = []
+    # 多音字：整字最多保留一条二简（权重最高的读音）；其余读音退到四码。
+    if kind == 'char':
+        by_name_two = defaultdict(list)
+        for i, rec in enumerate(records):
+            short = rec['short_code']
+            if short and short != rec['full_code'] and len(short) == 2 and short.isalpha():
+                by_name_two[rec['name']].append(i)
+        for idxs in by_name_two.values():
+            if len(idxs) <= 1:
+                continue
+            idxs.sort(key=lambda i: records[i]['weight'], reverse=True)
+            for i in idxs[1:]:
+                full = records[i]['full_code']
+                records[i]['short_code'] = full[:4] if len(full) >= 4 else full
 
-            if short_code and short_code != full_code:
-                word_entries[name].append([name, short_code, weight])
-                word_entries[name].append([name, full_code, 0])
-            else:
-                word_entries[name].append([name, full_code, weight])
+    by_two = defaultdict(list)
+    for i, rec in enumerate(records):
+        short = rec['short_code']
+        if short and short != rec['full_code'] and len(short) == 2 and short.isalpha():
+            by_two[short].append(i)
+    for idxs in by_two.values():
+        idxs.sort(key=lambda i: records[i]['weight'], reverse=True)
+        for rank, i in enumerate(idxs):
+            if rank < len(two_prefixes):
+                records[i]['two_prefix'] = two_prefixes[rank]
 
-    sorted_words = sorted(word_entries.items(), key=lambda x: x[1][0][2] if x[1] else 0, reverse=True)
+    word_entries = {}
+    for rec in records:
+        name = rec['name']
+        full_code = rec['full_code']
+        short_code = rec['short_code']
+        weight = rec['weight']
+        if name not in word_entries:
+            word_entries[name] = []
+
+        decorated_full = _decorate_letters(full_code, kind)
+        if (
+            short_code
+            and short_code != full_code
+            and short_code.isalpha()
+            and (len(short_code) != 2 or rec['two_prefix'] is not None)
+        ):
+            prefix = rec['two_prefix'] if len(short_code) == 2 else None
+            decorated_short = _decorate_letters(short_code, kind, prefix)
+            word_entries[name].append([name, decorated_short, weight])
+            word_entries[name].append([name, decorated_full, 0])
+        else:
+            word_entries[name].append([name, decorated_full, weight])
+
+    sorted_words = sorted(
+        word_entries.items(),
+        key=lambda x: x[1][0][2] if x[1] else 0,
+        reverse=True,
+    )
 
     with open(output_yaml, 'w', encoding='utf-8') as f:
         f.write('# Rime dictionary\n')
@@ -1044,11 +1196,15 @@ def main():
         print(f"\n【步骤4】生成YAML字典文件...")
 
         if zi_jsonl_path.exists():
-            convert_to_yaml(str(zi_jsonl_path), str(char_yaml_path), args.char_name)
+            convert_to_yaml(
+                str(zi_jsonl_path), str(char_yaml_path), args.char_name, kind='char'
+            )
             print(f"  单字字典: {char_yaml_path}")
 
         if word_jsonl_path.exists():
-            convert_to_yaml(str(word_jsonl_path), str(word_yaml_path), args.word_name)
+            convert_to_yaml(
+                str(word_jsonl_path), str(word_yaml_path), args.word_name, kind='word'
+            )
             print(f"  多字词字典: {word_yaml_path}")
 
     # 输出文件路径汇总
