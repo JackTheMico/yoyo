@@ -40,12 +40,11 @@ from collections import Counter, defaultdict
 from pathlib import Path
 
 RIME_ROOT = Path(__file__).resolve().parent.parent
-TOOL_DIR = RIME_ROOT / "scripts" / "编码生成和重码可视化"
-OUT_DIR = TOOL_DIR / "output"
+OUT_DIR = RIME_ROOT / "scripts" / "编码生成和重码可视化" / "output"
 WORD_JSONL = OUT_DIR / "word.jsonl"
-ZI_FULL = TOOL_DIR / "zi-full.jsonl"
+ZI_FULL = OUT_DIR / "zi-full.jsonl"
 PUB_WORD = RIME_ROOT / "yoyo-yx-word.dict.yaml"
-REVIEW_OUT = TOOL_DIR / "fix-polyphone-review.txt"
+REVIEW_OUT = OUT_DIR / "fix-polyphone-review.txt"
 
 # 旧键位(output) → 发布版键位 的字母置换（与 声韵母按权重重排键位指法/remap_codes.py 一致）
 LOWER = {
