@@ -62,10 +62,14 @@ yoyo-input/                         # 麓鸣输入法项目
  │   │   ├── 编码生成和重码可视化/      # 从拆分/词库一键生成初始编码与重码报告
  │   │   ├── 声韵母按权重重排键位指法/  # 音形 A 位布局优化与字典改写
  │   │   ├── generate_reverse_data.py # 生成拼音反查数据（lua/yoyo/data/，词库更新/重排后须重跑）
+ │   │   ├── test_reverse_*.lua      # 拼音反查 Lua 单测（查询/集成/门卫，纯 Lua 运行）
  │   │   └── trim_word_dict.py      # 生成发布用的精简音形词库
  │   └── lua/yoyo/                  # Lua脚本目录
  │       ├── yoyo.lua               # 核心类定义
  │       ├── popping.lua            # 实现顶功逻辑
+ │       ├── reverse.lua            # 拼音反查翻译器（reverse 段 → 字词+编码候选）
+ │       ├── reverse_input.lua      # 反查输入门卫（反查模式接管 a-z，绕过 chord_composer）
+ │       ├── reverse_segmentor.lua  # 反查分段器（` 开头建 reverse 段）
  │       ├── data/                  # 拼音反查数据（由 generate_reverse_data.py 生成，勿手改）
  │       └── commit_raw.lua         # 实现ctrl提交纯编码
  │
