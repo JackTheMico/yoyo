@@ -5,3 +5,5 @@ release/
 dist/
 deep_crawl/
 /.python-version
+/.reasonix/
+yoyo.yaml.bak-*
