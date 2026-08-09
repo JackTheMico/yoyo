@@ -101,6 +101,16 @@ local env5 = make_env("`han")
 local r5 = input_processor.func(make_key(0x31), env5)
 check(r5 == yoyo.kAccepted and env5.engine.context.input == "`han", "数字应吞掉不污染 input")
 
+-- 5b. 前缀键 ` 进 input（speller initials 不含 `，必须由本处理器接管）
+local env5b = make_env("")
+local r5b = input_processor.func(make_key(0x60), env5b)
+check(r5b == yoyo.kAccepted and env5b.engine.context.input == "`",
+  "前缀键应推入 input, 实际 '" .. env5b.engine.context.input .. "'")
+-- 5c. 已在反查模式时重复前缀键吞掉
+local r5c = input_processor.func(make_key(0x60), env5b)
+check(r5c == yoyo.kAccepted and env5b.engine.context.input == "`",
+  "反查模式下重复前缀键应吞掉, 实际 '" .. env5b.engine.context.input .. "'")
+
 -- 6. 空格吞掉
 local r6 = input_processor.func(make_key(0x20), env5)
 check(r6 == yoyo.kAccepted and env5.engine.context.input == "`han", "空格应吞掉不污染 input")

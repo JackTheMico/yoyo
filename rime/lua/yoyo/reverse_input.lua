@@ -37,13 +37,22 @@ function processor.func(key_event, env)
   local context = env.engine.context
   local input = context.input or ""
   local prefix = env.reverse_input and env.reverse_input.prefix or "`"
-  -- 非反查模式：放行。注意反查前缀键 ` 本身也走这里——它不在 chord_composer
-  -- 字母表，会经 recognizer/key_binder 落到 speller 加入 input（speller alphabet 含 `），
-  -- 下一键起本处理器进入反查模式接管。
+  local keycode = key_event.keycode
+  -- 反查前缀键本身：任何状态下一律接收并推入 input。
+  -- 实测 speller 的 initials 不含 `（alphabet 有但非法起始），直接放行会被丢弃，
+  -- 反查模式永远进不去。这里主动拦截 push_input。
+  if keycode == 0x60 then -- grave accent: `
+    if input == "" or input:sub(1, #prefix) ~= prefix then
+      context:push_input(prefix)
+      return yoyo.kAccepted
+    end
+    -- 已在反查模式：吞掉重复前缀
+    return yoyo.kAccepted
+  end
+  -- 非反查模式：放行
   if input:sub(1, #prefix) ~= prefix then
     return yoyo.kNoop
   end
-  local keycode = key_event.keycode
   -- a-z: 直接进 input（原始拼音）
   if keycode >= 0x61 and keycode <= 0x7a then
     context:push_input(utf8.char(keycode))
