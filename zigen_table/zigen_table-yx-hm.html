@@ -80,6 +80,30 @@
             font-size: 12px; line-height: 1.9;
         }
         .legend code { background: var(--paper-cream); padding: 1px 4px; border-radius: 3px; }
+
+        /* 按键组合占用查询 */
+        .chord-query {
+            max-width: 680px; margin: 0 auto 16px; display: flex;
+            flex-direction: column; gap: 7px; align-items: center;
+        }
+        .chord-query input {
+            width: 100%; padding: 8px 12px; font-size: 15px; text-align: center;
+            font-family: ui-monospace, monospace; color: var(--ink-black);
+            background: var(--paper-white); border: 1px solid var(--border-color);
+            border-radius: 6px; outline: none; transition: border-color .15s, box-shadow .15s;
+        }
+        .chord-query input:focus {
+            border-color: var(--cinnabar-red);
+            box-shadow: 0 0 0 2px oklch(0.55 0.18 25 / .15);
+        }
+        .chord-result {
+            min-height: 20px; font-size: 13px; color: var(--ink-medium);
+            line-height: 1.7; text-align: center;
+        }
+        .chord-result .hit {
+            color: var(--cinnabar-red); font-weight: 700;
+            font-family: ui-monospace, monospace;
+        }
         .tooltip {
             position: fixed; background: var(--paper-white); border: 1px solid var(--border-color);
             border-radius: 6px; padding: 14px 18px; box-shadow: 0 4px 20px rgba(0,0,0,.15);
@@ -121,6 +145,17 @@
         右手通常镜像等价，<code>bA–bL</code> 采用悬停所示的专用右手指法。
         每格底部的小字是该码元能拼出的全部合法音节，方便对照声韵练习。
     </div>
+    <div class="chord-query">
+        <input type="text" id="chord-input" inputmode="none" autocomplete="off"
+               spellcheck="false" autocapitalize="off"
+               placeholder="查询按键组合占用：输入 1–3 个键，如 wt（键位：qwert / asdfg / zxcvb）">
+        <div class="chord-result" id="chord-result" role="status" aria-live="polite"></div>
+    </div>
+    <script>
+const ALLOWED_KEYS = "qwertasdfgzxcvb";
+const CHORD_TO_CODE = {"a": "aA", "ads": "aB", "as": "aC", "afs": "aD", "aq": "aE", "ax": "aF", "ars": "aG", "adf": "aH", "ac": "aI", "ag": "aJ", "asv": "aK", "acs": "aL", "b": "bA", "bq": "bB", "ab": "bC", "bz": "bD", "bg": "bE", "bw": "bF", "bx": "bG", "bdx": "bH", "be": "bI", "bc": "bJ", "bs": "bK", "bd": "bL", "c": "cA", "bcg": "cB", "cvz": "cC", "cz": "cD", "cq": "cE", "cs": "cF", "bcv": "cG", "bcf": "cH", "cfs": "cI", "cgx": "cJ", "cfg": "cK", "cfv": "cL", "d": "dA", "dfg": "dB", "dsv": "dC", "ad": "dD", "de": "dE", "dw": "dF", "dz": "dG", "bdg": "dH", "dfw": "dI", "dvx": "dJ", "cd": "dK", "dgx": "dL", "e": "eA", "ert": "eB", "eqr": "eC", "ae": "eD", "ex": "eE", "es": "eF", "ef": "eG", "aew": "eH", "ers": "eI", "efw": "eJ", "eg": "eK", "est": "eL", "f": "fA", "df": "fB", "efs": "fC", "bdf": "fD", "fx": "fE", "cf": "fF", "fg": "fG", "af": "fH", "fq": "fI", "fw": "fJ", "fs": "fK", "fz": "fL", "g": "gA", "cg": "gB", "ags": "gC", "efg": "gD", "gs": "gE", "gx": "gF", "gq": "gG", "fgs": "gH", "gz": "gI", "dg": "gJ", "egt": "gK", "gw": "gL", "q": "qA", "qw": "qB", "eq": "qC", "qr": "qD", "qt": "qE", "dq": "qF", "qs": "qG", "eqw": "qH", "eqs": "qI", "fqw": "qJ", "qrw": "qK", "dqw": "qL", "r": "rA", "er": "rB", "rt": "rC", "rz": "rD", "dr": "rE", "fr": "rF", "egr": "rG", "ar": "rH", "cr": "rI", "rx": "rJ", "dgr": "rK", "rs": "rL", "s": "sA", "dfs": "sB", "ds": "sC", "dgs": "sD", "sw": "sE", "sx": "sF", "fsv": "sG", "dqs": "sH", "aes": "sI", "drs": "sJ", "egs": "sK", "sv": "sL", "t": "tA", "gt": "tB", "tx": "tC", "qtw": "tD", "tw": "tE", "et": "tF", "st": "tG", "at": "tH", "eft": "tI", "dt": "tJ", "ct": "tK", "tz": "tL", "v": "vA", "cv": "vB", "av": "vC", "qv": "vD", "dv": "vE", "fv": "vF", "vw": "vG", "ev": "vH", "vx": "vI", "csv": "vJ", "bv": "vK", "vz": "vL", "w": "wA", "erw": "wB", "ew": "wC", "etw": "wD", "rw": "wE", "aw": "wF", "rtw": "wG", "dtw": "wH", "frw": "wI", "cw": "wJ", "egw": "wK", "drw": "wL", "x": "xA", "cvx": "xB", "cx": "xC", "bvx": "xD", "qx": "xE", "dx": "xF", "adx": "xG", "acx": "xH", "bcx": "xI", "cfx": "xJ", "dfx": "xK", "fvx": "xL", "z": "zA", "bxz": "zB", "xz": "zC", "dxz": "zD", "az": "zE", "wz": "zF", "ez": "zG", "sz": "zH", "vxz": "zI", "csz": "zJ", "fxz": "zK", "cxz": "zL"};
+const CODE_INFO = {"aA": {"sm": "a", "ym": "A", "syls": "nang / nve / zhang / zhua", "roots": "付  "}, "aB": {"sm": "a", "ym": "B", "syls": "nen / zhen / zhuo", "roots": "习 其 直 金 钅 龺 "}, "aC": {"sm": "a", "ym": "C", "syls": "nu / zhou / zhu", "roots": "戉 戊 竹 舟 豆  "}, "aD": {"sm": "a", "ym": "D", "syls": "nao / nian / zhao", "roots": "廿 爪 爫 龷"}, "aE": {"sm": "a", "ym": "E", "syls": "ni / zhi", "roots": "夊 执 马"}, "aF": {"sm": "a", "ym": "F", "syls": "ne / ning / zhe", "roots": "乛 耂 者"}, "aG": {"sm": "a", "ym": "G", "syls": "na / niang / zha / zhuai", "roots": "乍"}, "aH": {"sm": "a", "ym": "H", "syls": "nan / nin / zhan", "roots": "占"}, "aI": {"sm": "a", "ym": "I", "syls": "niao / nong / zhong / zhun", "roots": "鸟 "}, "aJ": {"sm": "a", "ym": "J", "syls": "nai / zhai / zhuang", "roots": "乃 牛 牜  "}, "aK": {"sm": "a", "ym": "K", "syls": "neng / nuan / nv / zheng / zhuan", "roots": "女"}, "aL": {"sm": "a", "ym": "L", "syls": "nei / zhui", "roots": "内 禸 隹 "}, "bA": {"sm": "b", "ym": "A", "syls": "sang / ang", "roots": ""}, "bB": {"sm": "b", "ym": "B", "syls": "sen / en", "roots": "木 朩 林 "}, "bC": {"sm": "b", "ym": "C", "syls": "sou / su / ou", "roots": "几 尤 矢 "}, "bD": {"sm": "b", "ym": "D", "syls": "sao / ao", "roots": "糸 纟"}, "bE": {"sm": "b", "ym": "E", "syls": "si", "roots": "力 厶 巳 龰 龴  "}, "bF": {"sm": "b", "ym": "F", "syls": "se / e", "roots": ""}, "bG": {"sm": "b", "ym": "G", "syls": "sa / a", "roots": "不 卅 未 言 讠 鬼 "}, "bH": {"sm": "b", "ym": "H", "syls": "san / an", "roots": "三 氵 "}, "bI": {"sm": "b", "ym": "I", "syls": "song / sun / o", "roots": ""}, "bJ": {"sm": "b", "ym": "J", "syls": "sai / ai", "roots": "乙 比 爱 "}, "bK": {"sm": "b", "ym": "K", "syls": "seng / suan / eng / er", "roots": "二 子"}, "bL": {"sm": "b", "ym": "L", "syls": "sui / ei", "roots": "已"}, "cA": {"sm": "c", "ym": "A", "syls": "lang / lia / lve", "roots": ""}, "cB": {"sm": "c", "ym": "B", "syls": "lie", "roots": "落 "}, "cC": {"sm": "c", "ym": "C", "syls": "lou / lu", "roots": "鹿 "}, "cD": {"sm": "c", "ym": "D", "syls": "lao / lian", "roots": "劳 千 夕  󲰪"}, "cE": {"sm": "c", "ym": "E", "syls": "li", "roots": "立 "}, "cF": {"sm": "c", "ym": "F", "syls": "le / ling", "roots": "了 而"}, "cG": {"sm": "c", "ym": "G", "syls": "la / liang", "roots": "两"}, "cH": {"sm": "c", "ym": "H", "syls": "lan / lin", "roots": ""}, "cI": {"sm": "c", "ym": "I", "syls": "liao / long / lun", "roots": "仑 侖 龙"}, "cJ": {"sm": "c", "ym": "J", "syls": "lai / liu", "roots": "六"}, "cK": {"sm": "c", "ym": "K", "syls": "leng / luan / lv", "roots": "卵"}, "cL": {"sm": "c", "ym": "L", "syls": "lei", "roots": "耒"}, "dA": {"sm": "d", "ym": "A", "syls": "dang / rang", "roots": ""}, "dB": {"sm": "d", "ym": "B", "syls": "ren / ruo", "roots": "七 又 非   𡈼"}, "dC": {"sm": "d", "ym": "C", "syls": "dou / du / rou / ru", "roots": "乡 入 斗 无 旡 甫 由"}, "dD": {"sm": "d", "ym": "D", "syls": "dao / rao", "roots": "丶 刀 刂 电       "}, "dE": {"sm": "d", "ym": "E", "syls": "di / ri", "roots": "之 日  "}, "dF": {"sm": "d", "ym": "F", "syls": "de / ding / re", "roots": "丁"}, "dG": {"sm": "d", "ym": "G", "syls": "da", "roots": "大 "}, "dH": {"sm": "d", "ym": "H", "syls": "dan / ran", "roots": "亻"}, "dI": {"sm": "d", "ym": "I", "syls": "dong / dun / rong / run", "roots": "民 矛"}, "dJ": {"sm": "d", "ym": "J", "syls": "dai", "roots": "歹 歺 "}, "dK": {"sm": "d", "ym": "K", "syls": "deng / duan / reng / ruan", "roots": ""}, "dL": {"sm": "d", "ym": "L", "syls": "dei / dui / rui", "roots": ""}, "eA": {"sm": "e", "ym": "A", "syls": "pang / shang / shua", "roots": "尚 龸    "}, "eB": {"sm": "e", "ym": "B", "syls": "pen / shen / shuo", "roots": "丿 㐆 身"}, "eC": {"sm": "e", "ym": "C", "syls": "pu / shou / shu", "roots": "丨 手 扌 鼠 龵   "}, "eD": {"sm": "e", "ym": "D", "syls": "pao / shao", "roots": "片"}, "eE": {"sm": "e", "ym": "E", "syls": "pi / shi", "roots": "弋 戈 疋 皮 豕     "}, "eF": {"sm": "e", "ym": "F", "syls": "ping / she", "roots": "舌 "}, "eG": {"sm": "e", "ym": "G", "syls": "pa / sha / shuai", "roots": ""}, "eH": {"sm": "e", "ym": "H", "syls": "pan / shan", "roots": "丬 山 彡 爿   "}, "eI": {"sm": "e", "ym": "I", "syls": "po / shun", "roots": "镸 长 髟 "}, "eJ": {"sm": "e", "ym": "J", "syls": "pai / shai / shuang", "roots": "双"}, "eK": {"sm": "e", "ym": "K", "syls": "peng / sheng / shuan", "roots": "生"}, "eL": {"sm": "e", "ym": "L", "syls": "pei / shui", "roots": "亼 合 水 氺    "}, "fA": {"sm": "f", "ym": "A", "syls": "yang", "roots": "曰 羊   "}, "fB": {"sm": "f", "ym": "B", "syls": "", "roots": ""}, "fC": {"sm": "f", "ym": "C", "syls": "you / yu", "roots": "小 酉   "}, "fD": {"sm": "f", "ym": "D", "syls": "yao", "roots": "幺"}, "fE": {"sm": "f", "ym": "E", "syls": "yi", "roots": "亦 至  "}, "fF": {"sm": "f", "ym": "F", "syls": "ye / ying", "roots": "也 四 罒"}, "fG": {"sm": "f", "ym": "G", "syls": "ya / yue", "roots": "牙"}, "fH": {"sm": "f", "ym": "H", "syls": "yan / yin", "roots": "廴 音"}, "fI": {"sm": "f", "ym": "I", "syls": "yong / yun", "roots": "云 用  "}, "fJ": {"sm": "f", "ym": "J", "syls": "", "roots": ""}, "fK": {"sm": "f", "ym": "K", "syls": "yuan", "roots": "羽"}, "fL": {"sm": "f", "ym": "L", "syls": "", "roots": ""}, "gA": {"sm": "g", "ym": "A", "syls": "qia / zang", "roots": "斤 "}, "gB": {"sm": "g", "ym": "B", "syls": "qie / zen", "roots": "且 予 耳"}, "gC": {"sm": "g", "ym": "C", "syls": "qu / zou / zu", "roots": "走 足 "}, "gD": {"sm": "g", "ym": "D", "syls": "qian / zao", "roots": "欠 臣 "}, "gE": {"sm": "g", "ym": "E", "syls": "qi / zi", "roots": "自"}, "gF": {"sm": "g", "ym": "F", "syls": "qing / ze", "roots": "食 饣"}, "gG": {"sm": "g", "ym": "G", "syls": "qiang / que / za", "roots": ""}, "gH": {"sm": "g", "ym": "H", "syls": "qin / zan", "roots": "父"}, "gI": {"sm": "g", "ym": "I", "syls": "qiao / qun / zong / zun", "roots": "   "}, "gJ": {"sm": "g", "ym": "J", "syls": "qiu / zai", "roots": "载 "}, "gK": {"sm": "g", "ym": "K", "syls": "qiong / quan / zeng / zuan", "roots": "匕 曲 犬 犭 豸    "}, "gL": {"sm": "g", "ym": "L", "syls": "zei / zui", "roots": ""}, "qA": {"sm": "q", "ym": "A", "syls": "chang / mang", "roots": "业 厂 古  "}, "qB": {"sm": "q", "ym": "B", "syls": "chen / chuo / men", "roots": "戶 户 辶 门"}, "qC": {"sm": "q", "ym": "C", "syls": "chou / chu / mu", "roots": "亍 毋 母"}, "qD": {"sm": "q", "ym": "D", "syls": "chao / mao", "roots": "卯 及 宀 里 面 "}, "qE": {"sm": "q", "ym": "E", "syls": "chi / mi", "roots": "冖 彳 米   "}, "qF": {"sm": "q", "ym": "F", "syls": "che / ming", "roots": "光 屮 車 车   "}, "qG": {"sm": "q", "ym": "G", "syls": "cha / chuai / ma", "roots": "束 麻"}, "qH": {"sm": "q", "ym": "H", "syls": "chan / man", "roots": "皿 石"}, "qI": {"sm": "q", "ym": "I", "syls": "chong / chun / mo", "roots": "虫 "}, "qJ": {"sm": "q", "ym": "J", "syls": "chai / chuang / mai", "roots": ""}, "qK": {"sm": "q", "ym": "K", "syls": "cheng / chuan / meng", "roots": "巛 巜 川  "}, "qL": {"sm": "q", "ym": "L", "syls": "chui / mei", "roots": "毛 "}, "rA": {"sm": "r", "ym": "A", "syls": "bang", "roots": ""}, "rB": {"sm": "r", "ym": "B", "syls": "ben", "roots": "本"}, "rC": {"sm": "r", "ym": "C", "syls": "bu", "roots": ""}, "rD": {"sm": "r", "ym": "D", "syls": "bao", "roots": "勹 弓"}, "rE": {"sm": "r", "ym": "E", "syls": "bi", "roots": "㐅 聿 肀 辟   "}, "rF": {"sm": "r", "ym": "F", "syls": "bing", "roots": "冫 疒  "}, "rG": {"sm": "r", "ym": "G", "syls": "ba", "roots": "巴"}, "rH": {"sm": "r", "ym": "H", "syls": "ban", "roots": ""}, "rI": {"sm": "r", "ym": "I", "syls": "bo", "roots": "卜 "}, "rJ": {"sm": "r", "ym": "J", "syls": "bai", "roots": "氏 白"}, "rK": {"sm": "r", "ym": "K", "syls": "beng", "roots": ""}, "rL": {"sm": "r", "ym": "L", "syls": "bei", "roots": "贝"}, "sA": {"sm": "s", "ym": "A", "syls": "hang / hua", "roots": ""}, "sB": {"sm": "s", "ym": "B", "syls": "hen / huo", "roots": "火 灬"}, "sC": {"sm": "s", "ym": "C", "syls": "hou / hu", "roots": "虍 虎"}, "sD": {"sm": "s", "ym": "D", "syls": "hao", "roots": ""}, "sE": {"sm": "s", "ym": "E", "syls": "", "roots": ""}, "sF": {"sm": "s", "ym": "F", "syls": "he", "roots": "䒑 丷 八 禾 谷    "}, "sG": {"sm": "s", "ym": "G", "syls": "ha / huai", "roots": ""}, "sH": {"sm": "s", "ym": "H", "syls": "han", "roots": "夫"}, "sI": {"sm": "s", "ym": "I", "syls": "hong / hun", "roots": "巾"}, "sJ": {"sm": "s", "ym": "J", "syls": "hai / huang", "roots": "亥 黄 "}, "sK": {"sm": "s", "ym": "K", "syls": "heng / huan", "roots": "一"}, "sL": {"sm": "s", "ym": "L", "syls": "hei / hui", "roots": "兔 黑 "}, "tA": {"sm": "t", "ym": "A", "syls": "fang / xia", "roots": "方 穴"}, "tB": {"sm": "t", "ym": "B", "syls": "fen / xie", "roots": "分"}, "tC": {"sm": "t", "ym": "C", "syls": "fu / xu", "roots": "弗 缶  "}, "tD": {"sm": "t", "ym": "D", "syls": "xian", "roots": "癶 祭"}, "tE": {"sm": "t", "ym": "E", "syls": "xi", "roots": "西 覀"}, "tF": {"sm": "t", "ym": "F", "syls": "xing", "roots": "行"}, "tG": {"sm": "t", "ym": "G", "syls": "fa / xiang / xue", "roots": ""}, "tH": {"sm": "t", "ym": "H", "syls": "fan / xin", "roots": "攴 攵 示 礻 辛 "}, "tI": {"sm": "t", "ym": "I", "syls": "fo / xiao / xun", "roots": "心 忄 "}, "tJ": {"sm": "t", "ym": "J", "syls": "xiu", "roots": ""}, "tK": {"sm": "t", "ym": "K", "syls": "feng / xiong / xuan", "roots": "㠯 丰 乌 吅 龶  "}, "tL": {"sm": "t", "ym": "L", "syls": "fei", "roots": "飞"}, "vA": {"sm": "v", "ym": "A", "syls": "jia / kang / kua", "roots": "㐄 十 甲   "}, "vB": {"sm": "v", "ym": "B", "syls": "jie / ken / kuo", "roots": "㔾 卩 阝  "}, "vC": {"sm": "v", "ym": "C", "syls": "ju / kou / ku", "roots": "口 干"}, "vD": {"sm": "v", "ym": "D", "syls": "jian / kao", "roots": "人 见 "}, "vE": {"sm": "v", "ym": "E", "syls": "ji", "roots": "吉 彐 彑   "}, "vF": {"sm": "v", "ym": "F", "syls": "jing / ke", "roots": "九 井 可 "}, "vG": {"sm": "v", "ym": "G", "syls": "jiang / jue / ka / kuai", "roots": ""}, "vH": {"sm": "v", "ym": "H", "syls": "jin / kan", "roots": "今"}, "vI": {"sm": "v", "ym": "I", "syls": "jiao / jun / kong / kun", "roots": "月 气 角      "}, "vJ": {"sm": "v", "ym": "J", "syls": "jiu / kai / kuang", "roots": "丩 匚 囗 臼     "}, "vK": {"sm": "v", "ym": "K", "syls": "jiong / juan / keng / kuan", "roots": "句 "}, "vL": {"sm": "v", "ym": "L", "syls": "kui", "roots": ""}, "wA": {"sm": "w", "ym": "A", "syls": "cang / wang", "roots": "亡 亾 页 "}, "wB": {"sm": "w", "ym": "B", "syls": "cen / wen", "roots": "文"}, "wC": {"sm": "w", "ym": "C", "syls": "cou / cu / wu", "roots": "五"}, "wD": {"sm": "w", "ym": "D", "syls": "cao", "roots": "丌 卝 尢 廾 艹"}, "wE": {"sm": "w", "ym": "E", "syls": "ci", "roots": "支"}, "wF": {"sm": "w", "ym": "F", "syls": "ce", "roots": "册 目   "}, "wG": {"sm": "w", "ym": "G", "syls": "ca / wa", "roots": "瓦"}, "wH": {"sm": "w", "ym": "H", "syls": "can / wan", "roots": "尸 鱼  "}, "wI": {"sm": "w", "ym": "I", "syls": "cong / cun / wo", "roots": "寸"}, "wJ": {"sm": "w", "ym": "J", "syls": "cai / wai", "roots": ""}, "wK": {"sm": "w", "ym": "K", "syls": "ceng / cuan / weng", "roots": ""}, "wL": {"sm": "w", "ym": "L", "syls": "cui / wei", "roots": "己 韦"}, "xA": {"sm": "x", "ym": "A", "syls": "gang / gua", "roots": "瓜"}, "xB": {"sm": "x", "ym": "B", "syls": "gen / guo", "roots": "王 艮  "}, "xC": {"sm": "x", "ym": "C", "syls": "gou / gu", "roots": "骨"}, "xD": {"sm": "x", "ym": "D", "syls": "gao", "roots": "士 高   "}, "xE": {"sm": "x", "ym": "E", "syls": "", "roots": ""}, "xF": {"sm": "x", "ym": "F", "syls": "ge", "roots": "革 鬲"}, "xG": {"sm": "x", "ym": "G", "syls": "ga / guai", "roots": ""}, "xH": {"sm": "x", "ym": "H", "syls": "gan", "roots": "甘"}, "xI": {"sm": "x", "ym": "I", "syls": "gong / gun", "roots": "工"}, "xJ": {"sm": "x", "ym": "J", "syls": "gai / guang", "roots": "广"}, "xK": {"sm": "x", "ym": "K", "syls": "geng / guan", "roots": "关 毌 龹"}, "xL": {"sm": "x", "ym": "L", "syls": "gei / gui", "roots": "圭 "}, "zA": {"sm": "z", "ym": "A", "syls": "tang", "roots": ""}, "zB": {"sm": "z", "ym": "B", "syls": "", "roots": ""}, "zC": {"sm": "z", "ym": "C", "syls": "tou / tu", "roots": "亠 土 殳 "}, "zD": {"sm": "z", "ym": "D", "syls": "tao", "roots": "田 雨 "}, "zE": {"sm": "z", "ym": "E", "syls": "ti", "roots": "衣 衤   "}, "zF": {"sm": "z", "ym": "F", "syls": "te / ting", "roots": ""}, "zG": {"sm": "z", "ym": "G", "syls": "ta", "roots": ""}, "zH": {"sm": "z", "ym": "H", "syls": "tan", "roots": ""}, "zI": {"sm": "z", "ym": "I", "syls": "tong / tun", "roots": "冂 凵 同   "}, "zJ": {"sm": "z", "ym": "J", "syls": "tai", "roots": ""}, "zK": {"sm": "z", "ym": "K", "syls": "teng / tuan", "roots": ""}, "zL": {"sm": "z", "ym": "L", "syls": "tui", "roots": ""}};
+    </script>
     <table>
         <thead>
             <tr><th class="corner"></th>
@@ -446,6 +481,55 @@ document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
         tooltip.classList.remove('visible');
         hideKeyTooltip();
+    }
+});
+
+// 按键组合占用查询：归一化（去重 + 排序，并击无先后）后查反向索引
+const chordInput = document.getElementById('chord-input');
+const chordResult = document.getElementById('chord-result');
+
+function normalizeChord(raw) {
+    const keys = new Set();
+    for (const ch of raw.toLowerCase()) {
+        if (ALLOWED_KEYS.includes(ch)) keys.add(ch);
+    }
+    return [...keys].sort().join('');
+}
+
+function updateChordResult() {
+    const raw = chordInput.value;
+    if (!raw.trim()) {
+        chordResult.textContent = '';
+        return;
+    }
+    const keys = normalizeChord(raw);
+    if (!keys) {
+        chordResult.textContent =
+            '未识别到有效按键（本表可用键位：' + ALLOWED_KEYS + '）';
+        return;
+    }
+    const code = CHORD_TO_CODE[keys];
+    if (code) {
+        const info = CODE_INFO[code] || { sm: code[0], ym: code[1], syls: '', roots: '' };
+        const bits = [
+            `已占用：组合 <span class="hit">${keys}</span> 对应码元 <span class="hit">${code}</span>` +
+            `（声母 ${info.sm} · 韵母 ${info.ym}）`
+        ];
+        if (info.syls) bits.push(`音节：${info.syls}`);
+        if (info.roots) bits.push(`字根：${info.roots}`);
+        chordResult.innerHTML = bits.join('，');
+    } else {
+        chordResult.textContent =
+            `空闲：组合 ${keys} 未被任何码元占用，可用于扩展`;
+    }
+}
+
+chordInput.addEventListener('input', updateChordResult);
+// 故意不 stopPropagation：让 document 级 Escape 监听一并关闭 tooltip
+chordInput.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+        chordInput.value = '';
+        updateChordResult();
     }
 });
 </script>

@@ -186,6 +186,25 @@ def code_syllables(key: str, finger: str, shengmu: dict, yunmu: dict) -> list[st
     return out
 
 
+def build_chord_index(fingering: dict[str, str]) -> dict[str, str]:
+    """并击组合（归一化：去重 + 排序，并击无先后）→ 码元的反向索引。
+
+    占用判定必须无歧义：若归一化后同一组合被多个码元使用，直接失败，
+    防止未来重排键位引入组合冲突时错误索引静默上线。
+    """
+    index: dict[str, str] = {}
+    for code, chord in fingering.items():
+        norm = "".join(sorted(set(chord)))
+        prev = index.get(norm)
+        if prev is not None and prev != code:
+            raise SystemExit(
+                f"组合 {norm} 同时被码元 {prev} 与 {code} 占用，"
+                f"占用判定存在歧义，请先重排键位"
+            )
+        index[norm] = code
+    return index
+
+
 def build_cells(roots: dict[str, dict]) -> dict[str, list[dict]]:
     """码元 → 字根列表，按字根出现顺序（即字表频序）保留。"""
     cells: dict[str, list[dict]] = defaultdict(list)
@@ -208,6 +227,19 @@ def generate(shengmu, yunmu, roots, fingering) -> str:
     cells = build_cells(roots)
     total_roots = sum(len(v) for v in cells.values())
     filled = sum(1 for k in cells if cells[k])
+
+    # 按键组合占用查询的嵌入数据：反向索引 + 码元说明（生成时自检组合冲突）
+    chord_index = build_chord_index(fingering)
+    code_info: dict[str, dict] = {}
+    for code in fingering:
+        sm, ym = code[0], code[1]
+        syls = " / ".join(code_syllables(sm, ym, shengmu, yunmu))
+        glyphs = " ".join(item["glyph"] for item in cells.get(code, []))
+        code_info[code] = {"sm": sm, "ym": ym, "syls": syls, "roots": glyphs}
+    allowed_keys = "".join(KEY_GRID)
+    chord_json = json.dumps(chord_index, ensure_ascii=False).replace("<", "\\u003c")
+    info_json = json.dumps(code_info, ensure_ascii=False).replace("<", "\\u003c")
+    allowed_json = json.dumps(allowed_keys)
 
     head = f"""<!DOCTYPE html>
 <html lang="zh-CN">
@@ -291,6 +323,30 @@ def generate(shengmu, yunmu, roots, fingering) -> str:
             font-size: 12px; line-height: 1.9;
         }}
         .legend code {{ background: var(--paper-cream); padding: 1px 4px; border-radius: 3px; }}
+
+        /* 按键组合占用查询 */
+        .chord-query {{
+            max-width: 680px; margin: 0 auto 16px; display: flex;
+            flex-direction: column; gap: 7px; align-items: center;
+        }}
+        .chord-query input {{
+            width: 100%; padding: 8px 12px; font-size: 15px; text-align: center;
+            font-family: ui-monospace, monospace; color: var(--ink-black);
+            background: var(--paper-white); border: 1px solid var(--border-color);
+            border-radius: 6px; outline: none; transition: border-color .15s, box-shadow .15s;
+        }}
+        .chord-query input:focus {{
+            border-color: var(--cinnabar-red);
+            box-shadow: 0 0 0 2px oklch(0.55 0.18 25 / .15);
+        }}
+        .chord-result {{
+            min-height: 20px; font-size: 13px; color: var(--ink-medium);
+            line-height: 1.7; text-align: center;
+        }}
+        .chord-result .hit {{
+            color: var(--cinnabar-red); font-weight: 700;
+            font-family: ui-monospace, monospace;
+        }}
         .tooltip {{
             position: fixed; background: var(--paper-white); border: 1px solid var(--border-color);
             border-radius: 6px; padding: 14px 18px; box-shadow: 0 4px 20px rgba(0,0,0,.15);
@@ -332,6 +388,17 @@ def generate(shengmu, yunmu, roots, fingering) -> str:
         右手通常镜像等价，<code>bA–bL</code> 采用悬停所示的专用右手指法。
         每格底部的小字是该码元能拼出的全部合法音节，方便对照声韵练习。
     </div>
+    <div class="chord-query">
+        <input type="text" id="chord-input" inputmode="none" autocomplete="off"
+               spellcheck="false" autocapitalize="off"
+               placeholder="查询按键组合占用：输入 1–3 个键，如 wt（键位：{GRID_LABEL}）">
+        <div class="chord-result" id="chord-result" role="status" aria-live="polite"></div>
+    </div>
+    <script>
+const ALLOWED_KEYS = {allowed_json};
+const CHORD_TO_CODE = {chord_json};
+const CODE_INFO = {info_json};
+    </script>
     <table>
         <thead>
             <tr><th class="corner"></th>
@@ -481,6 +548,55 @@ document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
         tooltip.classList.remove('visible');
         hideKeyTooltip();
+    }
+});
+
+// 按键组合占用查询：归一化（去重 + 排序，并击无先后）后查反向索引
+const chordInput = document.getElementById('chord-input');
+const chordResult = document.getElementById('chord-result');
+
+function normalizeChord(raw) {
+    const keys = new Set();
+    for (const ch of raw.toLowerCase()) {
+        if (ALLOWED_KEYS.includes(ch)) keys.add(ch);
+    }
+    return [...keys].sort().join('');
+}
+
+function updateChordResult() {
+    const raw = chordInput.value;
+    if (!raw.trim()) {
+        chordResult.textContent = '';
+        return;
+    }
+    const keys = normalizeChord(raw);
+    if (!keys) {
+        chordResult.textContent =
+            '未识别到有效按键（本表可用键位：' + ALLOWED_KEYS + '）';
+        return;
+    }
+    const code = CHORD_TO_CODE[keys];
+    if (code) {
+        const info = CODE_INFO[code] || { sm: code[0], ym: code[1], syls: '', roots: '' };
+        const bits = [
+            `已占用：组合 <span class="hit">${keys}</span> 对应码元 <span class="hit">${code}</span>` +
+            `（声母 ${info.sm} · 韵母 ${info.ym}）`
+        ];
+        if (info.syls) bits.push(`音节：${info.syls}`);
+        if (info.roots) bits.push(`字根：${info.roots}`);
+        chordResult.innerHTML = bits.join('，');
+    } else {
+        chordResult.textContent =
+            `空闲：组合 ${keys} 未被任何码元占用，可用于扩展`;
+    }
+}
+
+chordInput.addEventListener('input', updateChordResult);
+// 故意不 stopPropagation：让 document 级 Escape 监听一并关闭 tooltip
+chordInput.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+        chordInput.value = '';
+        updateChordResult();
     }
 });
 </script>
