@@ -60,7 +60,12 @@ def main() -> int:
             procs = patches[s].get("engine/processors", [])
             segs = patches[s].get("engine/segmentors", [])
             trans = patches[s].get("engine/translators", {})
-            trans_list = trans.get("__append", []) if isinstance(trans, dict) else []
+            if isinstance(trans, dict):
+                trans_list = trans.get("__append", [])
+            elif isinstance(trans, list):
+                trans_list = trans
+            else:
+                trans_list = []
             all_refs = list(procs) + list(segs) + list(trans_list)
             check(comp in all_refs, f"{s}: 引用 {comp}")
 

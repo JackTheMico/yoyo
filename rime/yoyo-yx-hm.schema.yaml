@@ -55,8 +55,9 @@ __patch:
     - punct_segmentor
     - fallback_segmentor
   engine/translators:
-    __append:
-      - lua_translator@*yoyo.reverse   # 拼音反查（reverse 段，与折梅共用同一份数据）
+    - punct_translator
+    - table_translator
+    - lua_translator@*yoyo.reverse   # 拼音反查（reverse 段，显式列表：librime 1.17 不展开 __append）
   reverse:
     prefix: "`"                        # 反查前缀键
     max_candidates: 100                # 单次查询最大候选数

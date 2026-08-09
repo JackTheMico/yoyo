@@ -24,17 +24,21 @@ local out
 _G.yield = function(s)
   out[#out + 1] = s
 end
-_G.Segment = function(s, e, tag)
-  return { start = s, _end = e, tag = tag }
+_G.Segment = function(s, e)
+  return {
+    start = s,
+    _end = e,
+    tags = {},
+    has_tag = function(self, t)
+      return self.tags[t] == true
+    end,
+  }
 end
 
 -- ---- stub Context ----
 local function make_context(init_input)
   return {
     input = init_input or "",
-    get_input = function(self)
-      return self.input
-    end,
     push_input = function(self, s)
       self.input = self.input .. s
     end,
@@ -110,20 +114,17 @@ check(input_processor.func(make_key(0x61, { release = true }), env5) == yoyo.kNo
 check(input_processor.func(make_key(0x61, { ctrl = true }), env5) == yoyo.kNoop, "ctrl 组合放行")
 check(input_processor.func(make_key(0x61, { shift = true }), env5) == yoyo.kNoop, "shift 组合放行")
 
--- ---- reverse_segmentor ----
+-- ---- reverse_segmentor（真实签名 func(segmentation, env)，返回段列表） ----
 local senv = { reverse_segmentor = { prefix = "`" } }
-out = {}
-segmentor.func("`han", { start = 0, _end = 4 }, senv)
-check(#out == yoyo.kAccepted and out[1].tag == "reverse" and out[1].start == 0 and out[1]._end == 4,
-  "反查 input 应产出整段 reverse 段")
+local segs = segmentor.func({ input = "`han" }, senv)
+check(#segs == 1 and segs[1]:has_tag("reverse") and segs[1].start == 0 and segs[1]._end == 4,
+  "反查 input 应产出整段 reverse 段, 实际 " .. #segs .. " 段")
 
-out = {}
-segmentor.func("han", { start = 0, _end = 3 }, senv)
-check(#out == 0, "非反查 input 不产出段")
+local segs2 = segmentor.func({ input = "han" }, senv)
+check(#segs2 == 0, "非反查 input 不产出段")
 
-out = {}
-segmentor.func("`", { start = 0, _end = 1 }, senv)
-check(#out == yoyo.kAccepted and out[1].tag == "reverse", "仅前缀键也建 reverse 段")
+local segs3 = segmentor.func({ input = "`" }, senv)
+check(#segs3 == 1 and segs3[1]:has_tag("reverse"), "仅前缀键也建 reverse 段")
 
 print(("通过 %d 项断言"):format(passed))
 if ok then

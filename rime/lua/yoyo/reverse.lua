@@ -155,15 +155,15 @@ end
 ---@param segment Segment
 ---@param env ReverseEnv
 function translator.func(input, segment, env)
-  if not segment:has_tag("reverse") then
-    return
-  end
+  -- 段文本可能不含反查前缀（librime 会把 ` 单独分段），用完整输入判断
+  local ctx = env.engine.context
+  local full = ctx.input or ""
   local cfg = env.reverse or DEFAULTS
   local prefix = cfg.prefix
-  if input:sub(1, #prefix) ~= prefix then
+  if full:sub(1, #prefix) ~= prefix then
     return
   end
-  local pinyin = input:sub(#prefix + 1)
+  local pinyin = full:sub(#prefix + 1)
   if pinyin == "" or not pinyin:match("^[a-z]*$") then
     return
   end

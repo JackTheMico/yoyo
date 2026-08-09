@@ -35,7 +35,7 @@ function processor.func(key_event, env)
     return yoyo.kNoop
   end
   local context = env.engine.context
-  local input = context:get_input()
+  local input = context.input or ""
   local prefix = env.reverse_input and env.reverse_input.prefix or "`"
   -- 非反查模式：放行。注意反查前缀键 ` 本身也走这里——它不在 chord_composer
   -- 字母表，会经 recognizer/key_binder 落到 speller 加入 input（speller alphabet 含 `），

@@ -49,7 +49,12 @@ local function make_env(reverse_cfg)
   else
     cfg.get_map = function() return nil end
   end
-  return { engine = { schema = { config = cfg } } }
+  return {
+    engine = {
+      schema = { config = cfg },
+      context = { input = "" },
+    },
+  }
 end
 
 -- 1. init 默认配置
@@ -65,6 +70,7 @@ check(env2.reverse.max_candidates == 50, "init 读 reverse/max_candidates=50")
 
 -- 3. 集成: `hanmei → 寒梅/sHqL
 out = {}
+env.engine.context.input = "`hanmei"
 local seg = make_seg()
 reverse.func("`hanmei", seg, env)
 check(#out > 0 and out[1].text == "寒梅" and out[1].comment == "sHqL",
@@ -72,27 +78,32 @@ check(#out > 0 and out[1].text == "寒梅" and out[1].comment == "sHqL",
 
 -- 4. 非 reverse 段不产出
 out = {}
+env.engine.context.input = "abcd"
 local seg_plain = make_seg(function() return false end)
 reverse.func("abcd", seg_plain, env)
 check(#out == 0, "非 reverse 段无候选")
 
 -- 5. 前缀剥离: ` 不在开头不产出
 out = {}
+env.engine.context.input = "han`mei"
 reverse.func("han`mei", seg, env)
 check(#out == 0, "前缀键不在开头不产出")
 
 -- 6. 空拼音无候选
 out = {}
+env.engine.context.input = "`"
 reverse.func("`", seg, env)
 check(#out == 0, "空拼音无候选")
 
 -- 7. 非法字符（非 a-z）无候选
 out = {}
+env.engine.context.input = "`Han"
 reverse.func("`Han", seg, env)
 check(#out == 0, "大写输入无候选")
 
 -- 8. max_candidates 生效
 out = {}
+env2.engine.context.input = "`zh"
 reverse.func("`zh", make_seg(), env2)
 check(#out <= 50, "max_candidates=50 生效, 实际 " .. #out)
 
