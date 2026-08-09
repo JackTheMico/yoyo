@@ -108,13 +108,15 @@ MANUAL: dict[tuple[str, str], str] = {
 
 
 def is_2key_allowed(combo: str) -> bool:
-    """2 键组合允许:两指(不同手指,任意排) 或 同列横压(同指同列相邻排)。"""
+    """2 键组合允许:两指(不同手指,任意排)、同列横压(同指同列相邻排) 或 同排横压(同指同排相邻列,如 rt/fg/vb)。"""
     if len(combo) != 2:
         return False
     a, b = combo
     if FINGER[a] != FINGER[b]:
         return True
-    return COL[a] == COL[b] and abs(ROW[a] - ROW[b]) == 1
+    if COL[a] == COL[b] and abs(ROW[a] - ROW[b]) == 1:
+        return True   # 同列横压
+    return ROW[a] == ROW[b] and abs(COL[a] - COL[b]) == 1   # 同排横压
 
 
 def pool_2key(exclude: set[str] | None = None) -> list[str]:

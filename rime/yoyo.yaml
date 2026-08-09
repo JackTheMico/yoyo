@@ -613,9 +613,6 @@ menu:
     - xform|eAwAfA|eJ|
     - xform|eAtAsA|eL|
     - xform|eAsAtA|eL|
-    - xform|rAtAdA|rC|
-    - xform|dAtArA|rC|
-    - xform|rAdAtA|rC|
     - xform|eArAgA|rG|
     - xform|rAeAgA|rG|
     - xform|rAdAgA|rK|
@@ -676,9 +673,6 @@ menu:
     - xform|bAfAdA|fD|
     - xform|dAbAfA|fD|
     - xform|fAdAbA|fD|
-    - xform|rAsAfA|fG|
-    - xform|sArAfA|fG|
-    - xform|rAfAsA|fG|
     - xform|aAsAgA|gC|
     - xform|gAsAaA|gC|
     - xform|eAfAgA|gD|
@@ -746,11 +740,15 @@ menu:
     - xform|fAvAcA|cL|
     - xform|sAcAvA|vJ|
     - xform|sAvAcA|vJ|
-    - xform|dAfAvA|vK|
-    - xform|fAdAvA|vK|
     - xform|dAxAbA|bH|
     - xform|xAdAbA|bH|
     - xform|dAbAxA|bH|
+    - xform|rAtA|rC|
+    - xform|tArA|rC|
+    - xform|fAgA|fG|
+    - xform|gAfA|fG|
+    - xform|vAbA|vK|
+    - xform|bAvA|vK|
     - xform|rAzA|rD|
     - xform|zArA|rD|
     - xform|tAdA|tJ|
