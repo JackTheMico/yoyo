@@ -570,7 +570,7 @@ menu:
     - xform|c|cA|
     - xform|v|vA|
     - xform|b|bA|
-    # B-M 位：多键并击（规则按源串长度降序，避免长组合被短组合截断）
+    # B-L 位：多键并击（规则按源串长度降序，避免长组合被短组合截断）
     - xform|qAwAeA|qH|
     - xform|eAwAqA|qH|
     - xform|qAeAsA|qI|
@@ -600,8 +600,7 @@ menu:
     - xform|eAwAgA|wK|
     - xform|qAwAgA|wL|
     - xform|wAqAgA|wL|
-    - xform|wAaAdA|wM|
-    - xform|wAdAaA|wM|
+
     - xform|eArAtA|eB|
     - xform|rAeAtA|eB|
     - xform|qAeArA|eC|
@@ -615,8 +614,7 @@ menu:
     - xform|eAwAfA|eJ|
     - xform|eAtAsA|eL|
     - xform|eAsAtA|eL|
-    - xform|eAsAgA|eM|
-    - xform|eAgAsA|eM|
+
     - xform|rAtAdA|rC|
     - xform|dAtArA|rC|
     - xform|rAdAtA|rC|
@@ -649,9 +647,7 @@ menu:
     - xform|sAaAvA|aK|
     - xform|aAsAcA|aL|
     - xform|sAaAcA|aL|
-    - xform|aAdAgA|aM|
-    - xform|dAaAgA|aM|
-    - xform|gAdAaA|aM|
+
     - xform|sAdAfA|sB|
     - xform|fAdAsA|sB|
     - xform|sAdAgA|sD|
@@ -664,12 +660,10 @@ menu:
     - xform|eAsAaA|sI|
     - xform|rAsAdA|sJ|
     - xform|rAdAsA|sJ|
-    - xform|sAgAcA|sK|
-    - xform|sAcAgA|sK|
-    - xform|gAsAcA|sK|
-    - xform|sAdAvA|sM|
-    - xform|sAvAdA|sM|
-    - xform|dAsAvA|sM|
+    - xform|eAsAgA|sK|
+    - xform|eAgAsA|sK|
+    - xform|gAeAsA|sK|
+
     - xform|dAfAgA|dB|
     - xform|gAfAdA|dB|
     - xform|aAdAfA|dC|
@@ -697,8 +691,7 @@ menu:
     - xform|rAdAfA|fI|
     - xform|dArAfA|fI|
     - xform|rAfAdA|fI|
-    - xform|eArAfA|fM|
-    - xform|rAeAfA|fM|
+
     - xform|aAsAgA|gC|
     - xform|gAsAaA|gC|
     - xform|eAfAgA|gD|
@@ -709,9 +702,7 @@ menu:
     - xform|gAfAsA|gH|
     - xform|eAtAgA|gK|
     - xform|eAgAtA|gK|
-    - xform|dAgAvA|gM|
-    - xform|gAdAvA|gM|
-    - xform|dAvAgA|gM|
+
     - xform|zAxAbA|zB|
     - xform|bAxAzA|zB|
     - xform|zAbAxA|zB|
@@ -729,8 +720,7 @@ menu:
     - xform|zAxAcA|zL|
     - xform|zAcAxA|zL|
     - xform|cAxAzA|zL|
-    - xform|sAdAzA|zM|
-    - xform|dAsAzA|zM|
+
     - xform|xAcAvA|xB|
     - xform|vAcAxA|xB|
     - xform|xAvAbA|xD|
@@ -750,8 +740,7 @@ menu:
     - xform|fAdAxA|xK|
     - xform|fAxAvA|xL|
     - xform|fAvAxA|xL|
-    - xform|fAxAcA|xM|
-    - xform|fAcAxA|xM|
+
     - xform|gAcAbA|cB|
     - xform|bAcAgA|cB|
     - xform|gAbAcA|cB|
@@ -771,8 +760,7 @@ menu:
     - xform|gAfAcA|cK|
     - xform|fAcAvA|cL|
     - xform|fAvAcA|cL|
-    - xform|gAcAvA|cM|
-    - xform|gAvAcA|cM|
+
     - xform|dAvAbA|vI|
     - xform|dAbAvA|vI|
     - xform|sAcAvA|vJ|
@@ -793,8 +781,7 @@ menu:
     - xform|cArA|rI|
     - xform|rAxA|rJ|
     - xform|xArA|rJ|
-    - xform|rAzA|rM|
-    - xform|zArA|rM|
+
     - xform|tAxA|tC|
     - xform|xAtA|tC|
     - xform|tAaA|tH|
@@ -829,8 +816,7 @@ menu:
     - xform|vAeA|vH|
     - xform|zAvA|vL|
     - xform|vAzA|vL|
-    - xform|xAvA|vM|
-    - xform|vAxA|vM|
+
     - xform|aAbA|bC|
     - xform|bAaA|bC|
     - xform|eAbA|bI|
@@ -839,8 +825,7 @@ menu:
     - xform|bAcA|bJ|
     - xform|sAbA|bK|
     - xform|bAsA|bK|
-    - xform|zAbA|bM|
-    - xform|bAzA|bM|
+
     - xform|qAwA|qB|
     - xform|wAqA|qB|
     - xform|qAeA|qC|
@@ -850,7 +835,7 @@ menu:
     - xform|qAtA|qE|
     - xform|qAfA|qF|
     - xform|qAsA|qG|
-    - xform|qAdA|qM|
+
     - xform|wAeA|wC|
     - xform|eAwA|wC|
     - xform|wArA|wE|
@@ -874,8 +859,7 @@ menu:
     - xform|tAeA|tF|
     - xform|tAsA|tG|
     - xform|sAtA|tG|
-    - xform|tAdA|tM|
-    - xform|dAtA|tM|
+
     - xform|aAsA|aC|
     - xform|sAaA|aC|
     - xform|qAaA|aE|
@@ -896,7 +880,7 @@ menu:
     - xform|dAeA|dE|
     - xform|wAdA|dF|
     - xform|dAzA|dG|
-    - xform|dAbA|dM|
+
     - xform|dAfA|fB|
     - xform|fAdA|fB|
     - xform|fAxA|fE|

@@ -36,9 +36,6 @@ __patch:
     - xform/[_+<>]//
   key_binder:
     bindings:
-      # 单按 Ctrl 切换中英文输入（左右 Ctrl 均可）
-      - {accept: Control_L, toggle: ascii_mode, when: always}
-      - {accept: Control_R, toggle: ascii_mode, when: always}
       - {accept: BackSpace, send_sequence: "{BackSpace}{BackSpace}{BackSpace}", when: composing}
       - {accept: "Right", send_sequence: "{Right}{Right}{Right}", when: composing}
       - {accept: "Left", send_sequence: "{Left}{Left}{Left}", when: composing}
@@ -49,6 +46,16 @@ __patch:
       - {accept: "Control+period", toggle: ascii_punct, when: always}
       - {accept: "Shift+space", toggle: full_shape, when: always}
       # - {accept: "Control+Shift+space", select: .next, when: always}
+  # 用大写锁定切换中英文
+  ascii_composer:
+    good_old_caps_lock: true
+    switch_key:
+      Control_L: clear # noop 无 |clear 字符被清除，转英文输入
+      Control_R: clear # noop 无 |commit_text 输入一段编码字符后汉字上屏，转英文输入
+      Shift_L: noop
+      Shift_R: noop
+      Caps_Lock: clear
+      Eisu_toggle: clear
   chord_composer:
     alphabet: "123456qwertasdfgzxcvb 7890-=uiop[hjkl;ynm,./"
     prompt_format:  # 并击过程中套用的式样

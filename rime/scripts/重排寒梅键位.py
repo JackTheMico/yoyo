@@ -3,8 +3,8 @@
 
 背景
 ----
-rime/yoyo.yaml 的「寒梅」段定义音形方案的并击指法:180 个槽
-(15 声母键 × 12 码元 B–M),每个槽是一个 2/3 键的物理按键组合,
+rime/yoyo.yaml 的「寒梅」段定义音形方案的并击指法:165 个槽
+(15 声母键 × 11 码元 B–L),每个槽是一个 2/3 键的物理按键组合,
 由 xform 规则把「按键组合 → 码元字母」映射出来。词库编码由
 「声母键字母 + 码元字母」组成,因此**码元字母不变,词库零改动**,
 重排只改 yoyo.yaml 寒梅段。
@@ -26,11 +26,11 @@ rime/yoyo.yaml 的「寒梅」段定义音形方案的并击指法:180 个槽
 优化目标
 --------
 最大化 2 键槽数量(最少化「三指」= 3 键槽):
-  2 键池放宽后共 91 个组合,180 槽中最多 91 个可用 2 键,
-  其余 89 个槽用 3 键。用带权匈牙利:2 键列成本 = 人体工程,
+  2 键池放宽后共 91 个组合,165 槽中最多 91 个可用 2 键,
+  其余 74 个槽用 3 键。用带权匈牙利:2 键列成本 = 人体工程,
   虚拟列(3 键)成本 = 大惩罚,自动优先填满 2 键。
 MANUAL 手动指定槽默认锁定(用户点名,不改动);`--free-manual` 时
-全部 180 槽统一优化(手动指定也参与 2 键化)。
+全部 165 槽统一优化(手动指定也参与 2 键化)。
 
 用法
 ----
@@ -103,6 +103,7 @@ MANUAL: dict[tuple[str, str], str] = {
     ("b", "I"): "eb",   # free-manual 优化后:eb(2 键)
     ("t", "D"): "qwt",  # free-manual 优化后:qwt
     ("d", "K"): "cd",   # dK 定点:用户指定 cd(同列横压,手动指定)
+    ("s", "K"): "esg",  # sK 定点:用户指定 seg/esg(esg 为 chord 归一化序,原 eM 组合)
 }
 
 
@@ -521,7 +522,7 @@ def rebuild(body: list[str], slots: dict) -> tuple[list[str], dict, dict]:
 def verify(body: list[str], fixes: dict) -> None:
     """内置校验:结构、约束、唯一、覆盖。"""
     slots = build_slots(body)
-    assert len(slots) == 180, f"槽数 {len(slots)} != 180"
+    assert len(slots) == 165, f"槽数 {len(slots)} != 165"
     # 每个槽的所有规则行键数必须一致(防止键数变化后残留旧规则行)
     for (sm, mf), s in slots.items():
         combos = {norm_keys(v) for v in s["variants"]}
@@ -549,7 +550,7 @@ def verify(body: list[str], fixes: dict) -> None:
         seen.add(s["base"])
     # 码元字母与声母键集合不变
     assert {s for s, _ in slots} == set(LEFT_KEYS)
-    assert {m for _, m in slots} == set("BCDEFGHIJKLM")
+    assert {m for _, m in slots} == set("BCDEFGHIJKL")
     # 修复明细:新旧不同、约束不违例(MANUAL 手动指定槽允许例外)
     for (sm, mf), (old, new) in fixes.items():
         assert old != new
@@ -561,7 +562,7 @@ def verify(body: list[str], fixes: dict) -> None:
                 rows = {ROW[k] for k in new}
                 assert not (0 in rows and 2 in rows)
         assert sm in new
-    # 全量可达性:枚举左手组合模拟 xform 规则链,180 码元必须全部能打出
+    # 全量可达性:枚举左手组合模拟 xform 规则链,165 码元必须全部能打出
     # (防止 2 键规则混入 3 键区截断长规则等顺序问题)
     rules = []
     for line in body:
@@ -578,12 +579,12 @@ def verify(body: list[str], fixes: dict) -> None:
                 c = re.sub(pat, repl, c)
             if re.match(r"^[a-z][B-M]$", c):
                 reach.add(c)
-    missing = {a + b for a in LEFT_KEYS for b in "BCDEFGHIJKLM"} - reach
+    missing = {a + b for a in LEFT_KEYS for b in "BCDEFGHIJKL"} - reach
     assert not missing, f"打不出的码元: {sorted(missing)}"
 
 
 def print_report(fixes: dict, stats: dict) -> None:
-    n2 = 180 - len(stats["3键槽"])
+    n2 = 165 - len(stats["3键槽"])
     print(f"修复槽数: {len(fixes)}")
     print(f"2键槽: {n2} 个(3→2 减少 {len(stats['3→2'])} 个;2→3 增加 {len(stats['2→3'])} 个)")
     three = stats["3键槽"]
