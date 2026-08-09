@@ -7,3 +7,6 @@ deep_crawl/
 /.python-version
 /.reasonix/
 yoyo.yaml.bak-*
+
+# Reasonix 本地工具配置(allowlist/sandbox), 不入库
+reasonix.toml
