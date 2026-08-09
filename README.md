@@ -63,6 +63,7 @@ yoyo-input/                         # 麓鸣输入法项目
  │   │   ├── 声韵母按权重重排键位指法/  # 音形 A 位布局优化与字典改写
  │   │   ├── generate_reverse_data.py # 生成拼音反查数据（lua/yoyo/data/，词库更新/重排后须重跑）
  │   │   ├── test_reverse_*.lua      # 拼音反查 Lua 单测（查询/集成/门卫，纯 Lua 运行）
+ │   │   ├── deploy.sh               # 一键部署方案到 Rime 用户目录（含反查组件，--dry-run 预览）
  │   │   └── trim_word_dict.py      # 生成发布用的精简音形词库
  │   └── lua/yoyo/                  # Lua脚本目录
  │       ├── yoyo.lua               # 核心类定义
