@@ -9,7 +9,8 @@
 # 行为（均幂等，可重复执行）：
 #   1. 同步 rime/ 下 yoyo* 相关 yaml 与 lua/ 到目标目录（不删目标多余文件，不覆盖用户 default.yaml）
 #   2. 在 default.custom.yaml 的 schema_list 注册 yoyo-bm-km / yoyo-wx-km
-#   3. 触发 fcitx5 重新部署（fcitx5-remote -r）使方案生效
+#   3. 调用 rime_deployer 构建部署产物（确保新 schema 有 build 产物，选单显示中文名、可正常输入）
+#   4. 触发 fcitx5 重新部署（fcitx5-remote -r）使方案生效
 set -euo pipefail
 
 SRC_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -71,7 +72,30 @@ else
   echo "   请手动在 $DST_DIR/default.custom.yaml 的 schema_list 加入 yoyo-bm-km / yoyo-wx-km"
 fi
 
-# ---- 3. 触发 fcitx5 重新部署 ----
+# ---- 3. 构建 rime 部署产物（确保新 schema 有 build 产物）----
+echo "== 构建 rime 部署产物 =="
+RIME_DEPLOYER="${RIME_DEPLOYER:-rime_deployer}"
+if command -v "$RIME_DEPLOYER" >/dev/null 2>&1; then
+  "$RIME_DEPLOYER" --build "$DST_DIR" "$DST_DIR/build" "$DST_DIR/build" 2>&1 | grep -iE "error building|failed to save" && {
+    echo "警告：部分 schema 构建失败，但 yoyo 方案可能已正常构建"
+  } || true
+  # 验证新 schema 构建产物
+  missing_build=()
+  for s in yoyo-bm-km yoyo-wx-km; do
+    [ -f "$DST_DIR/build/${s}.schema.yaml" ] || missing_build+=("$s")
+  done
+  if [ ${#missing_build[@]} -eq 0 ]; then
+    echo "已构建 yoyo-bm-km / yoyo-wx-km 部署产物"
+  else
+    echo "警告：${missing_build[*]} 构建产物缺失——方案选单可能显示英文名且无法输入中文"
+    echo "  请检查 rime_deployer 输出或手动运行："
+    echo "  $RIME_DEPLOYER --build $DST_DIR $DST_DIR/build $DST_DIR/build"
+  fi
+else
+  echo "警告：未找到 $RIME_DEPLOYER，跳过构建——请手动运行 rime_deployer 或重启 fcitx5 触发自动构建"
+fi
+
+# ---- 4. 触发 fcitx5 重新部署 ----
 echo "== 触发 fcitx5 重新部署 =="
 if [ "${FCITX5_NO_RESTART:-0}" = "1" ]; then
   echo "已跳过 fcitx5 重启（FCITX5_NO_RESTART=1），方案将在下次 fcitx5 重启/重新部署时生效"
