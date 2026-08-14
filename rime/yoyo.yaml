@@ -8,7 +8,7 @@ switches:
     states: [ 中文, 西文 ]
   - name: full_shape
     states: [ 半角, 全角 ]
-  # - name: simplification
+  - name: simplification
     # states: [ 汉字, 漢字 ]
   - name: ascii_punct
     states: [ 。，, ．， ]
@@ -587,7 +587,10 @@ menu:
     - xform|ed|>|
     - xform|xz|?|
     - xform|zx|?|
-  # 大写码元（26 个，单手双键）：
+  # 大写码元（25 个双键 + 1 个三键）：
+    # Q 是三键并击，必须在双键规则之前匹配
+    - xform|efs|Q|
+    - xform|ijl|Q|
     - xform|av|A|
     - xform|va|A|
     - xform|qw|B|
@@ -620,8 +623,6 @@ menu:
     - xform|wa|O|
     - xform|fq|P|
     - xform|qf|P|
-    - xform|qv|Q|
-    - xform|vq|Q|
     - xform|et|R|
     - xform|te|R|
     - xform|sv|S|
