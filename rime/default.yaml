@@ -10,6 +10,8 @@ config_version: '2025-12-15'
 schema_list:
   - schema: yoyo-bm       # 纯形·北冥（单字派）
   - schema: yoyo-wx       # 纯形·无相（主词派）
+  - schema: yoyo-bm-km    # 纯形·北冥·空明（空明拳指法）
+  - schema: yoyo-wx-km    # 纯形·无相·空明（空明拳指法）
   - schema: yoyo-yx       # 音形·呦呦
   - schema: yoyo-yx-hm   # 音形·呦呦（寒梅指法）
   - schema: yoyo-practice # 纯形字根练习
