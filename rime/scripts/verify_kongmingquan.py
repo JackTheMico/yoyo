@@ -57,14 +57,22 @@ def apply_xforms(s, rules):
     return s
 
 
+# chord_composer 的 alphabet（决定按键排序顺序）
+ALPHABET = "12345qwertasdfgzxcvb 67890yuiophjkl;nm,./"
+
+def chord_sort(s):
+    """按 chord_composer alphabet 位置排序按键，而非字母序。"""
+    return "".join(sorted(s, key=lambda c: ALPHABET.find(c) if c in ALPHABET else 999))
+
+
 def main():
     mirror, yuan = load_rules()
     print(f"镜像规则 {len(mirror)} 条, 码元规则 {len(yuan)} 条")
 
-    # 键组合(排序) -> 码元
+    # 键组合(按 alphabet 位置排序) -> 码元
     combo = {}
     for src, dst in yuan:
-        keys = tuple(sorted(src))
+        keys = tuple(chord_sort(src))
         combo[keys] = dst
     for k in "qwertasdfgzxcvb":  # 单键直出
         combo[(k,)] = k
@@ -116,7 +124,7 @@ def main():
             continue
         total_double += 1
         if all(k in inv for k in keys):
-            rk = tuple(sorted(inv[k] for k in keys))
+            rk = tuple(chord_sort(inv[k] for k in keys))
             out = apply_xforms("".join(rk), all_rules)
             if out == y:
                 right_ok += 1

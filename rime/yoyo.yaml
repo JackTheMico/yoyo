@@ -589,8 +589,9 @@ menu:
     - xform|zx|?|
   # 大写码元（25 个双键 + 1 个三键）：
     # Q 是三键并击，必须在双键规则之前匹配
+    # 左手按 e+s+f → esf（alphabet排序），右手 i+j+l 先镜像成 e+f+s → efs
+    - xform|esf|Q|
     - xform|efs|Q|
-    - xform|ijl|Q|
     - xform|av|A|
     - xform|va|A|
     - xform|qw|B|
