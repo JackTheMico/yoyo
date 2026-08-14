@@ -5,3 +5,6 @@ release/
 dist/
 deep_crawl/
 /.python-version
+/.reasonix
+/CONTEXT.md
+/reasonix.toml

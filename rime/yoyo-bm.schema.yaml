@@ -38,6 +38,16 @@ __patch:
       __patch:
         - 内功心法
         - 指法
+# 用大写锁定切换中英文
+  ascii_composer:
+    good_old_caps_lock: true
+    switch_key:
+      Control_L: clear # noop 无 |clear 字符被清除，转英文输入
+      Control_R: clear # noop 无 |commit_text 输入一段编码字符后汉字上屏，转英文输入
+      Shift_L: noop
+      Shift_R: noop
+      Caps_Lock: clear
+      Eisu_toggle: clear
 
   speller:
     # auto_clear: auto # 3种选择， manual|auto|max_length 空码按下一键确认清屏|空码自动清|达到最长码时后码顶上清屏

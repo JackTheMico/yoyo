@@ -532,6 +532,140 @@ menu:
 
     - xform|'||  # 清除所有的单引号
 
+
+空明拳: # 空明码键位指法（yoyo-km）
+  __append:
+ # 左右手区按键的映射转换 - 将右手按键(y,u,i,o,p等)镜像到对应的左手按键(t,r,e,w,q等)
+    - xform|6|5|
+    - xform|7|4|
+    - xform|8|3|
+    - xform|9|2|
+    - xform|0|1|
+    - xform|y|t|
+    - xform|u|r|
+    - xform|i|e|
+    - xform|o|w|
+    - xform|p|q|
+    - xform|h|g|
+    - xform|j|f|
+    - xform|k|d|
+    - xform|l|s|
+    - xform|;|a|
+    - xform|n|b|
+    - xform|m|v|
+    - xform|,|c|
+    - xform|\.|x|
+    - xform|/|z|
+ # 以下是对各个码元的按键映射（指法）：
+  # 第零行码元（基于12345）：
+    - xform|14|0|
+    - xform|41|0|
+    - xform|12|9|
+    - xform|21|9|
+    - xform|34|8|
+    - xform|43|8|
+    - xform|24|7|
+    - xform|42|7|
+    - xform|45|6|
+    - xform|54|6|
+  # 以下码元键位照搬空明码：
+  # 符号码元（8 个）：
+    - xform|af|;|
+    - xform|fa|;|
+    - xform|as|:|
+    - xform|sa|:|
+    - xform|cx|,|
+    - xform|xc|,|
+    - xform|vx|.|
+    - xform|xv|.|
+    - xform|vz|/|
+    - xform|zv|/|
+    - xform|at|<|
+    - xform|ta|<|
+    - xform|de|>|
+    - xform|ed|>|
+    - xform|xz|?|
+    - xform|zx|?|
+  # 大写码元（26 个，单手双键）：
+    - xform|av|A|
+    - xform|va|A|
+    - xform|qw|B|
+    - xform|wq|B|
+    - xform|cf|C|
+    - xform|fc|C|
+    - xform|dv|D|
+    - xform|vd|D|
+    - xform|ev|E|
+    - xform|ve|E|
+    - xform|gs|F|
+    - xform|sg|F|
+    - xform|dg|G|
+    - xform|gd|G|
+    - xform|ar|H|
+    - xform|ra|H|
+    - xform|eg|I|
+    - xform|ge|I|
+    - xform|fx|J|
+    - xform|xf|J|
+    - xform|dr|K|
+    - xform|rd|K|
+    - xform|rs|L|
+    - xform|sr|L|
+    - xform|dw|M|
+    - xform|wd|M|
+    - xform|es|N|
+    - xform|se|N|
+    - xform|aw|O|
+    - xform|wa|O|
+    - xform|fq|P|
+    - xform|qf|P|
+    - xform|qv|Q|
+    - xform|vq|Q|
+    - xform|et|R|
+    - xform|te|R|
+    - xform|sv|S|
+    - xform|vs|S|
+    - xform|qt|T|
+    - xform|tq|T|
+    - xform|gw|U|
+    - xform|wg|U|
+    - xform|sz|V|
+    - xform|zs|V|
+    - xform|vw|W|
+    - xform|wv|W|
+    - xform|dx|X|
+    - xform|xd|X|
+    - xform|tw|Y|
+    - xform|wt|Y|
+    - xform|fz|Z|
+    - xform|zf|Z|
+  # 小写双键码元（11 个）：
+    - xform|fw|h|
+    - xform|wf|h|
+    - xform|ew|i|
+    - xform|we|i|
+    - xform|df|j|
+    - xform|fd|j|
+    - xform|ds|k|
+    - xform|sd|k|
+    - xform|fs|l|
+    - xform|sf|l|
+    - xform|cv|m|
+    - xform|vc|m|
+    - xform|cs|n|
+    - xform|sc|n|
+    - xform|rw|o|
+    - xform|wr|o|
+    - xform|qr|p|
+    - xform|rq|p|
+    - xform|er|u|
+    - xform|re|u|
+    - xform|ef|y|
+    - xform|fe|y|
+  # 单键码元（15 个，直出无需规则）：a b c d e f g q r s t v w x z
+
+    - xform|'||  # 清除所有的单引号
+
 寒梅: # 192指法
   __append:
     # 左右手区按键的镜像转换（标准 QWERTY 对称）：
