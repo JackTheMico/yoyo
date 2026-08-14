@@ -24,7 +24,7 @@ schema:
 
 __include: yoyo:/
 __patch:
-  translator/dictionary: yoyo-bm-km
+  translator/dictionary: yoyo-bm
   translator/prism: yoyo-bm
   chord_composer:
     alphabet: "12345qwertasdfgzxcvb 67890yuiophjkl;nm,./"
