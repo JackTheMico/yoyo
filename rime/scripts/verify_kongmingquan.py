@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""验证 yoyo 纯形空明拳指法：60 码元全覆盖、键组合无歧义、左右手镜像一致。
+"""验证 yoyo 纯形空明拳指法：65 码元全覆盖（60 字母符号 + 5 数字）、键组合无歧义、左右手镜像一致。
 
 模拟 librime chord_composer 的 algebra（xform 顺序替换），对每个码元的键组合
 （左手直打 + 右手镜像）验证能正确折叠成码元。
@@ -65,16 +65,14 @@ def main():
     combo = {}
     for src, dst in yuan:
         keys = tuple(sorted(src))
-        if any(k.isdigit() for k in keys):
-            continue  # 数字码元（第零行）单独处理
         combo[keys] = dst
     for k in "qwertasdfgzxcvb":  # 单键直出
         combo[(k,)] = k
 
-    # 60 码元覆盖检查
+    # 65 码元覆盖检查（60 字母符号 + 5 数字）
     all_yuan = set(combo.values())
-    expected = set("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ;,./:<>?")
-    print(f"字母符号码元: 键组合 {len(combo)} 个, 码元 {len(all_yuan)} 个 (期望 60)")
+    expected = set("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ;,./:<>?") | set("06789")
+    print(f"字母符号+数字码元: 键组合 {len(combo)} 个, 码元 {len(all_yuan)} 个 (期望 65)")
     missing = expected - all_yuan
     extra = all_yuan - expected
     if missing:
@@ -82,7 +80,7 @@ def main():
     if extra:
         print(f"  多余: {sorted(extra)}")
     if not missing and not extra:
-        print("  ✓ 60 码元全覆盖")
+        print("  ✓ 65 码元全覆盖")
 
     # 无歧义检查
     reverse = defaultdict(list)

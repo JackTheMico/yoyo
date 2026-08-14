@@ -557,17 +557,18 @@ menu:
     - xform|\.|x|
     - xform|/|z|
  # 以下是对各个码元的按键映射（指法）：
-  # 第零行码元（基于12345）：
-    - xform|14|0|
-    - xform|41|0|
-    - xform|12|9|
-    - xform|21|9|
-    - xform|34|8|
-    - xform|43|8|
-    - xform|24|7|
-    - xform|42|7|
-    - xform|45|6|
-    - xform|54|6|
+  # 第零行码元（字母+符号双键，替代数字行；左右手镜像对称）：
+  #   0=qa/p;  9=wc/o,  8=ex/i.  7=rz/u/  6=rt/yu
+    - xform|qa|0|
+    - xform|aq|0|
+    - xform|wc|9|
+    - xform|cw|9|
+    - xform|ex|8|
+    - xform|xe|8|
+    - xform|rz|7|
+    - xform|zr|7|
+    - xform|rt|6|
+    - xform|tr|6|
   # 以下码元键位照搬空明码：
   # 符号码元（8 个）：
     - xform|af|;|
