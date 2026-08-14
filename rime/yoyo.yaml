@@ -589,7 +589,9 @@ menu:
     - xform|zx|?|
   # 大写码元（25 个双键 + 1 个三键）：
     # Q 是三键并击，必须在双键规则之前匹配
-    # 左手按 e+s+f → esf（alphabet排序），右手 i+j+l 先镜像成 e+f+s → efs
+    # 指法：左手按 s+e+f（手感 sef），右手按 j+i+l（手感 jil）。
+    # chord_composer 按 alphabet 排序按键，故规则须写排序后串：
+    #   左手 sef → 排序 esf → xform|esf|Q|；右手 jil → 排序 ijl → 镜像 efs → xform|efs|Q|
     - xform|esf|Q|
     - xform|efs|Q|
     - xform|av|A|
