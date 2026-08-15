@@ -267,8 +267,8 @@ mapping:
     code: og
     name: 甘，示例“某”
   彡:
-    code: Is
-    name: 彡，示例“杉、彭”
+    code: Ia
+    name: 彡，示例“杉、彭”；小码音托去重：shan 声母 s 与「身」冲突，取韵母 a
   电:
     code: Ud
     name: 电
@@ -306,8 +306,8 @@ mapping:
     code: Lh
     name: 亥
   疋:
-    code: Cs
-    name: 疋
+    code: Cp
+    name: 疋；小码音托去重：shu 声母 s 与「束」冲突，多音取 pǐ
   丁:
     code: Gd
     name: 丁
@@ -477,8 +477,8 @@ mapping:
     code: kj
     name: 今
   屮:
-    code: Yc
-    name: 屮，示例“出”
+    code: Ye
+    name: 屮，示例“出”；小码音托去重：chè 声母 c 与「川」冲突，取韵母 e
   壬:
     code: Nr
     name: 壬
@@ -720,8 +720,8 @@ mapping:
     code: Dt
     name: 田
   疒:
-    code: lb
-    name: 疒
+    code: ln
+    name: 疒；小码音托去重：bi 声母 b 与「㡀」冲突，取 nè 读音 n
   匕:
     code: hb
     name: 匕
@@ -789,8 +789,8 @@ mapping:
     code: gs
     name: 舌
   辶:
-    code: pc
-    name: 辶
+    code: pz
+    name: 辶；小码音托去重：cao 声母 c 与「艹」冲突，取“走之底”形近音托 z
   吉:
     code: Jj
     name: 吉
