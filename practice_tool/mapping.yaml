@@ -1,828 +1,828 @@
 mapping:
   一:
-    code: fi
+    code: bf
   丨:
-    code: cs
+    code: eu
   丿:
-    code: tp
+    code: zv
   丶:
-    code: Od
+    code: iW
   乛:
-    code: Ae
+    code: kK
   乙:
-    code: ji
+    code: Cf
   戊:
-    code: ;u
+    code: om
     name: 戊
   生:
-    code: Gs
+    code: pu
     name: 生
   布:
-    code: Ab
+    code: kt
     name: 布
   豸:
-    code: Ki
+    code: Af
     name: 豸，示例“貌、豺”
   毛:
-    code: ym
+    code: sJ
     name: 毛
   可:
-    code: xk
+    code: EH
     name: 可
   水:
-    code: ns
+    code: gu
     name: 水
   言:
-    code: uy
+    code: ms
     name: 言
   至:
-    code: .i
+    code: ':f'
     name: 至
   丈:
-    code: gz
+    code: yc
     name: 丈
   西:
-    code: tx
+    code: zE
     name: 西
   执:
-    code: rz
+    code: Dc
     name: 执
   方:
-    code: <f
+    code: Fb
     name: 方
   也:
-    code: zy
+    code: cs
     name: 也
   廴:
-    code: gy
+    code: ys
     name: 廴
   戈:
-    code: Ug
+    code: ',y'
     name: 戈
   者:
-    code: qz
+    code: .c
     name: 者
   氏:
-    code: Zs
+    code: Uu
     name: 氏
   高:
-    code: sg
+    code: uy
     name: 高
   而:
-    code: Be
+    code: IK
     name: 而，示例“耍、需”
   辰:
-    code: <c
+    code: Fe
     name: 辰
   五:
-    code: Nu
+    code: Om
     name: 五
   十:
-    code: es
+    code: Ku
     name: 十
   八:
-    code: Xb
+    code: at
     name: 八
   聿:
-    code: lv
+    code: SM
     name: 聿
   之:
-    code: Li
+    code: Vf
     name: 之
   未:
-    code: zw
+    code: cd
     name: 未
   目:
-    code: Tm
+    code: xJ
     name: 目
   大:
-    code: Td
+    code: xW
     name: 大
   羽:
-    code: Kv
+    code: AM
     name: 羽
   齐:
-    code: cq
+    code: e.
     name: 齐
   载:
-    code: Lz
+    code: Vc
     name: 载
   :
-    code: qx
+    code: .E
     name: 向字框，示例“向、奥”
   见:
-    code: ej
+    code: KC
     name: 见
   入:
-    code: Vu
+    code: <m
     name: 入，示例“汆、肏”
   糸:
-    code: Rs
+    code: Xu
     name: 糸
   片:
-    code: Op
+    code: iv
     name: 片
   鬲:
-    code: '>g'
+    code: Qy
     name: 鬲
   巳:
-    code: Ps
+    code: '?u'
     name: 巳
   歹:
-    code: Jd
+    code: PW
     name: 歹
   日:
-    code: wr
+    code: dD
     name: 日
   虎:
-    code: Oh
+    code: iR
     name: 虎
   厂:
-    code: yc
+    code: se
     name: 厂
   火:
-    code: ;h
+    code: oR
     name: 火
   亦:
-    code: Gi
+    code: pf
     name: 亦
   口:
-    code: bk
+    code: tH
     name: 口
   飞:
-    code: kf
+    code: Hb
     name: 飞
   干:
-    code: ?g
+    code: ;y
     name: 干
   卅:
-    code: hc
+    code: Re
     name: 卅
   劳:
-    code: Kl
+    code: AS
     name: 劳
   亍:
-    code: gu
+    code: ym
     name: 亍
   合:
-    code: kh
+    code: HR
     name: 合，示例“拿、答、哈”
   已:
-    code: Pi
+    code: '?f'
     name: 已
   谷:
-    code: Lg
+    code: Vy
     name: 谷
   祭:
-    code: Ij
+    code: nC
     name: 祭，示例“察”
   次:
-    code: Ec
+    code: /e
     name: 次
   里:
-    code: Pl
+    code: '?S'
     name: 里
   鹿:
-    code: Al
+    code: kS
     name: 鹿
   爱:
-    code: Ai
+    code: kf
     name: 爱
   亡:
-    code: uw
+    code: md
     name: 亡，示例“忙、忘”
   竹:
-    code: cu
+    code: em
     name: 竹
   文:
-    code: vw
+    code: Md
     name: 文
   云:
-    code: Ny
+    code: Os
     name: 云
   攵:
-    code: ap
+    code: rv
     name: 攵
   车:
-    code: Mc
+    code: '>e'
     name: 车
   面:
-    code: cm
+    code: eJ
     name: 面
   耒:
-    code: ',l'
+    code: TS
     name: 耒
   臣:
-    code: Kc
+    code: Ae
     name: 臣
   气:
-    code: Dq
+    code: B.
     name: 气
   弓:
-    code: Pg
+    code: '?y'
     name: 弓
   母:
-    code: Nm
+    code: OJ
     name: 母
   且:
-    code: qq
+    code: ..
     name: 且
   乍:
-    code: Ha
+    code: jr
     name: 乍
   广:
-    code: Jg
+    code: Py
     name: 广
   矢:
-    code: Ds
+    code: Bu
     name: 矢
   :
-    code: Ek
+    code: /H
     name: 壳无几，示例“壹、壶”
   麻:
-    code: hm
+    code: RJ
     name: 麻，示例“魔、摩”
   金:
-    code: zj
+    code: cC
     name: 金
   斤:
-    code: /j
+    code: hC
     name: 斤
   巾:
-    code: Qj
+    code: ZC
     name: 巾，示例“制、帐”
   欠:
-    code: :q
+    code: q.
     name: 欠
   木:
-    code: om
+    code: wJ
     name: 木
   丩:
-    code: Wj
+    code: NC
     name: 丩，示例“叫、收”
   丬:
-    code: ?p
+    code: ;v
     name: 丬
   甘:
-    code: og
+    code: wy
     name: 甘，示例“某”
   彡:
-    code: Is
+    code: nr
     name: 彡，示例“杉、彭”
   电:
-    code: Ud
+    code: ',W'
     name: 电
   双:
-    code: ms
+    code: Ju
     name: 双
   齿:
-    code: Dc
+    code: Be
     name: 齿
   黄:
-    code: Rh
+    code: XR
     name: 黄
   子:
-    code: Fi
+    code: lf
     name: 子
   父:
-    code: hf
+    code: Rb
     name: 父
   止:
-    code: Ii
+    code: nf
     name: 止
   川:
-    code: Yc
+    code: Ge
     name: 川，示例“州、氚”
   刀:
-    code: ud
+    code: mW
     name: 刀
   雨:
-    code: kv
+    code: HM
     name: 雨
   冫:
-    code: Sb
+    code: Yt
     name: 冫，示例“凉、凌”
   亥:
-    code: Lh
+    code: VR
     name: 亥
   疋:
-    code: Cs
+    code: Lv
     name: 疋
   丁:
-    code: Gd
+    code: pW
     name: 丁
   白:
-    code: db
+    code: Wt
     name: 白
   门:
-    code: Im
+    code: nJ
     name: 门
   廿:
-    code: Rn
+    code: Xg
     name: 廿，示例“燕”
   宀:
-    code: jb
+    code: Ct
     name: 宀
   米:
-    code: rm
+    code: DJ
     name: 米
   力:
-    code: <l
+    code: FS
     name: 力
   卜:
-    code: xb
+    code: Et
     name: 卜，示例“处、补”
   穴:
-    code: Ix
+    code: nE
     name: 穴
   古:
-    code: /g
+    code: hy
     name: 古
   艹:
-    code: pc
+    code: ve
     name: 艹
   占:
-    code: Uz
+    code: ',c'
     name: 占
   六:
-    code: wl
+    code: dS
     name: 六
   直:
-    code: Az
+    code: kc
     name: 直
   㐄:
-    code: rk
+    code: DH
     name: 㐄，示例“降、桀”
   彐:
-    code: Cj
+    code: LC
     name: 彐，示例“扫、帚”
   人:
-    code: rr
+    code: DD
     name: 人
   马:
-    code: /m
+    code: hJ
     name: 马
   衣:
-    code: ?i
+    code: ;f
     name: 衣
   四:
-    code: Os
+    code: iu
     name: 四
   卩:
-    code: Yj
+    code: GC
     name: 卩，示例“节、卫、叩”
   弋:
-    code: Ui
+    code: ',f'
     name: 弋
   工:
-    code: Sg
+    code: Yy
     name: 工
   黑:
-    code: eh
+    code: KR
     name: 黑
   页:
-    code: ?y
+    code: ;s
     name: 页
   夫:
-    code: df
+    code: Wb
     name: 夫
   千:
-    code: kq
+    code: H.
     name: 千，示例“垂、乖”
   业:
-    code: /y
+    code: hs
     name: 业
   炎:
-    code: My
+    code: '>s'
     name: 炎
   三:
-    code: ds
+    code: Wu
     name: 三
   厶:
-    code: Bs
+    code: Iu
     name: 厶，示例“去、矣”
   酋:
-    code: ',q'
+    code: T.
     name: 酋
   羊:
-    code: Qy
+    code: Zs
     name: 羊
   瓦:
-    code: kw
+    code: Hd
     name: 瓦
   七:
-    code: tq
+    code: z.
     name: 七
   示:
-    code: Ns
+    code: Ou
     name: 示
   夕:
-    code: Sx
+    code: YE
     name: 夕
   心:
-    code: :x
+    code: qE
     name: 心
   耳:
-    code: Fe
+    code: lK
     name: 耳
   犬:
-    code: Kq
+    code: A.
     name: 犬
   甲:
-    code: Oj
+    code: iC
     name: 甲
   辟:
-    code: Wb
+    code: Nt
     name: 辟，示例“避、臂”
   禾:
-    code: xh
+    code: ER
     name: 禾
   自:
-    code: gi
+    code: yf
     name: 自
   骨:
-    code: qg
+    code: .y
     name: 骨
   同:
-    code: Ft
+    code: lz
     name: 同
   艮:
-    code: ;g
+    code: oy
     name: 艮
   井:
-    code: hj
+    code: RC
     name: 井
   及:
-    code: sj
+    code: uC
     name: 及
   士:
-    code: rs
+    code: Du
     name: 士
   乂:
-    code: li
+    code: Sf
     name: 乂，示例“希、区”
   兔:
-    code: At
+    code: kz
     name: 兔
   辛:
-    code: <x
+    code: FE
     name: 辛
   贝:
-    code: Gb
+    code: pt
     name: 贝
   习:
-    code: yx
+    code: sE
     name: 习
   今:
-    code: kj
+    code: HC
     name: 今
   屮:
-    code: Yc
+    code: GK
     name: 屮，示例“出”
   壬:
-    code: Nr
+    code: OD
     name: 壬
   土:
-    code: Vt
+    code: <z
     name: 土
   又:
-    code: vy
+    code: Ms
     name: 又
   音:
-    code: Sy
+    code: Ys
     name: 音
   足:
-    code: su
+    code: um
     name: 足
   身:
-    code: Is
+    code: nu
     name: 身
   由:
-    code: By
+    code: Is
     name: 由
   户:
-    code: Qh
+    code: ZR
     name: 户
   月:
-    code: Hy
+    code: js
     name: 月
   吅:
-    code: mq
+    code: J.
     name: 吅，示例“器、骂”
   巴:
-    code: Tb
+    code: xt
     name: 巴
   王:
-    code: ',w'
+    code: Td
     name: 王
   鱼:
-    code: Lv
+    code: VM
     name: 鱼
   虫:
-    code: Bc
+    code: Ie
     name: 虫
   尚:
-    code: Ms
+    code: '>u'
     name: 尚
   舟:
-    code: Wo
+    code: 'Nw'
     name: 舟
   皿:
-    code: ;m
+    code: oJ
     name: 皿
   本:
-    code: nb
+    code: gt
     name: 本
   勹:
-    code: .k
+    code: ':H'
     name: 勹，示例“勾、勿”
   爪:
-    code: :a
+    code: qr
     name: 爪，示例“爬、抓”
   仑:
-    code: Sl
+    code: YS
     name: 仑
   落:
-    code: /l
+    code: hS
     name: 落
   女:
-    code: Zn
+    code: Ug
     name: 女
   丰:
-    code: '>f'
+    code: Qb
     name: 丰
   行:
-    code: gx
+    code: yE
     name: 行，示例“衍、衡”
   豆:
-    code: '>d'
+    code: QW
     name: 豆
   牙:
-    code: Py
+    code: '?s'
     name: 牙
   了:
-    code: sl
+    code: uS
     name: 了
   非:
-    code: tf
+    code: zb
     name: 非
   无:
-    code: zu
+    code: cm
     name: 无
   象:
-    code: ',x'
+    code: TE
     name: 象
   石:
-    code: .s
+    code: ':u'
     name: 石
   角:
-    code: Lj
+    code: VC
     name: 角
   二:
-    code: Ee
+    code: /K
     name: 二
   毋:
-    code: Iu
+    code: nm
     name: 毋
   冖:
-    code: Ct
+    code: Lz
     name: 冖
   鼠:
-    code: As
+    code: ku
     name: 鼠
   毌:
-    code: Ig
+    code: ny
     name: 毌，示例“贯”
   句:
-    code: Gj
+    code: pC
     name: 句
   册:
-    code: Fc
+    code: le
     name: 册
   鬼:
-    code: Gg
+    code: py
     name: 鬼
   食:
-    code: fs
+    code: bu
     name: 食
   民:
-    code: wm
+    code: dJ
     name: 民
   予:
-    code: '>v'
+    code: QM
     name: 予
   内:
-    code: Bn
+    code: Ig
     name: 内
   林:
-    code: ml
+    code: JS
     name: 林
   圭:
-    code: Mg
+    code: '>y'
     name: 圭
   隹:
-    code: ',i'
+    code: Tf
     name: 隹，示例“推、催、鹤”
   关:
-    code: Rg
+    code: Xy
     name: 关
   皮:
-    code: Hp
+    code: jv
     name: 皮
   各:
-    code: Yg
+    code: Gy
     name: 各
   彳:
-    code: gc
+    code: ye
     name: 彳
   尸:
-    code: ys
+    code: su
     name: 尸
   寸:
-    code: zc
+    code: ce
     name: 寸
   束:
-    code: Cs
+    code: Lu
     name: 束
   龙:
-    code: Ul
+    code: ',S'
     name: 龙
   甫:
-    code: Lf
+    code: Vb
     name: 甫
   光:
-    code: xg
+    code: Ey
     name: 光
   亻:
-    code: ar
+    code: rD
     name: 亻
   弗:
-    code: Pf
+    code: '?b'
     name: 弗
   牛:
-    code: mn
+    code: Jg
     name: 牛
   九:
-    code: Aj
+    code: kC
     name: 九
   韦:
-    code: Dw
+    code: Bd
     name: 韦
   儿:
-    code: Je
+    code: PK
     name: 儿
   殳:
-    code: Ts
+    code: xu
     name: 殳
   曰:
-    code: wy
+    code: ds
     name: 曰
   夂:
-    code: /i
+    code: hf
     name: 夂
   壴:
-    code: Ju
+    code: Pm
     name: 壴，示例“喜、鼓”
   尤:
-    code: :y
+    code: qs
     name: 尤
   支:
-    code: ;i
+    code: of
     name: 支
   :
-    code: hs
+    code: Ru
     name: 商字头，示例“商、摘”
   长:
-    code: uc
+    code: me
     name: 长
   乡:
-    code: ex
+    code: KE
     name: 乡
   山:
-    code: <s
+    code: Fu
     name: 山
   手:
-    code: io
+    code: fw
     name: 手
   用:
-    code: qy
+    code: .s
     name: 用
   㡀:
-    code: lb
+    code: St
     name: 㡀
   幺:
-    code: '>y'
+    code: Qs
     name: 幺
   斗:
-    code: Dd
+    code: BW
     name: 斗
   田:
-    code: Dt
+    code: Bz
     name: 田
   疒:
-    code: lb
+    code: Sg
     name: 疒
   匕:
-    code: hb
+    code: Rt
     name: 匕
   缶:
-    code: Ef
+    code: /b
     name: 缶
   从:
-    code: mc
+    code: Je
     name: 从
   曲:
-    code: Fq
+    code: l.
     name: 曲，示例“蛐、曹”
   豕:
-    code: Qs
+    code: Zu
     name: 豕
   乃:
-    code: Tn
+    code: xg
     name: 乃，示例“盈、仍”
   䀠:
-    code: Mm
+    code: '>J'
     name: 䀠，示例“瞿、𪄊”
   革:
-    code: Ag
+    code: ky
     name: 革
   刂:
-    code: Wd
+    code: NW
     name: 刂
   亠:
-    code: Zt
+    code: Uz
     name: 亠
   囗:
-    code: Uk
+    code: ',H'
     name: 囗
   :
-    code: Kt
+    code: Az
     name: 卧人，示例“每、午”
   鸟:
-    code: Xn
+    code: ag
     name: 鸟
   立:
-    code: Cl
+    code: LS
     name: 立
   乌:
-    code: Xu
+    code: am
     name: 乌
   己:
-    code: Pj
+    code: '?C'
     name: 己
   其:
-    code: dq
+    code: W.
     name: 其
   臼:
-    code: ?j
+    code: ;C
     name: 臼
   小:
-    code: Ex
+    code: /E
     name: 小
   分:
-    code: af
+    code: rb
     name: 分
   龟:
-    code: cg
+    code: ey
     name: 龟
   舌:
-    code: gs
+    code: yu
     name: 舌
   辶:
-    code: pc
+    code: vc
     name: 辶
   吉:
-    code: Jj
+    code: PC
     name: 吉
   不:
-    code: cb
+    code: et
     name: 不
   几:
-    code: qj
+    code: .C
     name: 几，示例“朵、风”
   走:
-    code: dz
+    code: Wc
     name: 走
   卯:
-    code: :m
+    code: qJ
     name: 卯，示例“聊、卿”
   卵:
-    code: :l
+    code: qS
     name: 卵
   两:
-    code: Yl
+    code: GS
     name: 两
   酉:
-    code: Uy
+    code: ',s'
     name: 酉
   䒤:
-    code: Pm
+    code: '?J'
     name: 莫无大，示例“草、葛”
   矛:
-    code: '>m'
+    code: QJ
     name: 矛
   瓜:
-    code: <g
+    code: Fy
     name: 瓜
 grouping:
   :
