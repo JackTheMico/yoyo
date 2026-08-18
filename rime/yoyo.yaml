@@ -50,7 +50,7 @@ engine:
 
 recognizer:
   patterns:
-    reverse_lookup: "^`[a-z]+$"   # 反查前缀 ` 后接无声调全拼（a–z）
+    reverse_lookup: "^`[a-z]*$"   # 反查前缀 ` 后接无声调全拼（a–z）；` 单独亦匹配，便于 matcher 立即认领
 
 reverse_lookup:
   prefix: "`"

@@ -42,7 +42,11 @@ function translator.func(input, seg, env)
     return
   end
   local key = input:sub(2):lower()
-  if key == "" or not key:match("^[a-z]+$") then
+  -- `` 单独（无拼音）不产候选，但保留反查模式（等用户继续输入拼音）
+  if key == "" then
+    return
+  end
+  if not key:match("^[a-z]+$") then
     return
   end
 
