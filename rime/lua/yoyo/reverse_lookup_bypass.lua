@@ -2,6 +2,7 @@
 -- 放在 chord_composer 之前：输入以 ` 开头时，把按键直接推入输入缓冲
 -- 并返回 kAccepted，阻止 chord_composer 把后续 a–z 键当作并击键缓冲。
 -- 无 ` 前缀时返回 kNoop，不影响正常并击。
+-- 反查模式下 [ ] 用作翻页键（避免与正常并击的 [ ] chord 标记冲突）。
 
 local yoyo = require "yoyo.yoyo"
 
@@ -17,10 +18,26 @@ function processor.func(key_event, env)
   local context = env.engine.context
   local input = context.input
 
-  -- 输入以 ` 开头 = 已在反查模式：直接放行当前键到输入缓冲
+  -- 输入以 ` 开头 = 已在反查模式
   if input ~= "" and input:sub(1, 1) == '`' then
     local incoming = utf8.char(key_event.keycode)
-    -- 只放行 a–z（反查拼音）与 BackSpace（编辑）
+
+    -- [ = 上一页
+    if incoming == '[' then
+      if context:has_menu() then
+        context:page_up()
+        return yoyo.kAccepted
+      end
+    end
+    -- ] = 下一页
+    if incoming == ']' then
+      if context:has_menu() then
+        context:page_down()
+        return yoyo.kAccepted
+      end
+    end
+
+    -- 只放行 a–z（反查拼音）到输入缓冲
     if incoming:match("^[a-z]$") then
       context:push_input(incoming)
       return yoyo.kAccepted
