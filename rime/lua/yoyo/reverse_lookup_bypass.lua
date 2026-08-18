@@ -2,11 +2,37 @@
 -- 放在 chord_composer 之前：输入以 ` 开头时，把按键直接推入输入缓冲
 -- 并返回 kAccepted，阻止 chord_composer 把后续 a–z 键当作并击键缓冲。
 -- 无 ` 前缀时返回 kNoop，不影响正常并击。
--- 反查模式下 [ ] 用作翻页键（避免与正常并击的 [ ] chord 标记冲突）。
+-- 反查模式下 [ ] 用作翻页键：librime-lua 的 Context 没有 page_up/page_down，
+-- 但有 selected_index（属性）、highlight(idx)（方法）。
+-- 手动计算新索引并 highlight，等价于 selector 处理器的翻页逻辑。
 
 local yoyo = require "yoyo.yoyo"
 
 local processor = {}
+
+---@param env Env
+---@return integer
+local function get_page_size(env)
+  local config = env.engine.schema.config
+  if config then
+    local v = config:get_int("menu/page_size")
+    if v and v > 0 then return v end
+  end
+  return 5
+end
+
+--- 安全翻页：计算新候选索引并 highlight
+---@param context Context
+---@param page_size integer
+---@param delta integer  正=下页，负=上页
+local function turn_page(context, page_size, delta)
+  local current = context.selected_index or 0
+  local new_idx = current + delta * page_size
+  if new_idx < 0 then new_idx = 0 end
+  pcall(function()
+    context:highlight(new_idx)
+  end)
+end
 
 ---@param key_event KeyEvent
 ---@param env Env
@@ -22,13 +48,13 @@ function processor.func(key_event, env)
   if input ~= "" and input:sub(1, 1) == '`' then
     local incoming = utf8.char(key_event.keycode)
 
-    -- [ = 上一页，] = 下一页（反查模式下始终拦截，阻止 chord_composer 处理）
-    if incoming == '[' then
-      context:page_up()
+    -- [ = 上一页，] = 下一页（反查模式下始终拦截，阻止 chord_composer/speller 处理）
+    if incoming == ']' then
+      turn_page(context, get_page_size(env), 1)
       return yoyo.kAccepted
     end
-    if incoming == ']' then
-      context:page_down()
+    if incoming == '[' then
+      turn_page(context, get_page_size(env), -1)
       return yoyo.kAccepted
     end
 
