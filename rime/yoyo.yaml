@@ -24,6 +24,7 @@ switches:
 engine:
   processors:
     - ascii_composer
+    - lua_processor@*yoyo.reverse_lookup_bypass
     - chord_composer
     - lua_processor@*yoyo.popping
     - lua_processor@*yoyo.commit_raw
