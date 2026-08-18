@@ -22,19 +22,14 @@ function processor.func(key_event, env)
   if input ~= "" and input:sub(1, 1) == '`' then
     local incoming = utf8.char(key_event.keycode)
 
-    -- [ = 上一页
+    -- [ = 上一页，] = 下一页（反查模式下始终拦截，阻止 chord_composer 处理）
     if incoming == '[' then
-      if context:has_menu() then
-        context:page_up()
-        return yoyo.kAccepted
-      end
+      context:page_up()
+      return yoyo.kAccepted
     end
-    -- ] = 下一页
     if incoming == ']' then
-      if context:has_menu() then
-        context:page_down()
-        return yoyo.kAccepted
-      end
+      context:page_down()
+      return yoyo.kAccepted
     end
 
     -- 只放行 a–z（反查拼音）到输入缓冲
