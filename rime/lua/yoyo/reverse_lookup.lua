@@ -54,21 +54,26 @@ function translator.func(input, seg, env)
   local shard = get_shard(initial)
 
   -- 前缀补全匹配：键是完整拼音键的前缀即命中。
-  -- 候选可能很多，按拼音键字母序遍历到首个非前缀键即止。
-  -- 为保证候选稳定性，先收集命中键再按权重降序混排。
-  local yielded = {}  -- text -> true，去重
-  for full_key, cands in pairs(shard) do
+  -- 收集命中键并按字母序排序，保证翻页顺序稳定。
+  local matched_keys = {}
+  for full_key in pairs(shard) do
     if full_key:sub(1, #key) == key then
-      for _, c in ipairs(cands) do
-        local text, code = c[1], c[2]
-        if not yielded[text] then
-          yielded[text] = true
-          local cand = Candidate("yoyo", seg.start, seg._end, text, code)
-          if cand then
-            -- 注释直接复用分片中已去标记的纯形码元序列
-            cand.comment = code
-            yield(cand)
-          end
+      matched_keys[#matched_keys + 1] = full_key
+    end
+  end
+  table.sort(matched_keys)
+
+  local yielded = {}  -- text -> true，去重
+  for _, full_key in ipairs(matched_keys) do
+    local cands = shard[full_key]
+    for _, c in ipairs(cands) do
+      local text, code = c[1], c[2]
+      if not yielded[text] then
+        yielded[text] = true
+        local cand = Candidate("yoyo", seg.start, seg._end, text, code)
+        if cand then
+          cand.comment = code
+          yield(cand)
         end
       end
     end
