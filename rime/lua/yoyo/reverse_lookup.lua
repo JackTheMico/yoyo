@@ -64,18 +64,37 @@ function translator.func(input, seg, env)
   table.sort(matched_keys)
 
   local yielded = {}  -- text -> true，去重
+  -- 先收集所有命中候选，分单字/词两组
+  local chars = {}
+  local words = {}
   for _, full_key in ipairs(matched_keys) do
     local cands = shard[full_key]
     for _, c in ipairs(cands) do
       local text, code = c[1], c[2]
       if not yielded[text] then
         yielded[text] = true
-        local cand = Candidate("yoyo", seg.start, seg._end, text, code)
-        if cand then
-          cand.comment = code
-          yield(cand)
+        local len = utf8 and utf8.len(text) or #text
+        if len == 1 then
+          chars[#chars + 1] = c
+        else
+          words[#words + 1] = c
         end
       end
+    end
+  end
+  -- 单字优先，词在后；各自组内按权重降序（已在生成阶段保证）
+  for _, c in ipairs(chars) do
+    local cand = Candidate("yoyo", seg.start, seg._end, c[1], c[2])
+    if cand then
+      cand.comment = c[2]
+      yield(cand)
+    end
+  end
+  for _, c in ipairs(words) do
+    local cand = Candidate("yoyo", seg.start, seg._end, c[1], c[2])
+    if cand then
+      cand.comment = c[2]
+      yield(cand)
     end
   end
 end
