@@ -262,15 +262,6 @@ function rearrangeProgress(correct) {
   const list = state.progress.slice();
   if (list.length === 0) return;
   
-  // 如果队首是已掌握的题目，且还有未掌握的题目，将未掌握的题目移到队首
-  if (list[0].count >= MASTERY_COUNT) {
-    const unmasteredIdx = list.findIndex(p => p.count < MASTERY_COUNT);
-    if (unmasteredIdx >= 0) {
-      const item = list.splice(unmasteredIdx, 1)[0];
-      list.unshift(item);
-    }
-  }
-  
   const first = list.shift();
   if (correct) first.count += 1;
   else first.count = -1;
@@ -280,7 +271,11 @@ function rearrangeProgress(correct) {
     list.splice(0, 0, first);
   } else {
     let insertPos = spacedInterval(first.count);
-    // 跳过已掌握的题目
+    // 已掌握的题目跳到队尾
+    if (first.count >= MASTERY_COUNT) {
+      insertPos = list.length;
+    }
+    // 跳过已掌握的题目（避免队首都是已掌握的）
     while (insertPos < list.length && list[insertPos].count >= MASTERY_COUNT) {
       insertPos++;
     }
