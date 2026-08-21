@@ -36,8 +36,9 @@ BM_DICT = RIME_DIR / "yoyo-bm.dict.yaml"
 DEFAULT_OUT_DIR = RIME_DIR / "lua" / "yoyo" / "data"
 
 # 纯形支并击/一简标记符，生成显示码时一律剥离。
+# `<>` 是合法码元（如 `清 [n>]`、`方法 _<`），不是标记，不可剥离。
 # 注意 `,` 与 `.` 是合法码元（如 `中国 bcU,`），不可剥离。
-MARK_CHARS = set("!@-_+<>()[]=")
+MARK_CHARS = set("!@-_+()[]=")
 
 
 def strip_tone(s: str) -> str:
@@ -101,9 +102,10 @@ def parse_dict_yaml(path: Path):
 
 
 def load_char_codes(entries):
-    """字 -> 显示码（全码优先：去标记后最长，同长取权重高）。
+    """字 -> 显示码（主码优先：权重最高者，同权重取去标记后最短）。
 
-    纯形支单字全码来自权重=0 的全码条目（带 `[]()/-=` 标记）。
+    主码条目权重 > 0（实际打字使用的编码）；全码条目权重 = 0
+    （带 `[]()/-=` 标记的完整击键序列，仅供反查展示备选）。
     """
     char_codes = {}  # text -> (stripped_code, weight)
     for text, code, weight in entries:
@@ -117,17 +119,18 @@ def load_char_codes(entries):
             char_codes[text] = (stripped, weight)
         else:
             cur_code, cur_w = cur
-            if len(stripped) > len(cur_code) or (
-                len(stripped) == len(cur_code) and weight > cur_w
+            if weight > cur_w or (
+                weight == cur_w and len(stripped) < len(cur_code)
             ):
                 char_codes[text] = (stripped, weight)
     return {t: v[0] for t, v in char_codes.items()}, char_codes
 
 
 def load_word_codes(entries):
-    """词 -> 显示码（主码优先：主条目去标记后最短，同长取权重高）。
+    """词 -> 显示码（主码优先：权重最高者，同权重取去标记后最短）。
 
-    纯形支词主码来自权重=0 的全码条目（形如 `xkhr`，无标记）。
+    主码条目权重 > 0（平时打词实际使用的编码，较短）；
+    全码条目权重 = 0（完整击键序列，较长，仅供展示备选）。
     """
     word_codes = {}  # text -> (stripped_code, weight)
     for text, code, weight in entries:
@@ -141,8 +144,8 @@ def load_word_codes(entries):
             word_codes[text] = (stripped, weight)
         else:
             cur_code, cur_w = cur
-            if len(stripped) < len(cur_code) or (
-                len(stripped) == len(cur_code) and weight > cur_w
+            if weight > cur_w or (
+                weight == cur_w and len(stripped) < len(cur_code)
             ):
                 word_codes[text] = (stripped, weight)
     return {t: v[0] for t, v in word_codes.items()}, word_codes
