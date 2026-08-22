@@ -24,6 +24,7 @@ switches:
 engine:
   processors:
     - ascii_composer
+    - lua_processor@*yoyo.reverse_lookup_bypass
     - chord_composer
     - lua_processor@*yoyo.popping
     - lua_processor@*yoyo.commit_raw
@@ -43,9 +44,19 @@ engine:
   translators:
     - punct_translator
     - table_translator
+    - lua_translator@*yoyo.reverse_lookup
   filters:
     - uniquifier
     - simplifier
+
+recognizer:
+  patterns:
+    reverse_lookup: "^`[a-z]*$"   # 反查前缀 ` 后接无声调全拼（a–z）；` 单独亦匹配，便于 matcher 立即认领
+
+reverse_lookup:
+  prefix: "`"
+  tips: "〔反查〕"
+  tag: reverse_lookup
 
 translator:
   initial_quality: 1    #该翻译器出字优先级别

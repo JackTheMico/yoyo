@@ -74,6 +74,11 @@ function processor.func(key_event, env)
     return yoyo.kNoop
   end
 
+  -- 反查模式（输入以 ` 开头）绕过顶功（CONTEXT.md「顶功」条）
+  if input:sub(1, 1) == '`' then
+    return yoyo.kNoop
+  end
+
   for _, rule in ipairs(env.popping or {}) do
     -- 检查规则条件
     if rule.when and not context:get_option(rule.when) then
