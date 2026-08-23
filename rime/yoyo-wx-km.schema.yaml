@@ -54,7 +54,7 @@ __patch:
     alphabet: "zyxwvutsrqponmlkjihgfedcba;,./ZYXWVUTSRQPONMLKJIHGFEDCBA:<>?[]()_+-='0123456789"
     initials: "zyxwvutsrqponmlkjihgfedcba;,./ZYXWVUTSRQPONMLKJIHGFEDCBA:<>?[(_+-='"
     auto_select: true
-    auto_select_pattern: "'.+|\\(e?[6L].+\\)"  # 快符 + 标点并击，候选唯一则顶屏
+    auto_select_pattern: "'.+|\\((e?[6L]|fg).+\\)"  # 快符 + 标点并击，候选唯一则顶屏
     algebra:
     # 先处理词编码(第一击由并击打出则为词)
       - xform|^([a-zA-Z;:,<.>/?]{2})([a-zA-Z;:,<.>/?]*)$|($1)$2|
