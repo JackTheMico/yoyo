@@ -52,10 +52,10 @@ __patch:
   speller:
     # auto_clear: auto # 3种选择， manual|auto|max_length 空码按下一键确认清屏|空码自动清|达到最长码时后码顶上清屏
     # # max_code_length: 6
-    alphabet: "zyxwvutsrqponmlkjihgfedcba;,./ZYXWVUTSRQPONMLKJIHGFEDCBA:<>?[]()_+-='"
+    alphabet: "zyxwvutsrqponmlkjihgfedcba;,./ZYXWVUTSRQPONMLKJIHGFEDCBA:<>?[]()_+-='0123456789"
     initials: "zyxwvutsrqponmlkjihgfedcba;,./ZYXWVUTSRQPONMLKJIHGFEDCBA:<>?[(_+'"
     auto_select: true
-    auto_select_pattern: "'.+"  # 快符，候选唯一则顶屏
+    auto_select_pattern: "'.+|\\[e?[6L].+\\]"  # 快符 + 标点并击，候选唯一则顶屏
     algebra:
       # 处理词编码(第一击由并击打出则为词)
       - xform|^([a-zA-Z;:,<.>/?]{2})([a-zA-Z;:,<.>/?]*)$|($1)$2|
