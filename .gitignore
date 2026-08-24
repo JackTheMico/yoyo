@@ -8,3 +8,7 @@ deep_crawl/
 /.reasonix
 /CONTEXT.md
 /reasonix.toml
+rime/build/
+rime/user.yaml
+*.bin
+*.userdb*
