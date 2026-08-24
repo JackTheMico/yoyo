@@ -53,6 +53,22 @@ def generate():
     print(f"Reading source dictionary: {SOURCE_DICT}")
     lines = SOURCE_DICT.read_text(encoding="utf-8").splitlines()
 
+    # 第一遍：提取 3 码词语的权重，用于赋权给对应的 4 码全码词
+    word_3code_weights = {}
+    for line in lines:
+        if line.strip() == "..." or not line.strip() or line.startswith("#"):
+            continue
+        parts = line.split("\t")
+        if len(parts) < 2:
+            continue
+        text, code = parts[0], parts[1]
+        weight = int(parts[2]) if len(parts) > 2 and parts[2].isdigit() else 0
+        if len(text) > 1 and not (code.startswith("_") or code.startswith("+")):
+            clean_code = MARKER_REGEX.sub("", code)
+            if len(clean_code) == 3 and weight > 0:
+                word_3code_weights[text] = max(word_3code_weights.get(text, 0), weight)
+
+    # 第二遍：生成纯净词典
     in_header = True
     out_lines = [PURE_HEADER.rstrip()]
     converted_count = 0
@@ -70,19 +86,28 @@ def generate():
 
         text = parts[0]
         code = parts[1]
-        weight = parts[2] if len(parts) > 2 else "0"
+        weight = int(parts[2]) if len(parts) > 2 and parts[2].isdigit() else 0
 
         # 1-jian 条目保留左右手前缀 (_ 为左手，+ 为右手)
         if code.startswith("_") or code.startswith("+"):
             prefix = code[0]
             clean_body = MARKER_REGEX.sub("", code[1:])
             clean_code = f"{prefix}{clean_body}"
+            out_lines.append(f"{text}\t{clean_code}\t{weight}")
+            converted_count += 1
         else:
-            # 2/3/4 码条目剥离所有控制标记
             clean_code = MARKER_REGEX.sub("", code)
+            # 过滤多字词的 3 码缩写（三简词），避免在打 4 码词时造成第 3 码前缀拦截！
+            if len(text) > 1 and len(clean_code) == 3:
+                continue
             
-        out_lines.append(f"{text}\t{clean_code}\t{weight}")
-        converted_count += 1
+            # 若 4 码词对应的 3 码词有更高权重，继承之
+            if len(text) > 1 and len(clean_code) == 4 and text in word_3code_weights:
+                if weight == 0 or word_3code_weights[text] > weight:
+                    weight = word_3code_weights[text]
+
+            out_lines.append(f"{text}\t{clean_code}\t{weight}")
+            converted_count += 1
 
     OUTPUT_DICT.write_text("\n".join(out_lines) + "\n", encoding="utf-8")
     print(f"Successfully generated {OUTPUT_DICT} with {converted_count} entries.")
