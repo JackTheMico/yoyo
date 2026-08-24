@@ -186,8 +186,8 @@ do
   ctx.input = "slcb"
   ctx.menu_candidates = {} -- 4 码无词！
   
-  -- pure_popping 拦截
-  local res = pure_popping.func(make_key("b"), env)
+  -- pure_popping.post_func 拦截
+  local res = pure_popping.post_func(make_key("b"), env)
   assert_eq(ctx.input, "cb", "T4: buffer retains last 2 codes 'cb'")
   assert_eq(#ctx.committed, 1, "T4: first 2 codes committed")
   assert_eq(ctx.committed[1], "sl", "T4: committed text of first 2 codes")
@@ -218,8 +218,8 @@ do
   ctx.input = "bXn"
   ctx.menu_candidates = {"鸣"}
   
-  -- pure_popping 拦截并直接直出上屏
-  local res = pure_popping.func(make_key("n"), env)
+  -- pure_popping.post_func 拦截并直接直出上屏
+  local res = pure_popping.post_func(make_key("n"), env)
   assert_eq(res, yoyo.kNoop, "T6: return kNoop on instant commit")
   assert_eq(#ctx.committed, 1, "T6: committed count")
   assert_eq(ctx.committed[1], "鸣", "T6: committed text immediately on 3rd code")

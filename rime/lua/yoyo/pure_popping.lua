@@ -1,20 +1,20 @@
--- 麓鸣纯形统一流上下文感知顶功状态机 (Pure Popping FSM Processor)
--- 实现单字、一简、四码词、四码未命中自动回退与直出开关的统一分流引擎
+-- 纯形·统一流·前置状态机处理器 (pure_popping.lua)
+-- 作用：位于 chord_composer 之前执行。
+-- 当输入框中已有完成内容（一简、3码单字、4码词）且用户按下下一个新击键时，
+-- 立即将已完成内容顶屏提交上屏，并清空输入框，使后续击键进入全新的空输入环境。
 
 local yoyo = require "yoyo.yoyo"
 
 local processor = {}
 
----@class PurePoppingEnv: Env
----@field processing boolean
-
----@param env PurePoppingEnv
+---@param env Env
 function processor.init(env)
   env.processing = false
 end
 
 ---@param key_event KeyEvent
----@param env PurePoppingEnv
+---@param env Env
+---@return integer
 function processor.func(key_event, env)
   if env.processing then
     return yoyo.kNoop
@@ -61,40 +61,7 @@ function processor.func(key_event, env)
   local effective_len = #clean_input
   local is_1jian = (#input == 2 and (input:sub(1, 1) == "_" or input:sub(1, 1) == "+")) or (effective_len == 1)
 
-  -- Case A: 输入未命中词库时的自动回退切分 (3码无字 或 4码无词)
-  -- 1. 3码未命中（如 2码字 iG + 1简 +e -> 提交 iG "打"，留 +e "有"）
-  -- 2. 4码未命中（如 2码字 sl + 2码字 cb -> 提交 sl "了"，留 cb "不"）
-  if (effective_len == 3 or effective_len == 4) and not context:has_menu() then
-    env.processing = true
-    local first_two = clean_input:sub(1, 2)
-    local remainder = input:sub(#first_two + 1)
-    
-    context:pop_input(#input)
-    context:push_input(first_two)
-    if context:has_menu() then
-      context:confirm_current_selection()
-      context:commit()
-      context:clear()
-    else
-      env.engine:commit_text(first_two)
-      context:clear()
-    end
-    context:push_input(remainder)
-    env.processing = false
-    return yoyo.kNoop
-  end
-
-  -- Case B: 3 码单字即刻直出模式 (当 instant_commit_3code 开关开启时)
-  if effective_len == 3 and context:get_option("instant_commit_3code") and context:has_menu() then
-    env.processing = true
-    context:confirm_current_selection()
-    context:commit()
-    context:clear()
-    env.processing = false
-    return yoyo.kNoop
-  end
-
-  -- Case C: 已有一简 (is_1jian) 或 已有三码单字 (effective_len == 3) 或 已有四码/长码词 (effective_len >= 4)
+  -- 当输入框已有一简 (is_1jian) 或 已有3码单字 (effective_len == 3) 或 已有4码词 (effective_len >= 4):
   -- 当用户输入下一个非选字击键时，前序内容已完成，执行顶屏并提交上屏
   if is_1jian or effective_len == 3 or effective_len >= 4 then
     if context:has_menu() then
@@ -107,12 +74,11 @@ function processor.func(key_event, env)
     end
   end
 
-  -- Case D: 已有两码 (effective_len == 2 且非一简)
-  -- 此时 incoming 可能是：
-  --   1. 单手按键 (1 码) -> 构成 3 码单字
-  --   2. 双手并击 (2 码) -> 构成 4 码词
-  -- 放行给 chord_composer/speller 进行追加
   return yoyo.kNoop
 end
+
+-- 兼容独立后置调用
+local post_processor = require "yoyo.pure_popping_post"
+processor.post_func = post_processor.func
 
 return processor

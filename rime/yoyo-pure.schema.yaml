@@ -38,6 +38,7 @@ __patch:
     - lua_processor@*yoyo.reverse_lookup_bypass
     - lua_processor@*yoyo.pure_popping
     - chord_composer
+    - lua_processor@*yoyo.pure_popping_post
     - lua_processor@*yoyo.commit_raw
     - recognizer
     - key_binder
