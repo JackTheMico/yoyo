@@ -19,11 +19,17 @@ local yoyo = {
 --- 取出输入中当前正在翻译的一部分（返回光标前最后一个分词的完整编码，比如“nihao”会返回“hao”）
 ---@param context Context
 function yoyo.current(context)
-    local segment = context.composition:toSegmentation():back()
-    if not segment then
+    if not context then
         return nil
     end
-    return context.input:sub(segment.start + 1, segment._end)
+    if context.composition and context.composition.toSegmentation then
+        local segs = context.composition:toSegmentation()
+        local segment = segs and segs:back()
+        if segment then
+            return context.input:sub(segment.start + 1, segment._end)
+        end
+    end
+    return context.input
 end
 
 ---格式化 Info 日志
