@@ -31,7 +31,11 @@ DATA_DIR = SCRIPTS_DIR / "编码生成和重码可视化" / "data"
 
 PINYIN_TXT = DATA_DIR / "pinyin.txt"
 BASE_DICT_GZ = DATA_DIR / "base.dict.yaml.gz"
-BM_DICT = RIME_DIR / "yoyo-bm.dict.yaml"
+BM_DICT = (
+    RIME_DIR / "yoyo-pure.dict.yaml"
+    if (RIME_DIR / "yoyo-pure.dict.yaml").exists()
+    else RIME_DIR / "yoyo-bm.dict.yaml"
+)
 
 DEFAULT_OUT_DIR = RIME_DIR / "lua" / "yoyo" / "data"
 
@@ -101,6 +105,23 @@ def parse_dict_yaml(path: Path):
     return entries
 
 
+def is_cjk_char(ch: str) -> bool:
+    """判断单个字符是否为汉字（CJK 统一表意文字）"""
+    if len(ch) != 1:
+        return False
+    cp = ord(ch)
+    return (
+        0x4E00 <= cp <= 0x9FFF
+        or 0x3400 <= cp <= 0x4DBF
+        or 0x20000 <= cp <= 0x2A6DF
+        or 0x2A700 <= cp <= 0x2B73F
+        or 0x2B740 <= cp <= 0x2B81F
+        or 0x2B820 <= cp <= 0x2CEAF
+        or 0xF900 <= cp <= 0xFAFF
+        or 0x2F800 <= cp <= 0x2FA1F
+    )
+
+
 def load_char_codes(entries):
     """字 -> 显示码（主码优先：权重最高者，同权重取去标记后最短）。
 
@@ -109,7 +130,7 @@ def load_char_codes(entries):
     """
     char_codes = {}  # text -> (stripped_code, weight)
     for text, code, weight in entries:
-        if len(text) != 1:
+        if len(text) != 1 or not is_cjk_char(text):
             continue
         stripped = strip_marks(code)
         if not stripped:

@@ -37,6 +37,8 @@ path = sys.argv[1]
 text = open(path, encoding="utf-8").read()
 
 adds = [
+    ("yoyo-pure-km", "    - {schema: yoyo-pure-km} # 纯形·统一流·空明（状态机0空格并击）\n"),
+    ("yoyo-pure", "    - {schema: yoyo-pure} # 纯形·统一流·六脉（状态机0空格并击）\n"),
     ("yoyo-bm-km", "    - {schema: yoyo-bm-km} # 纯形·北冥·空明（空明拳指法）\n"),
     ("yoyo-wx-km", "    - {schema: yoyo-wx-km} # 纯形·无相·空明（空明拳指法）\n"),
 ]
