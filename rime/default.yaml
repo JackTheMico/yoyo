@@ -8,6 +8,8 @@ config_version: '2025-12-15'
 
 # 方案列表
 schema_list:
+  - schema: yoyo-pure-km # 纯形·统一流·空明（状态机0空格并击）
+  - schema: yoyo-pure    # 纯形·统一流·六脉（状态机0空格并击）
   - schema: yoyo-bm       # 纯形·北冥（单字派）
   - schema: yoyo-wx       # 纯形·无相（主词派）
   - schema: yoyo-bm-km    # 纯形·北冥·空明（空明拳指法）
