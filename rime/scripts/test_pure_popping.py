@@ -241,6 +241,24 @@ do
   print("✓ Test 7 Passed: 标点并击安全绕过正常")
 end
 
+-- Test 8: 一简 '+e' (有) 被下一击键顶屏并彻底清空 input
+do
+  local ctx = MockContext.new()
+  local env = create_env(ctx)
+  
+  -- 用户刚打了一简 '+e' ("有")
+  ctx.input = "+e"
+  ctx.menu_candidates = {"有"}
+  
+  -- 用户按下打 "问题" 的首个按键 'e'
+  local res = pure_popping.func(make_key("e"), env)
+  assert_eq(res, yoyo.kNoop, "T8: return kNoop on popping")
+  assert_eq(#ctx.committed, 1, "T8: committed count")
+  assert_eq(ctx.committed[1], "有", "T8: committed text")
+  assert_eq(ctx.input, "", "T8: input must be empty after popping!")
+  print("✓ Test 8 Passed: 一简 '+e' 随下一击顶屏上屏并清空输入框")
+end
+
 print(string.format("\\n🎉 全部 %d/%d 个 Lua 状态机单元测试顺利通过！", tests_passed, tests_total))
 """
 

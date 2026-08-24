@@ -83,8 +83,11 @@ function processor.func(key_event, env)
 
   -- Case B: 3 码单字即刻直出模式 (当 instant_commit_3code 开关开启时)
   if effective_len == 3 and context:get_option("instant_commit_3code") and context:has_menu() then
+    env.processing = true
     context:confirm_current_selection()
     context:commit()
+    context:clear()
+    env.processing = false
     return yoyo.kNoop
   end
 
@@ -92,8 +95,11 @@ function processor.func(key_event, env)
   -- 当用户输入下一个非选字击键时，前序内容已完成，执行顶屏并提交上屏
   if is_1jian or effective_len == 3 or effective_len >= 4 then
     if context:has_menu() then
+      env.processing = true
       context:confirm_current_selection()
       context:commit()
+      context:clear()
+      env.processing = false
       return yoyo.kNoop
     end
   end
