@@ -49,8 +49,10 @@ function processor.func(key_event, env)
     return yoyo.kNoop
   end
 
-  -- 2. 选字/翻页键（空格、单引号、数字键 0-9）不触发自动顶屏，交由后续 selector/speller 处理
-  if incoming == " " or incoming == "'" or (incoming >= "0" and incoming <= "9") then
+  -- 2. 选字/翻页键（空格、单引号、数字键 0-9、小键盘 KP_0-KP_9 等）不触发自动顶屏，交由后续 selector/speller 处理
+  local kc = key_event.keycode
+  if incoming == " " or incoming == "'" or (incoming >= "0" and incoming <= "9") or
+     (kc >= 0xffb0 and kc <= 0xffb9) or (kc >= 0x30 and kc <= 0x39) or kc == 0x20 or kc == 0x27 then
     return yoyo.kNoop
   end
 
@@ -59,24 +61,25 @@ function processor.func(key_event, env)
   local effective_len = #clean_input
   local is_1jian = (#input == 2 and (input:sub(1, 1) == "_" or input:sub(1, 1) == "+")) or (effective_len == 1)
 
-  -- Case A: 四码输入未命中词库时的自动回退切分
-  -- 当 effective_len 达到 4 码且无匹配词（无 menu）时：
-  -- 将前 2 码提交上屏（字 1），将后 2 码保留在 buffer 中（字 2）
-  if effective_len == 4 and not context:has_menu() then
+  -- Case A: 输入未命中词库时的自动回退切分 (3码无字 或 4码无词)
+  -- 1. 3码未命中（如 2码字 iG + 1简 +e -> 提交 iG "打"，留 +e "有"）
+  -- 2. 4码未命中（如 2码字 sl + 2码字 cb -> 提交 sl "了"，留 cb "不"）
+  if (effective_len == 3 or effective_len == 4) and not context:has_menu() then
     env.processing = true
     local first_two = clean_input:sub(1, 2)
-    local last_two = clean_input:sub(3, 4)
+    local remainder = input:sub(#first_two + 1)
     
     context:pop_input(#input)
     context:push_input(first_two)
     if context:has_menu() then
       context:confirm_current_selection()
       context:commit()
+      context:clear()
     else
       env.engine:commit_text(first_two)
       context:clear()
     end
-    context:push_input(last_two)
+    context:push_input(remainder)
     env.processing = false
     return yoyo.kNoop
   end
