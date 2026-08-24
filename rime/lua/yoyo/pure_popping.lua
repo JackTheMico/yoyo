@@ -4,7 +4,7 @@
 -- 1. 反查模式 (`)、快符模式 (')、标点并击 (e?[6L]|fg) 放行
 -- 2. 选字/翻页键（空格、单引号、数字 0-9、小键盘 KP_0-KP_9）放行
 -- 3. 模式识别与顶屏切分：
---    a. 连续一简 (如 _d_e)：顶出 _d ("的")，留 _e ("在")
+--    a. 连续一简 (如 _d_e, _d+e)：顶出 _d ("的")，留新一简
 --    b. 两码字接一简 (如 iG+e)：如果 iGe 不是 3 码单字 -> 顶出 iG ("打")，留 +e ("有")
 --    c. 三码单字后接新按键 (如 bX_n_t 或 bX_n+e 或 bX_nsl)：顶出 bX_n ("鸣")，留新击键
 --    d. 四码词语后接新按键 (如 rTah_t 或 ISoY_e 或 rTahsl)：顶出 4 码词，留新击键
@@ -25,8 +25,8 @@ function processor.func(key_event, env)
     return yoyo.kNoop
   end
 
-  -- 忽略释放键和修饰键 (Ctrl/Alt/Caps)
-  if key_event:release() or key_event:alt() or key_event:ctrl() or key_event:caps() then
+  -- 忽略修饰键 (Ctrl/Alt/Caps)，但不忽略 release，因为 chord_composer 在 key-up 时才输出码元
+  if key_event:alt() or key_event:ctrl() or key_event:caps() then
     return yoyo.kNoop
   end
 
