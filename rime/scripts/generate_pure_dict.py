@@ -72,8 +72,15 @@ def generate():
         code = parts[1]
         weight = parts[2] if len(parts) > 2 else "0"
 
-        # 剥离控制字符
-        clean_code = MARKER_REGEX.sub("", code)
+        # 1-jian 条目保留左右手前缀 (_ 为左手，+ 为右手)
+        if code.startswith("_") or code.startswith("+"):
+            prefix = code[0]
+            clean_body = MARKER_REGEX.sub("", code[1:])
+            clean_code = f"{prefix}{clean_body}"
+        else:
+            # 2/3/4 码条目剥离所有控制标记
+            clean_code = MARKER_REGEX.sub("", code)
+            
         out_lines.append(f"{text}\t{clean_code}\t{weight}")
         converted_count += 1
 

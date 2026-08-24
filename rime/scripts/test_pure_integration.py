@@ -95,10 +95,10 @@ def test_integration():
     code_dict = load_dict_entries()
     print(f"✓ 成功加载规范词库索引，共 {len(code_dict)} 个独立码位")
 
-    # 3. 提取空明拳与六脉神剑指法规则
+    # 3. 提取心法与指法规则
     km_fingering = yoyo_data.get("空明拳", {}).get("__append", [])
     six_fingering = yoyo_data.get("六脉神剑", {}).get("__append", [])
-    xinfa = ["xform|^([12345qwertasdfgzxcvb]+)([67890yuiophjkl;nm,./]+)$|$1'$2|"]
+    xinfa = km_data.get("纯形统一心法", {}).get("__append", [])
 
     km_pipeline = xinfa + km_fingering
     six_pipeline = xinfa + six_fingering
@@ -106,11 +106,21 @@ def test_integration():
     # 4. 测试用例验证 (空明拳链路)
     print("\n--- 验证空明拳 (yoyo-pure-km) 击键流水线 ---")
     
-    # 4.1 一简单手击键
-    r = apply_xforms("d", km_pipeline)
-    assert r == "d", f"Expected 'd', got '{r}'"
-    assert code_dict.get("d") == "的", f"Dict mismatch for 'd': got {code_dict.get('d')}"
-    print(f"✓ [一简] 单手按 'd' -> 码元 '{r}' -> 出字 '{code_dict.get(r)}'")
+    # 4.1 一简单手击键 (左手 _e -> 在, 右手 +e -> 有, 左手 _d -> 的)
+    r_left_d = apply_xforms("d", km_pipeline)
+    assert r_left_d == "_d", f"Expected '_d', got '{r_left_d}'"
+    assert code_dict.get(r_left_d) == "的", f"Dict mismatch for '_d': got {code_dict.get(r_left_d)}"
+    print(f"✓ [一简·左手] 单手按 'd' -> 码元 '{r_left_d}' -> 出字 '{code_dict.get(r_left_d)}'")
+
+    r_left_e = apply_xforms("e", km_pipeline)
+    assert r_left_e == "_e", f"Expected '_e', got '{r_left_e}'"
+    assert code_dict.get(r_left_e) == "在", f"Dict mismatch for '_e': got {code_dict.get(r_left_e)}"
+    print(f"✓ [一简·左手] 单手按 'e' -> 码元 '{r_left_e}' -> 出字 '{code_dict.get(r_left_e)}'")
+
+    r_right_i = apply_xforms("i", km_pipeline)
+    assert r_right_i == "+e", f"Expected '+e', got '{r_right_i}'"
+    assert code_dict.get(r_right_i) == "有", f"Dict mismatch for '+e': got {code_dict.get(r_right_i)}"
+    print(f"✓ [一简·右手] 单手按 'i' (镜像 e) -> 码元 '{r_right_i}' -> 出字 '{code_dict.get(r_right_i)}'")
 
     # 4.2 两码单字并击 (了 = s + l)
     # 左手按 's' (s 码元), 右手按 'jl' (fs 镜像 = l 码元)
@@ -123,10 +133,10 @@ def test_integration():
     # 左手按 'b' (b), 右手按 '.k' (dx 镜像 = X)
     r_chord = apply_xforms("b.k", km_pipeline)
     assert r_chord == "bX", f"Expected 'bX', got '{r_chord}'"
-    # 单手按左手 'cs' (左手 n 码元)
+    # 单手按左手 'cs' (左手 n 码元 -> _n)
     r_single = apply_xforms("cs", km_pipeline)
-    assert r_single == "n", f"Expected 'n', got '{r_single}'"
-    full_code = r_chord + r_single
+    assert r_single == "_n", f"Expected '_n', got '{r_single}'"
+    full_code = r_chord + r_single.replace("_", "")
     assert full_code == "bXn"
     assert code_dict.get(full_code) == "鸣", f"Dict mismatch for 'bXn': got {code_dict.get(full_code)}"
     print(f"✓ [三码字·左结构] 双手并击 'b.k' -> '{r_chord}', 左手单击 'cs' -> '{r_single}', 全码 '{full_code}' -> 出字 '{code_dict.get(full_code)}'")
@@ -135,10 +145,10 @@ def test_integration():
     # 左手按 'w' (w), 右手按 ',j' (cf 镜像 = C)
     r_chord = apply_xforms("w,j", km_pipeline)
     assert r_chord == "wC", f"Expected 'wC', got '{r_chord}'"
-    # 单手按右手 'l' (右手 s 码元)
+    # 单手按右手 'l' (右手 s 码元 -> +s)
     r_single = apply_xforms("l", km_pipeline)
-    assert r_single == "s", f"Expected 's', got '{r_single}'"
-    full_code = r_chord + r_single
+    assert r_single == "+s", f"Expected '+s', got '{r_single}'"
+    full_code = r_chord + r_single.replace("+", "")
     assert full_code == "wCs"
     assert code_dict.get(full_code) == "是", f"Dict mismatch for 'wCs': got {code_dict.get(full_code)}"
     print(f"✓ [三码字·右结构] 双手并击 'w,j' -> '{r_chord}', 右手单击 'l' -> '{r_single}', 全码 '{full_code}' -> 出字 '{code_dict.get(full_code)}'")

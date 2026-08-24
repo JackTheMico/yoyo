@@ -75,7 +75,13 @@ def test_pure_dict():
     # 3. 校验禁用的标记符
     forbidden_hits = []
     for text, code, weight, line_no in entries:
-        hit = [ch for ch in code if ch in FORBIDDEN_MARKERS]
+        # 1-jian 允许开头的 _ 或 +
+        if len(code) == 2 and (code.startswith("_") or code.startswith("+")):
+            code_to_check = code[1:]
+        else:
+            code_to_check = code
+
+        hit = [ch for ch in code_to_check if ch in FORBIDDEN_MARKERS]
         if hit:
             forbidden_hits.append((line_no, text, code, "".join(hit)))
 
@@ -84,10 +90,12 @@ def test_pure_dict():
         for line_no, text, code, hit in forbidden_hits[:10]:
             print(f"   Line {line_no}: [{text}] -> code '{code}' contains forbidden '{hit}'")
         return False
-    print("✓ 编码列格式纯净：0 语法控制标记符 (!@-_+()[]=)")
+    print("✓ 编码列格式纯净：0 非法语法控制标记符 (!@()[]= 等)")
 
-    # 4. 一简字词校验 (len == 1)
-    one_jian_entries = [e for e in entries if len(e[1]) == 1]
+    # 4. 一简字词校验 (len == 2 且以 _ 或 + 开头)
+    one_jian_entries = [
+        e for e in entries if len(e[1]) == 2 and (e[1].startswith("_") or e[1].startswith("+"))
+    ]
     print(f"✓ 检测到一简条目数: {len(one_jian_entries)}")
     if len(one_jian_entries) != 240:
         print(f"⚠️ 警告: 一简条目数预期为 240 (60左手字词 + 60右手字词)，实际为 {len(one_jian_entries)}")

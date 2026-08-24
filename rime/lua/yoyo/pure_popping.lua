@@ -55,17 +55,20 @@ function processor.func(key_event, env)
   end
 
   -- 3. 状态机分流逻辑
-  local input_len = #input
+  local clean_input = input:gsub("[_+]", "")
+  local effective_len = #clean_input
+  local is_1jian = (#input == 2 and (input:sub(1, 1) == "_" or input:sub(1, 1) == "+")) or (effective_len == 1)
 
   -- Case A: 四码输入未命中词库时的自动回退切分
-  -- 当 input 达到 4 码且无匹配词（无 menu）时：
+  -- 当 effective_len 达到 4 码且无匹配词（无 menu）时：
   -- 将前 2 码提交上屏（字 1），将后 2 码保留在 buffer 中（字 2）
-  if input_len == 4 and not context:has_menu() then
+  if effective_len == 4 and not context:has_menu() then
     env.processing = true
-    local first_two = input:sub(1, 2)
-    local last_two = input:sub(3, 4)
+    local first_two = clean_input:sub(1, 2)
+    local last_two = clean_input:sub(3, 4)
     
-    context:pop_input(2)
+    context:pop_input(#input)
+    context:push_input(first_two)
     if context:has_menu() then
       context:confirm_current_selection()
       context:commit()
@@ -79,15 +82,15 @@ function processor.func(key_event, env)
   end
 
   -- Case B: 3 码单字即刻直出模式 (当 instant_commit_3code 开关开启时)
-  if input_len == 3 and context:get_option("instant_commit_3code") and context:has_menu() then
+  if effective_len == 3 and context:get_option("instant_commit_3code") and context:has_menu() then
     context:confirm_current_selection()
     context:commit()
     return yoyo.kNoop
   end
 
-  -- Case C: 已有一简 (len == 1) 或 已有三码单字 (len == 3) 或 已有四码/长码词 (len >= 4)
+  -- Case C: 已有一简 (is_1jian) 或 已有三码单字 (effective_len == 3) 或 已有四码/长码词 (effective_len >= 4)
   -- 当用户输入下一个非选字击键时，前序内容已完成，执行顶屏并提交上屏
-  if input_len == 1 or input_len == 3 or input_len >= 4 then
+  if is_1jian or effective_len == 3 or effective_len >= 4 then
     if context:has_menu() then
       context:confirm_current_selection()
       context:commit()
@@ -95,7 +98,7 @@ function processor.func(key_event, env)
     end
   end
 
-  -- Case D: 已有两码 (len == 2)
+  -- Case D: 已有两码 (effective_len == 2 且非一简)
   -- 此时 incoming 可能是：
   --   1. 单手按键 (1 码) -> 构成 3 码单字
   --   2. 双手并击 (2 码) -> 构成 4 码词

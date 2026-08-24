@@ -69,12 +69,18 @@ __patch:
       Eisu_toggle: clear
 
   speller:
-    alphabet: "zyxwvutsrqponmlkjihgfedcba;,./ZYXWVUTSRQPONMLKJIHGFEDCBA:<>?'0123456789"
-    initials: "zyxwvutsrqponmlkjihgfedcba;,./ZYXWVUTSRQPONMLKJIHGFEDCBA:<>?'0123456789"
+    alphabet: "zyxwvutsrqponmlkjihgfedcba;,./ZYXWVUTSRQPONMLKJIHGFEDCBA:<>?_+'0123456789"
+    initials: "zyxwvutsrqponmlkjihgfedcba;,./ZYXWVUTSRQPONMLKJIHGFEDCBA:<>?_+'0123456789"
     auto_select: true
     auto_select_pattern: "'.+|(e?[6L]|fg).+"
+    algebra:
+      # 当单手击键作为第3码（带 _ 或 + 前缀）时，允许与前两码拼接匹配 3 码单字
+      - derive|^([a-zA-Z;:,<.>/?]{2})[_+]([a-zA-Z;:,<.>/?])$|$1$2|
 
 纯形统一心法:
   __append:
     # 左右手并击：以单引号分隔左右两手按键区，交由指法映射转换为纯码元
     - xform|^([12345qwertasdfgzxcvb]+)([67890yuiophjkl;nm,./]+)$|$1'$2|
+    # 单手按键：转换为 _ (左手) 或 + (右手) 开头的一简前缀
+    - xform|^([12345qwertasdfgzxcvb]+)$|_$1|
+    - xform|^([67890yuiophjkl;nm,./]+)$|+$1|
