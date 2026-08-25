@@ -112,6 +112,13 @@ def generate():
     OUTPUT_DICT.write_text("\n".join(out_lines) + "\n", encoding="utf-8")
     print(f"Successfully generated {OUTPUT_DICT} with {converted_count} entries.")
 
+    # 自动同步生成 Lua 静态映射表 (pure_dict_map.lua)
+    try:
+        from generate_pure_dict_map import generate as generate_map
+        generate_map()
+    except Exception as e:
+        print(f"Warning: Failed to auto-generate pure_dict_map.lua: {e}")
+
 
 if __name__ == "__main__":
     generate()

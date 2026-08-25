@@ -1,0 +1,83 @@
+#!/usr/bin/env python3
+"""生成纯形顶屏静态映射表 (rime/lua/yoyo/data/pure_dict_map.lua)。
+
+从 rime/yoyo-pure.dict.yaml 提取：
+1. dict_map: 编码 -> 首选中文文本映射
+2. words_4code: 四码词集合（用于状态机区分合法4码词与非词自动切分）
+3. chars_3code: 三码单字集合（用于状态机区分3码单字全码与两码字接一简）
+"""
+
+import json
+import sys
+from pathlib import Path
+
+SCRIPTS_DIR = Path(__file__).resolve().parent
+RIME_DIR = SCRIPTS_DIR.parent
+SOURCE_DICT = RIME_DIR / "yoyo-pure.dict.yaml"
+OUTPUT_LUA = RIME_DIR / "lua" / "yoyo" / "data" / "pure_dict_map.lua"
+
+
+def generate():
+    if not SOURCE_DICT.exists():
+        print(f"Error: Source dictionary {SOURCE_DICT} not found.", file=sys.stderr)
+        sys.exit(1)
+
+    print(f"Reading pure dictionary: {SOURCE_DICT}")
+    lines = SOURCE_DICT.read_text(encoding="utf-8").splitlines()
+
+    code_to_top_word = {}
+    words_4code = set()
+    chars_3code = set()
+
+    for l in lines:
+        if "\t" not in l or l.startswith("#"):
+            continue
+        parts = l.split("\t")
+        text = parts[0]
+        raw_code = parts[1]
+        clean_code = raw_code.replace("_", "").replace("+", "")
+
+        # 记录 4 码词
+        if len(clean_code) == 4 and len(text) > 1:
+            words_4code.add(clean_code)
+        # 记录 3 码单字
+        elif len(clean_code) == 3 and len(text) == 1:
+            chars_3code.add(clean_code)
+
+        # 记录首选词（保留第一条遇到的最高权重/最高位词条）
+        if raw_code not in code_to_top_word:
+            code_to_top_word[raw_code] = text
+        if clean_code not in code_to_top_word:
+            code_to_top_word[clean_code] = text
+
+    out = [
+        "-- Auto-generated pure shape dictionary map & sets",
+        "local M = {",
+        "  dict_map = {",
+    ]
+    for code, text in sorted(code_to_top_word.items()):
+        out.append(f"    [{json.dumps(code, ensure_ascii=False)}] = {json.dumps(text, ensure_ascii=False)},")
+    out.append("  },")
+
+    out.append("  words_4code = {")
+    for c in sorted(words_4code):
+        out.append(f"    [{json.dumps(c, ensure_ascii=False)}] = true,")
+    out.append("  },")
+
+    out.append("  chars_3code = {")
+    for c in sorted(chars_3code):
+        out.append(f"    [{json.dumps(c, ensure_ascii=False)}] = true,")
+    out.append("  },")
+    out.append("}")
+    out.append("return M")
+
+    OUTPUT_LUA.parent.mkdir(parents=True, exist_ok=True)
+    OUTPUT_LUA.write_text("\n".join(out) + "\n", encoding="utf-8")
+    print(f"Successfully generated {OUTPUT_LUA}")
+    print(f"  - dict_map entries: {len(code_to_top_word)}")
+    print(f"  - words_4code entries: {len(words_4code)}")
+    print(f"  - chars_3code entries: {len(chars_3code)}")
+
+
+if __name__ == "__main__":
+    generate()
