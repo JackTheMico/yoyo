@@ -88,9 +88,8 @@ function processor.func(key_event, env)
 
   if not input or input == "" then return yoyo.kNoop end
 
-  -- 特殊模式绕过
+  -- 特殊模式绕过（反查模式与以单引号开头的快符）
   if input:sub(1,1) == "`" or input:sub(1,1) == "'" then return yoyo.kNoop end
-  if input:match("^fg") or input:match("^e?[6L]") then return yoyo.kNoop end
 
   -- 选字/翻页键放行：空格、'、数字
   if incoming == " " or incoming == "'" or (incoming >= "0" and incoming <= "9") then
@@ -144,11 +143,15 @@ function processor.func(key_event, env)
     return yoyo.kNoop
   end
 
-  -- ─── Pattern F: 3字符纯字母(XYZ)，接普通字母W → 判断是否4码词 ───────────────
-  if ilen == 3 and not input:find("[_+]") and is_plain(incoming) then
-    if pure_data.words_4code[input .. incoming] then
-      return yoyo.kNoop  -- 是4码词（如 rTah）
-    else
+  -- ─── Pattern F: 3字符纯字母(XYZ)，接任意键 ──────────────────────────────────
+  if ilen == 3 and not input:find("[_+]") then
+    if is_plain(incoming) and pure_data.words_4code[input .. incoming] then
+      return yoyo.kNoop  -- 是4码词（如 rTah），继续等第4码
+    elseif pure_data.dict_map[input] then
+      -- input 自身是完整条目（如标点 eLd='。'，fgf=','）
+      commit_and_restore(env, context, input, nil)
+      return yoyo.kNoop
+    elseif is_plain(incoming) then
       commit_and_restore(env, context, input:sub(1,2), input:sub(3,3))
       return yoyo.kNoop
     end

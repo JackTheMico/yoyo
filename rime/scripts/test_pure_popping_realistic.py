@@ -224,6 +224,153 @@ do
   check("aLZF: input='aLZF'", ctx.input == "aLZF", ctx.input, "aLZF")
 end
 
+-- T11: 色(LT) + 的(_d) —— 修复 L-码元字词接一简被误拦截
+print("\nT11: 色(LT) + 的(_d) -> 顶出'色'，留'_d'")
+do
+  local ctx = MockContext.new(); local env = make_env(ctx)
+  sim(env, ctx, "L"); sim(env, ctx, "T")
+  check("LT: input", ctx.input == "LT", ctx.input, "LT")
+  check("LT: no commit", #ctx.committed == 0, #ctx.committed, 0)
+
+  sim(env, ctx, "_")  -- input='LT', incoming='_' → Pattern B
+  check("recv _: input='LT_'", ctx.input == "LT_", ctx.input, "LT_")
+  check("recv _: no commit yet", #ctx.committed == 0, #ctx.committed, 0)
+
+  sim(env, ctx, "d")  -- input='LT_', incoming='d' → Pattern C: chars_3code['LTd']=nil → 顶出'色'，restore '_', speller push 'd' → '_d'
+  check("recv d: '色' committed", ctx.committed[1] == "色", ctx.committed[1], "色")
+  check("recv d: input='_d'", ctx.input == "_d", ctx.input, "_d")
+end
+
+-- T12: 色(LT) + 有(+e)
+print("\nT12: 色(LT) + 有(+e) -> 顶出'色'，留'+e'")
+do
+  local ctx = MockContext.new(); local env = make_env(ctx)
+  sim(env, ctx, "L"); sim(env, ctx, "T")
+  sim(env, ctx, "+")
+  sim(env, ctx, "e")
+  check("recv e: '色' committed", ctx.committed[1] == "色", ctx.committed[1], "色")
+  check("recv e: input='+e'", ctx.input == "+e", ctx.input, "+e")
+end
+
+-- T13: 色(LT) + 色末根(_b) -> 构成3码字全码 'LT_b'，不误顶
+print("\nT13: 色(LT) + 色末根(_b) -> 构成3码字全码 'LT_b'，不误顶")
+do
+  local ctx = MockContext.new(); local env = make_env(ctx)
+  sim(env, ctx, "L"); sim(env, ctx, "T")
+  sim(env, ctx, "_")
+  sim(env, ctx, "b")  -- chars_3code['LTb']=true → kNoop
+  check("LT_b: no commit", #ctx.committed == 0, #ctx.committed, 0)
+  check("LT_b: input='LT_b'", ctx.input == "LT_b", ctx.input, "LT_b")
+end
+
+-- T14: 博(eL) + 的(_d)
+print("\nT14: 博(eL) + 的(_d) -> 顶出'博'，留'_d'")
+do
+  local ctx = MockContext.new(); local env = make_env(ctx)
+  sim(env, ctx, "e"); sim(env, ctx, "L")
+  sim(env, ctx, "_")
+  sim(env, ctx, "d")
+  check("recv d: '博' committed", ctx.committed[1] == "博", ctx.committed[1], "博")
+  check("recv d: input='_d'", ctx.input == "_d", ctx.input, "_d")
+end
+
+-- T15: 博士(eLrs) + 的(_d)
+print("\nT15: 博士(eLrs) + 的(_d) -> 顶出'博士'，留'_d'")
+do
+  local ctx = MockContext.new(); local env = make_env(ctx)
+  sim(env, ctx, "e"); sim(env, ctx, "L"); sim(env, ctx, "r"); sim(env, ctx, "s")
+  sim(env, ctx, "_")  -- Pattern G: input='eLrs', incoming='_' → 顶出'博士'
+  check("recv _: '博士' committed", ctx.committed[1] == "博士", ctx.committed[1], "博士")
+  check("recv _: input='_'", ctx.input == "_", ctx.input, "_")
+  sim(env, ctx, "d")
+  check("recv d: input='_d'", ctx.input == "_d", ctx.input, "_d")
+end
+
+-- T16: 是吧 (_w + bT)
+print("\nT16: 是吧 (_w + bT)")
+do
+  local ctx = MockContext.new(); local env = make_env(ctx)
+  sim(env, ctx, "_"); sim(env, ctx, "w")
+  sim(env, ctx, "b")  -- input='_w', incoming='b' → Pattern A: 一简+普通字母 → 顶出_w
+  check("recv b: '是' committed", ctx.committed[1] == "是", ctx.committed[1], "是")
+  check("recv b: input='b'", ctx.input == "b", ctx.input, "b")
+  sim(env, ctx, "T")  -- input='b', incoming='T' → kNoop → input='bT'
+  check("recv T: input='bT'", ctx.input == "bT", ctx.input, "bT")
+end
+
+-- T17: 是+是 (_w + _w)
+print("\nT17: 是+是 (_w + _w)")
+do
+  local ctx = MockContext.new(); local env = make_env(ctx)
+  sim(env, ctx, "_"); sim(env, ctx, "w")
+  sim(env, ctx, "_")  -- input='_w', incoming='_' → Pattern A → 顶出_w
+  check("recv _: '是' committed", ctx.committed[1] == "是", ctx.committed[1], "是")
+  check("recv _: input='_'", ctx.input == "_", ctx.input, "_")
+  sim(env, ctx, "w")  -- → input='_w'
+  check("recv w: input='_w'", ctx.input == "_w", ctx.input, "_w")
+end
+
+-- T18: 有问题 (+e + _I)
+print("\nT18: 有问题 (+e + _I)")
+do
+  local ctx = MockContext.new(); local env = make_env(ctx)
+  sim(env, ctx, "+"); sim(env, ctx, "e")
+  sim(env, ctx, "_")  -- input='+e', incoming='_' → Pattern A → 顶出+e("有")
+  check("recv _: '有' committed", ctx.committed[1] == "有", ctx.committed[1], "有")
+  check("recv _: input='_'", ctx.input == "_", ctx.input, "_")
+  sim(env, ctx, "I")  -- input='_', incoming='I' → kNoop → input='_I'
+  check("recv I: input='_I'", ctx.input == "_I", ctx.input, "_I")
+end
+
+-- T19: 博客 (eLjY) 完整4码词不出《Y
+print("\nT19: 博客 (eLjY) 完整4码词不出《Y")
+do
+  local ctx = MockContext.new(); local env = make_env(ctx)
+  sim(env, ctx, "e"); sim(env, ctx, "L"); sim(env, ctx, "j")
+  check("eLj: no commit (不出《)", #ctx.committed == 0, #ctx.committed, 0)
+  check("eLj: input='eLj'", ctx.input == "eLj", ctx.input, "eLj")
+  sim(env, ctx, "Y")
+  check("eLjY: no commit", #ctx.committed == 0, #ctx.committed, 0)
+  check("eLjY: input='eLjY'", ctx.input == "eLjY", ctx.input, "eLjY")
+end
+
+-- T20: 博客 (eLjY) 接 的(_d) -> 顶出'博客'，留'_d'
+print("\nT20: 博客 (eLjY) 接 的(_d) -> 顶出'博客'，留'_d'")
+do
+  local ctx = MockContext.new(); local env = make_env(ctx)
+  sim(env, ctx, "e"); sim(env, ctx, "L"); sim(env, ctx, "j"); sim(env, ctx, "Y")
+  sim(env, ctx, "_")
+  check("recv _: '博客' committed", ctx.committed[1] == "博客", ctx.committed[1], "博客")
+  check("recv _: input='_'", ctx.input == "_", ctx.input, "_")
+  sim(env, ctx, "d")
+  check("recv d: input='_d'", ctx.input == "_d", ctx.input, "_d")
+end
+
+-- T21: 标点。(eLd) 接 的(_d) -> 顶出'。'，留'_d'
+print("\nT21: 标点。(eLd) 接 的(_d) -> 顶出'。'，留'_d'")
+do
+  local ctx = MockContext.new(); local env = make_env(ctx)
+  sim(env, ctx, "e"); sim(env, ctx, "L"); sim(env, ctx, "d")
+  sim(env, ctx, "_")
+  check("recv _: '。' committed", ctx.committed[1] == "。", ctx.committed[1], "。")
+  check("recv _: input='_'", ctx.input == "_", ctx.input, "_")
+  sim(env, ctx, "d")
+  check("recv d: input='_d'", ctx.input == "_d", ctx.input, "_d")
+end
+
+-- T22: 标点。(eLd) 接 博客(eL + jY) -> 顶出'。'，留'eLjY'
+print("\nT22: 标点。(eLd) 接 博客(eL + jY) -> 顶出'。'，留'eLjY'")
+do
+  local ctx = MockContext.new(); local env = make_env(ctx)
+  sim(env, ctx, "e"); sim(env, ctx, "L"); sim(env, ctx, "d")
+  sim(env, ctx, "e")
+  check("recv e: '。' committed", ctx.committed[1] == "。", ctx.committed[1], "。")
+  check("recv e: input='e'", ctx.input == "e", ctx.input, "e")
+  sim(env, ctx, "L"); sim(env, ctx, "j"); sim(env, ctx, "Y")
+  check("eLjY: input='eLjY'", ctx.input == "eLjY", ctx.input, "eLjY")
+  check("total 1 committed", #ctx.committed == 1, #ctx.committed, 1)
+end
+
 print(string.format("\n%s %d/%d 通过\n", FAIL==0 and "🎉" or "💥", PASS, PASS+FAIL))
 if FAIL > 0 then os.exit(1) end
 """
@@ -242,127 +389,3 @@ def run():
 
 if __name__ == "__main__":
     sys.exit(0 if run() else 1)
-
-# T11-T14 新增回归测试
-_EXTRA_LUA = r"""
-package.path = package.path .. ";rime/lua/?.lua;rime/lua/?/init.lua;lua/?.lua"
-local yoyo = require "yoyo.yoyo"
-local pure_popping = require "yoyo.pure_popping"
-local pure_data = require "yoyo.data.pure_dict_map"
-
-local MockContext = {}
-MockContext.__index = MockContext
-function MockContext.new() return setmetatable({ input="", options={}, committed={} }, MockContext) end
-function MockContext:get_option(opt) return self.options[opt] or false end
-function MockContext:has_menu() return pure_data.dict_map[self.input] ~= nil end
-function MockContext:pop_input(n) self.input = self.input:sub(1, #self.input - n) end
-function MockContext:push_input(s) self.input = self.input .. s end
-function MockContext:clear() self.input = "" end
-
-local function make_env(ctx)
-  local env = {
-    engine = { context = ctx, commit_text = function(self, t) table.insert(ctx.committed, t) end },
-    processing = false
-  }
-  pure_popping.init(env)
-  return env
-end
-
-local function make_key(c)
-  local kc = (type(c)=="number") and c or utf8.codepoint(c)
-  return { keycode=kc, release=function() return false end,
-    alt=function() return false end, ctrl=function() return false end,
-    caps=function() return false end, shift=function() return false end }
-end
-
-local function sim(env, ctx, incoming)
-  pure_popping.func(make_key(incoming), env)
-  ctx:push_input(incoming)
-end
-
-local PASS, FAIL = 0, 0
-local function check(name, cond, got, exp)
-  if cond then PASS=PASS+1; io.write("  \xE2\x9C\x93 "..name.."\n")
-  else FAIL=FAIL+1; io.write("  \xE2\x9C\x97 "..name.." (got="..tostring(got).." want="..tostring(exp)..")\n") end
-end
-
-print("\n\xF0\x9F\xA7\xAA \xE6\x96\xB0\xE5\xA2\x9E\xE5\x9B\x9E\xE5\xBB\xBA\xE6\xB5\x8B\xE8\xAF\x95 (T11-T14)\n")
-
--- T11: 是吧 (_w + bT)
-print("T11: \xE6\x98\xAF\xE5\x90\xA7 _w\"\xE6\x98\xAF\" + bT\"\xE5\x90\xA7\"")
-do
-  local ctx = MockContext.new(); local env = make_env(ctx)
-  sim(env, ctx, "_"); sim(env, ctx, "w")
-  check("_w: input", ctx.input == "_w", ctx.input, "_w")
-  sim(env, ctx, "b")  -- input='_w', incoming='b' → Pattern A: 一简+普通字母 → 顶出_w
-  check("recv b: '\xE6\x98\xAF' committed", ctx.committed[1] == "\xE6\x98\xAF", ctx.committed[1], "\xE6\x98\xAF")
-  check("recv b: input='b'", ctx.input == "b", ctx.input, "b")
-  sim(env, ctx, "T")  -- input='b', incoming='T' → kNoop → input='bT'
-  check("recv T: input='bT'", ctx.input == "bT", ctx.input, "bT")
-  check("recv T: 1 committed", #ctx.committed == 1, #ctx.committed, 1)
-end
-
--- T12: 是 + 是 (_w + _w)
-print("\nT12: \xE6\x98\xAF+\xE6\x98\xAF (_w + _w)")
-do
-  local ctx = MockContext.new(); local env = make_env(ctx)
-  sim(env, ctx, "_"); sim(env, ctx, "w")
-  sim(env, ctx, "_")  -- input='_w', incoming='_' → Pattern A → 顶出_w
-  check("recv _: '\xE6\x98\xAF' committed", ctx.committed[1] == "\xE6\x98\xAF", ctx.committed[1], "\xE6\x98\xAF")
-  check("recv _: input='_'", ctx.input == "_", ctx.input, "_")
-  sim(env, ctx, "w")  -- → input='_w'
-  check("recv w: input='_w'", ctx.input == "_w", ctx.input, "_w")
-end
-
--- T13: _wb + T → 顶出_w，留bT （回归 _wbT 问题）
-print("\nT13: _wb+T (\xE6\x98\xAF\xE5\x90\xA7\xE8\xBF\x87\xE6\xB8\xA1\xEF\xBC\x8C\xE9\xBB\x84\xE9\x87\x91\xE6\xB5\x8B\xE8\xAF\x95)")
-do
-  local ctx = MockContext.new(); local env = make_env(ctx)
-  sim(env, ctx, "_"); sim(env, ctx, "w"); sim(env, ctx, "b")
-  -- input='_wb' (是的b已经进去了，说明 Pattern A 没在 recv 'b' 时触发)
-  -- 这个测试专门验证：如果 _wb 已经在 input 里了（不应该发生），收到 T 时是否还能救
-  -- 实际上有了 Pattern A，_wb 不会出现；但如果出现了，Pattern D 要处理
-  if ctx.input == "b" then
-    -- Pattern A 已经在收到 'b' 时顶出了 _w，input 现在是 'b'
-    check("Pattern A 已顶出, input='b'", ctx.input == "b", ctx.input, "b")
-    sim(env, ctx, "T")
-    check("recv T: input='bT'", ctx.input == "bT", ctx.input, "bT")
-  else
-    -- fallback: Pattern D 处理 _wb + T
-    check("input='_wb'", ctx.input == "_wb", ctx.input, "_wb")
-    sim(env, ctx, "T")  -- Pattern D: _wb + T → 顶出_w，restore 'b', kNoop → speller push 'T'
-    check("recv T: '\xE6\x98\xAF' committed", ctx.committed[1] == "\xE6\x98\xAF", ctx.committed[1], "\xE6\x98\xAF")
-    check("recv T: input='bT'", ctx.input == "bT", ctx.input, "bT")
-  end
-end
-
--- T14: 有问题 (+e + _I)
--- +e="有"(1简), _I="问题"(两码字或词)
-print("\nT14: \xE6\x9C\x89+\xE9\x97\xAE (+e\"\xE6\x9C\x89\" + _I\"\xE9\x97\xAE\")")
-do
-  local ctx = MockContext.new(); local env = make_env(ctx)
-  sim(env, ctx, "+"); sim(env, ctx, "e")
-  check("+e: input", ctx.input == "+e", ctx.input, "+e")
-  sim(env, ctx, "_")  -- input='+e', incoming='_' → Pattern A → 顶出+e("有")
-  check("recv _: '\xE6\x9C\x89' committed", ctx.committed[1] == "\xE6\x9C\x89", ctx.committed[1], "\xE6\x9C\x89")
-  check("recv _: input='_'", ctx.input == "_", ctx.input, "_")
-  sim(env, ctx, "I")  -- input='_', incoming='I' → kNoop → input='_I'
-  check("recv I: input='_I'", ctx.input == "_I", ctx.input, "_I")
-end
-
-print(string.format("\n%s %d/%d \xE9\x80\x9A\xE8\xBF\x87\n", FAIL==0 and "\xF0\x9F\x8E\x89" or "\xF0\x9F\x92\xA5", PASS, PASS+FAIL))
-if FAIL > 0 then os.exit(1) end
-"""
-
-import subprocess, sys
-from pathlib import Path
-SCRIPTS_DIR = Path(__file__).resolve().parent
-TL = SCRIPTS_DIR / "_tmp_extra_tests.lua"
-TL.write_text(_EXTRA_LUA, encoding="utf-8")
-try:
-    r = subprocess.run(["lua", str(TL)], capture_output=True, text=True)
-    print(r.stdout)
-    if r.returncode != 0: print(r.stderr, file=sys.stderr)
-    sys.exit(r.returncode)
-finally:
-    if TL.exists(): TL.unlink()

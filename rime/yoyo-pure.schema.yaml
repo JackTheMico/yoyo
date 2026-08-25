@@ -72,7 +72,7 @@ __patch:
     alphabet: "zyxwvutsrqponmlkjihgfedcba;,./ZYXWVUTSRQPONMLKJIHGFEDCBA:<>?_+'0123456789"
     initials: "zyxwvutsrqponmlkjihgfedcba;,./ZYXWVUTSRQPONMLKJIHGFEDCBA:<>?_+'0123456789"
     auto_select: true
-    auto_select_pattern: "'.+|(e?[6L]|fg).+"
+    auto_select_pattern: "'.+"
     algebra:
       # 将字典中 3 码单字 (如 bXn, wCs) 派生出单手击键输入形式 (如 bX_n, wC+s)
       - derive|^([a-zA-Z;:,<.>/?]{2})([a-zA-Z;:,<.>/?])$|$1_$2|

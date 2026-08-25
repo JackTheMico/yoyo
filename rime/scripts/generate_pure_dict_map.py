@@ -9,6 +9,7 @@
 
 import json
 import sys
+import unicodedata
 from pathlib import Path
 
 SCRIPTS_DIR = Path(__file__).resolve().parent
@@ -40,8 +41,8 @@ def generate():
         # 记录 4 码词
         if len(clean_code) == 4 and len(text) > 1:
             words_4code.add(clean_code)
-        # 记录 3 码单字
-        elif len(clean_code) == 3 and len(text) == 1:
+        # 记录 3 码单字（必须为单字汉字，排除标点符号与快符）
+        elif len(clean_code) == 3 and len(text) == 1 and unicodedata.category(text).startswith("L"):
             chars_3code.add(clean_code)
 
         # 记录首选词（保留第一条遇到的最高权重/最高位词条）
