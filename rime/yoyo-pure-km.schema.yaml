@@ -40,6 +40,7 @@ __patch:
     - ascii_composer
     - lua_processor@*yoyo.reverse_lookup_bypass
     - chord_composer
+    - lua_processor@*yoyo.km_punct
     - lua_processor@*yoyo.pure_popping
     - lua_processor@*yoyo.commit_raw
     - recognizer
@@ -57,7 +58,9 @@ __patch:
 
   key_binder/+:
     bindings:
-      - {accept: "Control+Shift+C", toggle: word_priority, when: always}
+      - { when: composing, accept: BackSpace, send: Escape }
+      - { when: composing, accept: Return, send: Escape }
+      - { accept: "Control+Shift+C", toggle: word_priority, when: always }
 
   chord_composer:
     alphabet: "qwertasdfgzxcvb yuiophjkl;nm,./'"

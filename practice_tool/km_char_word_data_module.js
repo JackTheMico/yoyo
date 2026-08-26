@@ -1,5 +1,5 @@
 // 空明拳（yoyo-km）常用单字 / 常用词组 / 一简字词练习数据 —— 由 generate_km_char_word_data.py 生成，请勿手改。
-// 数据来源：rime/yoyo-bm.dict.yaml（麓鸣·北冥·空明）。
+// 数据来源：rime/yoyo-pure.dict.yaml（麓鸣·纯形·空明 规范字典）。
 // steps 表示一次输入需要进行的并击步骤（不含 space，由前端按体系决定）：
 //   hand=both 双手并击；hand=left/right 单手并击；hand=either 单手左右皆可。
 //
@@ -314,7 +314,7 @@ const KM_CHARS = [
     },
     {
       "char": "等",
-      "code": "[cV]=z",
+      "code": "cVz",
       "steps": [
         {
           "target": [
@@ -327,7 +327,7 @@ const KM_CHARS = [
           "target": [
             "z"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
@@ -465,7 +465,7 @@ const KM_CHARS = [
     },
     {
       "char": "时",
-      "code": "[wz]-c",
+      "code": "wzc",
       "steps": [
         {
           "target": [
@@ -478,7 +478,7 @@ const KM_CHARS = [
           "target": [
             "c"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
@@ -520,7 +520,7 @@ const KM_CHARS = [
     },
     {
       "char": "但",
-      "code": "[aw]-f",
+      "code": "awf",
       "steps": [
         {
           "target": [
@@ -533,7 +533,7 @@ const KM_CHARS = [
           "target": [
             "f"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
@@ -575,7 +575,7 @@ const KM_CHARS = [
     },
     {
       "char": "个",
-      "code": "[rc]=s",
+      "code": "rcs",
       "steps": [
         {
           "target": [
@@ -588,7 +588,7 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
@@ -606,7 +606,7 @@ const KM_CHARS = [
     },
     {
       "char": "过",
-      "code": "[zp]-c",
+      "code": "zpc",
       "steps": [
         {
           "target": [
@@ -619,13 +619,13 @@ const KM_CHARS = [
           "target": [
             "c"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "最",
-      "code": "[wF]=v",
+      "code": "wFv",
       "steps": [
         {
           "target": [
@@ -638,7 +638,7 @@ const KM_CHARS = [
           "target": [
             "v"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
@@ -692,7 +692,7 @@ const KM_CHARS = [
     },
     {
       "char": "可",
-      "code": "[xk]",
+      "code": "xk",
       "steps": [
         {
           "target": [
@@ -705,7 +705,7 @@ const KM_CHARS = [
     },
     {
       "char": "下",
-      "code": "[fx]=b",
+      "code": "fxb",
       "steps": [
         {
           "target": [
@@ -718,13 +718,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "做",
-      "code": "[a/]-a",
+      "code": "a/a",
       "steps": [
         {
           "target": [
@@ -737,7 +737,7 @@ const KM_CHARS = [
           "target": [
             "a"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
@@ -755,7 +755,7 @@ const KM_CHARS = [
     },
     {
       "char": "于",
-      "code": "[fe]=s",
+      "code": "fes",
       "steps": [
         {
           "target": [
@@ -768,7 +768,7 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
@@ -846,7 +846,7 @@ const KM_CHARS = [
     },
     {
       "char": "高",
-      "code": "[sg]",
+      "code": "sg",
       "steps": [
         {
           "target": [
@@ -967,7 +967,7 @@ const KM_CHARS = [
     },
     {
       "char": "得",
-      "code": "[gw]-z",
+      "code": "gwz",
       "steps": [
         {
           "target": [
@@ -980,13 +980,13 @@ const KM_CHARS = [
           "target": [
             "z"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "其",
-      "code": "[dq]",
+      "code": "dq",
       "steps": [
         {
           "target": [
@@ -1011,7 +1011,7 @@ const KM_CHARS = [
     },
     {
       "char": "第",
-      "code": "[cP]=f",
+      "code": "cPf",
       "steps": [
         {
           "target": [
@@ -1024,13 +1024,13 @@ const KM_CHARS = [
           "target": [
             "f"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "又",
-      "code": "[vy]",
+      "code": "vy",
       "steps": [
         {
           "target": [
@@ -1103,7 +1103,7 @@ const KM_CHARS = [
     },
     {
       "char": "如",
-      "code": "[Zb]-k",
+      "code": "Zbk",
       "steps": [
         {
           "target": [
@@ -1116,13 +1116,13 @@ const KM_CHARS = [
           "target": [
             "k"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "该",
-      "code": "[uL]-h",
+      "code": "uLh",
       "steps": [
         {
           "target": [
@@ -1135,13 +1135,13 @@ const KM_CHARS = [
           "target": [
             "h"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "啊",
-      "code": "[bY]-x",
+      "code": "bYx",
       "steps": [
         {
           "target": [
@@ -1154,13 +1154,13 @@ const KM_CHARS = [
           "target": [
             "x"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "吧",
-      "code": "[bT]-b",
+      "code": "bTb",
       "steps": [
         {
           "target": [
@@ -1173,13 +1173,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "书",
-      "code": "[AA]=O",
+      "code": "AAO",
       "steps": [
         {
           "target": [
@@ -1192,7 +1192,7 @@ const KM_CHARS = [
           "target": [
             "O"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
@@ -1234,7 +1234,7 @@ const KM_CHARS = [
     },
     {
       "char": "们",
-      "code": "[aI]-m",
+      "code": "aIm",
       "steps": [
         {
           "target": [
@@ -1247,13 +1247,13 @@ const KM_CHARS = [
           "target": [
             "m"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "才",
-      "code": "[et]=p",
+      "code": "etp",
       "steps": [
         {
           "target": [
@@ -1266,13 +1266,13 @@ const KM_CHARS = [
           "target": [
             "p"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "及",
-      "code": "[sj]",
+      "code": "sj",
       "steps": [
         {
           "target": [
@@ -1285,7 +1285,7 @@ const KM_CHARS = [
     },
     {
       "char": "内",
-      "code": "[Bn]",
+      "code": "Bn",
       "steps": [
         {
           "target": [
@@ -1298,7 +1298,7 @@ const KM_CHARS = [
     },
     {
       "char": "请",
-      "code": "[u>]-H",
+      "code": "u>H",
       "steps": [
         {
           "target": [
@@ -1311,13 +1311,13 @@ const KM_CHARS = [
           "target": [
             "H"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "者",
-      "code": "[qz]",
+      "code": "qz",
       "steps": [
         {
           "target": [
@@ -1330,7 +1330,7 @@ const KM_CHARS = [
     },
     {
       "char": "只",
-      "code": "[bX]=b",
+      "code": "bXb",
       "steps": [
         {
           "target": [
@@ -1343,7 +1343,7 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
@@ -1361,7 +1361,7 @@ const KM_CHARS = [
     },
     {
       "char": "长",
-      "code": "[uc]",
+      "code": "uc",
       "steps": [
         {
           "target": [
@@ -1410,7 +1410,7 @@ const KM_CHARS = [
     },
     {
       "char": "吗",
-      "code": "[b/]-m",
+      "code": "b/m",
       "steps": [
         {
           "target": [
@@ -1423,13 +1423,13 @@ const KM_CHARS = [
           "target": [
             "m"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "开",
-      "code": "[fp]=c",
+      "code": "fpc",
       "steps": [
         {
           "target": [
@@ -1442,13 +1442,13 @@ const KM_CHARS = [
           "target": [
             "c"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "由",
-      "code": "[By]",
+      "code": "By",
       "steps": [
         {
           "target": [
@@ -1461,7 +1461,7 @@ const KM_CHARS = [
     },
     {
       "char": "国",
-      "code": "[U,]=O",
+      "code": "U,O",
       "steps": [
         {
           "target": [
@@ -1474,7 +1474,7 @@ const KM_CHARS = [
           "target": [
             "O"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
@@ -1516,7 +1516,7 @@ const KM_CHARS = [
     },
     {
       "char": "行",
-      "code": "[gx]",
+      "code": "gx",
       "steps": [
         {
           "target": [
@@ -1529,7 +1529,7 @@ const KM_CHARS = [
     },
     {
       "char": "分",
-      "code": "[af]",
+      "code": "af",
       "steps": [
         {
           "target": [
@@ -1542,7 +1542,7 @@ const KM_CHARS = [
     },
     {
       "char": "市",
-      "code": "[ZQ]=j",
+      "code": "ZQj",
       "steps": [
         {
           "target": [
@@ -1555,7 +1555,7 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
@@ -1573,7 +1573,7 @@ const KM_CHARS = [
     },
     {
       "char": "呢",
-      "code": "[by]-h",
+      "code": "byh",
       "steps": [
         {
           "target": [
@@ -1586,13 +1586,13 @@ const KM_CHARS = [
           "target": [
             "h"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "当",
-      "code": "[EC]=j",
+      "code": "ECj",
       "steps": [
         {
           "target": [
@@ -1605,7 +1605,7 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
@@ -1623,7 +1623,7 @@ const KM_CHARS = [
     },
     {
       "char": "已",
-      "code": "[Pi]",
+      "code": "Pi",
       "steps": [
         {
           "target": [
@@ -1648,7 +1648,7 @@ const KM_CHARS = [
     },
     {
       "char": "自",
-      "code": "[gi]",
+      "code": "gi",
       "steps": [
         {
           "target": [
@@ -1661,7 +1661,7 @@ const KM_CHARS = [
     },
     {
       "char": "您",
-      "code": "[aL]=:",
+      "code": "aL:",
       "steps": [
         {
           "target": [
@@ -1674,7 +1674,7 @@ const KM_CHARS = [
           "target": [
             ":"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
@@ -1704,7 +1704,7 @@ const KM_CHARS = [
     },
     {
       "char": "水",
-      "code": "[ns]",
+      "code": "ns",
       "steps": [
         {
           "target": [
@@ -1717,7 +1717,7 @@ const KM_CHARS = [
     },
     {
       "char": "全",
-      "code": "[r,]=w",
+      "code": "r,w",
       "steps": [
         {
           "target": [
@@ -1730,13 +1730,13 @@ const KM_CHARS = [
           "target": [
             "w"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "爱",
-      "code": "[Ai]",
+      "code": "Ai",
       "steps": [
         {
           "target": [
@@ -1749,7 +1749,7 @@ const KM_CHARS = [
     },
     {
       "char": "天",
-      "code": "[fT]=d",
+      "code": "fTd",
       "steps": [
         {
           "target": [
@@ -1762,7 +1762,7 @@ const KM_CHARS = [
           "target": [
             "d"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
@@ -1780,7 +1780,7 @@ const KM_CHARS = [
     },
     {
       "char": "美",
-      "code": "[QT]=d",
+      "code": "QTd",
       "steps": [
         {
           "target": [
@@ -1793,13 +1793,13 @@ const KM_CHARS = [
           "target": [
             "d"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "向",
-      "code": "[qb]=k",
+      "code": "qbk",
       "steps": [
         {
           "target": [
@@ -1812,7 +1812,7 @@ const KM_CHARS = [
           "target": [
             "k"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
@@ -1830,7 +1830,7 @@ const KM_CHARS = [
     },
     {
       "char": "打",
-      "code": "[iG]-d",
+      "code": "iGd",
       "steps": [
         {
           "target": [
@@ -1843,13 +1843,13 @@ const KM_CHARS = [
           "target": [
             "d"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "起",
-      "code": "[dP]-j",
+      "code": "dPj",
       "steps": [
         {
           "target": [
@@ -1862,13 +1862,13 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "跟",
-      "code": "[s;]-g",
+      "code": "s;g",
       "steps": [
         {
           "target": [
@@ -1881,13 +1881,13 @@ const KM_CHARS = [
           "target": [
             "g"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "金",
-      "code": "[zj]",
+      "code": "zj",
       "steps": [
         {
           "target": [
@@ -1912,7 +1912,7 @@ const KM_CHARS = [
     },
     {
       "char": "无",
-      "code": "[zu]",
+      "code": "zu",
       "steps": [
         {
           "target": [
@@ -1925,7 +1925,7 @@ const KM_CHARS = [
     },
     {
       "char": "万",
-      "code": "[fu]=d",
+      "code": "fud",
       "steps": [
         {
           "target": [
@@ -1938,13 +1938,13 @@ const KM_CHARS = [
           "target": [
             "d"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "带",
-      "code": "[hC]=Q",
+      "code": "hCQ",
       "steps": [
         {
           "target": [
@@ -1957,13 +1957,13 @@ const KM_CHARS = [
           "target": [
             "Q"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "路",
-      "code": "[sY]-g",
+      "code": "sYg",
       "steps": [
         {
           "target": [
@@ -1976,13 +1976,13 @@ const KM_CHARS = [
           "target": [
             "g"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "因",
-      "code": "[UT]=d",
+      "code": "UTd",
       "steps": [
         {
           "target": [
@@ -1995,7 +1995,7 @@ const KM_CHARS = [
           "target": [
             "d"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
@@ -2013,7 +2013,7 @@ const KM_CHARS = [
     },
     {
       "char": "事",
-      "code": "[fb]=l",
+      "code": "fbl",
       "steps": [
         {
           "target": [
@@ -2026,13 +2026,13 @@ const KM_CHARS = [
           "target": [
             "l"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "二",
-      "code": "[Ee]",
+      "code": "Ee",
       "steps": [
         {
           "target": [
@@ -2057,7 +2057,7 @@ const KM_CHARS = [
     },
     {
       "char": "像",
-      "code": "[a,]-x",
+      "code": "a,x",
       "steps": [
         {
           "target": [
@@ -2070,13 +2070,13 @@ const KM_CHARS = [
           "target": [
             "x"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "面",
-      "code": "[cm]",
+      "code": "cm",
       "steps": [
         {
           "target": [
@@ -2089,7 +2089,7 @@ const KM_CHARS = [
     },
     {
       "char": "化",
-      "code": "[ah]-b",
+      "code": "ahb",
       "steps": [
         {
           "target": [
@@ -2102,13 +2102,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "位",
-      "code": "[aC]-l",
+      "code": "aCl",
       "steps": [
         {
           "target": [
@@ -2121,13 +2121,13 @@ const KM_CHARS = [
           "target": [
             "l"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "先",
-      "code": "[mJ]=e",
+      "code": "mJe",
       "steps": [
         {
           "target": [
@@ -2140,7 +2140,7 @@ const KM_CHARS = [
           "target": [
             "e"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
@@ -2170,7 +2170,7 @@ const KM_CHARS = [
     },
     {
       "char": "图",
-      "code": "[U/]=S",
+      "code": "U/S",
       "steps": [
         {
           "target": [
@@ -2183,7 +2183,7 @@ const KM_CHARS = [
           "target": [
             "S"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
@@ -2201,7 +2201,7 @@ const KM_CHARS = [
     },
     {
       "char": "经",
-      "code": "[Rv]-S",
+      "code": "RvS",
       "steps": [
         {
           "target": [
@@ -2214,13 +2214,13 @@ const KM_CHARS = [
           "target": [
             "S"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "走",
-      "code": "[dz]",
+      "code": "dz",
       "steps": [
         {
           "target": [
@@ -2233,7 +2233,7 @@ const KM_CHARS = [
     },
     {
       "char": "同",
-      "code": "[Ft]",
+      "code": "Ft",
       "steps": [
         {
           "target": [
@@ -2246,7 +2246,7 @@ const KM_CHARS = [
     },
     {
       "char": "却",
-      "code": "[VB]-Y",
+      "code": "VBY",
       "steps": [
         {
           "target": [
@@ -2259,13 +2259,13 @@ const KM_CHARS = [
           "target": [
             "Y"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "老",
-      "code": "[qh]=b",
+      "code": "qhb",
       "steps": [
         {
           "target": [
@@ -2278,13 +2278,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "业",
-      "code": "[/y]",
+      "code": "/y",
       "steps": [
         {
           "target": [
@@ -2297,7 +2297,7 @@ const KM_CHARS = [
     },
     {
       "char": "进",
-      "code": "[hp]-c",
+      "code": "hpc",
       "steps": [
         {
           "target": [
@@ -2310,13 +2310,13 @@ const KM_CHARS = [
           "target": [
             "c"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "挺",
-      "code": "[iN]-g",
+      "code": "iNg",
       "steps": [
         {
           "target": [
@@ -2329,13 +2329,13 @@ const KM_CHARS = [
           "target": [
             "g"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "放",
-      "code": "[<a]-p",
+      "code": "<ap",
       "steps": [
         {
           "target": [
@@ -2348,7 +2348,7 @@ const KM_CHARS = [
           "target": [
             "p"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
@@ -2390,7 +2390,7 @@ const KM_CHARS = [
     },
     {
       "char": "两",
-      "code": "[Yl]",
+      "code": "Yl",
       "steps": [
         {
           "target": [
@@ -2403,7 +2403,7 @@ const KM_CHARS = [
     },
     {
       "char": "少",
-      "code": "[Et]=p",
+      "code": "Etp",
       "steps": [
         {
           "target": [
@@ -2416,13 +2416,13 @@ const KM_CHARS = [
           "target": [
             "p"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "公",
-      "code": "[XB]=s",
+      "code": "XBs",
       "steps": [
         {
           "target": [
@@ -2435,13 +2435,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "法",
-      "code": "[nV]-B",
+      "code": "nVB",
       "steps": [
         {
           "target": [
@@ -2454,13 +2454,13 @@ const KM_CHARS = [
           "target": [
             "B"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "总",
-      "code": "[Xb]=:",
+      "code": "Xb:",
       "steps": [
         {
           "target": [
@@ -2473,13 +2473,13 @@ const KM_CHARS = [
           "target": [
             ":"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "作",
-      "code": "[aH]-a",
+      "code": "aHa",
       "steps": [
         {
           "target": [
@@ -2492,13 +2492,13 @@ const KM_CHARS = [
           "target": [
             "a"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "类",
-      "code": "[rT]=d",
+      "code": "rTd",
       "steps": [
         {
           "target": [
@@ -2511,7 +2511,7 @@ const KM_CHARS = [
           "target": [
             "d"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
@@ -2529,7 +2529,7 @@ const KM_CHARS = [
     },
     {
       "char": "场",
-      "code": "[VA]-I",
+      "code": "VAI",
       "steps": [
         {
           "target": [
@@ -2542,13 +2542,13 @@ const KM_CHARS = [
           "target": [
             "I"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "真",
-      "code": "[eT]=X",
+      "code": "eTX",
       "steps": [
         {
           "target": [
@@ -2561,13 +2561,13 @@ const KM_CHARS = [
           "target": [
             "X"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "县",
-      "code": "[qB]=s",
+      "code": "qBs",
       "steps": [
         {
           "target": [
@@ -2580,13 +2580,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "使",
-      "code": "[ag]-b",
+      "code": "agb",
       "steps": [
         {
           "target": [
@@ -2599,7 +2599,7 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
@@ -2617,7 +2617,7 @@ const KM_CHARS = [
     },
     {
       "char": "号",
-      "code": "[bf]=A",
+      "code": "bfA",
       "steps": [
         {
           "target": [
@@ -2630,7 +2630,7 @@ const KM_CHARS = [
           "target": [
             "A"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
@@ -2648,7 +2648,7 @@ const KM_CHARS = [
     },
     {
       "char": "科",
-      "code": "[xD]-d",
+      "code": "xDd",
       "steps": [
         {
           "target": [
@@ -2661,13 +2661,13 @@ const KM_CHARS = [
           "target": [
             "d"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "现",
-      "code": "[,e]-j",
+      "code": ",ej",
       "steps": [
         {
           "target": [
@@ -2680,13 +2680,13 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "应",
-      "code": "[Jn]=f",
+      "code": "Jnf",
       "steps": [
         {
           "target": [
@@ -2699,13 +2699,13 @@ const KM_CHARS = [
           "target": [
             "f"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "道",
-      "code": "[Xg]-p",
+      "code": "Xgp",
       "steps": [
         {
           "target": [
@@ -2718,13 +2718,13 @@ const KM_CHARS = [
           "target": [
             "p"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "期",
-      "code": "[dH]-y",
+      "code": "dHy",
       "steps": [
         {
           "target": [
@@ -2737,13 +2737,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "文",
-      "code": "[vw]",
+      "code": "vw",
       "steps": [
         {
           "target": [
@@ -2756,7 +2756,7 @@ const KM_CHARS = [
     },
     {
       "char": "站",
-      "code": "[CU]-z",
+      "code": "CUz",
       "steps": [
         {
           "target": [
@@ -2769,13 +2769,13 @@ const KM_CHARS = [
           "target": [
             "z"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "入",
-      "code": "[Vu]",
+      "code": "Vu",
       "steps": [
         {
           "target": [
@@ -2788,7 +2788,7 @@ const KM_CHARS = [
     },
     {
       "char": "次",
-      "code": "[Ec]",
+      "code": "Ec",
       "steps": [
         {
           "target": [
@@ -2801,7 +2801,7 @@ const KM_CHARS = [
     },
     {
       "char": "找",
-      "code": "[iU]-g",
+      "code": "iUg",
       "steps": [
         {
           "target": [
@@ -2814,13 +2814,13 @@ const KM_CHARS = [
           "target": [
             "g"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "主",
-      "code": "[O,]=w",
+      "code": "O,w",
       "steps": [
         {
           "target": [
@@ -2833,7 +2833,7 @@ const KM_CHARS = [
           "target": [
             "w"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
@@ -2851,7 +2851,7 @@ const KM_CHARS = [
     },
     {
       "char": "斯",
-      "code": "[d/]-j",
+      "code": "d/j",
       "steps": [
         {
           "target": [
@@ -2864,13 +2864,13 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "快",
-      "code": "[:W]-r",
+      "code": ":Wr",
       "steps": [
         {
           "target": [
@@ -2883,13 +2883,13 @@ const KM_CHARS = [
           "target": [
             "r"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "机",
-      "code": "[oq]-j",
+      "code": "oqj",
       "steps": [
         {
           "target": [
@@ -2902,13 +2902,13 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "手",
-      "code": "[io]",
+      "code": "io",
       "steps": [
         {
           "target": [
@@ -2921,7 +2921,7 @@ const KM_CHARS = [
     },
     {
       "char": "写",
-      "code": "[Cf]=f",
+      "code": "Cff",
       "steps": [
         {
           "target": [
@@ -2934,13 +2934,13 @@ const KM_CHARS = [
           "target": [
             "f"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "型",
-      "code": "[fp]=V",
+      "code": "fpV",
       "steps": [
         {
           "target": [
@@ -2953,13 +2953,13 @@ const KM_CHARS = [
           "target": [
             "V"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "外",
-      "code": "[Sx]-b",
+      "code": "Sxb",
       "steps": [
         {
           "target": [
@@ -2972,13 +2972,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "卡",
-      "code": "[xf]=x",
+      "code": "xfx",
       "steps": [
         {
           "target": [
@@ -2991,13 +2991,13 @@ const KM_CHARS = [
           "target": [
             "x"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "正",
-      "code": "[fI]=i",
+      "code": "fIi",
       "steps": [
         {
           "target": [
@@ -3010,7 +3010,7 @@ const KM_CHARS = [
           "target": [
             "i"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
@@ -3028,7 +3028,7 @@ const KM_CHARS = [
     },
     {
       "char": "式",
-      "code": "[US]=g",
+      "code": "USg",
       "steps": [
         {
           "target": [
@@ -3041,13 +3041,13 @@ const KM_CHARS = [
           "target": [
             "g"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "各",
-      "code": "[Yg]",
+      "code": "Yg",
       "steps": [
         {
           "target": [
@@ -3060,7 +3060,7 @@ const KM_CHARS = [
     },
     {
       "char": "女",
-      "code": "[Zn]",
+      "code": "Zn",
       "steps": [
         {
           "target": [
@@ -3073,7 +3073,7 @@ const KM_CHARS = [
     },
     {
       "char": "量",
-      "code": "[wf]=P",
+      "code": "wfP",
       "steps": [
         {
           "target": [
@@ -3086,7 +3086,7 @@ const KM_CHARS = [
           "target": [
             "P"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
@@ -3104,7 +3104,7 @@ const KM_CHARS = [
     },
     {
       "char": "德",
-      "code": "[ge]-:",
+      "code": "ge:",
       "steps": [
         {
           "target": [
@@ -3117,13 +3117,13 @@ const KM_CHARS = [
           "target": [
             ":"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "西",
-      "code": "[tx]",
+      "code": "tx",
       "steps": [
         {
           "target": [
@@ -3148,7 +3148,7 @@ const KM_CHARS = [
     },
     {
       "char": "强",
-      "code": "[Pb]-B",
+      "code": "PbB",
       "steps": [
         {
           "target": [
@@ -3161,7 +3161,7 @@ const KM_CHARS = [
           "target": [
             "B"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
@@ -3179,7 +3179,7 @@ const KM_CHARS = [
     },
     {
       "char": "低",
-      "code": "[aZ]-O",
+      "code": "aZO",
       "steps": [
         {
           "target": [
@@ -3192,13 +3192,13 @@ const KM_CHARS = [
           "target": [
             "O"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "钱",
-      "code": "[zf]-U",
+      "code": "zfU",
       "steps": [
         {
           "target": [
@@ -3211,13 +3211,13 @@ const KM_CHARS = [
           "target": [
             "U"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "利",
-      "code": "[xW]-d",
+      "code": "xWd",
       "steps": [
         {
           "target": [
@@ -3230,7 +3230,7 @@ const KM_CHARS = [
           "target": [
             "d"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
@@ -3260,7 +3260,7 @@ const KM_CHARS = [
     },
     {
       "char": "完",
-      "code": "[jE]=J",
+      "code": "jEJ",
       "steps": [
         {
           "target": [
@@ -3273,7 +3273,7 @@ const KM_CHARS = [
           "target": [
             "J"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
@@ -3291,7 +3291,7 @@ const KM_CHARS = [
     },
     {
       "char": "处",
-      "code": "[/x]-b",
+      "code": "/xb",
       "steps": [
         {
           "target": [
@@ -3304,13 +3304,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "东",
-      "code": "[tE]=x",
+      "code": "tEx",
       "steps": [
         {
           "target": [
@@ -3323,13 +3323,13 @@ const KM_CHARS = [
           "target": [
             "x"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "非",
-      "code": "[tf]",
+      "code": "tf",
       "steps": [
         {
           "target": [
@@ -3342,7 +3342,7 @@ const KM_CHARS = [
     },
     {
       "char": "回",
-      "code": "[Ub]=k",
+      "code": "Ubk",
       "steps": [
         {
           "target": [
@@ -3355,13 +3355,13 @@ const KM_CHARS = [
           "target": [
             "k"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "数",
-      "code": "[rZ]-a",
+      "code": "rZa",
       "steps": [
         {
           "target": [
@@ -3374,7 +3374,7 @@ const KM_CHARS = [
           "target": [
             "a"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
@@ -3392,7 +3392,7 @@ const KM_CHARS = [
     },
     {
       "char": "达",
-      "code": "[Tp]-c",
+      "code": "Tpc",
       "steps": [
         {
           "target": [
@@ -3405,7 +3405,7 @@ const KM_CHARS = [
           "target": [
             "c"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
@@ -3423,7 +3423,7 @@ const KM_CHARS = [
     },
     {
       "char": "受",
-      "code": "[Av]=y",
+      "code": "Avy",
       "steps": [
         {
           "target": [
@@ -3436,13 +3436,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "间",
-      "code": "[Iw]=r",
+      "code": "Iwr",
       "steps": [
         {
           "target": [
@@ -3455,13 +3455,13 @@ const KM_CHARS = [
           "target": [
             "r"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "力",
-      "code": "[<l]",
+      "code": "<l",
       "steps": [
         {
           "target": [
@@ -3474,7 +3474,7 @@ const KM_CHARS = [
     },
     {
       "char": "提",
-      "code": "[iw]-C",
+      "code": "iwC",
       "steps": [
         {
           "target": [
@@ -3487,13 +3487,13 @@ const KM_CHARS = [
           "target": [
             "C"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "某",
-      "code": "[oo]=m",
+      "code": "oom",
       "steps": [
         {
           "target": [
@@ -3506,13 +3506,13 @@ const KM_CHARS = [
           "target": [
             "m"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "基",
-      "code": "[dV]=t",
+      "code": "dVt",
       "steps": [
         {
           "target": [
@@ -3525,13 +3525,13 @@ const KM_CHARS = [
           "target": [
             "t"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "山",
-      "code": "[<s]",
+      "code": "<s",
       "steps": [
         {
           "target": [
@@ -3544,7 +3544,7 @@ const KM_CHARS = [
     },
     {
       "char": "平",
-      "code": "[?X]=b",
+      "code": "?Xb",
       "steps": [
         {
           "target": [
@@ -3557,13 +3557,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "拉",
-      "code": "[iC]-l",
+      "code": "iCl",
       "steps": [
         {
           "target": [
@@ -3576,13 +3576,13 @@ const KM_CHARS = [
           "target": [
             "l"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "玩",
-      "code": "[,E]-J",
+      "code": ",EJ",
       "steps": [
         {
           "target": [
@@ -3595,13 +3595,13 @@ const KM_CHARS = [
           "target": [
             "J"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "安",
-      "code": "[jZ]=n",
+      "code": "jZn",
       "steps": [
         {
           "target": [
@@ -3614,13 +3614,13 @@ const KM_CHARS = [
           "target": [
             "n"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "称",
-      "code": "[xL]-E",
+      "code": "xLE",
       "steps": [
         {
           "target": [
@@ -3633,13 +3633,13 @@ const KM_CHARS = [
           "target": [
             "E"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "拿",
-      "code": "[ki]=o",
+      "code": "kio",
       "steps": [
         {
           "target": [
@@ -3652,13 +3652,13 @@ const KM_CHARS = [
           "target": [
             "o"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "值",
-      "code": "[aA]-z",
+      "code": "aAz",
       "steps": [
         {
           "target": [
@@ -3671,13 +3671,13 @@ const KM_CHARS = [
           "target": [
             "z"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "未",
-      "code": "[zw]",
+      "code": "zw",
       "steps": [
         {
           "target": [
@@ -3690,7 +3690,7 @@ const KM_CHARS = [
     },
     {
       "char": "工",
-      "code": "[Sg]",
+      "code": "Sg",
       "steps": [
         {
           "target": [
@@ -3703,7 +3703,7 @@ const KM_CHARS = [
     },
     {
       "char": "种",
-      "code": "[xb]-c",
+      "code": "xbc",
       "steps": [
         {
           "target": [
@@ -3716,13 +3716,13 @@ const KM_CHARS = [
           "target": [
             "c"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "越",
-      "code": "[d;]-u",
+      "code": "d;u",
       "steps": [
         {
           "target": [
@@ -3735,13 +3735,13 @@ const KM_CHARS = [
           "target": [
             "u"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "省",
-      "code": "[Et]=T",
+      "code": "EtT",
       "steps": [
         {
           "target": [
@@ -3754,13 +3754,13 @@ const KM_CHARS = [
           "target": [
             "T"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "信",
-      "code": "[au]-y",
+      "code": "auy",
       "steps": [
         {
           "target": [
@@ -3773,13 +3773,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "定",
-      "code": "[jC]=s",
+      "code": "jCs",
       "steps": [
         {
           "target": [
@@ -3792,13 +3792,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "海",
-      "code": "[nK]-N",
+      "code": "nKN",
       "steps": [
         {
           "target": [
@@ -3811,13 +3811,13 @@ const KM_CHARS = [
           "target": [
             "N"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "通",
-      "code": "[Bq]-p",
+      "code": "Bqp",
       "steps": [
         {
           "target": [
@@ -3830,13 +3830,13 @@ const KM_CHARS = [
           "target": [
             "p"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "十",
-      "code": "[es]",
+      "code": "es",
       "steps": [
         {
           "target": [
@@ -3861,7 +3861,7 @@ const KM_CHARS = [
     },
     {
       "char": "话",
-      "code": "[ug]-s",
+      "code": "ugs",
       "steps": [
         {
           "target": [
@@ -3874,13 +3874,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "据",
-      "code": "[iy]-/",
+      "code": "iy/",
       "steps": [
         {
           "target": [
@@ -3893,13 +3893,13 @@ const KM_CHARS = [
           "target": [
             "/"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "米",
-      "code": "[rm]",
+      "code": "rm",
       "steps": [
         {
           "target": [
@@ -3912,7 +3912,7 @@ const KM_CHARS = [
     },
     {
       "char": "系",
-      "code": "[tR]=s",
+      "code": "tRs",
       "steps": [
         {
           "target": [
@@ -3925,13 +3925,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "明",
-      "code": "[wH]-y",
+      "code": "wHy",
       "steps": [
         {
           "target": [
@@ -3944,13 +3944,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "超",
-      "code": "[du]-b",
+      "code": "dub",
       "steps": [
         {
           "target": [
@@ -3963,13 +3963,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "算",
-      "code": "[cT]=p",
+      "code": "cTp",
       "steps": [
         {
           "target": [
@@ -3982,13 +3982,13 @@ const KM_CHARS = [
           "target": [
             "p"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "体",
-      "code": "[an]-b",
+      "code": "anb",
       "steps": [
         {
           "target": [
@@ -4001,13 +4001,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "听",
-      "code": "[b/]-j",
+      "code": "b/j",
       "steps": [
         {
           "target": [
@@ -4020,7 +4020,7 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
@@ -4038,7 +4038,7 @@ const KM_CHARS = [
     },
     {
       "char": "林",
-      "code": "[ml]",
+      "code": "ml",
       "steps": [
         {
           "target": [
@@ -4051,7 +4051,7 @@ const KM_CHARS = [
     },
     {
       "char": "理",
-      "code": "[,P]-l",
+      "code": ",Pl",
       "steps": [
         {
           "target": [
@@ -4064,13 +4064,13 @@ const KM_CHARS = [
           "target": [
             "l"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "岁",
-      "code": "[<S]=x",
+      "code": "<Sx",
       "steps": [
         {
           "target": [
@@ -4083,13 +4083,13 @@ const KM_CHARS = [
           "target": [
             "x"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "款",
-      "code": "[rN]-:",
+      "code": "rN:",
       "steps": [
         {
           "target": [
@@ -4102,13 +4102,13 @@ const KM_CHARS = [
           "target": [
             ":"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "关",
-      "code": "[Rg]",
+      "code": "Rg",
       "steps": [
         {
           "target": [
@@ -4121,7 +4121,7 @@ const KM_CHARS = [
     },
     {
       "char": "指",
-      "code": "[ih]-w",
+      "code": "ihw",
       "steps": [
         {
           "target": [
@@ -4134,13 +4134,13 @@ const KM_CHARS = [
           "target": [
             "w"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "管",
-      "code": "[cj]=m",
+      "code": "cjm",
       "steps": [
         {
           "target": [
@@ -4153,13 +4153,13 @@ const KM_CHARS = [
           "target": [
             "m"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "电",
-      "code": "[Ud]",
+      "code": "Ud",
       "steps": [
         {
           "target": [
@@ -4172,7 +4172,7 @@ const KM_CHARS = [
     },
     {
       "char": "选",
-      "code": "[mJ]-p",
+      "code": "mJp",
       "steps": [
         {
           "target": [
@@ -4185,13 +4185,13 @@ const KM_CHARS = [
           "target": [
             "p"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "条",
-      "code": "[/o]=m",
+      "code": "/om",
       "steps": [
         {
           "target": [
@@ -4204,7 +4204,7 @@ const KM_CHARS = [
           "target": [
             "m"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
@@ -4222,7 +4222,7 @@ const KM_CHARS = [
     },
     {
       "char": "南",
-      "code": "[eF]=Q",
+      "code": "eFQ",
       "steps": [
         {
           "target": [
@@ -4235,7 +4235,7 @@ const KM_CHARS = [
           "target": [
             "Q"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
@@ -4253,7 +4253,7 @@ const KM_CHARS = [
     },
     {
       "char": "率",
-      "code": "[Z>]=e",
+      "code": "Z>e",
       "steps": [
         {
           "target": [
@@ -4266,13 +4266,13 @@ const KM_CHARS = [
           "target": [
             "e"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "别",
-      "code": "[b<]-W",
+      "code": "b<W",
       "steps": [
         {
           "target": [
@@ -4285,13 +4285,13 @@ const KM_CHARS = [
           "target": [
             "W"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "按",
-      "code": "[ij]-Z",
+      "code": "ijZ",
       "steps": [
         {
           "target": [
@@ -4304,13 +4304,13 @@ const KM_CHARS = [
           "target": [
             "Z"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "报",
-      "code": "[iY]-v",
+      "code": "iYv",
       "steps": [
         {
           "target": [
@@ -4323,13 +4323,13 @@ const KM_CHARS = [
           "target": [
             "v"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "近",
-      "code": "[/p]-c",
+      "code": "/pc",
       "steps": [
         {
           "target": [
@@ -4342,13 +4342,13 @@ const KM_CHARS = [
           "target": [
             "c"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "台",
-      "code": "[Bb]=k",
+      "code": "Bbk",
       "steps": [
         {
           "target": [
@@ -4361,13 +4361,13 @@ const KM_CHARS = [
           "target": [
             "k"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "刚",
-      "code": "[Fl]-W",
+      "code": "FlW",
       "steps": [
         {
           "target": [
@@ -4380,13 +4380,13 @@ const KM_CHARS = [
           "target": [
             "W"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "实",
-      "code": "[jS]=T",
+      "code": "jST",
       "steps": [
         {
           "target": [
@@ -4399,13 +4399,13 @@ const KM_CHARS = [
           "target": [
             "T"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "曾",
-      "code": "[Xe]=w",
+      "code": "Xew",
       "steps": [
         {
           "target": [
@@ -4418,13 +4418,13 @@ const KM_CHARS = [
           "target": [
             "w"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "城",
-      "code": "[V;]-A",
+      "code": "V;A",
       "steps": [
         {
           "target": [
@@ -4437,13 +4437,13 @@ const KM_CHARS = [
           "target": [
             "A"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "版",
-      "code": "[Oy]-v",
+      "code": "Oyv",
       "steps": [
         {
           "target": [
@@ -4456,13 +4456,13 @@ const KM_CHARS = [
           "target": [
             "v"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "读",
-      "code": "[ue]-T",
+      "code": "ueT",
       "steps": [
         {
           "target": [
@@ -4475,13 +4475,13 @@ const KM_CHARS = [
           "target": [
             "T"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "变",
-      "code": "[Gv]=y",
+      "code": "Gvy",
       "steps": [
         {
           "target": [
@@ -4494,13 +4494,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "集",
-      "code": "[,o]=m",
+      "code": ",om",
       "steps": [
         {
           "target": [
@@ -4513,13 +4513,13 @@ const KM_CHARS = [
           "target": [
             "m"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "叫",
-      "code": "[bW]-j",
+      "code": "bWj",
       "steps": [
         {
           "target": [
@@ -4532,13 +4532,13 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "周",
-      "code": "[FJ]=j",
+      "code": "FJj",
       "steps": [
         {
           "target": [
@@ -4551,13 +4551,13 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "约",
-      "code": "[R.]-O",
+      "code": "R.O",
       "steps": [
         {
           "target": [
@@ -4570,13 +4570,13 @@ const KM_CHARS = [
           "target": [
             "O"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "陈",
-      "code": "[Yt]-E",
+      "code": "YtE",
       "steps": [
         {
           "target": [
@@ -4589,13 +4589,13 @@ const KM_CHARS = [
           "target": [
             "E"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "么",
-      "code": "[tB]=s",
+      "code": "tBs",
       "steps": [
         {
           "target": [
@@ -4608,13 +4608,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "谁",
-      "code": "[u,]-i",
+      "code": "u,i",
       "steps": [
         {
           "target": [
@@ -4627,13 +4627,13 @@ const KM_CHARS = [
           "target": [
             "i"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "油",
-      "code": "[nB]-y",
+      "code": "nBy",
       "steps": [
         {
           "target": [
@@ -4646,13 +4646,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "资",
-      "code": "[EG]=b",
+      "code": "EGb",
       "steps": [
         {
           "target": [
@@ -4665,7 +4665,7 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
@@ -4683,7 +4683,7 @@ const KM_CHARS = [
     },
     {
       "char": "华",
-      "code": "[ah]=e",
+      "code": "ahe",
       "steps": [
         {
           "target": [
@@ -4696,13 +4696,13 @@ const KM_CHARS = [
           "target": [
             "e"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "村",
-      "code": "[oz]-c",
+      "code": "ozc",
       "steps": [
         {
           "target": [
@@ -4715,13 +4715,13 @@ const KM_CHARS = [
           "target": [
             "c"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "门",
-      "code": "[Im]",
+      "code": "Im",
       "steps": [
         {
           "target": [
@@ -4734,7 +4734,7 @@ const KM_CHARS = [
     },
     {
       "char": "份",
-      "code": "[aa]-f",
+      "code": "aaf",
       "steps": [
         {
           "target": [
@@ -4747,13 +4747,13 @@ const KM_CHARS = [
           "target": [
             "f"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "贵",
-      "code": "[BG]=b",
+      "code": "BGb",
       "steps": [
         {
           "target": [
@@ -4766,7 +4766,7 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
@@ -4784,7 +4784,7 @@ const KM_CHARS = [
     },
     {
       "char": "组",
-      "code": "[Rq]-q",
+      "code": "Rqq",
       "steps": [
         {
           "target": [
@@ -4797,13 +4797,13 @@ const KM_CHARS = [
           "target": [
             "q"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "即",
-      "code": "[;Y]-j",
+      "code": ";Yj",
       "steps": [
         {
           "target": [
@@ -4816,13 +4816,13 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "价",
-      "code": "[ar]-W",
+      "code": "arW",
       "steps": [
         {
           "target": [
@@ -4835,7 +4835,7 @@ const KM_CHARS = [
           "target": [
             "W"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
@@ -4853,7 +4853,7 @@ const KM_CHARS = [
     },
     {
       "char": "差",
-      "code": "[QS]=g",
+      "code": "QSg",
       "steps": [
         {
           "target": [
@@ -4866,13 +4866,13 @@ const KM_CHARS = [
           "target": [
             "g"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "制",
-      "code": "[mQ]-W",
+      "code": "mQW",
       "steps": [
         {
           "target": [
@@ -4885,13 +4885,13 @@ const KM_CHARS = [
           "target": [
             "W"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "需",
-      "code": "[kB]=e",
+      "code": "kBe",
       "steps": [
         {
           "target": [
@@ -4904,13 +4904,13 @@ const KM_CHARS = [
           "target": [
             "e"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "单",
-      "code": "[Xw]=e",
+      "code": "Xwe",
       "steps": [
         {
           "target": [
@@ -4923,13 +4923,13 @@ const KM_CHARS = [
           "target": [
             "e"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "白",
-      "code": "[db]",
+      "code": "db",
       "steps": [
         {
           "target": [
@@ -4942,7 +4942,7 @@ const KM_CHARS = [
     },
     {
       "char": "罗",
-      "code": "[OS]=x",
+      "code": "OSx",
       "steps": [
         {
           "target": [
@@ -4955,13 +4955,13 @@ const KM_CHARS = [
           "target": [
             "x"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "连",
-      "code": "[Mp]-c",
+      "code": "Mpc",
       "steps": [
         {
           "target": [
@@ -4974,13 +4974,13 @@ const KM_CHARS = [
           "target": [
             "c"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "项",
-      "code": "[S?]-y",
+      "code": "S?y",
       "steps": [
         {
           "target": [
@@ -4993,13 +4993,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "些",
-      "code": "[Ih]=E",
+      "code": "IhE",
       "steps": [
         {
           "target": [
@@ -5012,13 +5012,13 @@ const KM_CHARS = [
           "target": [
             "E"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "相",
-      "code": "[oT]-m",
+      "code": "oTm",
       "steps": [
         {
           "target": [
@@ -5031,13 +5031,13 @@ const KM_CHARS = [
           "target": [
             "m"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "头",
-      "code": "[ST]=d",
+      "code": "STd",
       "steps": [
         {
           "target": [
@@ -5050,13 +5050,13 @@ const KM_CHARS = [
           "target": [
             "d"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "送",
-      "code": "[Rp]-c",
+      "code": "Rpc",
       "steps": [
         {
           "target": [
@@ -5069,13 +5069,13 @@ const KM_CHARS = [
           "target": [
             "c"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "红",
-      "code": "[RS]-g",
+      "code": "RSg",
       "steps": [
         {
           "target": [
@@ -5088,13 +5088,13 @@ const KM_CHARS = [
           "target": [
             "g"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "干",
-      "code": "[?g]",
+      "code": "?g",
       "steps": [
         {
           "target": [
@@ -5107,7 +5107,7 @@ const KM_CHARS = [
     },
     {
       "char": "级",
-      "code": "[Rs]-j",
+      "code": "Rsj",
       "steps": [
         {
           "target": [
@@ -5120,7 +5120,7 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
@@ -5138,7 +5138,7 @@ const KM_CHARS = [
     },
     {
       "char": "黄",
-      "code": "[Rh]",
+      "code": "Rh",
       "steps": [
         {
           "target": [
@@ -5151,7 +5151,7 @@ const KM_CHARS = [
     },
     {
       "char": "品",
-      "code": "[bm]=q",
+      "code": "bmq",
       "steps": [
         {
           "target": [
@@ -5164,13 +5164,13 @@ const KM_CHARS = [
           "target": [
             "q"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "见",
-      "code": "[ej]",
+      "code": "ej",
       "steps": [
         {
           "target": [
@@ -5183,7 +5183,7 @@ const KM_CHARS = [
     },
     {
       "char": "鱼",
-      "code": "[Lv]",
+      "code": "Lv",
       "steps": [
         {
           "target": [
@@ -5196,7 +5196,7 @@ const KM_CHARS = [
     },
     {
       "char": "北",
-      "code": "[?h]-b",
+      "code": "?hb",
       "steps": [
         {
           "target": [
@@ -5209,13 +5209,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "转",
-      "code": "[ME]-O",
+      "code": "MEO",
       "steps": [
         {
           "target": [
@@ -5228,13 +5228,13 @@ const KM_CHARS = [
           "target": [
             "O"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "考",
-      "code": "[qf]=A",
+      "code": "qfA",
       "steps": [
         {
           "target": [
@@ -5247,13 +5247,13 @@ const KM_CHARS = [
           "target": [
             "A"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "布",
-      "code": "[Ab]",
+      "code": "Ab",
       "steps": [
         {
           "target": [
@@ -5266,7 +5266,7 @@ const KM_CHARS = [
     },
     {
       "char": "喝",
-      "code": "[bw]-u",
+      "code": "bwu",
       "steps": [
         {
           "target": [
@@ -5279,13 +5279,13 @@ const KM_CHARS = [
           "target": [
             "u"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "题",
-      "code": "[wC]-?",
+      "code": "wC?",
       "steps": [
         {
           "target": [
@@ -5298,13 +5298,13 @@ const KM_CHARS = [
           "target": [
             "?"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "字",
-      "code": "[jF]=i",
+      "code": "jFi",
       "steps": [
         {
           "target": [
@@ -5317,13 +5317,13 @@ const KM_CHARS = [
           "target": [
             "i"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "产",
-      "code": "[Cy]=c",
+      "code": "Cyc",
       "steps": [
         {
           "target": [
@@ -5336,13 +5336,13 @@ const KM_CHARS = [
           "target": [
             "c"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "常",
-      "code": "[MQ]=j",
+      "code": "MQj",
       "steps": [
         {
           "target": [
@@ -5355,13 +5355,13 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "收",
-      "code": "[Wa]-p",
+      "code": "Wap",
       "steps": [
         {
           "target": [
@@ -5374,13 +5374,13 @@ const KM_CHARS = [
           "target": [
             "p"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "队",
-      "code": "[Yr]-r",
+      "code": "Yrr",
       "steps": [
         {
           "target": [
@@ -5393,13 +5393,13 @@ const KM_CHARS = [
           "target": [
             "r"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "阿",
-      "code": "[Yx]-k",
+      "code": "Yxk",
       "steps": [
         {
           "target": [
@@ -5412,13 +5412,13 @@ const KM_CHARS = [
           "target": [
             "k"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "双",
-      "code": "[ms]",
+      "code": "ms",
       "steps": [
         {
           "target": [
@@ -5431,7 +5431,7 @@ const KM_CHARS = [
     },
     {
       "char": "刘",
-      "code": "[vW]-d",
+      "code": "vWd",
       "steps": [
         {
           "target": [
@@ -5444,13 +5444,13 @@ const KM_CHARS = [
           "target": [
             "d"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "口",
-      "code": "[bk]",
+      "code": "bk",
       "steps": [
         {
           "target": [
@@ -5463,7 +5463,7 @@ const KM_CHARS = [
     },
     {
       "char": "格",
-      "code": "[oY]-g",
+      "code": "oYg",
       "steps": [
         {
           "target": [
@@ -5476,13 +5476,13 @@ const KM_CHARS = [
           "target": [
             "g"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "包",
-      "code": "[.P]=s",
+      "code": ".Ps",
       "steps": [
         {
           "target": [
@@ -5495,13 +5495,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "黑",
-      "code": "[eh]",
+      "code": "eh",
       "steps": [
         {
           "target": [
@@ -5514,7 +5514,7 @@ const KM_CHARS = [
     },
     {
       "char": "记",
-      "code": "[uP]-j",
+      "code": "uPj",
       "steps": [
         {
           "target": [
@@ -5527,13 +5527,13 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "啦",
-      "code": "[bi]-C",
+      "code": "biC",
       "steps": [
         {
           "target": [
@@ -5546,13 +5546,13 @@ const KM_CHARS = [
           "target": [
             "C"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "住",
-      "code": "[aO]-,",
+      "code": "aO,",
       "steps": [
         {
           "target": [
@@ -5565,13 +5565,13 @@ const KM_CHARS = [
           "target": [
             ","
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "较",
-      "code": "[MZ]-h",
+      "code": "MZh",
       "steps": [
         {
           "target": [
@@ -5584,13 +5584,13 @@ const KM_CHARS = [
           "target": [
             "h"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "风",
-      "code": "[ql]=i",
+      "code": "qli",
       "steps": [
         {
           "target": [
@@ -5603,7 +5603,7 @@ const KM_CHARS = [
           "target": [
             "i"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
@@ -5621,7 +5621,7 @@ const KM_CHARS = [
     },
     {
       "char": "哦",
-      "code": "[bt]-U",
+      "code": "btU",
       "steps": [
         {
           "target": [
@@ -5634,13 +5634,13 @@ const KM_CHARS = [
           "target": [
             "U"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "穿",
-      "code": "[IP]=y",
+      "code": "IPy",
       "steps": [
         {
           "target": [
@@ -5653,7 +5653,7 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
@@ -5671,7 +5671,7 @@ const KM_CHARS = [
     },
     {
       "char": "卖",
-      "code": "[eA]=T",
+      "code": "eAT",
       "steps": [
         {
           "target": [
@@ -5684,13 +5684,13 @@ const KM_CHARS = [
           "target": [
             "T"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "清",
-      "code": "[n>]-H",
+      "code": "n>H",
       "steps": [
         {
           "target": [
@@ -5703,13 +5703,13 @@ const KM_CHARS = [
           "target": [
             "H"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "交",
-      "code": "[Zh]=f",
+      "code": "Zhf",
       "steps": [
         {
           "target": [
@@ -5722,13 +5722,13 @@ const KM_CHARS = [
           "target": [
             "f"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "讲",
-      "code": "[uh]-j",
+      "code": "uhj",
       "steps": [
         {
           "target": [
@@ -5741,13 +5741,13 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "肉",
-      "code": "[Br]=r",
+      "code": "Brr",
       "steps": [
         {
           "target": [
@@ -5760,13 +5760,13 @@ const KM_CHARS = [
           "target": [
             "r"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "光",
-      "code": "[xg]",
+      "code": "xg",
       "steps": [
         {
           "target": [
@@ -5779,7 +5779,7 @@ const KM_CHARS = [
     },
     {
       "char": "保",
-      "code": "[ab]-o",
+      "code": "abo",
       "steps": [
         {
           "target": [
@@ -5792,13 +5792,13 @@ const KM_CHARS = [
           "target": [
             "o"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "改",
-      "code": "[Pa]-p",
+      "code": "Pap",
       "steps": [
         {
           "target": [
@@ -5811,13 +5811,13 @@ const KM_CHARS = [
           "target": [
             "p"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "任",
-      "code": "[aN]-r",
+      "code": "aNr",
       "steps": [
         {
           "target": [
@@ -5830,13 +5830,13 @@ const KM_CHARS = [
           "target": [
             "r"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "活",
-      "code": "[ng]-s",
+      "code": "ngs",
       "steps": [
         {
           "target": [
@@ -5849,13 +5849,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "香",
-      "code": "[xw]=r",
+      "code": "xwr",
       "steps": [
         {
           "target": [
@@ -5868,13 +5868,13 @@ const KM_CHARS = [
           "target": [
             "r"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "房",
-      "code": "[Q<]=f",
+      "code": "Q<f",
       "steps": [
         {
           "target": [
@@ -5887,13 +5887,13 @@ const KM_CHARS = [
           "target": [
             "f"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "死",
-      "code": "[Jh]=b",
+      "code": "Jhb",
       "steps": [
         {
           "target": [
@@ -5906,13 +5906,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "投",
-      "code": "[iT]-s",
+      "code": "iTs",
       "steps": [
         {
           "target": [
@@ -5925,13 +5925,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "司",
-      "code": "[Af]=b",
+      "code": "Afb",
       "steps": [
         {
           "target": [
@@ -5944,13 +5944,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "费",
-      "code": "[PG]=b",
+      "code": "PGb",
       "steps": [
         {
           "target": [
@@ -5963,13 +5963,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "且",
-      "code": "[qq]",
+      "code": "qq",
       "steps": [
         {
           "target": [
@@ -5982,7 +5982,7 @@ const KM_CHARS = [
     },
     {
       "char": "教",
-      "code": "[qF]-a",
+      "code": "qFa",
       "steps": [
         {
           "target": [
@@ -5995,13 +5995,13 @@ const KM_CHARS = [
           "target": [
             "a"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "亚",
-      "code": "[f/]=y",
+      "code": "f/y",
       "steps": [
         {
           "target": [
@@ -6014,13 +6014,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "热",
-      "code": "[r;]=h",
+      "code": "r;h",
       "steps": [
         {
           "target": [
@@ -6033,13 +6033,13 @@ const KM_CHARS = [
           "target": [
             "h"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "换",
-      "code": "[iL]-T",
+      "code": "iLT",
       "steps": [
         {
           "target": [
@@ -6052,13 +6052,13 @@ const KM_CHARS = [
           "target": [
             "T"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "深",
-      "code": "[nC]-o",
+      "code": "nCo",
       "steps": [
         {
           "target": [
@@ -6071,13 +6071,13 @@ const KM_CHARS = [
           "target": [
             "o"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "汤",
-      "code": "[nA]-I",
+      "code": "nAI",
       "steps": [
         {
           "target": [
@@ -6090,13 +6090,13 @@ const KM_CHARS = [
           "target": [
             "I"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "球",
-      "code": "[,f]-O",
+      "code": ",fO",
       "steps": [
         {
           "target": [
@@ -6109,13 +6109,13 @@ const KM_CHARS = [
           "target": [
             "O"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "赛",
-      "code": "[jh]=G",
+      "code": "jhG",
       "steps": [
         {
           "target": [
@@ -6128,7 +6128,7 @@ const KM_CHARS = [
           "target": [
             "G"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
@@ -6146,7 +6146,7 @@ const KM_CHARS = [
     },
     {
       "char": "然",
-      "code": "[HK]=;",
+      "code": "HK;",
       "steps": [
         {
           "target": [
@@ -6159,13 +6159,13 @@ const KM_CHARS = [
           "target": [
             ";"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "局",
-      "code": "[yA]=b",
+      "code": "yAb",
       "steps": [
         {
           "target": [
@@ -6178,13 +6178,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "坐",
-      "code": "[mV]=t",
+      "code": "mVt",
       "steps": [
         {
           "target": [
@@ -6197,13 +6197,13 @@ const KM_CHARS = [
           "target": [
             "t"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "哪",
-      "code": "[bA]-Y",
+      "code": "bAY",
       "steps": [
         {
           "target": [
@@ -6216,13 +6216,13 @@ const KM_CHARS = [
           "target": [
             "Y"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "龙",
-      "code": "[Ul]",
+      "code": "Ul",
       "steps": [
         {
           "target": [
@@ -6235,7 +6235,7 @@ const KM_CHARS = [
     },
     {
       "char": "情",
-      "code": "[:>]-H",
+      "code": ":>H",
       "steps": [
         {
           "target": [
@@ -6248,13 +6248,13 @@ const KM_CHARS = [
           "target": [
             "H"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "接",
-      "code": "[iC]-Z",
+      "code": "iCZ",
       "steps": [
         {
           "target": [
@@ -6267,13 +6267,13 @@ const KM_CHARS = [
           "target": [
             "Z"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "首",
-      "code": "[Xg]=i",
+      "code": "Xgi",
       "steps": [
         {
           "target": [
@@ -6286,13 +6286,13 @@ const KM_CHARS = [
           "target": [
             "i"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "员",
-      "code": "[bG]=b",
+      "code": "bGb",
       "steps": [
         {
           "target": [
@@ -6305,13 +6305,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "神",
-      "code": "[Nw]-c",
+      "code": "Nwc",
       "steps": [
         {
           "target": [
@@ -6324,13 +6324,13 @@ const KM_CHARS = [
           "target": [
             "c"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "商",
-      "code": "[hX]=b",
+      "code": "hXb",
       "steps": [
         {
           "target": [
@@ -6343,13 +6343,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "目",
-      "code": "[Tm]",
+      "code": "Tm",
       "steps": [
         {
           "target": [
@@ -6362,7 +6362,7 @@ const KM_CHARS = [
     },
     {
       "char": "易",
-      "code": "[w.]=I",
+      "code": "w.I",
       "steps": [
         {
           "target": [
@@ -6375,13 +6375,13 @@ const KM_CHARS = [
           "target": [
             "I"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "难",
-      "code": "[v,]-i",
+      "code": "v,i",
       "steps": [
         {
           "target": [
@@ -6394,13 +6394,13 @@ const KM_CHARS = [
           "target": [
             "i"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "段",
-      "code": "[if]-T",
+      "code": "ifT",
       "steps": [
         {
           "target": [
@@ -6413,13 +6413,13 @@ const KM_CHARS = [
           "target": [
             "T"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "句",
-      "code": "[Gj]",
+      "code": "Gj",
       "steps": [
         {
           "target": [
@@ -6432,7 +6432,7 @@ const KM_CHARS = [
     },
     {
       "char": "云",
-      "code": "[Ny]",
+      "code": "Ny",
       "steps": [
         {
           "target": [
@@ -6445,7 +6445,7 @@ const KM_CHARS = [
     },
     {
       "char": "样",
-      "code": "[oQ]-y",
+      "code": "oQy",
       "steps": [
         {
           "target": [
@@ -6458,13 +6458,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "仅",
-      "code": "[av]-y",
+      "code": "avy",
       "steps": [
         {
           "target": [
@@ -6477,13 +6477,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "均",
-      "code": "[V.]-S",
+      "code": "V.S",
       "steps": [
         {
           "target": [
@@ -6496,13 +6496,13 @@ const KM_CHARS = [
           "target": [
             "S"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "共",
-      "code": "[RX]=b",
+      "code": "RXb",
       "steps": [
         {
           "target": [
@@ -6515,13 +6515,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "片",
-      "code": "[Op]",
+      "code": "Op",
       "steps": [
         {
           "target": [
@@ -6534,7 +6534,7 @@ const KM_CHARS = [
     },
     {
       "char": "物",
-      "code": "[m.]-I",
+      "code": "m.I",
       "steps": [
         {
           "target": [
@@ -6547,13 +6547,13 @@ const KM_CHARS = [
           "target": [
             "I"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "果",
-      "code": "[Do]=m",
+      "code": "Dom",
       "steps": [
         {
           "target": [
@@ -6566,13 +6566,13 @@ const KM_CHARS = [
           "target": [
             "m"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "创",
-      "code": "[rY]-W",
+      "code": "rYW",
       "steps": [
         {
           "target": [
@@ -6585,13 +6585,13 @@ const KM_CHARS = [
           "target": [
             "W"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "宝",
-      "code": "[j,]=O",
+      "code": "j,O",
       "steps": [
         {
           "target": [
@@ -6604,13 +6604,13 @@ const KM_CHARS = [
           "target": [
             "O"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "远",
-      "code": "[EJ]-p",
+      "code": "EJp",
       "steps": [
         {
           "target": [
@@ -6623,13 +6623,13 @@ const KM_CHARS = [
           "target": [
             "p"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "民",
-      "code": "[wm]",
+      "code": "wm",
       "steps": [
         {
           "target": [
@@ -6642,7 +6642,7 @@ const KM_CHARS = [
     },
     {
       "char": "设",
-      "code": "[uT]-s",
+      "code": "uTs",
       "steps": [
         {
           "target": [
@@ -6655,13 +6655,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "今",
-      "code": "[kj]",
+      "code": "kj",
       "steps": [
         {
           "target": [
@@ -6674,7 +6674,7 @@ const KM_CHARS = [
     },
     {
       "char": "求",
-      "code": "[fn]=O",
+      "code": "fnO",
       "steps": [
         {
           "target": [
@@ -6687,13 +6687,13 @@ const KM_CHARS = [
           "target": [
             "O"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "微",
-      "code": "[gq]=j",
+      "code": "gqj",
       "steps": [
         {
           "target": [
@@ -6706,13 +6706,13 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "副",
-      "code": "[fb]-W",
+      "code": "fbW",
       "steps": [
         {
           "target": [
@@ -6725,13 +6725,13 @@ const KM_CHARS = [
           "target": [
             "W"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "满",
-      "code": "[np]-Y",
+      "code": "npY",
       "steps": [
         {
           "target": [
@@ -6744,13 +6744,13 @@ const KM_CHARS = [
           "target": [
             "Y"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "配",
-      "code": "[UP]-j",
+      "code": "UPj",
       "steps": [
         {
           "target": [
@@ -6763,13 +6763,13 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "展",
-      "code": "[yR]=?",
+      "code": "yR?",
       "steps": [
         {
           "target": [
@@ -6782,13 +6782,13 @@ const KM_CHARS = [
           "target": [
             "?"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "拍",
-      "code": "[id]-b",
+      "code": "idb",
       "steps": [
         {
           "target": [
@@ -6801,13 +6801,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "岛",
-      "code": "[X<]=s",
+      "code": "X<s",
       "steps": [
         {
           "target": [
@@ -6820,13 +6820,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "代",
-      "code": "[aU]-i",
+      "code": "aUi",
       "steps": [
         {
           "target": [
@@ -6839,13 +6839,13 @@ const KM_CHARS = [
           "target": [
             "i"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "装",
-      "code": "[?r]=?",
+      "code": "?r?",
       "steps": [
         {
           "target": [
@@ -6858,13 +6858,13 @@ const KM_CHARS = [
           "target": [
             "?"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "古",
-      "code": "[/g]",
+      "code": "/g",
       "steps": [
         {
           "target": [
@@ -6877,7 +6877,7 @@ const KM_CHARS = [
     },
     {
       "char": "意",
-      "code": "[S:]=x",
+      "code": "S:x",
       "steps": [
         {
           "target": [
@@ -6890,13 +6890,13 @@ const KM_CHARS = [
           "target": [
             "x"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "军",
-      "code": "[CM]=c",
+      "code": "CMc",
       "steps": [
         {
           "target": [
@@ -6909,13 +6909,13 @@ const KM_CHARS = [
           "target": [
             "c"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "游",
-      "code": "[n<]-F",
+      "code": "n<F",
       "steps": [
         {
           "target": [
@@ -6928,13 +6928,13 @@ const KM_CHARS = [
           "target": [
             "F"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "气",
-      "code": "[Dq]",
+      "code": "Dq",
       "steps": [
         {
           "target": [
@@ -6947,7 +6947,7 @@ const KM_CHARS = [
     },
     {
       "char": "便",
-      "code": "[ag]-w",
+      "code": "agw",
       "steps": [
         {
           "target": [
@@ -6960,13 +6960,13 @@ const KM_CHARS = [
           "target": [
             "w"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "属",
-      "code": "[yt]=B",
+      "code": "ytB",
       "steps": [
         {
           "target": [
@@ -6979,13 +6979,13 @@ const KM_CHARS = [
           "target": [
             "B"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "石",
-      "code": "[.s]",
+      "code": ".s",
       "steps": [
         {
           "target": [
@@ -6998,7 +6998,7 @@ const KM_CHARS = [
     },
     {
       "char": "维",
-      "code": "[R,]-i",
+      "code": "R,i",
       "steps": [
         {
           "target": [
@@ -7011,13 +7011,13 @@ const KM_CHARS = [
           "target": [
             "i"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "器",
-      "code": "[mK]=m",
+      "code": "mKm",
       "steps": [
         {
           "target": [
@@ -7030,13 +7030,13 @@ const KM_CHARS = [
           "target": [
             "m"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "层",
-      "code": "[yN]=y",
+      "code": "yNy",
       "steps": [
         {
           "target": [
@@ -7049,13 +7049,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "增",
-      "code": "[VX]-w",
+      "code": "VXw",
       "steps": [
         {
           "target": [
@@ -7068,13 +7068,13 @@ const KM_CHARS = [
           "target": [
             "w"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "流",
-      "code": "[nN]-Y",
+      "code": "nNY",
       "steps": [
         {
           "target": [
@@ -7087,13 +7087,13 @@ const KM_CHARS = [
           "target": [
             "Y"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "镇",
-      "code": "[ze]-X",
+      "code": "zeX",
       "steps": [
         {
           "target": [
@@ -7106,13 +7106,13 @@ const KM_CHARS = [
           "target": [
             "X"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "早",
-      "code": "[we]=s",
+      "code": "wes",
       "steps": [
         {
           "target": [
@@ -7125,13 +7125,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "盘",
-      "code": "[W;]=m",
+      "code": "W;m",
       "steps": [
         {
           "target": [
@@ -7144,13 +7144,13 @@ const KM_CHARS = [
           "target": [
             "m"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "立",
-      "code": "[Cl]",
+      "code": "Cl",
       "steps": [
         {
           "target": [
@@ -7163,7 +7163,7 @@ const KM_CHARS = [
     },
     {
       "char": "推",
-      "code": "[i,]-i",
+      "code": "i,i",
       "steps": [
         {
           "target": [
@@ -7176,13 +7176,13 @@ const KM_CHARS = [
           "target": [
             "i"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "蛮",
-      "code": "[GB]=c",
+      "code": "GBc",
       "steps": [
         {
           "target": [
@@ -7195,13 +7195,13 @@ const KM_CHARS = [
           "target": [
             "c"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "传",
-      "code": "[aE]-O",
+      "code": "aEO",
       "steps": [
         {
           "target": [
@@ -7214,13 +7214,13 @@ const KM_CHARS = [
           "target": [
             "O"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "纳",
-      "code": "[RB]-n",
+      "code": "RBn",
       "steps": [
         {
           "target": [
@@ -7233,13 +7233,13 @@ const KM_CHARS = [
           "target": [
             "n"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "几",
-      "code": "[qj]",
+      "code": "qj",
       "steps": [
         {
           "target": [
@@ -7252,7 +7252,7 @@ const KM_CHARS = [
     },
     {
       "char": "办",
-      "code": "[<X]=b",
+      "code": "<Xb",
       "steps": [
         {
           "target": [
@@ -7265,13 +7265,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "座",
-      "code": "[Jm]=V",
+      "code": "JmV",
       "steps": [
         {
           "target": [
@@ -7284,13 +7284,13 @@ const KM_CHARS = [
           "target": [
             "V"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "计",
-      "code": "[ue]-s",
+      "code": "ues",
       "steps": [
         {
           "target": [
@@ -7303,13 +7303,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "证",
-      "code": "[uf]-I",
+      "code": "ufI",
       "steps": [
         {
           "target": [
@@ -7322,13 +7322,13 @@ const KM_CHARS = [
           "target": [
             "I"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "件",
-      "code": "[am]-n",
+      "code": "amn",
       "steps": [
         {
           "target": [
@@ -7341,13 +7341,13 @@ const KM_CHARS = [
           "target": [
             "n"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "直",
-      "code": "[Az]",
+      "code": "Az",
       "steps": [
         {
           "target": [
@@ -7360,7 +7360,7 @@ const KM_CHARS = [
     },
     {
       "char": "调",
-      "code": "[uF]-J",
+      "code": "uFJ",
       "steps": [
         {
           "target": [
@@ -7373,13 +7373,13 @@ const KM_CHARS = [
           "target": [
             "J"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "巴",
-      "code": "[Tb]",
+      "code": "Tb",
       "steps": [
         {
           "target": [
@@ -7392,7 +7392,7 @@ const KM_CHARS = [
     },
     {
       "char": "另",
-      "code": "[b<]=l",
+      "code": "b<l",
       "steps": [
         {
           "target": [
@@ -7405,13 +7405,13 @@ const KM_CHARS = [
           "target": [
             "l"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "试",
-      "code": "[uU]-S",
+      "code": "uUS",
       "steps": [
         {
           "target": [
@@ -7424,13 +7424,13 @@ const KM_CHARS = [
           "target": [
             "S"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "篇",
-      "code": "[cQ]=F",
+      "code": "cQF",
       "steps": [
         {
           "target": [
@@ -7443,13 +7443,13 @@ const KM_CHARS = [
           "target": [
             "F"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "占",
-      "code": "[Uz]",
+      "code": "Uz",
       "steps": [
         {
           "target": [
@@ -7462,7 +7462,7 @@ const KM_CHARS = [
     },
     {
       "char": "联",
-      "code": "[FR]-g",
+      "code": "FRg",
       "steps": [
         {
           "target": [
@@ -7475,13 +7475,13 @@ const KM_CHARS = [
           "target": [
             "g"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "亿",
-      "code": "[aj]-i",
+      "code": "aji",
       "steps": [
         {
           "target": [
@@ -7494,13 +7494,13 @@ const KM_CHARS = [
           "target": [
             "i"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "身",
-      "code": "[Is]",
+      "code": "Is",
       "steps": [
         {
           "target": [
@@ -7513,7 +7513,7 @@ const KM_CHARS = [
     },
     {
       "char": "节",
-      "code": "[pY]=j",
+      "code": "pYj",
       "steps": [
         {
           "target": [
@@ -7526,13 +7526,13 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "空",
-      "code": "[IS]=g",
+      "code": "ISg",
       "steps": [
         {
           "target": [
@@ -7545,13 +7545,13 @@ const KM_CHARS = [
           "target": [
             "g"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "饭",
-      "code": "[fy]-v",
+      "code": "fyv",
       "steps": [
         {
           "target": [
@@ -7564,13 +7564,13 @@ const KM_CHARS = [
           "target": [
             "v"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "味",
-      "code": "[bz]-w",
+      "code": "bzw",
       "steps": [
         {
           "target": [
@@ -7583,13 +7583,13 @@ const KM_CHARS = [
           "target": [
             "w"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "奖",
-      "code": "[?S]=T",
+      "code": "?ST",
       "steps": [
         {
           "target": [
@@ -7602,13 +7602,13 @@ const KM_CHARS = [
           "target": [
             "T"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "星",
-      "code": "[wG]=s",
+      "code": "wGs",
       "steps": [
         {
           "target": [
@@ -7621,13 +7621,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "反",
-      "code": "[yv]=y",
+      "code": "yvy",
       "steps": [
         {
           "target": [
@@ -7640,13 +7640,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "州",
-      "code": "[YY]=c",
+      "code": "YYc",
       "steps": [
         {
           "target": [
@@ -7659,13 +7659,13 @@ const KM_CHARS = [
           "target": [
             "c"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "久",
-      "code": "[LO]=d",
+      "code": "LOd",
       "steps": [
         {
           "target": [
@@ -7678,13 +7678,13 @@ const KM_CHARS = [
           "target": [
             "d"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "极",
-      "code": "[os]-j",
+      "code": "osj",
       "steps": [
         {
           "target": [
@@ -7697,13 +7697,13 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "排",
-      "code": "[it]-f",
+      "code": "itf",
       "steps": [
         {
           "target": [
@@ -7716,13 +7716,13 @@ const KM_CHARS = [
           "target": [
             "f"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "儿",
-      "code": "[Je]",
+      "code": "Je",
       "steps": [
         {
           "target": [
@@ -7735,7 +7735,7 @@ const KM_CHARS = [
     },
     {
       "char": "河",
-      "code": "[nx]-k",
+      "code": "nxk",
       "steps": [
         {
           "target": [
@@ -7748,13 +7748,13 @@ const KM_CHARS = [
           "target": [
             "k"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "食",
-      "code": "[fs]",
+      "code": "fs",
       "steps": [
         {
           "target": [
@@ -7767,7 +7767,7 @@ const KM_CHARS = [
     },
     {
       "char": "整",
-      "code": "[Ca]=I",
+      "code": "CaI",
       "steps": [
         {
           "target": [
@@ -7780,13 +7780,13 @@ const KM_CHARS = [
           "target": [
             "I"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "银",
-      "code": "[z;]-g",
+      "code": "z;g",
       "steps": [
         {
           "target": [
@@ -7799,13 +7799,13 @@ const KM_CHARS = [
           "target": [
             "g"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "乐",
-      "code": "[WE]=x",
+      "code": "WEx",
       "steps": [
         {
           "target": [
@@ -7818,13 +7818,13 @@ const KM_CHARS = [
           "target": [
             "x"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "火",
-      "code": "[;h]",
+      "code": ";h",
       "steps": [
         {
           "target": [
@@ -7837,7 +7837,7 @@ const KM_CHARS = [
     },
     {
       "char": "色",
-      "code": "[LT]=b",
+      "code": "LTb",
       "steps": [
         {
           "target": [
@@ -7850,13 +7850,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "杨",
-      "code": "[oA]-I",
+      "code": "oAI",
       "steps": [
         {
           "target": [
@@ -7869,13 +7869,13 @@ const KM_CHARS = [
           "target": [
             "I"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "跑",
-      "code": "[s.]-P",
+      "code": "s.P",
       "steps": [
         {
           "target": [
@@ -7888,13 +7888,13 @@ const KM_CHARS = [
           "target": [
             "P"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "注",
-      "code": "[nO]-,",
+      "code": "nO,",
       "steps": [
         {
           "target": [
@@ -7907,13 +7907,13 @@ const KM_CHARS = [
           "target": [
             ","
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "战",
-      "code": "[UU]-g",
+      "code": "UUg",
       "steps": [
         {
           "target": [
@@ -7926,13 +7926,13 @@ const KM_CHARS = [
           "target": [
             "g"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "何",
-      "code": "[ax]-k",
+      "code": "axk",
       "steps": [
         {
           "target": [
@@ -7945,13 +7945,13 @@ const KM_CHARS = [
           "target": [
             "k"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "解",
-      "code": "[Lu]-m",
+      "code": "Lum",
       "steps": [
         {
           "target": [
@@ -7964,13 +7964,13 @@ const KM_CHARS = [
           "target": [
             "m"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "病",
-      "code": "[lf]=B",
+      "code": "lfB",
       "steps": [
         {
           "target": [
@@ -7983,13 +7983,13 @@ const KM_CHARS = [
           "target": [
             "B"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "务",
-      "code": "[/<]=l",
+      "code": "/<l",
       "steps": [
         {
           "target": [
@@ -8002,13 +8002,13 @@ const KM_CHARS = [
           "target": [
             "l"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "靠",
-      "code": "[mb]=t",
+      "code": "mbt",
       "steps": [
         {
           "target": [
@@ -8021,13 +8021,13 @@ const KM_CHARS = [
           "target": [
             "t"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "掉",
-      "code": "[ix]-e",
+      "code": "ixe",
       "steps": [
         {
           "target": [
@@ -8040,13 +8040,13 @@ const KM_CHARS = [
           "target": [
             "e"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "晚",
-      "code": "[wA]-J",
+      "code": "wAJ",
       "steps": [
         {
           "target": [
@@ -8059,13 +8059,13 @@ const KM_CHARS = [
           "target": [
             "J"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "团",
-      "code": "[Ue]=t",
+      "code": "Uet",
       "steps": [
         {
           "target": [
@@ -8078,13 +8078,13 @@ const KM_CHARS = [
           "target": [
             "t"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "广",
-      "code": "[Jg]",
+      "code": "Jg",
       "steps": [
         {
           "target": [
@@ -8097,7 +8097,7 @@ const KM_CHARS = [
     },
     {
       "char": "田",
-      "code": "[Dt]",
+      "code": "Dt",
       "steps": [
         {
           "target": [
@@ -8110,7 +8110,7 @@ const KM_CHARS = [
     },
     {
       "char": "波",
-      "code": "[nH]-p",
+      "code": "nHp",
       "steps": [
         {
           "target": [
@@ -8123,13 +8123,13 @@ const KM_CHARS = [
           "target": [
             "p"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "牛",
-      "code": "[mn]",
+      "code": "mn",
       "steps": [
         {
           "target": [
@@ -8142,7 +8142,7 @@ const KM_CHARS = [
     },
     {
       "char": "六",
-      "code": "[wl]",
+      "code": "wl",
       "steps": [
         {
           "target": [
@@ -8155,7 +8155,7 @@ const KM_CHARS = [
     },
     {
       "char": "半",
-      "code": "[Xi]=o",
+      "code": "Xio",
       "steps": [
         {
           "target": [
@@ -8168,13 +8168,13 @@ const KM_CHARS = [
           "target": [
             "o"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "英",
-      "code": "[pF]=T",
+      "code": "pFT",
       "steps": [
         {
           "target": [
@@ -8187,13 +8187,13 @@ const KM_CHARS = [
           "target": [
             "T"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "茶",
-      "code": "[pr]=o",
+      "code": "pro",
       "steps": [
         {
           "target": [
@@ -8206,13 +8206,13 @@ const KM_CHARS = [
           "target": [
             "o"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "哈",
-      "code": "[bk]-h",
+      "code": "bkh",
       "steps": [
         {
           "target": [
@@ -8225,7 +8225,7 @@ const KM_CHARS = [
           "target": [
             "h"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     }
@@ -8233,7 +8233,7 @@ const KM_CHARS = [
   [
     {
       "char": "根",
-      "code": "[o;]-g",
+      "code": "o;g",
       "steps": [
         {
           "target": [
@@ -8246,13 +8246,13 @@ const KM_CHARS = [
           "target": [
             "g"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "兰",
-      "code": "[Xd]=s",
+      "code": "Xds",
       "steps": [
         {
           "target": [
@@ -8265,13 +8265,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "史",
-      "code": "[bl]=i",
+      "code": "bli",
       "steps": [
         {
           "target": [
@@ -8284,13 +8284,13 @@ const KM_CHARS = [
           "target": [
             "i"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "歌",
-      "code": "[xx]-:",
+      "code": "xx:",
       "steps": [
         {
           "target": [
@@ -8303,13 +8303,13 @@ const KM_CHARS = [
           "target": [
             ":"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "酒",
-      "code": "[nU]-y",
+      "code": "nUy",
       "steps": [
         {
           "target": [
@@ -8322,13 +8322,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "皮",
-      "code": "[Hp]",
+      "code": "Hp",
       "steps": [
         {
           "target": [
@@ -8341,7 +8341,7 @@ const KM_CHARS = [
     },
     {
       "char": "边",
-      "code": "[<p]-c",
+      "code": "<pc",
       "steps": [
         {
           "target": [
@@ -8354,7 +8354,7 @@ const KM_CHARS = [
           "target": [
             "c"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
@@ -8372,7 +8372,7 @@ const KM_CHARS = [
     },
     {
       "char": "离",
-      "code": "[Zl]=B",
+      "code": "ZlB",
       "steps": [
         {
           "target": [
@@ -8385,13 +8385,13 @@ const KM_CHARS = [
           "target": [
             "B"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "赞",
-      "code": "[mJ]=G",
+      "code": "mJG",
       "steps": [
         {
           "target": [
@@ -8404,13 +8404,13 @@ const KM_CHARS = [
           "target": [
             "G"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "查",
-      "code": "[ow]=f",
+      "code": "owf",
       "steps": [
         {
           "target": [
@@ -8423,13 +8423,13 @@ const KM_CHARS = [
           "target": [
             "f"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "伊",
-      "code": "[al]-t",
+      "code": "alt",
       "steps": [
         {
           "target": [
@@ -8442,13 +8442,13 @@ const KM_CHARS = [
           "target": [
             "t"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "懂",
-      "code": "[:p]-P",
+      "code": ":pP",
       "steps": [
         {
           "target": [
@@ -8461,13 +8461,13 @@ const KM_CHARS = [
           "target": [
             "P"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "博",
-      "code": "[eL]-z",
+      "code": "eLz",
       "steps": [
         {
           "target": [
@@ -8480,13 +8480,13 @@ const KM_CHARS = [
           "target": [
             "z"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "画",
-      "code": "[fD]=F",
+      "code": "fDF",
       "steps": [
         {
           "target": [
@@ -8499,13 +8499,13 @@ const KM_CHARS = [
           "target": [
             "F"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "运",
-      "code": "[Np]-c",
+      "code": "Npc",
       "steps": [
         {
           "target": [
@@ -8518,13 +8518,13 @@ const KM_CHARS = [
           "target": [
             "c"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "持",
-      "code": "[iV]-z",
+      "code": "iVz",
       "steps": [
         {
           "target": [
@@ -8537,13 +8537,13 @@ const KM_CHARS = [
           "target": [
             "z"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "留",
-      "code": "[:D]=t",
+      "code": ":Dt",
       "steps": [
         {
           "target": [
@@ -8556,13 +8556,13 @@ const KM_CHARS = [
           "target": [
             "t"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "支",
-      "code": "[;i]",
+      "code": ";i",
       "steps": [
         {
           "target": [
@@ -8575,7 +8575,7 @@ const KM_CHARS = [
     },
     {
       "char": "社",
-      "code": "[NV]-t",
+      "code": "NVt",
       "steps": [
         {
           "target": [
@@ -8588,13 +8588,13 @@ const KM_CHARS = [
           "target": [
             "t"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "粉",
-      "code": "[ra]-f",
+      "code": "raf",
       "steps": [
         {
           "target": [
@@ -8607,13 +8607,13 @@ const KM_CHARS = [
           "target": [
             "f"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "往",
-      "code": "[gO]-,",
+      "code": "gO,",
       "steps": [
         {
           "target": [
@@ -8626,13 +8626,13 @@ const KM_CHARS = [
           "target": [
             ","
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "供",
-      "code": "[aR]-X",
+      "code": "aRX",
       "steps": [
         {
           "target": [
@@ -8645,13 +8645,13 @@ const KM_CHARS = [
           "target": [
             "X"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "街",
-      "code": "[gM]=g",
+      "code": "gMg",
       "steps": [
         {
           "target": [
@@ -8664,13 +8664,13 @@ const KM_CHARS = [
           "target": [
             "g"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "服",
-      "code": "[HY]-v",
+      "code": "HYv",
       "steps": [
         {
           "target": [
@@ -8683,13 +8683,13 @@ const KM_CHARS = [
           "target": [
             "v"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "块",
-      "code": "[VW]-r",
+      "code": "VWr",
       "steps": [
         {
           "target": [
@@ -8702,13 +8702,13 @@ const KM_CHARS = [
           "target": [
             "r"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "八",
-      "code": "[Xb]",
+      "code": "Xb",
       "steps": [
         {
           "target": [
@@ -8721,7 +8721,7 @@ const KM_CHARS = [
     },
     {
       "char": "夫",
-      "code": "[df]",
+      "code": "df",
       "steps": [
         {
           "target": [
@@ -8734,7 +8734,7 @@ const KM_CHARS = [
     },
     {
       "char": "必",
-      "code": "[:t]=p",
+      "code": ":tp",
       "steps": [
         {
           "target": [
@@ -8747,13 +8747,13 @@ const KM_CHARS = [
           "target": [
             "p"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "取",
-      "code": "[Fv]-y",
+      "code": "Fvy",
       "steps": [
         {
           "target": [
@@ -8766,13 +8766,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "治",
-      "code": "[nB]-b",
+      "code": "nBb",
       "steps": [
         {
           "target": [
@@ -8785,13 +8785,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "塔",
-      "code": "[Vp]-k",
+      "code": "Vpk",
       "steps": [
         {
           "target": [
@@ -8804,13 +8804,13 @@ const KM_CHARS = [
           "target": [
             "k"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "世",
-      "code": "[RA]=e",
+      "code": "RAe",
       "steps": [
         {
           "target": [
@@ -8823,13 +8823,13 @@ const KM_CHARS = [
           "target": [
             "e"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "仍",
-      "code": "[aT]-n",
+      "code": "aTn",
       "steps": [
         {
           "target": [
@@ -8842,13 +8842,13 @@ const KM_CHARS = [
           "target": [
             "n"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "奥",
-      "code": "[qr]=T",
+      "code": "qrT",
       "steps": [
         {
           "target": [
@@ -8861,13 +8861,13 @@ const KM_CHARS = [
           "target": [
             "T"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "足",
-      "code": "[su]",
+      "code": "su",
       "steps": [
         {
           "target": [
@@ -8880,7 +8880,7 @@ const KM_CHARS = [
     },
     {
       "char": "源",
-      "code": "[ny]-E",
+      "code": "nyE",
       "steps": [
         {
           "target": [
@@ -8893,13 +8893,13 @@ const KM_CHARS = [
           "target": [
             "E"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "购",
-      "code": "[G.]-B",
+      "code": "G.B",
       "steps": [
         {
           "target": [
@@ -8912,13 +8912,13 @@ const KM_CHARS = [
           "target": [
             "B"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "江",
-      "code": "[nS]-g",
+      "code": "nSg",
       "steps": [
         {
           "target": [
@@ -8931,13 +8931,13 @@ const KM_CHARS = [
           "target": [
             "g"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "切",
-      "code": "[tu]-d",
+      "code": "tud",
       "steps": [
         {
           "target": [
@@ -8950,13 +8950,13 @@ const KM_CHARS = [
           "target": [
             "d"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "视",
-      "code": "[Ne]-j",
+      "code": "Nej",
       "steps": [
         {
           "target": [
@@ -8969,13 +8969,13 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "杯",
-      "code": "[oc]-b",
+      "code": "ocb",
       "steps": [
         {
           "target": [
@@ -8988,13 +8988,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "眼",
-      "code": "[T;]-g",
+      "code": "T;g",
       "steps": [
         {
           "target": [
@@ -9007,13 +9007,13 @@ const KM_CHARS = [
           "target": [
             "g"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "权",
-      "code": "[ov]-y",
+      "code": "ovy",
       "steps": [
         {
           "target": [
@@ -9026,13 +9026,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "鸡",
-      "code": "[vX]-n",
+      "code": "vXn",
       "steps": [
         {
           "target": [
@@ -9045,13 +9045,13 @@ const KM_CHARS = [
           "target": [
             "n"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "标",
-      "code": "[oN]-s",
+      "code": "oNs",
       "steps": [
         {
           "target": [
@@ -9064,13 +9064,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "具",
-      "code": "[TX]=b",
+      "code": "TXb",
       "steps": [
         {
           "target": [
@@ -9083,13 +9083,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "班",
-      "code": "[,W]=,",
+      "code": ",W,",
       "steps": [
         {
           "target": [
@@ -9102,13 +9102,13 @@ const KM_CHARS = [
           "target": [
             ","
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "尼",
-      "code": "[yh]=b",
+      "code": "yhb",
       "steps": [
         {
           "target": [
@@ -9121,13 +9121,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "词",
-      "code": "[uA]-b",
+      "code": "uAb",
       "steps": [
         {
           "target": [
@@ -9140,13 +9140,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "政",
-      "code": "[fI]-a",
+      "code": "fIa",
       "steps": [
         {
           "target": [
@@ -9159,13 +9159,13 @@ const KM_CHARS = [
           "target": [
             "a"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "木",
-      "code": "[om]",
+      "code": "om",
       "steps": [
         {
           "target": [
@@ -9178,7 +9178,7 @@ const KM_CHARS = [
     },
     {
       "char": "树",
-      "code": "[ov]-z",
+      "code": "ovz",
       "steps": [
         {
           "target": [
@@ -9191,13 +9191,13 @@ const KM_CHARS = [
           "target": [
             "z"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "程",
-      "code": "[xb]-,",
+      "code": "xb,",
       "steps": [
         {
           "target": [
@@ -9210,13 +9210,13 @@ const KM_CHARS = [
           "target": [
             ","
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "错",
-      "code": "[zR]-w",
+      "code": "zRw",
       "steps": [
         {
           "target": [
@@ -9229,13 +9229,13 @@ const KM_CHARS = [
           "target": [
             "w"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "库",
-      "code": "[JM]=c",
+      "code": "JMc",
       "steps": [
         {
           "target": [
@@ -9248,13 +9248,13 @@ const KM_CHARS = [
           "target": [
             "c"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "若",
-      "code": "[pe]=b",
+      "code": "peb",
       "steps": [
         {
           "target": [
@@ -9267,13 +9267,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "搞",
-      "code": "[is]-g",
+      "code": "isg",
       "steps": [
         {
           "target": [
@@ -9286,13 +9286,13 @@ const KM_CHARS = [
           "target": [
             "g"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "随",
-      "code": "[Ye]-p",
+      "code": "Yep",
       "steps": [
         {
           "target": [
@@ -9305,13 +9305,13 @@ const KM_CHARS = [
           "target": [
             "p"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "院",
-      "code": "[Yj]-J",
+      "code": "YjJ",
       "steps": [
         {
           "target": [
@@ -9324,13 +9324,13 @@ const KM_CHARS = [
           "target": [
             "J"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "升",
-      "code": "[tp]=c",
+      "code": "tpc",
       "steps": [
         {
           "target": [
@@ -9343,13 +9343,13 @@ const KM_CHARS = [
           "target": [
             "c"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "养",
-      "code": "[QO]=W",
+      "code": "QOW",
       "steps": [
         {
           "target": [
@@ -9362,13 +9362,13 @@ const KM_CHARS = [
           "target": [
             "W"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "烤",
-      "code": "[;q]-A",
+      "code": ";qA",
       "steps": [
         {
           "target": [
@@ -9381,13 +9381,13 @@ const KM_CHARS = [
           "target": [
             "A"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "结",
-      "code": "[RJ]-j",
+      "code": "RJj",
       "steps": [
         {
           "target": [
@@ -9400,13 +9400,13 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "楼",
-      "code": "[or]-Z",
+      "code": "orZ",
       "steps": [
         {
           "target": [
@@ -9419,13 +9419,13 @@ const KM_CHARS = [
           "target": [
             "Z"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "语",
-      "code": "[uN]-b",
+      "code": "uNb",
       "steps": [
         {
           "target": [
@@ -9438,13 +9438,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "步",
-      "code": "[II]=i",
+      "code": "IIi",
       "steps": [
         {
           "target": [
@@ -9457,13 +9457,13 @@ const KM_CHARS = [
           "target": [
             "i"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "优",
-      "code": "[a:]-y",
+      "code": "a:y",
       "steps": [
         {
           "target": [
@@ -9476,13 +9476,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "普",
-      "code": "[X/]=w",
+      "code": "X/w",
       "steps": [
         {
           "target": [
@@ -9495,13 +9495,13 @@ const KM_CHARS = [
           "target": [
             "w"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "讯",
-      "code": "[uA]-e",
+      "code": "uAe",
       "steps": [
         {
           "target": [
@@ -9514,13 +9514,13 @@ const KM_CHARS = [
           "target": [
             "e"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "福",
-      "code": "[Nf]-D",
+      "code": "NfD",
       "steps": [
         {
           "target": [
@@ -9533,13 +9533,13 @@ const KM_CHARS = [
           "target": [
             "D"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "索",
-      "code": "[ER]=s",
+      "code": "ERs",
       "steps": [
         {
           "target": [
@@ -9552,13 +9552,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "森",
-      "code": "[om]=l",
+      "code": "oml",
       "steps": [
         {
           "target": [
@@ -9571,13 +9571,13 @@ const KM_CHARS = [
           "target": [
             "l"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "准",
-      "code": "[S,]-i",
+      "code": "S,i",
       "steps": [
         {
           "target": [
@@ -9590,13 +9590,13 @@ const KM_CHARS = [
           "target": [
             "i"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "模",
-      "code": "[oP]-T",
+      "code": "oPT",
       "steps": [
         {
           "target": [
@@ -9609,13 +9609,13 @@ const KM_CHARS = [
           "target": [
             "T"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "吴",
-      "code": "[bf]=T",
+      "code": "bfT",
       "steps": [
         {
           "target": [
@@ -9628,13 +9628,13 @@ const KM_CHARS = [
           "target": [
             "T"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "领",
-      "code": "[kO]-?",
+      "code": "kO?",
       "steps": [
         {
           "target": [
@@ -9647,13 +9647,13 @@ const KM_CHARS = [
           "target": [
             "?"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "医",
-      "code": "[WD]=s",
+      "code": "WDs",
       "steps": [
         {
           "target": [
@@ -9666,13 +9666,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "客",
-      "code": "[jY]=g",
+      "code": "jYg",
       "steps": [
         {
           "target": [
@@ -9685,13 +9685,13 @@ const KM_CHARS = [
           "target": [
             "g"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "友",
-      "code": "[ev]=y",
+      "code": "evy",
       "steps": [
         {
           "target": [
@@ -9704,13 +9704,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "偏",
-      "code": "[aQ]-F",
+      "code": "aQF",
       "steps": [
         {
           "target": [
@@ -9723,13 +9723,13 @@ const KM_CHARS = [
           "target": [
             "F"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "锅",
-      "code": "[zb]-B",
+      "code": "zbB",
       "steps": [
         {
           "target": [
@@ -9742,13 +9742,13 @@ const KM_CHARS = [
           "target": [
             "B"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "飞",
-      "code": "[kf]",
+      "code": "kf",
       "steps": [
         {
           "target": [
@@ -9761,7 +9761,7 @@ const KM_CHARS = [
     },
     {
       "char": "够",
-      "code": "[GS]-S",
+      "code": "GSS",
       "steps": [
         {
           "target": [
@@ -9774,13 +9774,13 @@ const KM_CHARS = [
           "target": [
             "S"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "料",
-      "code": "[rD]-d",
+      "code": "rDd",
       "steps": [
         {
           "target": [
@@ -9793,13 +9793,13 @@ const KM_CHARS = [
           "target": [
             "d"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "脸",
-      "code": "[Hk]-f",
+      "code": "Hkf",
       "steps": [
         {
           "target": [
@@ -9812,13 +9812,13 @@ const KM_CHARS = [
           "target": [
             "f"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "希",
-      "code": "[lA]=b",
+      "code": "lAb",
       "steps": [
         {
           "target": [
@@ -9831,13 +9831,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "辣",
-      "code": "[<C]-s",
+      "code": "<Cs",
       "steps": [
         {
           "target": [
@@ -9850,13 +9850,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "著",
-      "code": "[pq]=z",
+      "code": "pqz",
       "steps": [
         {
           "target": [
@@ -9869,13 +9869,13 @@ const KM_CHARS = [
           "target": [
             "z"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "洗",
-      "code": "[nm]-J",
+      "code": "nmJ",
       "steps": [
         {
           "target": [
@@ -9888,13 +9888,13 @@ const KM_CHARS = [
           "target": [
             "J"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "京",
-      "code": "[sE]=x",
+      "code": "sEx",
       "steps": [
         {
           "target": [
@@ -9907,13 +9907,13 @@ const KM_CHARS = [
           "target": [
             "x"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "户",
-      "code": "[Qh]",
+      "code": "Qh",
       "steps": [
         {
           "target": [
@@ -9926,7 +9926,7 @@ const KM_CHARS = [
     },
     {
       "char": "青",
-      "code": "[>H]=y",
+      "code": ">Hy",
       "steps": [
         {
           "target": [
@@ -9939,13 +9939,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "观",
-      "code": "[ve]-j",
+      "code": "vej",
       "steps": [
         {
           "target": [
@@ -9958,13 +9958,13 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "术",
-      "code": "[oO]=d",
+      "code": "oOd",
       "steps": [
         {
           "target": [
@@ -9977,13 +9977,13 @@ const KM_CHARS = [
           "target": [
             "d"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "精",
-      "code": "[r>]-H",
+      "code": "r>H",
       "steps": [
         {
           "target": [
@@ -9996,13 +9996,13 @@ const KM_CHARS = [
           "target": [
             "H"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "百",
-      "code": "[fd]=b",
+      "code": "fdb",
       "steps": [
         {
           "target": [
@@ -10015,13 +10015,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "案",
-      "code": "[jZ]=o",
+      "code": "jZo",
       "steps": [
         {
           "target": [
@@ -10034,13 +10034,13 @@ const KM_CHARS = [
           "target": [
             "o"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "己",
-      "code": "[Pj]",
+      "code": "Pj",
       "steps": [
         {
           "target": [
@@ -10053,7 +10053,7 @@ const KM_CHARS = [
     },
     {
       "char": "洛",
-      "code": "[nY]-g",
+      "code": "nYg",
       "steps": [
         {
           "target": [
@@ -10066,13 +10066,13 @@ const KM_CHARS = [
           "target": [
             "g"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "专",
-      "code": "[EA]=O",
+      "code": "EAO",
       "steps": [
         {
           "target": [
@@ -10085,13 +10085,13 @@ const KM_CHARS = [
           "target": [
             "O"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "影",
-      "code": "[ws]-I",
+      "code": "wsI",
       "steps": [
         {
           "target": [
@@ -10104,13 +10104,13 @@ const KM_CHARS = [
           "target": [
             "I"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "梦",
-      "code": "[mS]=x",
+      "code": "mSx",
       "steps": [
         {
           "target": [
@@ -10123,13 +10123,13 @@ const KM_CHARS = [
           "target": [
             "x"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "界",
-      "code": "[Dr]=W",
+      "code": "DrW",
       "steps": [
         {
           "target": [
@@ -10142,13 +10142,13 @@ const KM_CHARS = [
           "target": [
             "W"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "药",
-      "code": "[pR]=O",
+      "code": "pRO",
       "steps": [
         {
           "target": [
@@ -10161,13 +10161,13 @@ const KM_CHARS = [
           "target": [
             "O"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "照",
-      "code": "[wu]=;",
+      "code": "wu;",
       "steps": [
         {
           "target": [
@@ -10180,13 +10180,13 @@ const KM_CHARS = [
           "target": [
             ";"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "湖",
-      "code": "[n/]-H",
+      "code": "n/H",
       "steps": [
         {
           "target": [
@@ -10199,13 +10199,13 @@ const KM_CHARS = [
           "target": [
             "H"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "质",
-      "code": "[ye]=G",
+      "code": "yeG",
       "steps": [
         {
           "target": [
@@ -10218,13 +10218,13 @@ const KM_CHARS = [
           "target": [
             "G"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "造",
-      "code": "[mb]-p",
+      "code": "mbp",
       "steps": [
         {
           "target": [
@@ -10237,13 +10237,13 @@ const KM_CHARS = [
           "target": [
             "p"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "苏",
-      "code": "[p<]=X",
+      "code": "p<X",
       "steps": [
         {
           "target": [
@@ -10256,13 +10256,13 @@ const KM_CHARS = [
           "target": [
             "X"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "七",
-      "code": "[tq]",
+      "code": "tq",
       "steps": [
         {
           "target": [
@@ -10275,7 +10275,7 @@ const KM_CHARS = [
     },
     {
       "char": "士",
-      "code": "[rs]",
+      "code": "rs",
       "steps": [
         {
           "target": [
@@ -10288,7 +10288,7 @@ const KM_CHARS = [
     },
     {
       "char": "声",
-      "code": "[ry]=s",
+      "code": "rys",
       "steps": [
         {
           "target": [
@@ -10301,13 +10301,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "季",
-      "code": "[xF]=i",
+      "code": "xFi",
       "steps": [
         {
           "target": [
@@ -10320,13 +10320,13 @@ const KM_CHARS = [
           "target": [
             "i"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "妈",
-      "code": "[Z/]-m",
+      "code": "Z/m",
       "steps": [
         {
           "target": [
@@ -10339,13 +10339,13 @@ const KM_CHARS = [
           "target": [
             "m"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "港",
-      "code": "[nR]-P",
+      "code": "nRP",
       "steps": [
         {
           "target": [
@@ -10358,13 +10358,13 @@ const KM_CHARS = [
           "target": [
             "P"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "峰",
-      "code": "[</]->",
+      "code": "</>",
       "steps": [
         {
           "target": [
@@ -10377,13 +10377,13 @@ const KM_CHARS = [
           "target": [
             ">"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "川",
-      "code": "[Yc]",
+      "code": "Yc",
       "steps": [
         {
           "target": [
@@ -10396,7 +10396,7 @@ const KM_CHARS = [
     },
     {
       "char": "短",
-      "code": "[D>]-d",
+      "code": "D>d",
       "steps": [
         {
           "target": [
@@ -10409,13 +10409,13 @@ const KM_CHARS = [
           "target": [
             "d"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "降",
-      "code": "[Y/]-r",
+      "code": "Y/r",
       "steps": [
         {
           "target": [
@@ -10428,13 +10428,13 @@ const KM_CHARS = [
           "target": [
             "r"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "园",
-      "code": "[UE]=J",
+      "code": "UEJ",
       "steps": [
         {
           "target": [
@@ -10447,13 +10447,13 @@ const KM_CHARS = [
           "target": [
             "J"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "营",
-      "code": "[Kb]=b",
+      "code": "Kbb",
       "steps": [
         {
           "target": [
@@ -10466,13 +10466,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "列",
-      "code": "[JW]-d",
+      "code": "JWd",
       "steps": [
         {
           "target": [
@@ -10485,13 +10485,13 @@ const KM_CHARS = [
           "target": [
             "d"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "沙",
-      "code": "[nE]-t",
+      "code": "nEt",
       "steps": [
         {
           "target": [
@@ -10504,13 +10504,13 @@ const KM_CHARS = [
           "target": [
             "t"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "涨",
-      "code": "[nP]-u",
+      "code": "nPu",
       "steps": [
         {
           "target": [
@@ -10523,13 +10523,13 @@ const KM_CHARS = [
           "target": [
             "u"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "叶",
-      "code": "[be]-s",
+      "code": "bes",
       "steps": [
         {
           "target": [
@@ -10542,13 +10542,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "获",
-      "code": "[pK]=K",
+      "code": "pKK",
       "steps": [
         {
           "target": [
@@ -10561,13 +10561,13 @@ const KM_CHARS = [
           "target": [
             "K"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "慢",
-      "code": "[:w]-v",
+      "code": ":wv",
       "steps": [
         {
           "target": [
@@ -10580,13 +10580,13 @@ const KM_CHARS = [
           "target": [
             "v"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "富",
-      "code": "[jf]=D",
+      "code": "jfD",
       "steps": [
         {
           "target": [
@@ -10599,13 +10599,13 @@ const KM_CHARS = [
           "target": [
             "D"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "派",
-      "code": "[ny]-?",
+      "code": "ny?",
       "steps": [
         {
           "target": [
@@ -10618,13 +10618,13 @@ const KM_CHARS = [
           "target": [
             "?"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "呀",
-      "code": "[bP]-y",
+      "code": "bPy",
       "steps": [
         {
           "target": [
@@ -10637,13 +10637,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "血",
-      "code": "[t;]=m",
+      "code": "t;m",
       "steps": [
         {
           "target": [
@@ -10656,13 +10656,13 @@ const KM_CHARS = [
           "target": [
             "m"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "校",
-      "code": "[oZ]-h",
+      "code": "oZh",
       "steps": [
         {
           "target": [
@@ -10675,13 +10675,13 @@ const KM_CHARS = [
           "target": [
             "h"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "众",
-      "code": "[rm]=c",
+      "code": "rmc",
       "steps": [
         {
           "target": [
@@ -10694,13 +10694,13 @@ const KM_CHARS = [
           "target": [
             "c"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "认",
-      "code": "[ur]-r",
+      "code": "urr",
       "steps": [
         {
           "target": [
@@ -10713,13 +10713,13 @@ const KM_CHARS = [
           "target": [
             "r"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "煮",
-      "code": "[q;]=h",
+      "code": "q;h",
       "steps": [
         {
           "target": [
@@ -10732,13 +10732,13 @@ const KM_CHARS = [
           "target": [
             "h"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "除",
-      "code": "[Yr]-x",
+      "code": "Yrx",
       "steps": [
         {
           "target": [
@@ -10751,13 +10751,13 @@ const KM_CHARS = [
           "target": [
             "x"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "思",
-      "code": "[D:]=x",
+      "code": "D:x",
       "steps": [
         {
           "target": [
@@ -10770,13 +10770,13 @@ const KM_CHARS = [
           "target": [
             "x"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "官",
-      "code": "[jm]=q",
+      "code": "jmq",
       "steps": [
         {
           "target": [
@@ -10789,13 +10789,13 @@ const KM_CHARS = [
           "target": [
             "q"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "亦",
-      "code": "[Gi]",
+      "code": "Gi",
       "steps": [
         {
           "target": [
@@ -10808,7 +10808,7 @@ const KM_CHARS = [
     },
     {
       "char": "炒",
-      "code": "[;E]-t",
+      "code": ";Et",
       "steps": [
         {
           "target": [
@@ -10821,13 +10821,13 @@ const KM_CHARS = [
           "target": [
             "t"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "圣",
-      "code": "[vV]=t",
+      "code": "vVt",
       "steps": [
         {
           "target": [
@@ -10840,13 +10840,13 @@ const KM_CHARS = [
           "target": [
             "t"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "形",
-      "code": "[fp]-I",
+      "code": "fpI",
       "steps": [
         {
           "target": [
@@ -10859,13 +10859,13 @@ const KM_CHARS = [
           "target": [
             "I"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "预",
-      "code": "[>?]-y",
+      "code": ">?y",
       "steps": [
         {
           "target": [
@@ -10878,13 +10878,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "规",
-      "code": "[de]-j",
+      "code": "dej",
       "steps": [
         {
           "target": [
@@ -10897,13 +10897,13 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "圈",
-      "code": "[UR]=Y",
+      "code": "URY",
       "steps": [
         {
           "target": [
@@ -10916,13 +10916,13 @@ const KM_CHARS = [
           "target": [
             "Y"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "赵",
-      "code": "[dl]-i",
+      "code": "dli",
       "steps": [
         {
           "target": [
@@ -10935,13 +10935,13 @@ const KM_CHARS = [
           "target": [
             "i"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "举",
-      "code": "[nX]=i",
+      "code": "nXi",
       "steps": [
         {
           "target": [
@@ -10954,13 +10954,13 @@ const KM_CHARS = [
           "target": [
             "i"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "诺",
-      "code": "[up]-b",
+      "code": "upb",
       "steps": [
         {
           "target": [
@@ -10973,13 +10973,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "修",
-      "code": "[ac]-I",
+      "code": "acI",
       "steps": [
         {
           "target": [
@@ -10992,13 +10992,13 @@ const KM_CHARS = [
           "target": [
             "I"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "梅",
-      "code": "[oK]-N",
+      "code": "oKN",
       "steps": [
         {
           "target": [
@@ -11011,13 +11011,13 @@ const KM_CHARS = [
           "target": [
             "N"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "盐",
-      "code": "[Vx]=;",
+      "code": "Vx;",
       "steps": [
         {
           "target": [
@@ -11030,13 +11030,13 @@ const KM_CHARS = [
           "target": [
             ";"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "环",
-      "code": "[,c]-b",
+      "code": ",cb",
       "steps": [
         {
           "target": [
@@ -11049,13 +11049,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "课",
-      "code": "[uD]-o",
+      "code": "uDo",
       "steps": [
         {
           "target": [
@@ -11068,13 +11068,13 @@ const KM_CHARS = [
           "target": [
             "o"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "景",
-      "code": "[ws]=E",
+      "code": "wsE",
       "steps": [
         {
           "target": [
@@ -11087,13 +11087,13 @@ const KM_CHARS = [
           "target": [
             "E"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "货",
-      "code": "[ah]=G",
+      "code": "ahG",
       "steps": [
         {
           "target": [
@@ -11106,13 +11106,13 @@ const KM_CHARS = [
           "target": [
             "G"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "吉",
-      "code": "[Jj]",
+      "code": "Jj",
       "steps": [
         {
           "target": [
@@ -11125,7 +11125,7 @@ const KM_CHARS = [
     },
     {
       "char": "论",
-      "code": "[uS]-l",
+      "code": "uSl",
       "steps": [
         {
           "target": [
@@ -11138,13 +11138,13 @@ const KM_CHARS = [
           "target": [
             "l"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "志",
-      "code": "[r:]=x",
+      "code": "r:x",
       "steps": [
         {
           "target": [
@@ -11157,13 +11157,13 @@ const KM_CHARS = [
           "target": [
             "x"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "铁",
-      "code": "[zt]-d",
+      "code": "ztd",
       "steps": [
         {
           "target": [
@@ -11176,13 +11176,13 @@ const KM_CHARS = [
           "target": [
             "d"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "许",
-      "code": "[uK]-e",
+      "code": "uKe",
       "steps": [
         {
           "target": [
@@ -11195,13 +11195,13 @@ const KM_CHARS = [
           "target": [
             "e"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "破",
-      "code": "[.H]-p",
+      "code": ".Hp",
       "steps": [
         {
           "target": [
@@ -11214,13 +11214,13 @@ const KM_CHARS = [
           "target": [
             "p"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "含",
-      "code": "[kb]=k",
+      "code": "kbk",
       "steps": [
         {
           "target": [
@@ -11233,13 +11233,13 @@ const KM_CHARS = [
           "target": [
             "k"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "套",
-      "code": "[Tu]=c",
+      "code": "Tuc",
       "steps": [
         {
           "target": [
@@ -11252,13 +11252,13 @@ const KM_CHARS = [
           "target": [
             "c"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "票",
-      "code": "[tN]=s",
+      "code": "tNs",
       "steps": [
         {
           "target": [
@@ -11271,13 +11271,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "防",
-      "code": "[Y<]-f",
+      "code": "Y<f",
       "steps": [
         {
           "target": [
@@ -11290,13 +11290,13 @@ const KM_CHARS = [
           "target": [
             "f"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "采",
-      "code": "[:o]=m",
+      "code": ":om",
       "steps": [
         {
           "target": [
@@ -11309,13 +11309,13 @@ const KM_CHARS = [
           "target": [
             "m"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "牌",
-      "code": "[Od]-k",
+      "code": "Odk",
       "steps": [
         {
           "target": [
@@ -11328,13 +11328,13 @@ const KM_CHARS = [
           "target": [
             "k"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "左",
-      "code": "[eS]=g",
+      "code": "eSg",
       "steps": [
         {
           "target": [
@@ -11347,13 +11347,13 @@ const KM_CHARS = [
           "target": [
             "g"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "答",
-      "code": "[ck]=h",
+      "code": "ckh",
       "steps": [
         {
           "target": [
@@ -11366,13 +11366,13 @@ const KM_CHARS = [
           "target": [
             "h"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "狗",
-      "code": "[KG]-j",
+      "code": "KGj",
       "steps": [
         {
           "target": [
@@ -11385,13 +11385,13 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "企",
-      "code": "[rI]=i",
+      "code": "rIi",
       "steps": [
         {
           "target": [
@@ -11404,13 +11404,13 @@ const KM_CHARS = [
           "target": [
             "i"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "奇",
-      "code": "[Tx]=k",
+      "code": "Txk",
       "steps": [
         {
           "target": [
@@ -11423,13 +11423,13 @@ const KM_CHARS = [
           "target": [
             "k"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "雷",
-      "code": "[kD]=t",
+      "code": "kDt",
       "steps": [
         {
           "target": [
@@ -11442,13 +11442,13 @@ const KM_CHARS = [
           "target": [
             "t"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "显",
-      "code": "[w/]=y",
+      "code": "w/y",
       "steps": [
         {
           "target": [
@@ -11461,13 +11461,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "补",
-      "code": "[?x]-b",
+      "code": "?xb",
       "steps": [
         {
           "target": [
@@ -11480,13 +11480,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "瓦",
-      "code": "[kw]",
+      "code": "kw",
       "steps": [
         {
           "target": [
@@ -11499,7 +11499,7 @@ const KM_CHARS = [
     },
     {
       "char": "汉",
-      "code": "[nv]-y",
+      "code": "nvy",
       "steps": [
         {
           "target": [
@@ -11512,13 +11512,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "轻",
-      "code": "[Mv]-S",
+      "code": "MvS",
       "steps": [
         {
           "target": [
@@ -11531,13 +11531,13 @@ const KM_CHARS = [
           "target": [
             "S"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "谈",
-      "code": "[uM]-y",
+      "code": "uMy",
       "steps": [
         {
           "target": [
@@ -11550,13 +11550,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "素",
-      "code": "[>R]=s",
+      "code": ">Rs",
       "steps": [
         {
           "target": [
@@ -11569,13 +11569,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "参",
-      "code": "[BT]=I",
+      "code": "BTI",
       "steps": [
         {
           "target": [
@@ -11588,13 +11588,13 @@ const KM_CHARS = [
           "target": [
             "I"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "松",
-      "code": "[oX]-B",
+      "code": "oXB",
       "steps": [
         {
           "target": [
@@ -11607,13 +11607,13 @@ const KM_CHARS = [
           "target": [
             "B"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "烧",
-      "code": "[;U]-J",
+      "code": ";UJ",
       "steps": [
         {
           "target": [
@@ -11626,13 +11626,13 @@ const KM_CHARS = [
           "target": [
             "J"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "恩",
-      "code": "[UT]=:",
+      "code": "UT:",
       "steps": [
         {
           "target": [
@@ -11645,13 +11645,13 @@ const KM_CHARS = [
           "target": [
             ":"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "倒",
-      "code": "[a.]-W",
+      "code": "a.W",
       "steps": [
         {
           "target": [
@@ -11664,13 +11664,13 @@ const KM_CHARS = [
           "target": [
             "W"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "欧",
-      "code": "[Wl]-:",
+      "code": "Wl:",
       "steps": [
         {
           "target": [
@@ -11683,13 +11683,13 @@ const KM_CHARS = [
           "target": [
             ":"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "什",
-      "code": "[ae]-s",
+      "code": "aes",
       "steps": [
         {
           "target": [
@@ -11702,13 +11702,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "剧",
-      "code": "[y/]-W",
+      "code": "y/W",
       "steps": [
         {
           "target": [
@@ -11721,13 +11721,13 @@ const KM_CHARS = [
           "target": [
             "W"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "轮",
-      "code": "[MS]-l",
+      "code": "MSl",
       "steps": [
         {
           "target": [
@@ -11740,13 +11740,13 @@ const KM_CHARS = [
           "target": [
             "l"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "卷",
-      "code": "[RY]=j",
+      "code": "RYj",
       "steps": [
         {
           "target": [
@@ -11759,13 +11759,13 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "冷",
-      "code": "[Sk]-O",
+      "code": "SkO",
       "steps": [
         {
           "target": [
@@ -11778,13 +11778,13 @@ const KM_CHARS = [
           "target": [
             "O"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "净",
-      "code": "[SL]-l",
+      "code": "SLl",
       "steps": [
         {
           "target": [
@@ -11797,13 +11797,13 @@ const KM_CHARS = [
           "target": [
             "l"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "容",
-      "code": "[jL]=g",
+      "code": "jLg",
       "steps": [
         {
           "target": [
@@ -11816,13 +11816,13 @@ const KM_CHARS = [
           "target": [
             "g"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "土",
-      "code": "[Vt]",
+      "code": "Vt",
       "steps": [
         {
           "target": [
@@ -11835,7 +11835,7 @@ const KM_CHARS = [
     },
     {
       "char": "令",
-      "code": "[kO]=d",
+      "code": "kOd",
       "steps": [
         {
           "target": [
@@ -11848,13 +11848,13 @@ const KM_CHARS = [
           "target": [
             "d"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "党",
-      "code": "[MJ]=e",
+      "code": "MJe",
       "steps": [
         {
           "target": [
@@ -11867,13 +11867,13 @@ const KM_CHARS = [
           "target": [
             "e"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "停",
-      "code": "[as]-G",
+      "code": "asG",
       "steps": [
         {
           "target": [
@@ -11886,13 +11886,13 @@ const KM_CHARS = [
           "target": [
             "G"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "氏",
-      "code": "[Zs]",
+      "code": "Zs",
       "steps": [
         {
           "target": [
@@ -11905,7 +11905,7 @@ const KM_CHARS = [
     },
     {
       "char": "示",
-      "code": "[Ns]",
+      "code": "Ns",
       "steps": [
         {
           "target": [
@@ -11918,7 +11918,7 @@ const KM_CHARS = [
     },
     {
       "char": "角",
-      "code": "[Lj]",
+      "code": "Lj",
       "steps": [
         {
           "target": [
@@ -11931,7 +11931,7 @@ const KM_CHARS = [
     },
     {
       "char": "玉",
-      "code": "[,O]=d",
+      "code": ",Od",
       "steps": [
         {
           "target": [
@@ -11944,13 +11944,13 @@ const KM_CHARS = [
           "target": [
             "d"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "托",
-      "code": "[it]-t",
+      "code": "itt",
       "steps": [
         {
           "target": [
@@ -11963,13 +11963,13 @@ const KM_CHARS = [
           "target": [
             "t"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "甜",
-      "code": "[go]-g",
+      "code": "gog",
       "steps": [
         {
           "target": [
@@ -11982,13 +11982,13 @@ const KM_CHARS = [
           "target": [
             "g"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "啥",
-      "code": "[br]-g",
+      "code": "brg",
       "steps": [
         {
           "target": [
@@ -12001,13 +12001,13 @@ const KM_CHARS = [
           "target": [
             "g"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "九",
-      "code": "[Aj]",
+      "code": "Aj",
       "steps": [
         {
           "target": [
@@ -12020,7 +12020,7 @@ const KM_CHARS = [
     },
     {
       "char": "旅",
-      "code": "[<K]-?",
+      "code": "<K?",
       "steps": [
         {
           "target": [
@@ -12033,13 +12033,13 @@ const KM_CHARS = [
           "target": [
             "?"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "嘛",
-      "code": "[bh]-m",
+      "code": "bhm",
       "steps": [
         {
           "target": [
@@ -12052,13 +12052,13 @@ const KM_CHARS = [
           "target": [
             "m"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "丝",
-      "code": "[RR]-s",
+      "code": "RRs",
       "steps": [
         {
           "target": [
@@ -12071,13 +12071,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "笑",
-      "code": "[ct]=T",
+      "code": "ctT",
       "steps": [
         {
           "target": [
@@ -12090,13 +12090,13 @@ const KM_CHARS = [
           "target": [
             "T"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "哥",
-      "code": "[xx]=k",
+      "code": "xxk",
       "steps": [
         {
           "target": [
@@ -12109,13 +12109,13 @@ const KM_CHARS = [
           "target": [
             "k"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "春",
-      "code": "[>w]=r",
+      "code": ">wr",
       "steps": [
         {
           "target": [
@@ -12128,13 +12128,13 @@ const KM_CHARS = [
           "target": [
             "r"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "技",
-      "code": "[i;]-i",
+      "code": "i;i",
       "steps": [
         {
           "target": [
@@ -12147,13 +12147,13 @@ const KM_CHARS = [
           "target": [
             "i"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "康",
-      "code": "[Jl]=n",
+      "code": "Jln",
       "steps": [
         {
           "target": [
@@ -12166,13 +12166,13 @@ const KM_CHARS = [
           "target": [
             "n"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "勒",
-      "code": "[A<]-l",
+      "code": "A<l",
       "steps": [
         {
           "target": [
@@ -12185,13 +12185,13 @@ const KM_CHARS = [
           "target": [
             "l"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "板",
-      "code": "[oy]-v",
+      "code": "oyv",
       "steps": [
         {
           "target": [
@@ -12204,13 +12204,13 @@ const KM_CHARS = [
           "target": [
             "v"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "秀",
-      "code": "[xT]=n",
+      "code": "xTn",
       "steps": [
         {
           "target": [
@@ -12223,13 +12223,13 @@ const KM_CHARS = [
           "target": [
             "n"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "财",
-      "code": "[Ge]-t",
+      "code": "Get",
       "steps": [
         {
           "target": [
@@ -12242,13 +12242,13 @@ const KM_CHARS = [
           "target": [
             "t"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "千",
-      "code": "[kq]",
+      "code": "kq",
       "steps": [
         {
           "target": [
@@ -12261,7 +12261,7 @@ const KM_CHARS = [
     },
     {
       "char": "温",
-      "code": "[nw]-;",
+      "code": "nw;",
       "steps": [
         {
           "target": [
@@ -12274,13 +12274,13 @@ const KM_CHARS = [
           "target": [
             ";"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "怕",
-      "code": "[:d]-b",
+      "code": ":db",
       "steps": [
         {
           "target": [
@@ -12293,13 +12293,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "细",
-      "code": "[RD]-t",
+      "code": "RDt",
       "steps": [
         {
           "target": [
@@ -12312,13 +12312,13 @@ const KM_CHARS = [
           "target": [
             "t"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "存",
-      "code": "[ec]=F",
+      "code": "ecF",
       "steps": [
         {
           "target": [
@@ -12331,13 +12331,13 @@ const KM_CHARS = [
           "target": [
             "F"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "阳",
-      "code": "[Yw]-r",
+      "code": "Ywr",
       "steps": [
         {
           "target": [
@@ -12350,13 +12350,13 @@ const KM_CHARS = [
           "target": [
             "r"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "智",
-      "code": "[Db]=w",
+      "code": "Dbw",
       "steps": [
         {
           "target": [
@@ -12369,13 +12369,13 @@ const KM_CHARS = [
           "target": [
             "w"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "限",
-      "code": "[Y;]-g",
+      "code": "Y;g",
       "steps": [
         {
           "target": [
@@ -12388,13 +12388,13 @@ const KM_CHARS = [
           "target": [
             "g"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "夏",
-      "code": "[?/]=i",
+      "code": "?/i",
       "steps": [
         {
           "target": [
@@ -12407,13 +12407,13 @@ const KM_CHARS = [
           "target": [
             "i"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "迪",
-      "code": "[Bp]-c",
+      "code": "Bpc",
       "steps": [
         {
           "target": [
@@ -12426,13 +12426,13 @@ const KM_CHARS = [
           "target": [
             "c"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "翻",
-      "code": "[tr]-K",
+      "code": "trK",
       "steps": [
         {
           "target": [
@@ -12445,13 +12445,13 @@ const KM_CHARS = [
           "target": [
             "K"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "底",
-      "code": "[JZ]=O",
+      "code": "JZO",
       "steps": [
         {
           "target": [
@@ -12464,13 +12464,13 @@ const KM_CHARS = [
           "target": [
             "O"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "莱",
-      "code": "[pz]=X",
+      "code": "pzX",
       "steps": [
         {
           "target": [
@@ -12483,13 +12483,13 @@ const KM_CHARS = [
           "target": [
             "X"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "桥",
-      "code": "[ot]-W",
+      "code": "otW",
       "steps": [
         {
           "target": [
@@ -12502,13 +12502,13 @@ const KM_CHARS = [
           "target": [
             "W"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "消",
-      "code": "[nE]-H",
+      "code": "nEH",
       "steps": [
         {
           "target": [
@@ -12521,13 +12521,13 @@ const KM_CHARS = [
           "target": [
             "H"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "速",
-      "code": "[Cp]-c",
+      "code": "Cpc",
       "steps": [
         {
           "target": [
@@ -12540,13 +12540,13 @@ const KM_CHARS = [
           "target": [
             "c"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "瑞",
-      "code": "[,<]-B",
+      "code": ",<B",
       "steps": [
         {
           "target": [
@@ -12559,13 +12559,13 @@ const KM_CHARS = [
           "target": [
             "B"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "致",
-      "code": "[.a]-p",
+      "code": ".ap",
       "steps": [
         {
           "target": [
@@ -12578,13 +12578,13 @@ const KM_CHARS = [
           "target": [
             "p"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "泰",
-      "code": "[>n]=s",
+      "code": ">ns",
       "steps": [
         {
           "target": [
@@ -12597,13 +12597,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "余",
-      "code": "[rx]=h",
+      "code": "rxh",
       "steps": [
         {
           "target": [
@@ -12616,13 +12616,13 @@ const KM_CHARS = [
           "target": [
             "h"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "导",
-      "code": "[Pz]=c",
+      "code": "Pzc",
       "steps": [
         {
           "target": [
@@ -12635,13 +12635,13 @@ const KM_CHARS = [
           "target": [
             "c"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "初",
-      "code": "[?u]-d",
+      "code": "?ud",
       "steps": [
         {
           "target": [
@@ -12654,13 +12654,13 @@ const KM_CHARS = [
           "target": [
             "d"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "端",
-      "code": "[C<]-B",
+      "code": "C<B",
       "steps": [
         {
           "target": [
@@ -12673,13 +12673,13 @@ const KM_CHARS = [
           "target": [
             "B"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "胜",
-      "code": "[HG]-s",
+      "code": "HGs",
       "steps": [
         {
           "target": [
@@ -12692,13 +12692,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "背",
-      "code": "[?h]=H",
+      "code": "?hH",
       "steps": [
         {
           "target": [
@@ -12711,13 +12711,13 @@ const KM_CHARS = [
           "target": [
             "H"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "研",
-      "code": "[.f]-p",
+      "code": ".fp",
       "steps": [
         {
           "target": [
@@ -12730,13 +12730,13 @@ const KM_CHARS = [
           "target": [
             "p"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "徐",
-      "code": "[gr]-x",
+      "code": "grx",
       "steps": [
         {
           "target": [
@@ -12749,13 +12749,13 @@ const KM_CHARS = [
           "target": [
             "x"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "义",
-      "code": "[Ol]=i",
+      "code": "Oli",
       "steps": [
         {
           "target": [
@@ -12768,13 +12768,13 @@ const KM_CHARS = [
           "target": [
             "i"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "朱",
-      "code": "[tz]=w",
+      "code": "tzw",
       "steps": [
         {
           "target": [
@@ -12787,13 +12787,13 @@ const KM_CHARS = [
           "target": [
             "w"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "冲",
-      "code": "[Sb]-c",
+      "code": "Sbc",
       "steps": [
         {
           "target": [
@@ -12806,13 +12806,13 @@ const KM_CHARS = [
           "target": [
             "c"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "贴",
-      "code": "[GU]-z",
+      "code": "GUz",
       "steps": [
         {
           "target": [
@@ -12825,13 +12825,13 @@ const KM_CHARS = [
           "target": [
             "z"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "复",
-      "code": "[Kw]=/",
+      "code": "Kw/",
       "steps": [
         {
           "target": [
@@ -12844,13 +12844,13 @@ const KM_CHARS = [
           "target": [
             "/"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "伤",
-      "code": "[aK]-<",
+      "code": "aK<",
       "steps": [
         {
           "target": [
@@ -12863,13 +12863,13 @@ const KM_CHARS = [
           "target": [
             "<"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "孙",
-      "code": "[FE]-x",
+      "code": "FEx",
       "steps": [
         {
           "target": [
@@ -12882,13 +12882,13 @@ const KM_CHARS = [
           "target": [
             "x"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "额",
-      "code": "[jY]-?",
+      "code": "jY?",
       "steps": [
         {
           "target": [
@@ -12901,13 +12901,13 @@ const KM_CHARS = [
           "target": [
             "?"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "贝",
-      "code": "[Gb]",
+      "code": "Gb",
       "steps": [
         {
           "target": [
@@ -12920,7 +12920,7 @@ const KM_CHARS = [
     },
     {
       "char": "演",
-      "code": "[nj]-R",
+      "code": "njR",
       "steps": [
         {
           "target": [
@@ -12933,13 +12933,13 @@ const KM_CHARS = [
           "target": [
             "R"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "居",
-      "code": "[y/]=g",
+      "code": "y/g",
       "steps": [
         {
           "target": [
@@ -12952,13 +12952,13 @@ const KM_CHARS = [
           "target": [
             "g"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "施",
-      "code": "[<K]-z",
+      "code": "<Kz",
       "steps": [
         {
           "target": [
@@ -12971,13 +12971,13 @@ const KM_CHARS = [
           "target": [
             "z"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "野",
-      "code": "[P>]-v",
+      "code": "P>v",
       "steps": [
         {
           "target": [
@@ -12990,13 +12990,13 @@ const KM_CHARS = [
           "target": [
             "v"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "旧",
-      "code": "[cw]-r",
+      "code": "cwr",
       "steps": [
         {
           "target": [
@@ -13009,13 +13009,13 @@ const KM_CHARS = [
           "target": [
             "r"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "猫",
-      "code": "[Kp]-D",
+      "code": "KpD",
       "steps": [
         {
           "target": [
@@ -13028,13 +13028,13 @@ const KM_CHARS = [
           "target": [
             "D"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "亲",
-      "code": "[Co]=m",
+      "code": "Com",
       "steps": [
         {
           "target": [
@@ -13047,13 +13047,13 @@ const KM_CHARS = [
           "target": [
             "m"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "引",
-      "code": "[Pc]-s",
+      "code": "Pcs",
       "steps": [
         {
           "target": [
@@ -13066,13 +13066,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "武",
-      "code": "[fU]=I",
+      "code": "fUI",
       "steps": [
         {
           "target": [
@@ -13085,13 +13085,13 @@ const KM_CHARS = [
           "target": [
             "I"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "鲜",
-      "code": "[LQ]-y",
+      "code": "LQy",
       "steps": [
         {
           "target": [
@@ -13104,13 +13104,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "息",
-      "code": "[g:]=x",
+      "code": "g:x",
       "steps": [
         {
           "target": [
@@ -13123,13 +13123,13 @@ const KM_CHARS = [
           "target": [
             "x"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "统",
-      "code": "[RN]-J",
+      "code": "RNJ",
       "steps": [
         {
           "target": [
@@ -13142,13 +13142,13 @@ const KM_CHARS = [
           "target": [
             "J"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "蓝",
-      "code": "[pW]=;",
+      "code": "pW;",
       "steps": [
         {
           "target": [
@@ -13161,13 +13161,13 @@ const KM_CHARS = [
           "target": [
             ";"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "寺",
-      "code": "[Vz]=c",
+      "code": "Vzc",
       "steps": [
         {
           "target": [
@@ -13180,13 +13180,13 @@ const KM_CHARS = [
           "target": [
             "c"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "觉",
-      "code": "[Me]=j",
+      "code": "Mej",
       "steps": [
         {
           "target": [
@@ -13199,13 +13199,13 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "例",
-      "code": "[aJ]-W",
+      "code": "aJW",
       "steps": [
         {
           "target": [
@@ -13218,13 +13218,13 @@ const KM_CHARS = [
           "target": [
             "W"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "丽",
-      "code": "[fH]=H",
+      "code": "fHH",
       "steps": [
         {
           "target": [
@@ -13237,13 +13237,13 @@ const KM_CHARS = [
           "target": [
             "H"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "杀",
-      "code": "[lo]=m",
+      "code": "lom",
       "steps": [
         {
           "target": [
@@ -13256,13 +13256,13 @@ const KM_CHARS = [
           "target": [
             "m"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "练",
-      "code": "[Rt]-E",
+      "code": "RtE",
       "steps": [
         {
           "target": [
@@ -13275,13 +13275,13 @@ const KM_CHARS = [
           "target": [
             "E"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "假",
-      "code": "[ay]-v",
+      "code": "ayv",
       "steps": [
         {
           "target": [
@@ -13294,13 +13294,13 @@ const KM_CHARS = [
           "target": [
             "v"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "摄",
-      "code": "[iF]-m",
+      "code": "iFm",
       "steps": [
         {
           "target": [
@@ -13313,13 +13313,13 @@ const KM_CHARS = [
           "target": [
             "m"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "鲁",
-      "code": "[Lw]=r",
+      "code": "Lwr",
       "steps": [
         {
           "target": [
@@ -13332,13 +13332,13 @@ const KM_CHARS = [
           "target": [
             "r"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "睡",
-      "code": "[Tk]-r",
+      "code": "Tkr",
       "steps": [
         {
           "target": [
@@ -13351,13 +13351,13 @@ const KM_CHARS = [
           "target": [
             "r"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "碗",
-      "code": "[.j]-Y",
+      "code": ".jY",
       "steps": [
         {
           "target": [
@@ -13370,13 +13370,13 @@ const KM_CHARS = [
           "target": [
             "Y"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "压",
-      "code": "[yV]=O",
+      "code": "yVO",
       "steps": [
         {
           "target": [
@@ -13389,13 +13389,13 @@ const KM_CHARS = [
           "target": [
             "O"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "室",
-      "code": "[j.]=i",
+      "code": "j.i",
       "steps": [
         {
           "target": [
@@ -13408,13 +13408,13 @@ const KM_CHARS = [
           "target": [
             "i"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "棒",
-      "code": "[o>]-i",
+      "code": "o>i",
       "steps": [
         {
           "target": [
@@ -13427,13 +13427,13 @@ const KM_CHARS = [
           "target": [
             "i"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "唐",
-      "code": "[Jl]=b",
+      "code": "Jlb",
       "steps": [
         {
           "target": [
@@ -13446,13 +13446,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "顿",
-      "code": "[fY]-?",
+      "code": "fY?",
       "steps": [
         {
           "target": [
@@ -13465,13 +13465,13 @@ const KM_CHARS = [
           "target": [
             "?"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "君",
-      "code": "[lt]=b",
+      "code": "ltb",
       "steps": [
         {
           "target": [
@@ -13484,13 +13484,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "塞",
-      "code": "[jh]=V",
+      "code": "jhV",
       "steps": [
         {
           "target": [
@@ -13503,13 +13503,13 @@ const KM_CHARS = [
           "target": [
             "V"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "宫",
-      "code": "[jb]=b",
+      "code": "jbb",
       "steps": [
         {
           "target": [
@@ -13522,13 +13522,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "亮",
-      "code": "[sq]=j",
+      "code": "sqj",
       "steps": [
         {
           "target": [
@@ -13541,13 +13541,13 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "告",
-      "code": "[mb]=k",
+      "code": "mbk",
       "steps": [
         {
           "target": [
@@ -13560,13 +13560,13 @@ const KM_CHARS = [
           "target": [
             "k"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "喜",
-      "code": "[Jb]=k",
+      "code": "Jbk",
       "steps": [
         {
           "target": [
@@ -13579,13 +13579,13 @@ const KM_CHARS = [
           "target": [
             "k"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "韩",
-      "code": "[AD]-w",
+      "code": "ADw",
       "steps": [
         {
           "target": [
@@ -13598,13 +13598,13 @@ const KM_CHARS = [
           "target": [
             "w"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "糖",
-      "code": "[rJ]-b",
+      "code": "rJb",
       "steps": [
         {
           "target": [
@@ -13617,13 +13617,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "确",
-      "code": "[.L]-j",
+      "code": ".Lj",
       "steps": [
         {
           "target": [
@@ -13636,13 +13636,13 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "莫",
-      "code": "[PT]=d",
+      "code": "PTd",
       "steps": [
         {
           "target": [
@@ -13655,13 +13655,13 @@ const KM_CHARS = [
           "target": [
             "d"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "乡",
-      "code": "[ex]",
+      "code": "ex",
       "steps": [
         {
           "target": [
@@ -13674,7 +13674,7 @@ const KM_CHARS = [
     },
     {
       "char": "兴",
-      "code": "[nX]=b",
+      "code": "nXb",
       "steps": [
         {
           "target": [
@@ -13687,13 +13687,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "核",
-      "code": "[oL]-h",
+      "code": "oLh",
       "steps": [
         {
           "target": [
@@ -13706,13 +13706,13 @@ const KM_CHARS = [
           "target": [
             "h"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "佳",
-      "code": "[aM]-g",
+      "code": "aMg",
       "steps": [
         {
           "target": [
@@ -13725,13 +13725,13 @@ const KM_CHARS = [
           "target": [
             "g"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "胡",
-      "code": "[/H]-y",
+      "code": "/Hy",
       "steps": [
         {
           "target": [
@@ -13744,13 +13744,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "辆",
-      "code": "[MY]-l",
+      "code": "MYl",
       "steps": [
         {
           "target": [
@@ -13763,13 +13763,13 @@ const KM_CHARS = [
           "target": [
             "l"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "功",
-      "code": "[S<]-l",
+      "code": "S<l",
       "steps": [
         {
           "target": [
@@ -13782,13 +13782,13 @@ const KM_CHARS = [
           "target": [
             "l"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "右",
-      "code": "[eb]=k",
+      "code": "ebk",
       "steps": [
         {
           "target": [
@@ -13801,13 +13801,13 @@ const KM_CHARS = [
           "target": [
             "k"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "音",
-      "code": "[Sy]",
+      "code": "Sy",
       "steps": [
         {
           "target": [
@@ -13820,7 +13820,7 @@ const KM_CHARS = [
     },
     {
       "char": "融",
-      "code": "[>B]-c",
+      "code": ">Bc",
       "steps": [
         {
           "target": [
@@ -13833,13 +13833,13 @@ const KM_CHARS = [
           "target": [
             "c"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "萨",
-      "code": "[pY]=y",
+      "code": "pYy",
       "steps": [
         {
           "target": [
@@ -13852,13 +13852,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "冰",
-      "code": "[Sn]-s",
+      "code": "Sns",
       "steps": [
         {
           "target": [
@@ -13871,13 +13871,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "助",
-      "code": "[q<]-l",
+      "code": "q<l",
       "steps": [
         {
           "target": [
@@ -13890,13 +13890,13 @@ const KM_CHARS = [
           "target": [
             "l"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "范",
-      "code": "[/Y]=j",
+      "code": "/Yj",
       "steps": [
         {
           "target": [
@@ -13909,13 +13909,13 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "略",
-      "code": "[DY]-g",
+      "code": "DYg",
       "steps": [
         {
           "target": [
@@ -13928,13 +13928,13 @@ const KM_CHARS = [
           "target": [
             "g"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "孩",
-      "code": "[FL]-h",
+      "code": "FLh",
       "steps": [
         {
           "target": [
@@ -13947,13 +13947,13 @@ const KM_CHARS = [
           "target": [
             "h"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "招",
-      "code": "[iu]-b",
+      "code": "iub",
       "steps": [
         {
           "target": [
@@ -13966,13 +13966,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "象",
-      "code": "[,x]",
+      "code": ",x",
       "steps": [
         {
           "target": [
@@ -13985,7 +13985,7 @@ const KM_CHARS = [
     },
     {
       "char": "丁",
-      "code": "[Gd]",
+      "code": "Gd",
       "steps": [
         {
           "target": [
@@ -13998,7 +13998,7 @@ const KM_CHARS = [
     },
     {
       "char": "盖",
-      "code": "[Q;]=m",
+      "code": "Q;m",
       "steps": [
         {
           "target": [
@@ -14011,13 +14011,13 @@ const KM_CHARS = [
           "target": [
             "m"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "尚",
-      "code": "[Ms]",
+      "code": "Ms",
       "steps": [
         {
           "target": [
@@ -14030,7 +14030,7 @@ const KM_CHARS = [
     },
     {
       "char": "望",
-      "code": "[uH]=,",
+      "code": "uH,",
       "steps": [
         {
           "target": [
@@ -14043,13 +14043,13 @@ const KM_CHARS = [
           "target": [
             ","
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "威",
-      "code": "[;f]=Z",
+      "code": ";fZ",
       "steps": [
         {
           "target": [
@@ -14062,13 +14062,13 @@ const KM_CHARS = [
           "target": [
             "Z"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "言",
-      "code": "[uy]",
+      "code": "uy",
       "steps": [
         {
           "target": [
@@ -14081,7 +14081,7 @@ const KM_CHARS = [
     },
     {
       "char": "续",
-      "code": "[Re]-T",
+      "code": "ReT",
       "steps": [
         {
           "target": [
@@ -14094,13 +14094,13 @@ const KM_CHARS = [
           "target": [
             "T"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "减",
-      "code": "[S;]-b",
+      "code": "S;b",
       "steps": [
         {
           "target": [
@@ -14113,13 +14113,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "宗",
-      "code": "[jN]=s",
+      "code": "jNs",
       "steps": [
         {
           "target": [
@@ -14132,13 +14132,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "谢",
-      "code": "[uI]-z",
+      "code": "uIz",
       "steps": [
         {
           "target": [
@@ -14151,13 +14151,13 @@ const KM_CHARS = [
           "target": [
             "z"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "落",
-      "code": "[/l]",
+      "code": "/l",
       "steps": [
         {
           "target": [
@@ -14170,7 +14170,7 @@ const KM_CHARS = [
     },
     {
       "char": "险",
-      "code": "[Yk]-f",
+      "code": "Ykf",
       "steps": [
         {
           "target": [
@@ -14183,13 +14183,13 @@ const KM_CHARS = [
           "target": [
             "f"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "嘉",
-      "code": "[J<]=b",
+      "code": "J<b",
       "steps": [
         {
           "target": [
@@ -14202,13 +14202,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "府",
-      "code": "[Ja]=z",
+      "code": "Jaz",
       "steps": [
         {
           "target": [
@@ -14221,13 +14221,13 @@ const KM_CHARS = [
           "target": [
             "z"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "势",
-      "code": "[r<]=l",
+      "code": "r<l",
       "steps": [
         {
           "target": [
@@ -14240,13 +14240,13 @@ const KM_CHARS = [
           "target": [
             "l"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "雪",
-      "code": "[kC]=j",
+      "code": "kCj",
       "steps": [
         {
           "target": [
@@ -14259,13 +14259,13 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "追",
-      "code": "[tm]-p",
+      "code": "tmp",
       "steps": [
         {
           "target": [
@@ -14278,13 +14278,13 @@ const KM_CHARS = [
           "target": [
             "p"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "脚",
-      "code": "[HV]-Y",
+      "code": "HVY",
       "steps": [
         {
           "target": [
@@ -14297,13 +14297,13 @@ const KM_CHARS = [
           "target": [
             "Y"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "既",
-      "code": "[;z]-u",
+      "code": ";zu",
       "steps": [
         {
           "target": [
@@ -14316,13 +14316,13 @@ const KM_CHARS = [
           "target": [
             "u"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "始",
-      "code": "[ZB]-b",
+      "code": "ZBb",
       "steps": [
         {
           "target": [
@@ -14335,13 +14335,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "郑",
-      "code": "[RY]-j",
+      "code": "RYj",
       "steps": [
         {
           "target": [
@@ -14354,13 +14354,13 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "止",
-      "code": "[Ii]",
+      "code": "Ii",
       "steps": [
         {
           "target": [
@@ -14373,7 +14373,7 @@ const KM_CHARS = [
     },
     {
       "char": "届",
-      "code": "[yB]=y",
+      "code": "yBy",
       "steps": [
         {
           "target": [
@@ -14386,13 +14386,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "纯",
-      "code": "[Rf]-Y",
+      "code": "RfY",
       "steps": [
         {
           "target": [
@@ -14405,13 +14405,13 @@ const KM_CHARS = [
           "target": [
             "Y"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "育",
-      "code": "[NH]=y",
+      "code": "NHy",
       "steps": [
         {
           "target": [
@@ -14424,13 +14424,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "堂",
-      "code": "[MV]=t",
+      "code": "MVt",
       "steps": [
         {
           "target": [
@@ -14443,13 +14443,13 @@ const KM_CHARS = [
           "target": [
             "t"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "刷",
-      "code": "[yQ]-W",
+      "code": "yQW",
       "steps": [
         {
           "target": [
@@ -14462,13 +14462,13 @@ const KM_CHARS = [
           "target": [
             "W"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "硬",
-      "code": "[.g]-w",
+      "code": ".gw",
       "steps": [
         {
           "target": [
@@ -14481,13 +14481,13 @@ const KM_CHARS = [
           "target": [
             "w"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "毛",
-      "code": "[ym]",
+      "code": "ym",
       "steps": [
         {
           "target": [
@@ -14500,7 +14500,7 @@ const KM_CHARS = [
     },
     {
       "char": "永",
-      "code": "[On]=s",
+      "code": "Ons",
       "steps": [
         {
           "target": [
@@ -14513,13 +14513,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "绿",
-      "code": "[RC]-n",
+      "code": "RCn",
       "steps": [
         {
           "target": [
@@ -14532,13 +14532,13 @@ const KM_CHARS = [
           "target": [
             "n"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "馆",
-      "code": "[fj]-m",
+      "code": "fjm",
       "steps": [
         {
           "target": [
@@ -14551,13 +14551,13 @@ const KM_CHARS = [
           "target": [
             "m"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "酸",
-      "code": "[UB]-/",
+      "code": "UB/",
       "steps": [
         {
           "target": [
@@ -14570,13 +14570,13 @@ const KM_CHARS = [
           "target": [
             "/"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "命",
-      "code": "[kb]=Y",
+      "code": "kbY",
       "steps": [
         {
           "target": [
@@ -14589,13 +14589,13 @@ const KM_CHARS = [
           "target": [
             "Y"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "依",
-      "code": "[a?]-i",
+      "code": "a?i",
       "steps": [
         {
           "target": [
@@ -14608,13 +14608,13 @@ const KM_CHARS = [
           "target": [
             "i"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "累",
-      "code": "[DR]=s",
+      "code": "DRs",
       "steps": [
         {
           "target": [
@@ -14627,13 +14627,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "戴",
-      "code": "[LD]=X",
+      "code": "LDX",
       "steps": [
         {
           "target": [
@@ -14646,13 +14646,13 @@ const KM_CHARS = [
           "target": [
             "X"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "济",
-      "code": "[nc]-q",
+      "code": "ncq",
       "steps": [
         {
           "target": [
@@ -14665,13 +14665,13 @@ const KM_CHARS = [
           "target": [
             "q"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "蒂",
-      "code": "[ph]=Q",
+      "code": "phQ",
       "steps": [
         {
           "target": [
@@ -14684,13 +14684,13 @@ const KM_CHARS = [
           "target": [
             "Q"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "雨",
-      "code": "[kv]",
+      "code": "kv",
       "steps": [
         {
           "target": [
@@ -14703,7 +14703,7 @@ const KM_CHARS = [
     },
     {
       "char": "备",
-      "code": "[/D]=t",
+      "code": "/Dt",
       "steps": [
         {
           "target": [
@@ -14716,13 +14716,13 @@ const KM_CHARS = [
           "target": [
             "t"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "坏",
-      "code": "[Vc]-b",
+      "code": "Vcb",
       "steps": [
         {
           "target": [
@@ -14735,13 +14735,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "尽",
-      "code": "[yO]=S",
+      "code": "yOS",
       "steps": [
         {
           "target": [
@@ -14754,13 +14754,13 @@ const KM_CHARS = [
           "target": [
             "S"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "健",
-      "code": "[al]-g",
+      "code": "alg",
       "steps": [
         {
           "target": [
@@ -14773,13 +14773,13 @@ const KM_CHARS = [
           "target": [
             "g"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "登",
-      "code": "[I>]=d",
+      "code": "I>d",
       "steps": [
         {
           "target": [
@@ -14792,13 +14792,13 @@ const KM_CHARS = [
           "target": [
             "d"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "齐",
-      "code": "[cq]",
+      "code": "cq",
       "steps": [
         {
           "target": [
@@ -14811,7 +14811,7 @@ const KM_CHARS = [
     },
     {
       "char": "待",
-      "code": "[gV]-z",
+      "code": "gVz",
       "steps": [
         {
           "target": [
@@ -14824,13 +14824,13 @@ const KM_CHARS = [
           "target": [
             "z"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "控",
-      "code": "[iI]-S",
+      "code": "iIS",
       "steps": [
         {
           "target": [
@@ -14843,13 +14843,13 @@ const KM_CHARS = [
           "target": [
             "S"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "蒙",
-      "code": "[Kf]=Q",
+      "code": "KfQ",
       "steps": [
         {
           "target": [
@@ -14862,13 +14862,13 @@ const KM_CHARS = [
           "target": [
             "Q"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "决",
-      "code": "[SW]-r",
+      "code": "SWr",
       "steps": [
         {
           "target": [
@@ -14881,13 +14881,13 @@ const KM_CHARS = [
           "target": [
             "r"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "餐",
-      "code": "[Jv]=f",
+      "code": "Jvf",
       "steps": [
         {
           "target": [
@@ -14900,13 +14900,13 @@ const KM_CHARS = [
           "target": [
             "f"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "状",
-      "code": "[?K]-q",
+      "code": "?Kq",
       "steps": [
         {
           "target": [
@@ -14919,13 +14919,13 @@ const KM_CHARS = [
           "target": [
             "q"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "挂",
-      "code": "[iM]-g",
+      "code": "iMg",
       "steps": [
         {
           "target": [
@@ -14938,13 +14938,13 @@ const KM_CHARS = [
           "target": [
             "g"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "职",
-      "code": "[Fb]-X",
+      "code": "FbX",
       "steps": [
         {
           "target": [
@@ -14957,13 +14957,13 @@ const KM_CHARS = [
           "target": [
             "X"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "雅",
-      "code": "[P,]-i",
+      "code": "P,i",
       "steps": [
         {
           "target": [
@@ -14976,13 +14976,13 @@ const KM_CHARS = [
           "target": [
             "i"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "郭",
-      "code": "[sF]-Y",
+      "code": "sFY",
       "steps": [
         {
           "target": [
@@ -14995,13 +14995,13 @@ const KM_CHARS = [
           "target": [
             "Y"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "笔",
-      "code": "[cy]=m",
+      "code": "cym",
       "steps": [
         {
           "target": [
@@ -15014,13 +15014,13 @@ const KM_CHARS = [
           "target": [
             "m"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "虾",
-      "code": "[Bf]-x",
+      "code": "Bfx",
       "steps": [
         {
           "target": [
@@ -15033,13 +15033,13 @@ const KM_CHARS = [
           "target": [
             "x"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "付",
-      "code": "[az]-c",
+      "code": "azc",
       "steps": [
         {
           "target": [
@@ -15052,13 +15052,13 @@ const KM_CHARS = [
           "target": [
             "c"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "归",
-      "code": "[WC]-j",
+      "code": "WCj",
       "steps": [
         {
           "target": [
@@ -15071,13 +15071,13 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "评",
-      "code": "[u?]-X",
+      "code": "u?X",
       "steps": [
         {
           "target": [
@@ -15090,13 +15090,13 @@ const KM_CHARS = [
           "target": [
             "X"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "泽",
-      "code": "[nv]-i",
+      "code": "nvi",
       "steps": [
         {
           "target": [
@@ -15109,13 +15109,13 @@ const KM_CHARS = [
           "target": [
             "i"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "跳",
-      "code": "[sJ]-S",
+      "code": "sJS",
       "steps": [
         {
           "target": [
@@ -15128,13 +15128,13 @@ const KM_CHARS = [
           "target": [
             "S"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "宁",
-      "code": "[jG]=d",
+      "code": "jGd",
       "steps": [
         {
           "target": [
@@ -15147,13 +15147,13 @@ const KM_CHARS = [
           "target": [
             "d"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "汽",
-      "code": "[nD]-q",
+      "code": "nDq",
       "steps": [
         {
           "target": [
@@ -15166,13 +15166,13 @@ const KM_CHARS = [
           "target": [
             "q"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "赚",
-      "code": "[GX]-;",
+      "code": "GX;",
       "steps": [
         {
           "target": [
@@ -15185,13 +15185,13 @@ const KM_CHARS = [
           "target": [
             ";"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "炸",
-      "code": "[;H]-a",
+      "code": ";Ha",
       "steps": [
         {
           "target": [
@@ -15204,13 +15204,13 @@ const KM_CHARS = [
           "target": [
             "a"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "积",
-      "code": "[xb]-X",
+      "code": "xbX",
       "steps": [
         {
           "target": [
@@ -15223,13 +15223,13 @@ const KM_CHARS = [
           "target": [
             "X"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "跌",
-      "code": "[st]-d",
+      "code": "std",
       "steps": [
         {
           "target": [
@@ -15242,13 +15242,13 @@ const KM_CHARS = [
           "target": [
             "d"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "测",
-      "code": "[nG]-W",
+      "code": "nGW",
       "steps": [
         {
           "target": [
@@ -15261,13 +15261,13 @@ const KM_CHARS = [
           "target": [
             "W"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "益",
-      "code": "[n;]=m",
+      "code": "n;m",
       "steps": [
         {
           "target": [
@@ -15280,13 +15280,13 @@ const KM_CHARS = [
           "target": [
             "m"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "杰",
-      "code": "[o;]=h",
+      "code": "o;h",
       "steps": [
         {
           "target": [
@@ -15299,13 +15299,13 @@ const KM_CHARS = [
           "target": [
             "h"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "故",
-      "code": "[/a]-p",
+      "code": "/ap",
       "steps": [
         {
           "target": [
@@ -15318,13 +15318,13 @@ const KM_CHARS = [
           "target": [
             "p"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "诗",
-      "code": "[uV]-z",
+      "code": "uVz",
       "steps": [
         {
           "target": [
@@ -15337,13 +15337,13 @@ const KM_CHARS = [
           "target": [
             "z"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "乱",
-      "code": "[gA]-e",
+      "code": "gAe",
       "steps": [
         {
           "target": [
@@ -15356,13 +15356,13 @@ const KM_CHARS = [
           "target": [
             "e"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "互",
-      "code": "[fC]=j",
+      "code": "fCj",
       "steps": [
         {
           "target": [
@@ -15375,13 +15375,13 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "曼",
-      "code": "[wO]=v",
+      "code": "wOv",
       "steps": [
         {
           "target": [
@@ -15394,13 +15394,13 @@ const KM_CHARS = [
           "target": [
             "v"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "盛",
-      "code": "[;A]=;",
+      "code": ";A;",
       "steps": [
         {
           "target": [
@@ -15413,13 +15413,13 @@ const KM_CHARS = [
           "target": [
             ";"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "帕",
-      "code": "[Qd]-b",
+      "code": "Qdb",
       "steps": [
         {
           "target": [
@@ -15432,13 +15432,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "置",
-      "code": "[OA]=z",
+      "code": "OAz",
       "steps": [
         {
           "target": [
@@ -15451,13 +15451,13 @@ const KM_CHARS = [
           "target": [
             "z"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "藏",
-      "code": "[p;]=K",
+      "code": "p;K",
       "steps": [
         {
           "target": [
@@ -15470,13 +15470,13 @@ const KM_CHARS = [
           "target": [
             "K"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "谷",
-      "code": "[Lg]",
+      "code": "Lg",
       "steps": [
         {
           "target": [
@@ -15489,7 +15489,7 @@ const KM_CHARS = [
     },
     {
       "char": "杜",
-      "code": "[oV]-t",
+      "code": "oVt",
       "steps": [
         {
           "target": [
@@ -15502,13 +15502,13 @@ const KM_CHARS = [
           "target": [
             "t"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "印",
-      "code": "[Wf]-Y",
+      "code": "WfY",
       "steps": [
         {
           "target": [
@@ -15521,13 +15521,13 @@ const KM_CHARS = [
           "target": [
             "Y"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "良",
-      "code": "[O;]=g",
+      "code": "O;g",
       "steps": [
         {
           "target": [
@@ -15540,13 +15540,13 @@ const KM_CHARS = [
           "target": [
             "g"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "负",
-      "code": "[LG]=b",
+      "code": "LGb",
       "steps": [
         {
           "target": [
@@ -15559,13 +15559,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "编",
-      "code": "[RQ]-F",
+      "code": "RQF",
       "steps": [
         {
           "target": [
@@ -15578,13 +15578,13 @@ const KM_CHARS = [
           "target": [
             "F"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "酱",
-      "code": "[?S]=U",
+      "code": "?SU",
       "steps": [
         {
           "target": [
@@ -15597,13 +15597,13 @@ const KM_CHARS = [
           "target": [
             "U"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "汁",
-      "code": "[ne]-s",
+      "code": "nes",
       "steps": [
         {
           "target": [
@@ -15616,13 +15616,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "饰",
-      "code": "[fK]-Q",
+      "code": "fKQ",
       "steps": [
         {
           "target": [
@@ -15635,13 +15635,13 @@ const KM_CHARS = [
           "target": [
             "Q"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "厅",
-      "code": "[yG]=d",
+      "code": "yGd",
       "steps": [
         {
           "target": [
@@ -15654,13 +15654,13 @@ const KM_CHARS = [
           "target": [
             "d"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "效",
-      "code": "[Zh]-a",
+      "code": "Zha",
       "steps": [
         {
           "target": [
@@ -15673,13 +15673,13 @@ const KM_CHARS = [
           "target": [
             "a"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "顶",
-      "code": "[G?]-y",
+      "code": "G?y",
       "steps": [
         {
           "target": [
@@ -15692,13 +15692,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "咸",
-      "code": "[;f]=b",
+      "code": ";fb",
       "steps": [
         {
           "target": [
@@ -15711,13 +15711,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "软",
-      "code": "[M:]-q",
+      "code": "M:q",
       "steps": [
         {
           "target": [
@@ -15730,13 +15730,13 @@ const KM_CHARS = [
           "target": [
             "q"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "抓",
-      "code": "[i:]-a",
+      "code": "i:a",
       "steps": [
         {
           "target": [
@@ -15749,13 +15749,13 @@ const KM_CHARS = [
           "target": [
             "a"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "唱",
-      "code": "[bw]-w",
+      "code": "bww",
       "steps": [
         {
           "target": [
@@ -15768,13 +15768,13 @@ const KM_CHARS = [
           "target": [
             "w"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "猪",
-      "code": "[Kq]-z",
+      "code": "Kqz",
       "steps": [
         {
           "target": [
@@ -15787,13 +15787,13 @@ const KM_CHARS = [
           "target": [
             "z"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "借",
-      "code": "[aR]-w",
+      "code": "aRw",
       "steps": [
         {
           "target": [
@@ -15806,13 +15806,13 @@ const KM_CHARS = [
           "target": [
             "w"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "章",
-      "code": "[Se]=s",
+      "code": "Ses",
       "steps": [
         {
           "target": [
@@ -15825,13 +15825,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "伦",
-      "code": "[aS]-l",
+      "code": "aSl",
       "steps": [
         {
           "target": [
@@ -15844,13 +15844,13 @@ const KM_CHARS = [
           "target": [
             "l"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "伯",
-      "code": "[ad]-b",
+      "code": "adb",
       "steps": [
         {
           "target": [
@@ -15863,13 +15863,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "庄",
-      "code": "[JV]=t",
+      "code": "JVt",
       "steps": [
         {
           "target": [
@@ -15882,13 +15882,13 @@ const KM_CHARS = [
           "target": [
             "t"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "断",
-      "code": "[rA]-/",
+      "code": "rA/",
       "steps": [
         {
           "target": [
@@ -15901,13 +15901,13 @@ const KM_CHARS = [
           "target": [
             "/"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "梁",
-      "code": "[nu]=o",
+      "code": "nuo",
       "steps": [
         {
           "target": [
@@ -15920,13 +15920,13 @@ const KM_CHARS = [
           "target": [
             "o"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "厂",
-      "code": "[yc]",
+      "code": "yc",
       "steps": [
         {
           "target": [
@@ -15939,7 +15939,7 @@ const KM_CHARS = [
     },
     {
       "char": "宋",
-      "code": "[jo]=m",
+      "code": "jom",
       "steps": [
         {
           "target": [
@@ -15952,13 +15952,13 @@ const KM_CHARS = [
           "target": [
             "m"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "草",
-      "code": "[Pe]=s",
+      "code": "Pes",
       "steps": [
         {
           "target": [
@@ -15971,13 +15971,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "虽",
-      "code": "[bB]=c",
+      "code": "bBc",
       "steps": [
         {
           "target": [
@@ -15990,13 +15990,13 @@ const KM_CHARS = [
           "target": [
             "c"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "厚",
-      "code": "[yw]=F",
+      "code": "ywF",
       "steps": [
         {
           "target": [
@@ -16009,13 +16009,13 @@ const KM_CHARS = [
           "target": [
             "F"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "委",
-      "code": "[xZ]=n",
+      "code": "xZn",
       "steps": [
         {
           "target": [
@@ -16028,13 +16028,13 @@ const KM_CHARS = [
           "target": [
             "n"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "甲",
-      "code": "[Oj]",
+      "code": "Oj",
       "steps": [
         {
           "target": [
@@ -16047,7 +16047,7 @@ const KM_CHARS = [
     },
     {
       "char": "失",
-      "code": "[td]=f",
+      "code": "tdf",
       "steps": [
         {
           "target": [
@@ -16060,13 +16060,13 @@ const KM_CHARS = [
           "target": [
             "f"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "埃",
-      "code": "[VB]-D",
+      "code": "VBD",
       "steps": [
         {
           "target": [
@@ -16079,13 +16079,13 @@ const KM_CHARS = [
           "target": [
             "D"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "议",
-      "code": "[uO]-l",
+      "code": "uOl",
       "steps": [
         {
           "target": [
@@ -16098,13 +16098,13 @@ const KM_CHARS = [
           "target": [
             "l"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "简",
-      "code": "[cI]=w",
+      "code": "cIw",
       "steps": [
         {
           "target": [
@@ -16117,13 +16117,13 @@ const KM_CHARS = [
           "target": [
             "w"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "惠",
-      "code": "[fw]=:",
+      "code": "fw:",
       "steps": [
         {
           "target": [
@@ -16136,13 +16136,13 @@ const KM_CHARS = [
           "target": [
             ":"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "卫",
-      "code": "[Yf]=i",
+      "code": "Yfi",
       "steps": [
         {
           "target": [
@@ -16155,13 +16155,13 @@ const KM_CHARS = [
           "target": [
             "i"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "识",
-      "code": "[ub]-X",
+      "code": "ubX",
       "steps": [
         {
           "target": [
@@ -16174,13 +16174,13 @@ const KM_CHARS = [
           "target": [
             "X"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "善",
-      "code": "[QX]=b",
+      "code": "QXb",
       "steps": [
         {
           "target": [
@@ -16193,13 +16193,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "封",
-      "code": "[Mz]-c",
+      "code": "Mzc",
       "steps": [
         {
           "target": [
@@ -16212,13 +16212,13 @@ const KM_CHARS = [
           "target": [
             "c"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "爆",
-      "code": "[;w]-n",
+      "code": ";wn",
       "steps": [
         {
           "target": [
@@ -16231,13 +16231,13 @@ const KM_CHARS = [
           "target": [
             "n"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "划",
-      "code": "[UW]-d",
+      "code": "UWd",
       "steps": [
         {
           "target": [
@@ -16250,13 +16250,13 @@ const KM_CHARS = [
           "target": [
             "d"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "农",
-      "code": "[C?]=i",
+      "code": "C?i",
       "steps": [
         {
           "target": [
@@ -16269,13 +16269,13 @@ const KM_CHARS = [
           "target": [
             "i"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "刀",
-      "code": "[ud]",
+      "code": "ud",
       "steps": [
         {
           "target": [
@@ -16288,7 +16288,7 @@ const KM_CHARS = [
     },
     {
       "char": "吸",
-      "code": "[bs]-j",
+      "code": "bsj",
       "steps": [
         {
           "target": [
@@ -16301,13 +16301,13 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "佛",
-      "code": "[aP]-f",
+      "code": "aPf",
       "steps": [
         {
           "target": [
@@ -16320,13 +16320,13 @@ const KM_CHARS = [
           "target": [
             "f"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "击",
-      "code": "[iF]=t",
+      "code": "iFt",
       "steps": [
         {
           "target": [
@@ -16339,13 +16339,13 @@ const KM_CHARS = [
           "target": [
             "t"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "母",
-      "code": "[Nm]",
+      "code": "Nm",
       "steps": [
         {
           "target": [
@@ -16358,7 +16358,7 @@ const KM_CHARS = [
     },
     {
       "char": "熟",
-      "code": "[sF]=;",
+      "code": "sF;",
       "steps": [
         {
           "target": [
@@ -16371,13 +16371,13 @@ const KM_CHARS = [
           "target": [
             ";"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "充",
-      "code": "[NJ]=e",
+      "code": "NJe",
       "steps": [
         {
           "target": [
@@ -16390,13 +16390,13 @@ const KM_CHARS = [
           "target": [
             "e"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "退",
-      "code": "[;p]-c",
+      "code": ";pc",
       "steps": [
         {
           "target": [
@@ -16409,13 +16409,13 @@ const KM_CHARS = [
           "target": [
             "c"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "售",
-      "code": "[,b]=k",
+      "code": ",bk",
       "steps": [
         {
           "target": [
@@ -16428,13 +16428,13 @@ const KM_CHARS = [
           "target": [
             "k"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "卢",
-      "code": "[xy]=s",
+      "code": "xys",
       "steps": [
         {
           "target": [
@@ -16447,13 +16447,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "销",
-      "code": "[zE]-H",
+      "code": "zEH",
       "steps": [
         {
           "target": [
@@ -16466,13 +16466,13 @@ const KM_CHARS = [
           "target": [
             "H"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "朝",
-      "code": "[AH]-y",
+      "code": "AHy",
       "steps": [
         {
           "target": [
@@ -16485,13 +16485,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "弄",
-      "code": "[,p]=c",
+      "code": ",pc",
       "steps": [
         {
           "target": [
@@ -16504,13 +16504,13 @@ const KM_CHARS = [
           "target": [
             "c"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "艾",
-      "code": "[pl]=i",
+      "code": "pli",
       "steps": [
         {
           "target": [
@@ -16523,13 +16523,13 @@ const KM_CHARS = [
           "target": [
             "i"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "券",
-      "code": "[Ru]=d",
+      "code": "Rud",
       "steps": [
         {
           "target": [
@@ -16542,13 +16542,13 @@ const KM_CHARS = [
           "target": [
             "d"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "族",
-      "code": "[<K]-D",
+      "code": "<KD",
       "steps": [
         {
           "target": [
@@ -16561,13 +16561,13 @@ const KM_CHARS = [
           "target": [
             "D"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "姆",
-      "code": "[ZN]-m",
+      "code": "ZNm",
       "steps": [
         {
           "target": [
@@ -16580,13 +16580,13 @@ const KM_CHARS = [
           "target": [
             "m"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "响",
-      "code": "[bq]-b",
+      "code": "bqb",
       "steps": [
         {
           "target": [
@@ -16599,13 +16599,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "哭",
-      "code": "[mK]=q",
+      "code": "mKq",
       "steps": [
         {
           "target": [
@@ -16618,13 +16618,13 @@ const KM_CHARS = [
           "target": [
             "q"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "急",
-      "code": "[LC]=:",
+      "code": "LC:",
       "steps": [
         {
           "target": [
@@ -16637,13 +16637,13 @@ const KM_CHARS = [
           "target": [
             ":"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "免",
-      "code": "[AJ]=e",
+      "code": "AJe",
       "steps": [
         {
           "target": [
@@ -16656,13 +16656,13 @@ const KM_CHARS = [
           "target": [
             "e"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "伟",
-      "code": "[aD]-w",
+      "code": "aDw",
       "steps": [
         {
           "target": [
@@ -16675,13 +16675,13 @@ const KM_CHARS = [
           "target": [
             "w"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "输",
-      "code": "[Mk]-W",
+      "code": "MkW",
       "steps": [
         {
           "target": [
@@ -16694,13 +16694,13 @@ const KM_CHARS = [
           "target": [
             "W"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "继",
-      "code": "[Rr]-A",
+      "code": "RrA",
       "steps": [
         {
           "target": [
@@ -16713,13 +16713,13 @@ const KM_CHARS = [
           "target": [
             "A"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "曲",
-      "code": "[Fq]",
+      "code": "Fq",
       "steps": [
         {
           "target": [
@@ -16732,7 +16732,7 @@ const KM_CHARS = [
     },
     {
       "char": "灵",
-      "code": "[C;]=h",
+      "code": "C;h",
       "steps": [
         {
           "target": [
@@ -16745,13 +16745,13 @@ const KM_CHARS = [
           "target": [
             "h"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "护",
-      "code": "[iQ]-h",
+      "code": "iQh",
       "steps": [
         {
           "target": [
@@ -16764,13 +16764,13 @@ const KM_CHARS = [
           "target": [
             "h"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "痛",
-      "code": "[lB]=q",
+      "code": "lBq",
       "steps": [
         {
           "target": [
@@ -16783,13 +16783,13 @@ const KM_CHARS = [
           "target": [
             "q"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "抢",
-      "code": "[ir]-Y",
+      "code": "irY",
       "steps": [
         {
           "target": [
@@ -16802,13 +16802,13 @@ const KM_CHARS = [
           "target": [
             "Y"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "纸",
-      "code": "[RZ]-s",
+      "code": "RZs",
       "steps": [
         {
           "target": [
@@ -16821,13 +16821,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "态",
-      "code": "[TO]=:",
+      "code": "TO:",
       "steps": [
         {
           "target": [
@@ -16840,13 +16840,13 @@ const KM_CHARS = [
           "target": [
             ":"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "夜",
-      "code": "[Za]=H",
+      "code": "ZaH",
       "steps": [
         {
           "target": [
@@ -16859,13 +16859,13 @@ const KM_CHARS = [
           "target": [
             "H"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "泡",
-      "code": "[n.]-P",
+      "code": "n.P",
       "steps": [
         {
           "target": [
@@ -16878,13 +16878,13 @@ const KM_CHARS = [
           "target": [
             "P"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "麦",
-      "code": "[>/]=i",
+      "code": ">/i",
       "steps": [
         {
           "target": [
@@ -16897,13 +16897,13 @@ const KM_CHARS = [
           "target": [
             "i"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "墙",
-      "code": "[VV]-b",
+      "code": "VVb",
       "steps": [
         {
           "target": [
@@ -16916,13 +16916,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "严",
-      "code": "[f;]=y",
+      "code": "f;y",
       "steps": [
         {
           "target": [
@@ -16935,13 +16935,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "稳",
-      "code": "[xL]-:",
+      "code": "xL:",
       "steps": [
         {
           "target": [
@@ -16954,13 +16954,13 @@ const KM_CHARS = [
           "target": [
             ":"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "骨",
-      "code": "[qg]",
+      "code": "qg",
       "steps": [
         {
           "target": [
@@ -16973,7 +16973,7 @@ const KM_CHARS = [
     },
     {
       "char": "顺",
-      "code": "[Y?]-y",
+      "code": "Y?y",
       "steps": [
         {
           "target": [
@@ -16986,13 +16986,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "荣",
-      "code": "[Ko]=m",
+      "code": "Kom",
       "steps": [
         {
           "target": [
@@ -17005,13 +17005,13 @@ const KM_CHARS = [
           "target": [
             "m"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "乌",
-      "code": "[Xu]",
+      "code": "Xu",
       "steps": [
         {
           "target": [
@@ -17024,7 +17024,7 @@ const KM_CHARS = [
     },
     {
       "char": "抗",
-      "code": "[iZ]-q",
+      "code": "iZq",
       "steps": [
         {
           "target": [
@@ -17037,13 +17037,13 @@ const KM_CHARS = [
           "target": [
             "q"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "架",
-      "code": "[<b]=o",
+      "code": "<bo",
       "steps": [
         {
           "target": [
@@ -17056,13 +17056,13 @@ const KM_CHARS = [
           "target": [
             "o"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "适",
-      "code": "[gp]-c",
+      "code": "gpc",
       "steps": [
         {
           "target": [
@@ -17075,13 +17075,13 @@ const KM_CHARS = [
           "target": [
             "c"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "桌",
-      "code": "[xw]=o",
+      "code": "xwo",
       "steps": [
         {
           "target": [
@@ -17094,13 +17094,13 @@ const KM_CHARS = [
           "target": [
             "o"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "丰",
-      "code": "[>f]",
+      "code": ">f",
       "steps": [
         {
           "target": [
@@ -17113,7 +17113,7 @@ const KM_CHARS = [
     },
     {
       "char": "钟",
-      "code": "[zb]-c",
+      "code": "zbc",
       "steps": [
         {
           "target": [
@@ -17126,13 +17126,13 @@ const KM_CHARS = [
           "target": [
             "c"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "宽",
-      "code": "[jp]=e",
+      "code": "jpe",
       "steps": [
         {
           "target": [
@@ -17145,13 +17145,13 @@ const KM_CHARS = [
           "target": [
             "e"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "抱",
-      "code": "[i.]-P",
+      "code": "i.P",
       "steps": [
         {
           "target": [
@@ -17164,13 +17164,13 @@ const KM_CHARS = [
           "target": [
             "P"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "蛋",
-      "code": "[CB]=c",
+      "code": "CBc",
       "steps": [
         {
           "target": [
@@ -17183,13 +17183,13 @@ const KM_CHARS = [
           "target": [
             "c"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "艺",
-      "code": "[pj]=i",
+      "code": "pji",
       "steps": [
         {
           "target": [
@@ -17202,13 +17202,13 @@ const KM_CHARS = [
           "target": [
             "i"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "灯",
-      "code": "[;G]-d",
+      "code": ";Gd",
       "steps": [
         {
           "target": [
@@ -17221,13 +17221,13 @@ const KM_CHARS = [
           "target": [
             "d"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "围",
-      "code": "[UD]=w",
+      "code": "UDw",
       "steps": [
         {
           "target": [
@@ -17240,13 +17240,13 @@ const KM_CHARS = [
           "target": [
             "w"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "忘",
-      "code": "[u:]=x",
+      "code": "u:x",
       "steps": [
         {
           "target": [
@@ -17259,13 +17259,13 @@ const KM_CHARS = [
           "target": [
             "x"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "零",
-      "code": "[kk]=O",
+      "code": "kkO",
       "steps": [
         {
           "target": [
@@ -17278,13 +17278,13 @@ const KM_CHARS = [
           "target": [
             "O"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "遇",
-      "code": "[DB]-p",
+      "code": "DBp",
       "steps": [
         {
           "target": [
@@ -17297,13 +17297,13 @@ const KM_CHARS = [
           "target": [
             "p"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "腿",
-      "code": "[H;]-p",
+      "code": "H;p",
       "steps": [
         {
           "target": [
@@ -17316,13 +17316,13 @@ const KM_CHARS = [
           "target": [
             "p"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "申",
-      "code": "[wc]=s",
+      "code": "wcs",
       "steps": [
         {
           "target": [
@@ -17335,13 +17335,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "晓",
-      "code": "[wU]-J",
+      "code": "wUJ",
       "steps": [
         {
           "target": [
@@ -17354,13 +17354,13 @@ const KM_CHARS = [
           "target": [
             "J"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "批",
-      "code": "[ih]-h",
+      "code": "ihh",
       "steps": [
         {
           "target": [
@@ -17373,13 +17373,13 @@ const KM_CHARS = [
           "target": [
             "h"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "粥",
-      "code": "[Pr]=P",
+      "code": "PrP",
       "steps": [
         {
           "target": [
@@ -17392,13 +17392,13 @@ const KM_CHARS = [
           "target": [
             "P"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "兹",
-      "code": "[X>]=>",
+      "code": "X>>",
       "steps": [
         {
           "target": [
@@ -17411,13 +17411,13 @@ const KM_CHARS = [
           "target": [
             ">"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "享",
-      "code": "[sF]=i",
+      "code": "sFi",
       "steps": [
         {
           "target": [
@@ -17430,13 +17430,13 @@ const KM_CHARS = [
           "target": [
             "i"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "折",
-      "code": "[i/]-j",
+      "code": "i/j",
       "steps": [
         {
           "target": [
@@ -17449,13 +17449,13 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "债",
-      "code": "[a>]-G",
+      "code": "a>G",
       "steps": [
         {
           "target": [
@@ -17468,7 +17468,7 @@ const KM_CHARS = [
           "target": [
             "G"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     }
@@ -17476,7 +17476,7 @@ const KM_CHARS = [
   [
     {
       "char": "弹",
-      "code": "[PX]-e",
+      "code": "PXe",
       "steps": [
         {
           "target": [
@@ -17489,13 +17489,13 @@ const KM_CHARS = [
           "target": [
             "e"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "衣",
-      "code": "[?i]",
+      "code": "?i",
       "steps": [
         {
           "target": [
@@ -17508,7 +17508,7 @@ const KM_CHARS = [
     },
     {
       "char": "露",
-      "code": "[ks]=Y",
+      "code": "ksY",
       "steps": [
         {
           "target": [
@@ -17521,13 +17521,13 @@ const KM_CHARS = [
           "target": [
             "Y"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "薄",
-      "code": "[/L]=z",
+      "code": "/Lz",
       "steps": [
         {
           "target": [
@@ -17540,13 +17540,13 @@ const KM_CHARS = [
           "target": [
             "z"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "姜",
-      "code": "[QZ]=n",
+      "code": "QZn",
       "steps": [
         {
           "target": [
@@ -17559,13 +17559,13 @@ const KM_CHARS = [
           "target": [
             "n"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "页",
-      "code": "[?y]",
+      "code": "?y",
       "steps": [
         {
           "target": [
@@ -17578,7 +17578,7 @@ const KM_CHARS = [
     },
     {
       "char": "税",
-      "code": "[xX]-J",
+      "code": "xXJ",
       "steps": [
         {
           "target": [
@@ -17591,13 +17591,13 @@ const KM_CHARS = [
           "target": [
             "J"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "般",
-      "code": "[WT]-s",
+      "code": "WTs",
       "steps": [
         {
           "target": [
@@ -17610,13 +17610,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "陆",
-      "code": "[Yi]-F",
+      "code": "YiF",
       "steps": [
         {
           "target": [
@@ -17629,13 +17629,13 @@ const KM_CHARS = [
           "target": [
             "F"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "赫",
-      "code": "[VG]-G",
+      "code": "VGG",
       "steps": [
         {
           "target": [
@@ -17648,13 +17648,13 @@ const KM_CHARS = [
           "target": [
             "G"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "屋",
-      "code": "[y.]=i",
+      "code": "y.i",
       "steps": [
         {
           "target": [
@@ -17667,13 +17667,13 @@ const KM_CHARS = [
           "target": [
             "i"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "倍",
-      "code": "[aC]-b",
+      "code": "aCb",
       "steps": [
         {
           "target": [
@@ -17686,13 +17686,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "滴",
-      "code": "[nh]-/",
+      "code": "nh/",
       "steps": [
         {
           "target": [
@@ -17705,13 +17705,13 @@ const KM_CHARS = [
           "target": [
             "/"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "损",
-      "code": "[ib]-G",
+      "code": "ibG",
       "steps": [
         {
           "target": [
@@ -17724,13 +17724,13 @@ const KM_CHARS = [
           "target": [
             "G"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "警",
-      "code": "[pG]=u",
+      "code": "pGu",
       "steps": [
         {
           "target": [
@@ -17743,13 +17743,13 @@ const KM_CHARS = [
           "target": [
             "u"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "码",
-      "code": "[./]-m",
+      "code": "./m",
       "steps": [
         {
           "target": [
@@ -17762,13 +17762,13 @@ const KM_CHARS = [
           "target": [
             "m"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "独",
-      "code": "[KB]-c",
+      "code": "KBc",
       "steps": [
         {
           "target": [
@@ -17781,13 +17781,13 @@ const KM_CHARS = [
           "target": [
             "c"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "彩",
-      "code": "[:o]-I",
+      "code": ":oI",
       "steps": [
         {
           "target": [
@@ -17800,13 +17800,13 @@ const KM_CHARS = [
           "target": [
             "I"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "湾",
-      "code": "[nG]-P",
+      "code": "nGP",
       "steps": [
         {
           "target": [
@@ -17819,13 +17819,13 @@ const KM_CHARS = [
           "target": [
             "P"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "须",
-      "code": "[I?]-y",
+      "code": "I?y",
       "steps": [
         {
           "target": [
@@ -17838,13 +17838,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "脑",
-      "code": "[HZ]-F",
+      "code": "HZF",
       "steps": [
         {
           "target": [
@@ -17857,13 +17857,13 @@ const KM_CHARS = [
           "target": [
             "F"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "坑",
-      "code": "[VZ]-q",
+      "code": "VZq",
       "steps": [
         {
           "target": [
@@ -17876,13 +17876,13 @@ const KM_CHARS = [
           "target": [
             "q"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "候",
-      "code": "[ac]-D",
+      "code": "acD",
       "steps": [
         {
           "target": [
@@ -17895,13 +17895,13 @@ const KM_CHARS = [
           "target": [
             "D"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "静",
-      "code": "[>H]-l",
+      "code": ">Hl",
       "steps": [
         {
           "target": [
@@ -17914,13 +17914,13 @@ const KM_CHARS = [
           "target": [
             "l"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "礼",
-      "code": "[NA]-e",
+      "code": "NAe",
       "steps": [
         {
           "target": [
@@ -17933,13 +17933,13 @@ const KM_CHARS = [
           "target": [
             "e"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "戏",
-      "code": "[vU]-g",
+      "code": "vUg",
       "steps": [
         {
           "target": [
@@ -17952,13 +17952,13 @@ const KM_CHARS = [
           "target": [
             "g"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "弗",
-      "code": "[Pf]",
+      "code": "Pf",
       "steps": [
         {
           "target": [
@@ -17971,7 +17971,7 @@ const KM_CHARS = [
     },
     {
       "char": "颗",
-      "code": "[Do]-?",
+      "code": "Do?",
       "steps": [
         {
           "target": [
@@ -17984,13 +17984,13 @@ const KM_CHARS = [
           "target": [
             "?"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "耶",
-      "code": "[FY]-j",
+      "code": "FYj",
       "steps": [
         {
           "target": [
@@ -18003,13 +18003,13 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "录",
-      "code": "[Cn]=s",
+      "code": "Cns",
       "steps": [
         {
           "target": [
@@ -18022,13 +18022,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "淡",
-      "code": "[nM]-y",
+      "code": "nMy",
       "steps": [
         {
           "target": [
@@ -18041,13 +18041,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "习",
-      "code": "[yx]",
+      "code": "yx",
       "steps": [
         {
           "target": [
@@ -18060,7 +18060,7 @@ const KM_CHARS = [
     },
     {
       "char": "历",
-      "code": "[y<]=l",
+      "code": "y<l",
       "steps": [
         {
           "target": [
@@ -18073,13 +18073,13 @@ const KM_CHARS = [
           "target": [
             "l"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "扎",
-      "code": "[iA]-e",
+      "code": "iAe",
       "steps": [
         {
           "target": [
@@ -18092,13 +18092,13 @@ const KM_CHARS = [
           "target": [
             "e"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "念",
-      "code": "[k:]=x",
+      "code": "k:x",
       "steps": [
         {
           "target": [
@@ -18111,13 +18111,13 @@ const KM_CHARS = [
           "target": [
             "x"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "秋",
-      "code": "[x;]-h",
+      "code": "x;h",
       "steps": [
         {
           "target": [
@@ -18130,13 +18130,13 @@ const KM_CHARS = [
           "target": [
             "h"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "忙",
-      "code": "[:u]-w",
+      "code": ":uw",
       "steps": [
         {
           "target": [
@@ -18149,13 +18149,13 @@ const KM_CHARS = [
           "target": [
             "w"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "症",
-      "code": "[lf]=I",
+      "code": "lfI",
       "steps": [
         {
           "target": [
@@ -18168,13 +18168,13 @@ const KM_CHARS = [
           "target": [
             "I"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "缺",
-      "code": "[EW]-r",
+      "code": "EWr",
       "steps": [
         {
           "target": [
@@ -18187,13 +18187,13 @@ const KM_CHARS = [
           "target": [
             "r"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "临",
-      "code": "[Wc]-w",
+      "code": "Wcw",
       "steps": [
         {
           "target": [
@@ -18206,13 +18206,13 @@ const KM_CHARS = [
           "target": [
             "w"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "聊",
-      "code": "[F:]-m",
+      "code": "F:m",
       "steps": [
         {
           "target": [
@@ -18225,13 +18225,13 @@ const KM_CHARS = [
           "target": [
             "m"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "羊",
-      "code": "[Qy]",
+      "code": "Qy",
       "steps": [
         {
           "target": [
@@ -18244,7 +18244,7 @@ const KM_CHARS = [
     },
     {
       "char": "航",
-      "code": "[WZ]-q",
+      "code": "WZq",
       "steps": [
         {
           "target": [
@@ -18257,13 +18257,13 @@ const KM_CHARS = [
           "target": [
             "q"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "纪",
-      "code": "[RP]-j",
+      "code": "RPj",
       "steps": [
         {
           "target": [
@@ -18276,13 +18276,13 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "紧",
-      "code": "[Wv]=R",
+      "code": "WvR",
       "steps": [
         {
           "target": [
@@ -18295,13 +18295,13 @@ const KM_CHARS = [
           "target": [
             "R"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "挑",
-      "code": "[iJ]-S",
+      "code": "iJS",
       "steps": [
         {
           "target": [
@@ -18314,13 +18314,13 @@ const KM_CHARS = [
           "target": [
             "S"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "策",
-      "code": "[co]=F",
+      "code": "coF",
       "steps": [
         {
           "target": [
@@ -18333,13 +18333,13 @@ const KM_CHARS = [
           "target": [
             "F"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "庆",
-      "code": "[JT]=d",
+      "code": "JTd",
       "steps": [
         {
           "target": [
@@ -18352,13 +18352,13 @@ const KM_CHARS = [
           "target": [
             "d"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "瘦",
-      "code": "[l?]=v",
+      "code": "l?v",
       "steps": [
         {
           "target": [
@@ -18371,13 +18371,13 @@ const KM_CHARS = [
           "target": [
             "v"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "汇",
-      "code": "[nW]-j",
+      "code": "nWj",
       "steps": [
         {
           "target": [
@@ -18390,13 +18390,13 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "终",
-      "code": "[R/]-S",
+      "code": "R/S",
       "steps": [
         {
           "target": [
@@ -18409,13 +18409,13 @@ const KM_CHARS = [
           "target": [
             "S"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "监",
-      "code": "[Wc]=;",
+      "code": "Wc;",
       "steps": [
         {
           "target": [
@@ -18428,13 +18428,13 @@ const KM_CHARS = [
           "target": [
             ";"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "菲",
-      "code": "[pt]=f",
+      "code": "ptf",
       "steps": [
         {
           "target": [
@@ -18447,13 +18447,13 @@ const KM_CHARS = [
           "target": [
             "f"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "脆",
-      "code": "[HL]-Y",
+      "code": "HLY",
       "steps": [
         {
           "target": [
@@ -18466,13 +18466,13 @@ const KM_CHARS = [
           "target": [
             "Y"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "仁",
-      "code": "[aE]-e",
+      "code": "aEe",
       "steps": [
         {
           "target": [
@@ -18485,13 +18485,13 @@ const KM_CHARS = [
           "target": [
             "e"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "苦",
-      "code": "[p/]=g",
+      "code": "p/g",
       "steps": [
         {
           "target": [
@@ -18504,13 +18504,13 @@ const KM_CHARS = [
           "target": [
             "g"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "兵",
-      "code": "[/X]=b",
+      "code": "/Xb",
       "steps": [
         {
           "target": [
@@ -18523,13 +18523,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "际",
-      "code": "[YN]-s",
+      "code": "YNs",
       "steps": [
         {
           "target": [
@@ -18542,13 +18542,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "丹",
-      "code": "[FZ]=t",
+      "code": "FZt",
       "steps": [
         {
           "target": [
@@ -18561,13 +18561,13 @@ const KM_CHARS = [
           "target": [
             "t"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "构",
-      "code": "[o.]-B",
+      "code": "o.B",
       "steps": [
         {
           "target": [
@@ -18580,13 +18580,13 @@ const KM_CHARS = [
           "target": [
             "B"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "幅",
-      "code": "[Qf]-D",
+      "code": "QfD",
       "steps": [
         {
           "target": [
@@ -18599,13 +18599,13 @@ const KM_CHARS = [
           "target": [
             "D"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "闻",
-      "code": "[IF]=e",
+      "code": "IFe",
       "steps": [
         {
           "target": [
@@ -18618,13 +18618,13 @@ const KM_CHARS = [
           "target": [
             "e"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "况",
-      "code": "[Sb]-J",
+      "code": "SbJ",
       "steps": [
         {
           "target": [
@@ -18637,13 +18637,13 @@ const KM_CHARS = [
           "target": [
             "J"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "朗",
-      "code": "[O;]-H",
+      "code": "O;H",
       "steps": [
         {
           "target": [
@@ -18656,13 +18656,13 @@ const KM_CHARS = [
           "target": [
             "H"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "玛",
-      "code": "[,/]-m",
+      "code": ",/m",
       "steps": [
         {
           "target": [
@@ -18675,13 +18675,13 @@ const KM_CHARS = [
           "target": [
             "m"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "船",
-      "code": "[Wq]-b",
+      "code": "Wqb",
       "steps": [
         {
           "target": [
@@ -18694,13 +18694,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "堡",
-      "code": "[ab]=V",
+      "code": "abV",
       "steps": [
         {
           "target": [
@@ -18713,13 +18713,13 @@ const KM_CHARS = [
           "target": [
             "V"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "混",
-      "code": "[nw]-h",
+      "code": "nwh",
       "steps": [
         {
           "target": [
@@ -18732,13 +18732,13 @@ const KM_CHARS = [
           "target": [
             "h"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "烂",
-      "code": "[;X]-d",
+      "code": ";Xd",
       "steps": [
         {
           "target": [
@@ -18751,13 +18751,13 @@ const KM_CHARS = [
           "target": [
             "d"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "圆",
-      "code": "[Ub]=G",
+      "code": "UbG",
       "steps": [
         {
           "target": [
@@ -18770,13 +18770,13 @@ const KM_CHARS = [
           "target": [
             "G"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "饼",
-      "code": "[fX]-p",
+      "code": "fXp",
       "steps": [
         {
           "target": [
@@ -18789,13 +18789,13 @@ const KM_CHARS = [
           "target": [
             "p"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "滑",
-      "code": "[nq]-g",
+      "code": "nqg",
       "steps": [
         {
           "target": [
@@ -18808,13 +18808,13 @@ const KM_CHARS = [
           "target": [
             "g"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "争",
-      "code": "[Ll]=v",
+      "code": "Llv",
       "steps": [
         {
           "target": [
@@ -18827,13 +18827,13 @@ const KM_CHARS = [
           "target": [
             "v"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "摆",
-      "code": "[iO]-B",
+      "code": "iOB",
       "steps": [
         {
           "target": [
@@ -18846,13 +18846,13 @@ const KM_CHARS = [
           "target": [
             "B"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "凯",
-      "code": "[<P]-q",
+      "code": "<Pq",
       "steps": [
         {
           "target": [
@@ -18865,13 +18865,13 @@ const KM_CHARS = [
           "target": [
             "q"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "俩",
-      "code": "[aY]-l",
+      "code": "aYl",
       "steps": [
         {
           "target": [
@@ -18884,13 +18884,13 @@ const KM_CHARS = [
           "target": [
             "l"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "境",
-      "code": "[VS]-J",
+      "code": "VSJ",
       "steps": [
         {
           "target": [
@@ -18903,13 +18903,13 @@ const KM_CHARS = [
           "target": [
             "J"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "剑",
-      "code": "[kn]-W",
+      "code": "knW",
       "steps": [
         {
           "target": [
@@ -18922,13 +18922,13 @@ const KM_CHARS = [
           "target": [
             "W"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "尾",
-      "code": "[yy]=m",
+      "code": "yym",
       "steps": [
         {
           "target": [
@@ -18941,13 +18941,13 @@ const KM_CHARS = [
           "target": [
             "m"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "隆",
-      "code": "[Y/]-G",
+      "code": "Y/G",
       "steps": [
         {
           "target": [
@@ -18960,13 +18960,13 @@ const KM_CHARS = [
           "target": [
             "G"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "帝",
-      "code": "[hQ]=j",
+      "code": "hQj",
       "steps": [
         {
           "target": [
@@ -18979,13 +18979,13 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "承",
-      "code": "[An]=d",
+      "code": "And",
       "steps": [
         {
           "target": [
@@ -18998,13 +18998,13 @@ const KM_CHARS = [
           "target": [
             "d"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "搭",
-      "code": "[ip]-k",
+      "code": "ipk",
       "steps": [
         {
           "target": [
@@ -19017,13 +19017,13 @@ const KM_CHARS = [
           "target": [
             "k"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "敏",
-      "code": "[KN]-a",
+      "code": "KNa",
       "steps": [
         {
           "target": [
@@ -19036,13 +19036,13 @@ const KM_CHARS = [
           "target": [
             "a"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "载",
-      "code": "[Lz]",
+      "code": "Lz",
       "steps": [
         {
           "target": [
@@ -19055,7 +19055,7 @@ const KM_CHARS = [
     },
     {
       "char": "床",
-      "code": "[Jo]=m",
+      "code": "Jom",
       "steps": [
         {
           "target": [
@@ -19068,13 +19068,13 @@ const KM_CHARS = [
           "target": [
             "m"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "绝",
-      "code": "[RL]-T",
+      "code": "RLT",
       "steps": [
         {
           "target": [
@@ -19087,13 +19087,13 @@ const KM_CHARS = [
           "target": [
             "T"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "剂",
-      "code": "[cW]-d",
+      "code": "cWd",
       "steps": [
         {
           "target": [
@@ -19106,13 +19106,13 @@ const KM_CHARS = [
           "target": [
             "d"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "守",
-      "code": "[jz]=c",
+      "code": "jzc",
       "steps": [
         {
           "target": [
@@ -19125,13 +19125,13 @@ const KM_CHARS = [
           "target": [
             "c"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "签",
-      "code": "[ck]=f",
+      "code": "ckf",
       "steps": [
         {
           "target": [
@@ -19144,13 +19144,13 @@ const KM_CHARS = [
           "target": [
             "f"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "逛",
-      "code": "[K,]-p",
+      "code": "K,p",
       "steps": [
         {
           "target": [
@@ -19163,13 +19163,13 @@ const KM_CHARS = [
           "target": [
             "p"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "井",
-      "code": "[hj]",
+      "code": "hj",
       "steps": [
         {
           "target": [
@@ -19182,7 +19182,7 @@ const KM_CHARS = [
     },
     {
       "char": "沃",
-      "code": "[nt]-T",
+      "code": "ntT",
       "steps": [
         {
           "target": [
@@ -19195,13 +19195,13 @@ const KM_CHARS = [
           "target": [
             "T"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "宜",
-      "code": "[jq]=q",
+      "code": "jqq",
       "steps": [
         {
           "target": [
@@ -19214,13 +19214,13 @@ const KM_CHARS = [
           "target": [
             "q"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "贷",
-      "code": "[aU]=G",
+      "code": "aUG",
       "steps": [
         {
           "target": [
@@ -19233,13 +19233,13 @@ const KM_CHARS = [
           "target": [
             "G"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "冬",
-      "code": "[/S]=b",
+      "code": "/Sb",
       "steps": [
         {
           "target": [
@@ -19252,13 +19252,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "敢",
-      "code": "[AF]-a",
+      "code": "AFa",
       "steps": [
         {
           "target": [
@@ -19271,13 +19271,13 @@ const KM_CHARS = [
           "target": [
             "a"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "宇",
-      "code": "[jf]=e",
+      "code": "jfe",
       "steps": [
         {
           "target": [
@@ -19290,13 +19290,13 @@ const KM_CHARS = [
           "target": [
             "e"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "嫩",
-      "code": "[ZC]-a",
+      "code": "ZCa",
       "steps": [
         {
           "target": [
@@ -19309,13 +19309,13 @@ const KM_CHARS = [
           "target": [
             "a"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "霍",
-      "code": "[k,]=i",
+      "code": "k,i",
       "steps": [
         {
           "target": [
@@ -19328,13 +19328,13 @@ const KM_CHARS = [
           "target": [
             "i"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "订",
-      "code": "[uG]-d",
+      "code": "uGd",
       "steps": [
         {
           "target": [
@@ -19347,13 +19347,13 @@ const KM_CHARS = [
           "target": [
             "d"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "爸",
-      "code": "[hT]=b",
+      "code": "hTb",
       "steps": [
         {
           "target": [
@@ -19366,13 +19366,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "怪",
-      "code": "[:v]-V",
+      "code": ":vV",
       "steps": [
         {
           "target": [
@@ -19385,13 +19385,13 @@ const KM_CHARS = [
           "target": [
             "V"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "域",
-      "code": "[VU]-f",
+      "code": "VUf",
       "steps": [
         {
           "target": [
@@ -19404,13 +19404,13 @@ const KM_CHARS = [
           "target": [
             "f"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "介",
-      "code": "[rW]=d",
+      "code": "rWd",
       "steps": [
         {
           "target": [
@@ -19423,13 +19423,13 @@ const KM_CHARS = [
           "target": [
             "d"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "检",
-      "code": "[ok]-f",
+      "code": "okf",
       "steps": [
         {
           "target": [
@@ -19442,13 +19442,13 @@ const KM_CHARS = [
           "target": [
             "f"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "池",
-      "code": "[nz]-y",
+      "code": "nzy",
       "steps": [
         {
           "target": [
@@ -19461,13 +19461,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "键",
-      "code": "[zl]-g",
+      "code": "zlg",
       "steps": [
         {
           "target": [
@@ -19480,13 +19480,13 @@ const KM_CHARS = [
           "target": [
             "g"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "嘴",
-      "code": "[bI]-L",
+      "code": "bIL",
       "steps": [
         {
           "target": [
@@ -19499,13 +19499,13 @@ const KM_CHARS = [
           "target": [
             "L"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "佩",
-      "code": "[aq]-Q",
+      "code": "aqQ",
       "steps": [
         {
           "target": [
@@ -19518,13 +19518,13 @@ const KM_CHARS = [
           "target": [
             "Q"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "陪",
-      "code": "[YC]-b",
+      "code": "YCb",
       "steps": [
         {
           "target": [
@@ -19537,13 +19537,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "堆",
-      "code": "[V,]-i",
+      "code": "V,i",
       "steps": [
         {
           "target": [
@@ -19556,13 +19556,13 @@ const KM_CHARS = [
           "target": [
             "i"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "帅",
-      "code": "[WQ]-j",
+      "code": "WQj",
       "steps": [
         {
           "target": [
@@ -19575,13 +19575,13 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "验",
-      "code": "[/k]-f",
+      "code": "/kf",
       "steps": [
         {
           "target": [
@@ -19594,13 +19594,13 @@ const KM_CHARS = [
           "target": [
             "f"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "秒",
-      "code": "[xE]-t",
+      "code": "xEt",
       "steps": [
         {
           "target": [
@@ -19613,13 +19613,13 @@ const KM_CHARS = [
           "target": [
             "t"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "密",
-      "code": "[j:]=<",
+      "code": "j:<",
       "steps": [
         {
           "target": [
@@ -19632,13 +19632,13 @@ const KM_CHARS = [
           "target": [
             "<"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "洪",
-      "code": "[nR]-X",
+      "code": "nRX",
       "steps": [
         {
           "target": [
@@ -19651,13 +19651,13 @@ const KM_CHARS = [
           "target": [
             "X"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "父",
-      "code": "[hf]",
+      "code": "hf",
       "steps": [
         {
           "target": [
@@ -19670,7 +19670,7 @@ const KM_CHARS = [
     },
     {
       "char": "尝",
-      "code": "[MN]=y",
+      "code": "MNy",
       "steps": [
         {
           "target": [
@@ -19683,13 +19683,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "牙",
-      "code": "[Py]",
+      "code": "Py",
       "steps": [
         {
           "target": [
@@ -19702,7 +19702,7 @@ const KM_CHARS = [
     },
     {
       "char": "桶",
-      "code": "[oB]-q",
+      "code": "oBq",
       "steps": [
         {
           "target": [
@@ -19715,13 +19715,13 @@ const KM_CHARS = [
           "target": [
             "q"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "吹",
-      "code": "[b:]-q",
+      "code": "b:q",
       "steps": [
         {
           "target": [
@@ -19734,13 +19734,13 @@ const KM_CHARS = [
           "target": [
             "q"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "奶",
-      "code": "[ZT]-n",
+      "code": "ZTn",
       "steps": [
         {
           "target": [
@@ -19753,13 +19753,13 @@ const KM_CHARS = [
           "target": [
             "n"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "鞋",
-      "code": "[AM]-g",
+      "code": "AMg",
       "steps": [
         {
           "target": [
@@ -19772,13 +19772,13 @@ const KM_CHARS = [
           "target": [
             "g"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "浓",
-      "code": "[nC]-?",
+      "code": "nC?",
       "steps": [
         {
           "target": [
@@ -19791,13 +19791,13 @@ const KM_CHARS = [
           "target": [
             "?"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "启",
-      "code": "[Qb]=k",
+      "code": "Qbk",
       "steps": [
         {
           "target": [
@@ -19810,13 +19810,13 @@ const KM_CHARS = [
           "target": [
             "k"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "协",
-      "code": "[e<]-X",
+      "code": "e<X",
       "steps": [
         {
           "target": [
@@ -19829,13 +19829,13 @@ const KM_CHARS = [
           "target": [
             "X"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "跨",
-      "code": "[sT]-A",
+      "code": "sTA",
       "steps": [
         {
           "target": [
@@ -19848,13 +19848,13 @@ const KM_CHARS = [
           "target": [
             "A"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "熊",
-      "code": "[BH]=;",
+      "code": "BH;",
       "steps": [
         {
           "target": [
@@ -19867,13 +19867,13 @@ const KM_CHARS = [
           "target": [
             ";"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "麻",
-      "code": "[hm]",
+      "code": "hm",
       "steps": [
         {
           "target": [
@@ -19886,7 +19886,7 @@ const KM_CHARS = [
     },
     {
       "char": "弱",
-      "code": "[PS]-S",
+      "code": "PSS",
       "steps": [
         {
           "target": [
@@ -19899,13 +19899,13 @@ const KM_CHARS = [
           "target": [
             "S"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "链",
-      "code": "[zM]-p",
+      "code": "zMp",
       "steps": [
         {
           "target": [
@@ -19918,13 +19918,13 @@ const KM_CHARS = [
           "target": [
             "p"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "典",
-      "code": "[FX]=b",
+      "code": "FXb",
       "steps": [
         {
           "target": [
@@ -19937,13 +19937,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "韦",
-      "code": "[Dw]",
+      "code": "Dw",
       "steps": [
         {
           "target": [
@@ -19956,7 +19956,7 @@ const KM_CHARS = [
     },
     {
       "char": "散",
-      "code": "[RH]-a",
+      "code": "RHa",
       "steps": [
         {
           "target": [
@@ -19969,13 +19969,13 @@ const KM_CHARS = [
           "target": [
             "a"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "鸟",
-      "code": "[Xn]",
+      "code": "Xn",
       "steps": [
         {
           "target": [
@@ -19988,7 +19988,7 @@ const KM_CHARS = [
     },
     {
       "char": "饱",
-      "code": "[f.]-P",
+      "code": "f.P",
       "steps": [
         {
           "target": [
@@ -20001,13 +20001,13 @@ const KM_CHARS = [
           "target": [
             "P"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "仓",
-      "code": "[rY]=j",
+      "code": "rYj",
       "steps": [
         {
           "target": [
@@ -20020,13 +20020,13 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "旺",
-      "code": "[w,]-w",
+      "code": "w,w",
       "steps": [
         {
           "target": [
@@ -20039,13 +20039,13 @@ const KM_CHARS = [
           "target": [
             "w"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "虎",
-      "code": "[Oh]",
+      "code": "Oh",
       "steps": [
         {
           "target": [
@@ -20058,7 +20058,7 @@ const KM_CHARS = [
     },
     {
       "char": "郡",
-      "code": "[lt]-Y",
+      "code": "ltY",
       "steps": [
         {
           "target": [
@@ -20071,13 +20071,13 @@ const KM_CHARS = [
           "target": [
             "Y"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "患",
-      "code": "[bb]=:",
+      "code": "bb:",
       "steps": [
         {
           "target": [
@@ -20090,13 +20090,13 @@ const KM_CHARS = [
           "target": [
             ":"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "洋",
-      "code": "[nQ]-y",
+      "code": "nQy",
       "steps": [
         {
           "target": [
@@ -20109,13 +20109,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "愿",
-      "code": "[yd]=:",
+      "code": "yd:",
       "steps": [
         {
           "target": [
@@ -20128,13 +20128,13 @@ const KM_CHARS = [
           "target": [
             ":"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "蒸",
-      "code": "[pA]=;",
+      "code": "pA;",
       "steps": [
         {
           "target": [
@@ -20147,13 +20147,13 @@ const KM_CHARS = [
           "target": [
             ";"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "尤",
-      "code": "[:y]",
+      "code": ":y",
       "steps": [
         {
           "target": [
@@ -20166,7 +20166,7 @@ const KM_CHARS = [
     },
     {
       "char": "透",
-      "code": "[xT]-p",
+      "code": "xTp",
       "steps": [
         {
           "target": [
@@ -20179,13 +20179,13 @@ const KM_CHARS = [
           "target": [
             "p"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "毒",
-      "code": "[>N]=m",
+      "code": ">Nm",
       "steps": [
         {
           "target": [
@@ -20198,13 +20198,13 @@ const KM_CHARS = [
           "target": [
             "m"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "呈",
-      "code": "[b,]=w",
+      "code": "b,w",
       "steps": [
         {
           "target": [
@@ -20217,13 +20217,13 @@ const KM_CHARS = [
           "target": [
             "w"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "救",
-      "code": "[fn]-a",
+      "code": "fna",
       "steps": [
         {
           "target": [
@@ -20236,13 +20236,13 @@ const KM_CHARS = [
           "target": [
             "a"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "欢",
-      "code": "[v:]-q",
+      "code": "v:q",
       "steps": [
         {
           "target": [
@@ -20255,13 +20255,13 @@ const KM_CHARS = [
           "target": [
             "q"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "舞",
-      "code": "[Kh]=r",
+      "code": "Khr",
       "steps": [
         {
           "target": [
@@ -20274,13 +20274,13 @@ const KM_CHARS = [
           "target": [
             "r"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "侧",
-      "code": "[aG]-W",
+      "code": "aGW",
       "steps": [
         {
           "target": [
@@ -20293,13 +20293,13 @@ const KM_CHARS = [
           "target": [
             "W"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "沈",
-      "code": "[nC]-J",
+      "code": "nCJ",
       "steps": [
         {
           "target": [
@@ -20312,13 +20312,13 @@ const KM_CHARS = [
           "target": [
             "J"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "董",
-      "code": "[pk]=P",
+      "code": "pkP",
       "steps": [
         {
           "target": [
@@ -20331,13 +20331,13 @@ const KM_CHARS = [
           "target": [
             "P"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "突",
-      "code": "[IK]=q",
+      "code": "IKq",
       "steps": [
         {
           "target": [
@@ -20350,13 +20350,13 @@ const KM_CHARS = [
           "target": [
             "q"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "究",
-      "code": "[IA]=j",
+      "code": "IAj",
       "steps": [
         {
           "target": [
@@ -20369,13 +20369,13 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "辉",
-      "code": "[xC]-M",
+      "code": "xCM",
       "steps": [
         {
           "target": [
@@ -20388,13 +20388,13 @@ const KM_CHARS = [
           "target": [
             "M"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "币",
-      "code": "[tQ]=j",
+      "code": "tQj",
       "steps": [
         {
           "target": [
@@ -20407,13 +20407,13 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "末",
-      "code": "[fo]=m",
+      "code": "fom",
       "steps": [
         {
           "target": [
@@ -20426,13 +20426,13 @@ const KM_CHARS = [
           "target": [
             "m"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "异",
-      "code": "[Pp]=c",
+      "code": "Ppc",
       "steps": [
         {
           "target": [
@@ -20445,13 +20445,13 @@ const KM_CHARS = [
           "target": [
             "c"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "迷",
-      "code": "[rp]-c",
+      "code": "rpc",
       "steps": [
         {
           "target": [
@@ -20464,13 +20464,13 @@ const KM_CHARS = [
           "target": [
             "c"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "鬼",
-      "code": "[Gg]",
+      "code": "Gg",
       "steps": [
         {
           "target": [
@@ -20483,7 +20483,7 @@ const KM_CHARS = [
     },
     {
       "char": "移",
-      "code": "[xS]-S",
+      "code": "xSS",
       "steps": [
         {
           "target": [
@@ -20496,13 +20496,13 @@ const KM_CHARS = [
           "target": [
             "S"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "润",
-      "code": "[nI]-,",
+      "code": "nI,",
       "steps": [
         {
           "target": [
@@ -20515,13 +20515,13 @@ const KM_CHARS = [
           "target": [
             ","
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "祝",
-      "code": "[Nb]-J",
+      "code": "NbJ",
       "steps": [
         {
           "target": [
@@ -20534,13 +20534,13 @@ const KM_CHARS = [
           "target": [
             "J"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "拼",
-      "code": "[iX]-p",
+      "code": "iXp",
       "steps": [
         {
           "target": [
@@ -20553,13 +20553,13 @@ const KM_CHARS = [
           "target": [
             "p"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "萌",
-      "code": "[pw]=H",
+      "code": "pwH",
       "steps": [
         {
           "target": [
@@ -20572,13 +20572,13 @@ const KM_CHARS = [
           "target": [
             "H"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "秦",
-      "code": "[>x]=h",
+      "code": ">xh",
       "steps": [
         {
           "target": [
@@ -20591,13 +20591,13 @@ const KM_CHARS = [
           "target": [
             "h"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "搜",
-      "code": "[i?]-v",
+      "code": "i?v",
       "steps": [
         {
           "target": [
@@ -20610,13 +20610,13 @@ const KM_CHARS = [
           "target": [
             "v"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "材",
-      "code": "[oe]-t",
+      "code": "oet",
       "steps": [
         {
           "target": [
@@ -20629,13 +20629,13 @@ const KM_CHARS = [
           "target": [
             "t"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "皆",
-      "code": "[hh]=d",
+      "code": "hhd",
       "steps": [
         {
           "target": [
@@ -20648,13 +20648,13 @@ const KM_CHARS = [
           "target": [
             "d"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "拟",
-      "code": "[ih]-r",
+      "code": "ihr",
       "steps": [
         {
           "target": [
@@ -20667,13 +20667,13 @@ const KM_CHARS = [
           "target": [
             "r"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "孔",
-      "code": "[FA]-e",
+      "code": "FAe",
       "steps": [
         {
           "target": [
@@ -20686,13 +20686,13 @@ const KM_CHARS = [
           "target": [
             "e"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "宣",
-      "code": "[jf]=f",
+      "code": "jff",
       "steps": [
         {
           "target": [
@@ -20705,13 +20705,13 @@ const KM_CHARS = [
           "target": [
             "f"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "播",
-      "code": "[it]-D",
+      "code": "itD",
       "steps": [
         {
           "target": [
@@ -20724,13 +20724,13 @@ const KM_CHARS = [
           "target": [
             "D"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "茨",
-      "code": "[pE]=c",
+      "code": "pEc",
       "steps": [
         {
           "target": [
@@ -20743,13 +20743,13 @@ const KM_CHARS = [
           "target": [
             "c"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "魔",
-      "code": "[hG]=g",
+      "code": "hGg",
       "steps": [
         {
           "target": [
@@ -20762,13 +20762,13 @@ const KM_CHARS = [
           "target": [
             "g"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "责",
-      "code": "[>G]=b",
+      "code": ">Gb",
       "steps": [
         {
           "target": [
@@ -20781,13 +20781,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "兼",
-      "code": "[Xl]=;",
+      "code": "Xl;",
       "steps": [
         {
           "target": [
@@ -20800,13 +20800,13 @@ const KM_CHARS = [
           "target": [
             ";"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "瓶",
-      "code": "[Xp]-k",
+      "code": "Xpk",
       "steps": [
         {
           "target": [
@@ -20819,13 +20819,13 @@ const KM_CHARS = [
           "target": [
             "k"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "姓",
-      "code": "[ZG]-s",
+      "code": "ZGs",
       "steps": [
         {
           "target": [
@@ -20838,13 +20838,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "斤",
-      "code": "[/j]",
+      "code": "/j",
       "steps": [
         {
           "target": [
@@ -20857,7 +20857,7 @@ const KM_CHARS = [
     },
     {
       "char": "赢",
-      "code": "[gG]=b",
+      "code": "gGb",
       "steps": [
         {
           "target": [
@@ -20870,13 +20870,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "液",
-      "code": "[nZ]-H",
+      "code": "nZH",
       "steps": [
         {
           "target": [
@@ -20889,13 +20889,13 @@ const KM_CHARS = [
           "target": [
             "H"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "骂",
-      "code": "[m/]=m",
+      "code": "m/m",
       "steps": [
         {
           "target": [
@@ -20908,13 +20908,13 @@ const KM_CHARS = [
           "target": [
             "m"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "培",
-      "code": "[VC]-b",
+      "code": "VCb",
       "steps": [
         {
           "target": [
@@ -20927,13 +20927,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "审",
-      "code": "[jw]=c",
+      "code": "jwc",
       "steps": [
         {
           "target": [
@@ -20946,13 +20946,13 @@ const KM_CHARS = [
           "target": [
             "c"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "晒",
-      "code": "[wt]-x",
+      "code": "wtx",
       "steps": [
         {
           "target": [
@@ -20965,13 +20965,13 @@ const KM_CHARS = [
           "target": [
             "x"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "甚",
-      "code": "[dA]=e",
+      "code": "dAe",
       "steps": [
         {
           "target": [
@@ -20984,13 +20984,13 @@ const KM_CHARS = [
           "target": [
             "e"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "租",
-      "code": "[xq]-q",
+      "code": "xqq",
       "steps": [
         {
           "target": [
@@ -21003,13 +21003,13 @@ const KM_CHARS = [
           "target": [
             "q"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "脱",
-      "code": "[HX]-J",
+      "code": "HXJ",
       "steps": [
         {
           "target": [
@@ -21022,13 +21022,13 @@ const KM_CHARS = [
           "target": [
             "J"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "罪",
-      "code": "[Ot]=f",
+      "code": "Otf",
       "steps": [
         {
           "target": [
@@ -21041,13 +21041,13 @@ const KM_CHARS = [
           "target": [
             "f"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "冯",
-      "code": "[S/]-m",
+      "code": "S/m",
       "steps": [
         {
           "target": [
@@ -21060,13 +21060,13 @@ const KM_CHARS = [
           "target": [
             "m"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "附",
-      "code": "[Ya]-z",
+      "code": "Yaz",
       "steps": [
         {
           "target": [
@@ -21079,13 +21079,13 @@ const KM_CHARS = [
           "target": [
             "z"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "怀",
-      "code": "[:c]-b",
+      "code": ":cb",
       "steps": [
         {
           "target": [
@@ -21098,13 +21098,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "凉",
-      "code": "[Ss]-E",
+      "code": "SsE",
       "steps": [
         {
           "target": [
@@ -21117,13 +21117,13 @@ const KM_CHARS = [
           "target": [
             "E"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "溪",
-      "code": "[n:]-T",
+      "code": "n:T",
       "steps": [
         {
           "target": [
@@ -21136,13 +21136,13 @@ const KM_CHARS = [
           "target": [
             "T"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "岩",
-      "code": "[<.]=s",
+      "code": "<.s",
       "steps": [
         {
           "target": [
@@ -21155,13 +21155,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "喷",
-      "code": "[be]-G",
+      "code": "beG",
       "steps": [
         {
           "target": [
@@ -21174,13 +21174,13 @@ const KM_CHARS = [
           "target": [
             "G"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "洲",
-      "code": "[nY]-Y",
+      "code": "nYY",
       "steps": [
         {
           "target": [
@@ -21193,13 +21193,13 @@ const KM_CHARS = [
           "target": [
             "Y"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "榜",
-      "code": "[oh]-<",
+      "code": "oh<",
       "steps": [
         {
           "target": [
@@ -21212,13 +21212,13 @@ const KM_CHARS = [
           "target": [
             "<"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "驻",
-      "code": "[/O]-,",
+      "code": "/O,",
       "steps": [
         {
           "target": [
@@ -21231,13 +21231,13 @@ const KM_CHARS = [
           "target": [
             ","
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "泪",
-      "code": "[nT]-m",
+      "code": "nTm",
       "steps": [
         {
           "target": [
@@ -21250,13 +21250,13 @@ const KM_CHARS = [
           "target": [
             "m"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "雄",
-      "code": "[eB]-,",
+      "code": "eB,",
       "steps": [
         {
           "target": [
@@ -21269,13 +21269,13 @@ const KM_CHARS = [
           "target": [
             ","
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "娜",
-      "code": "[ZA]-Y",
+      "code": "ZAY",
       "steps": [
         {
           "target": [
@@ -21288,13 +21288,13 @@ const KM_CHARS = [
           "target": [
             "Y"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "遭",
-      "code": "[fF]-p",
+      "code": "fFp",
       "steps": [
         {
           "target": [
@@ -21307,13 +21307,13 @@ const KM_CHARS = [
           "target": [
             "p"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "延",
-      "code": "[Cg]-y",
+      "code": "Cgy",
       "steps": [
         {
           "target": [
@@ -21326,13 +21326,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "骑",
-      "code": "[/T]-x",
+      "code": "/Tx",
       "steps": [
         {
           "target": [
@@ -21345,13 +21345,13 @@ const KM_CHARS = [
           "target": [
             "x"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "蟹",
-      "code": "[Lu]=B",
+      "code": "LuB",
       "steps": [
         {
           "target": [
@@ -21364,13 +21364,13 @@ const KM_CHARS = [
           "target": [
             "B"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "乘",
-      "code": "[x?]=h",
+      "code": "x?h",
       "steps": [
         {
           "target": [
@@ -21383,13 +21383,13 @@ const KM_CHARS = [
           "target": [
             "h"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "昌",
-      "code": "[ww]=r",
+      "code": "wwr",
       "steps": [
         {
           "target": [
@@ -21402,13 +21402,13 @@ const KM_CHARS = [
           "target": [
             "r"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "姐",
-      "code": "[Zq]-q",
+      "code": "Zqq",
       "steps": [
         {
           "target": [
@@ -21421,13 +21421,13 @@ const KM_CHARS = [
           "target": [
             "q"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "顾",
-      "code": "[yY]-?",
+      "code": "yY?",
       "steps": [
         {
           "target": [
@@ -21440,13 +21440,13 @@ const KM_CHARS = [
           "target": [
             "?"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "聚",
-      "code": "[Fv]=n",
+      "code": "Fvn",
       "steps": [
         {
           "target": [
@@ -21459,13 +21459,13 @@ const KM_CHARS = [
           "target": [
             "n"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "似",
-      "code": "[ah]-r",
+      "code": "ahr",
       "steps": [
         {
           "target": [
@@ -21478,13 +21478,13 @@ const KM_CHARS = [
           "target": [
             "r"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "冠",
-      "code": "[CE]=z",
+      "code": "CEz",
       "steps": [
         {
           "target": [
@@ -21497,13 +21497,13 @@ const KM_CHARS = [
           "target": [
             "z"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "坚",
-      "code": "[Wv]=V",
+      "code": "WvV",
       "steps": [
         {
           "target": [
@@ -21516,13 +21516,13 @@ const KM_CHARS = [
           "target": [
             "V"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "旗",
-      "code": "[<K]-d",
+      "code": "<Kd",
       "steps": [
         {
           "target": [
@@ -21535,13 +21535,13 @@ const KM_CHARS = [
           "target": [
             "d"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "犯",
-      "code": "[KY]-j",
+      "code": "KYj",
       "steps": [
         {
           "target": [
@@ -21554,13 +21554,13 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "巨",
-      "code": "[WW]=j",
+      "code": "WWj",
       "steps": [
         {
           "target": [
@@ -21573,13 +21573,13 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "征",
-      "code": "[gf]-I",
+      "code": "gfI",
       "steps": [
         {
           "target": [
@@ -21592,13 +21592,13 @@ const KM_CHARS = [
           "target": [
             "I"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "甘",
-      "code": "[og]",
+      "code": "og",
       "steps": [
         {
           "target": [
@@ -21611,7 +21611,7 @@ const KM_CHARS = [
     },
     {
       "char": "饮",
-      "code": "[f:]-q",
+      "code": "f:q",
       "steps": [
         {
           "target": [
@@ -21624,13 +21624,13 @@ const KM_CHARS = [
           "target": [
             "q"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "潮",
-      "code": "[nA]-H",
+      "code": "nAH",
       "steps": [
         {
           "target": [
@@ -21643,13 +21643,13 @@ const KM_CHARS = [
           "target": [
             "H"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "宏",
-      "code": "[je]=B",
+      "code": "jeB",
       "steps": [
         {
           "target": [
@@ -21662,13 +21662,13 @@ const KM_CHARS = [
           "target": [
             "B"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "骗",
-      "code": "[/Q]-F",
+      "code": "/QF",
       "steps": [
         {
           "target": [
@@ -21681,13 +21681,13 @@ const KM_CHARS = [
           "target": [
             "F"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "肥",
-      "code": "[HT]-b",
+      "code": "HTb",
       "steps": [
         {
           "target": [
@@ -21700,13 +21700,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "津",
-      "code": "[nl]-v",
+      "code": "nlv",
       "steps": [
         {
           "target": [
@@ -21719,13 +21719,13 @@ const KM_CHARS = [
           "target": [
             "v"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "豪",
-      "code": "[sQ]=s",
+      "code": "sQs",
       "steps": [
         {
           "target": [
@@ -21738,13 +21738,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "曹",
-      "code": "[fF]=w",
+      "code": "fFw",
       "steps": [
         {
           "target": [
@@ -21757,13 +21757,13 @@ const KM_CHARS = [
           "target": [
             "w"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "童",
-      "code": "[CP]=l",
+      "code": "CPl",
       "steps": [
         {
           "target": [
@@ -21776,13 +21776,13 @@ const KM_CHARS = [
           "target": [
             "l"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "佐",
-      "code": "[ae]-S",
+      "code": "aeS",
       "steps": [
         {
           "target": [
@@ -21795,13 +21795,13 @@ const KM_CHARS = [
           "target": [
             "S"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "泉",
-      "code": "[dn]=s",
+      "code": "dns",
       "steps": [
         {
           "target": [
@@ -21814,13 +21814,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "乔",
-      "code": "[tT]=W",
+      "code": "tTW",
       "steps": [
         {
           "target": [
@@ -21833,13 +21833,13 @@ const KM_CHARS = [
           "target": [
             "W"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "胃",
-      "code": "[DH]=y",
+      "code": "DHy",
       "steps": [
         {
           "target": [
@@ -21852,13 +21852,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "仪",
-      "code": "[aO]-l",
+      "code": "aOl",
       "steps": [
         {
           "target": [
@@ -21871,13 +21871,13 @@ const KM_CHARS = [
           "target": [
             "l"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "勇",
-      "code": "[Bq]=<",
+      "code": "Bq<",
       "steps": [
         {
           "target": [
@@ -21890,13 +21890,13 @@ const KM_CHARS = [
           "target": [
             "<"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "酷",
-      "code": "[Um]-b",
+      "code": "Umb",
       "steps": [
         {
           "target": [
@@ -21909,13 +21909,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "魏",
-      "code": "[xZ]-G",
+      "code": "xZG",
       "steps": [
         {
           "target": [
@@ -21928,13 +21928,13 @@ const KM_CHARS = [
           "target": [
             "G"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "吨",
-      "code": "[bf]-Y",
+      "code": "bfY",
       "steps": [
         {
           "target": [
@@ -21947,13 +21947,13 @@ const KM_CHARS = [
           "target": [
             "Y"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "攻",
-      "code": "[Sa]-p",
+      "code": "Sap",
       "steps": [
         {
           "target": [
@@ -21966,13 +21966,13 @@ const KM_CHARS = [
           "target": [
             "p"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "怎",
-      "code": "[H:]=x",
+      "code": "H:x",
       "steps": [
         {
           "target": [
@@ -21985,13 +21985,13 @@ const KM_CHARS = [
           "target": [
             "x"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "肌",
-      "code": "[Hq]-j",
+      "code": "Hqj",
       "steps": [
         {
           "target": [
@@ -22004,13 +22004,13 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "凭",
-      "code": "[aN]=q",
+      "code": "aNq",
       "steps": [
         {
           "target": [
@@ -22023,13 +22023,13 @@ const KM_CHARS = [
           "target": [
             "q"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "胖",
-      "code": "[HX]-i",
+      "code": "HXi",
       "steps": [
         {
           "target": [
@@ -22042,13 +22042,13 @@ const KM_CHARS = [
           "target": [
             "i"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "屏",
-      "code": "[yX]=p",
+      "code": "yXp",
       "steps": [
         {
           "target": [
@@ -22061,13 +22061,13 @@ const KM_CHARS = [
           "target": [
             "p"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "镜",
-      "code": "[zS]-J",
+      "code": "zSJ",
       "steps": [
         {
           "target": [
@@ -22080,13 +22080,13 @@ const KM_CHARS = [
           "target": [
             "J"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "暖",
-      "code": "[w:]-v",
+      "code": "w:v",
       "steps": [
         {
           "target": [
@@ -22099,13 +22099,13 @@ const KM_CHARS = [
           "target": [
             "v"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "贾",
-      "code": "[tG]=b",
+      "code": "tGb",
       "steps": [
         {
           "target": [
@@ -22118,13 +22118,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "洞",
-      "code": "[nF]-t",
+      "code": "nFt",
       "steps": [
         {
           "target": [
@@ -22137,13 +22137,13 @@ const KM_CHARS = [
           "target": [
             "t"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "涂",
-      "code": "[nr]-x",
+      "code": "nrx",
       "steps": [
         {
           "target": [
@@ -22156,13 +22156,13 @@ const KM_CHARS = [
           "target": [
             "x"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "爽",
-      "code": "[Tl]=l",
+      "code": "Tll",
       "steps": [
         {
           "target": [
@@ -22175,13 +22175,13 @@ const KM_CHARS = [
           "target": [
             "l"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "阴",
-      "code": "[YH]-y",
+      "code": "YHy",
       "steps": [
         {
           "target": [
@@ -22194,13 +22194,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "赶",
-      "code": "[d?]-g",
+      "code": "d?g",
       "steps": [
         {
           "target": [
@@ -22213,13 +22213,13 @@ const KM_CHARS = [
           "target": [
             "g"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "奈",
-      "code": "[TN]=s",
+      "code": "TNs",
       "steps": [
         {
           "target": [
@@ -22232,13 +22232,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "竹",
-      "code": "[cu]",
+      "code": "cu",
       "steps": [
         {
           "target": [
@@ -22251,7 +22251,7 @@ const KM_CHARS = [
     },
     {
       "char": "辛",
-      "code": "[<x]",
+      "code": "<x",
       "steps": [
         {
           "target": [
@@ -22264,7 +22264,7 @@ const KM_CHARS = [
     },
     {
       "char": "疼",
-      "code": "[l/]=S",
+      "code": "l/S",
       "steps": [
         {
           "target": [
@@ -22277,13 +22277,13 @@ const KM_CHARS = [
           "target": [
             "S"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "蔡",
-      "code": "[pI]=j",
+      "code": "pIj",
       "steps": [
         {
           "target": [
@@ -22296,13 +22296,13 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "否",
-      "code": "[cb]=k",
+      "code": "cbk",
       "steps": [
         {
           "target": [
@@ -22315,13 +22315,13 @@ const KM_CHARS = [
           "target": [
             "k"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "俊",
-      "code": "[aB]-/",
+      "code": "aB/",
       "steps": [
         {
           "target": [
@@ -22334,13 +22334,13 @@ const KM_CHARS = [
           "target": [
             "/"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "朋",
-      "code": "[HH]-y",
+      "code": "HHy",
       "steps": [
         {
           "target": [
@@ -22353,13 +22353,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "箱",
-      "code": "[co]=T",
+      "code": "coT",
       "steps": [
         {
           "target": [
@@ -22372,13 +22372,13 @@ const KM_CHARS = [
           "target": [
             "T"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "抽",
-      "code": "[iB]-y",
+      "code": "iBy",
       "steps": [
         {
           "target": [
@@ -22391,13 +22391,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "择",
-      "code": "[iv]-i",
+      "code": "ivi",
       "steps": [
         {
           "target": [
@@ -22410,13 +22410,13 @@ const KM_CHARS = [
           "target": [
             "i"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "腻",
-      "code": "[HU]-G",
+      "code": "HUG",
       "steps": [
         {
           "target": [
@@ -22429,13 +22429,13 @@ const KM_CHARS = [
           "target": [
             "G"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "吕",
-      "code": "[bb]=k",
+      "code": "bbk",
       "steps": [
         {
           "target": [
@@ -22448,13 +22448,13 @@ const KM_CHARS = [
           "target": [
             "k"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "律",
-      "code": "[gl]-v",
+      "code": "glv",
       "steps": [
         {
           "target": [
@@ -22467,13 +22467,13 @@ const KM_CHARS = [
           "target": [
             "v"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "操",
-      "code": "[ib]-o",
+      "code": "ibo",
       "steps": [
         {
           "target": [
@@ -22486,13 +22486,13 @@ const KM_CHARS = [
           "target": [
             "o"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "斗",
-      "code": "[Dd]",
+      "code": "Dd",
       "steps": [
         {
           "target": [
@@ -22505,7 +22505,7 @@ const KM_CHARS = [
     },
     {
       "char": "恒",
-      "code": "[:f]-f",
+      "code": ":ff",
       "steps": [
         {
           "target": [
@@ -22518,13 +22518,13 @@ const KM_CHARS = [
           "target": [
             "f"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "酥",
-      "code": "[Ux]-h",
+      "code": "Uxh",
       "steps": [
         {
           "target": [
@@ -22537,13 +22537,13 @@ const KM_CHARS = [
           "target": [
             "h"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "邦",
-      "code": "[>Y]-j",
+      "code": ">Yj",
       "steps": [
         {
           "target": [
@@ -22556,13 +22556,13 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "豆",
-      "code": "[>d]",
+      "code": ">d",
       "steps": [
         {
           "target": [
@@ -22575,7 +22575,7 @@ const KM_CHARS = [
     },
     {
       "char": "湿",
-      "code": "[nw]-/",
+      "code": "nw/",
       "steps": [
         {
           "target": [
@@ -22588,13 +22588,13 @@ const KM_CHARS = [
           "target": [
             "/"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "仔",
-      "code": "[aF]-i",
+      "code": "aFi",
       "steps": [
         {
           "target": [
@@ -22607,13 +22607,13 @@ const KM_CHARS = [
           "target": [
             "i"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "忠",
-      "code": "[bc]=:",
+      "code": "bc:",
       "steps": [
         {
           "target": [
@@ -22626,13 +22626,13 @@ const KM_CHARS = [
           "target": [
             ":"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "钢",
-      "code": "[zF]-l",
+      "code": "zFl",
       "steps": [
         {
           "target": [
@@ -22645,13 +22645,13 @@ const KM_CHARS = [
           "target": [
             "l"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "隔",
-      "code": "[Y>]-g",
+      "code": "Y>g",
       "steps": [
         {
           "target": [
@@ -22664,13 +22664,13 @@ const KM_CHARS = [
           "target": [
             "g"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "扣",
-      "code": "[ib]-k",
+      "code": "ibk",
       "steps": [
         {
           "target": [
@@ -22683,13 +22683,13 @@ const KM_CHARS = [
           "target": [
             "k"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "锁",
-      "code": "[zE]-G",
+      "code": "zEG",
       "steps": [
         {
           "target": [
@@ -22702,13 +22702,13 @@ const KM_CHARS = [
           "target": [
             "G"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "莉",
-      "code": "[px]=W",
+      "code": "pxW",
       "steps": [
         {
           "target": [
@@ -22721,13 +22721,13 @@ const KM_CHARS = [
           "target": [
             "W"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "害",
-      "code": "[j>]=b",
+      "code": "j>b",
       "steps": [
         {
           "target": [
@@ -22740,13 +22740,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "档",
-      "code": "[oE]-C",
+      "code": "oEC",
       "steps": [
         {
           "target": [
@@ -22759,13 +22759,13 @@ const KM_CHARS = [
           "target": [
             "C"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "窗",
-      "code": "[It]=/",
+      "code": "It/",
       "steps": [
         {
           "target": [
@@ -22778,13 +22778,13 @@ const KM_CHARS = [
           "target": [
             "/"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "欲",
-      "code": "[L:]-q",
+      "code": "L:q",
       "steps": [
         {
           "target": [
@@ -22797,13 +22797,13 @@ const KM_CHARS = [
           "target": [
             "q"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "潘",
-      "code": "[nt]-D",
+      "code": "ntD",
       "steps": [
         {
           "target": [
@@ -22816,13 +22816,13 @@ const KM_CHARS = [
           "target": [
             "D"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "摩",
-      "code": "[hi]=o",
+      "code": "hio",
       "steps": [
         {
           "target": [
@@ -22835,13 +22835,13 @@ const KM_CHARS = [
           "target": [
             "o"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "袋",
-      "code": "[aU]=?",
+      "code": "aU?",
       "steps": [
         {
           "target": [
@@ -22854,13 +22854,13 @@ const KM_CHARS = [
           "target": [
             "?"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "针",
-      "code": "[ze]-s",
+      "code": "zes",
       "steps": [
         {
           "target": [
@@ -22873,13 +22873,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "庭",
-      "code": "[JN]=g",
+      "code": "JNg",
       "steps": [
         {
           "target": [
@@ -22892,13 +22892,13 @@ const KM_CHARS = [
           "target": [
             "g"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "枪",
-      "code": "[or]-Y",
+      "code": "orY",
       "steps": [
         {
           "target": [
@@ -22911,13 +22911,13 @@ const KM_CHARS = [
           "target": [
             "Y"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "担",
-      "code": "[iw]-f",
+      "code": "iwf",
       "steps": [
         {
           "target": [
@@ -22930,13 +22930,13 @@ const KM_CHARS = [
           "target": [
             "f"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "肯",
-      "code": "[IH]=y",
+      "code": "IHy",
       "steps": [
         {
           "target": [
@@ -22949,13 +22949,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "紫",
-      "code": "[Ih]=R",
+      "code": "IhR",
       "steps": [
         {
           "target": [
@@ -22968,13 +22968,13 @@ const KM_CHARS = [
           "target": [
             "R"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "撞",
-      "code": "[iC]-P",
+      "code": "iCP",
       "steps": [
         {
           "target": [
@@ -22987,13 +22987,13 @@ const KM_CHARS = [
           "target": [
             "P"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "咬",
-      "code": "[bZ]-h",
+      "code": "bZh",
       "steps": [
         {
           "target": [
@@ -23006,13 +23006,13 @@ const KM_CHARS = [
           "target": [
             "h"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "席",
-      "code": "[JR]=Q",
+      "code": "JRQ",
       "steps": [
         {
           "target": [
@@ -23025,13 +23025,13 @@ const KM_CHARS = [
           "target": [
             "Q"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "劳",
-      "code": "[Kl]",
+      "code": "Kl",
       "steps": [
         {
           "target": [
@@ -23044,7 +23044,7 @@ const KM_CHARS = [
     },
     {
       "char": "舰",
-      "code": "[We]-j",
+      "code": "Wej",
       "steps": [
         {
           "target": [
@@ -23057,13 +23057,13 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "戈",
-      "code": "[Ug]",
+      "code": "Ug",
       "steps": [
         {
           "target": [
@@ -23076,7 +23076,7 @@ const KM_CHARS = [
     },
     {
       "char": "婚",
-      "code": "[ZZ]-w",
+      "code": "ZZw",
       "steps": [
         {
           "target": [
@@ -23089,13 +23089,13 @@ const KM_CHARS = [
           "target": [
             "w"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "炎",
-      "code": "[My]",
+      "code": "My",
       "steps": [
         {
           "target": [
@@ -23108,7 +23108,7 @@ const KM_CHARS = [
     },
     {
       "char": "鸭",
-      "code": "[OX]-n",
+      "code": "OXn",
       "steps": [
         {
           "target": [
@@ -23121,13 +23121,13 @@ const KM_CHARS = [
           "target": [
             "n"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "擦",
-      "code": "[ij]-I",
+      "code": "ijI",
       "steps": [
         {
           "target": [
@@ -23140,13 +23140,13 @@ const KM_CHARS = [
           "target": [
             "I"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "误",
-      "code": "[ub]-T",
+      "code": "ubT",
       "steps": [
         {
           "target": [
@@ -23159,13 +23159,13 @@ const KM_CHARS = [
           "target": [
             "T"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "町",
-      "code": "[DG]-d",
+      "code": "DGd",
       "steps": [
         {
           "target": [
@@ -23178,13 +23178,13 @@ const KM_CHARS = [
           "target": [
             "d"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "激",
-      "code": "[nd]-a",
+      "code": "nda",
       "steps": [
         {
           "target": [
@@ -23197,13 +23197,13 @@ const KM_CHARS = [
           "target": [
             "a"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "慧",
-      "code": "[>>]=:",
+      "code": ">>:",
       "steps": [
         {
           "target": [
@@ -23216,13 +23216,13 @@ const KM_CHARS = [
           "target": [
             ":"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "彭",
-      "code": "[JI]-s",
+      "code": "JIs",
       "steps": [
         {
           "target": [
@@ -23235,13 +23235,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "肝",
-      "code": "[H?]-g",
+      "code": "H?g",
       "steps": [
         {
           "target": [
@@ -23254,13 +23254,13 @@ const KM_CHARS = [
           "target": [
             "g"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "距",
-      "code": "[sW]-W",
+      "code": "sWW",
       "steps": [
         {
           "target": [
@@ -23273,13 +23273,13 @@ const KM_CHARS = [
           "target": [
             "W"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "撑",
-      "code": "[iM]-i",
+      "code": "iMi",
       "steps": [
         {
           "target": [
@@ -23292,13 +23292,13 @@ const KM_CHARS = [
           "target": [
             "i"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "肾",
-      "code": "[Wv]=H",
+      "code": "WvH",
       "steps": [
         {
           "target": [
@@ -23311,13 +23311,13 @@ const KM_CHARS = [
           "target": [
             "H"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "燕",
-      "code": "[Rb]=;",
+      "code": "Rb;",
       "steps": [
         {
           "target": [
@@ -23330,13 +23330,13 @@ const KM_CHARS = [
           "target": [
             ";"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "添",
-      "code": "[nf]-:",
+      "code": "nf:",
       "steps": [
         {
           "target": [
@@ -23349,13 +23349,13 @@ const KM_CHARS = [
           "target": [
             ":"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "射",
-      "code": "[Iz]-c",
+      "code": "Izc",
       "steps": [
         {
           "target": [
@@ -23368,13 +23368,13 @@ const KM_CHARS = [
           "target": [
             "c"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "柱",
-      "code": "[oO]-,",
+      "code": "oO,",
       "steps": [
         {
           "target": [
@@ -23387,13 +23387,13 @@ const KM_CHARS = [
           "target": [
             ","
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "喊",
-      "code": "[b;]-b",
+      "code": "b;b",
       "steps": [
         {
           "target": [
@@ -23406,13 +23406,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "鹏",
-      "code": "[HH]-X",
+      "code": "HHX",
       "steps": [
         {
           "target": [
@@ -23425,13 +23425,13 @@ const KM_CHARS = [
           "target": [
             "X"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "挖",
-      "code": "[iI]-j",
+      "code": "iIj",
       "steps": [
         {
           "target": [
@@ -23444,13 +23444,13 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "穆",
-      "code": "[xd]-I",
+      "code": "xdI",
       "steps": [
         {
           "target": [
@@ -23463,13 +23463,13 @@ const KM_CHARS = [
           "target": [
             "I"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "汗",
-      "code": "[n?]-g",
+      "code": "n?g",
       "steps": [
         {
           "target": [
@@ -23482,13 +23482,13 @@ const KM_CHARS = [
           "target": [
             "g"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "诚",
-      "code": "[u;]-A",
+      "code": "u;A",
       "steps": [
         {
           "target": [
@@ -23501,13 +23501,13 @@ const KM_CHARS = [
           "target": [
             "A"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "浪",
-      "code": "[nO]-;",
+      "code": "nO;",
       "steps": [
         {
           "target": [
@@ -23520,13 +23520,13 @@ const KM_CHARS = [
           "target": [
             ";"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "挤",
-      "code": "[ic]-q",
+      "code": "icq",
       "steps": [
         {
           "target": [
@@ -23539,13 +23539,13 @@ const KM_CHARS = [
           "target": [
             "q"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "侯",
-      "code": "[aW]-D",
+      "code": "aWD",
       "steps": [
         {
           "target": [
@@ -23558,13 +23558,13 @@ const KM_CHARS = [
           "target": [
             "D"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "胸",
-      "code": "[H.]-F",
+      "code": "H.F",
       "steps": [
         {
           "target": [
@@ -23577,13 +23577,13 @@ const KM_CHARS = [
           "target": [
             "F"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "刻",
-      "code": "[LW]-d",
+      "code": "LWd",
       "steps": [
         {
           "target": [
@@ -23596,13 +23596,13 @@ const KM_CHARS = [
           "target": [
             "d"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "耳",
-      "code": "[Fe]",
+      "code": "Fe",
       "steps": [
         {
           "target": [
@@ -23615,7 +23615,7 @@ const KM_CHARS = [
     },
     {
       "char": "枚",
-      "code": "[oa]-p",
+      "code": "oap",
       "steps": [
         {
           "target": [
@@ -23628,13 +23628,13 @@ const KM_CHARS = [
           "target": [
             "p"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "竞",
-      "code": "[Cb]=J",
+      "code": "CbJ",
       "steps": [
         {
           "target": [
@@ -23647,13 +23647,13 @@ const KM_CHARS = [
           "target": [
             "J"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "撒",
-      "code": "[iR]-a",
+      "code": "iRa",
       "steps": [
         {
           "target": [
@@ -23666,13 +23666,13 @@ const KM_CHARS = [
           "target": [
             "a"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "串",
-      "code": "[bb]=c",
+      "code": "bbc",
       "steps": [
         {
           "target": [
@@ -23685,13 +23685,13 @@ const KM_CHARS = [
           "target": [
             "c"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "默",
-      "code": "[eK]-q",
+      "code": "eKq",
       "steps": [
         {
           "target": [
@@ -23704,13 +23704,13 @@ const KM_CHARS = [
           "target": [
             "q"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "醒",
-      "code": "[Uw]-G",
+      "code": "UwG",
       "steps": [
         {
           "target": [
@@ -23723,13 +23723,13 @@ const KM_CHARS = [
           "target": [
             "G"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "逼",
-      "code": "[fb]-p",
+      "code": "fbp",
       "steps": [
         {
           "target": [
@@ -23742,13 +23742,13 @@ const KM_CHARS = [
           "target": [
             "p"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "俄",
-      "code": "[at]-U",
+      "code": "atU",
       "steps": [
         {
           "target": [
@@ -23761,13 +23761,13 @@ const KM_CHARS = [
           "target": [
             "U"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "搬",
-      "code": "[iW]-T",
+      "code": "iWT",
       "steps": [
         {
           "target": [
@@ -23780,13 +23780,13 @@ const KM_CHARS = [
           "target": [
             "T"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "织",
-      "code": "[Rb]-X",
+      "code": "RbX",
       "steps": [
         {
           "target": [
@@ -23799,13 +23799,13 @@ const KM_CHARS = [
           "target": [
             "X"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "遍",
-      "code": "[QF]-p",
+      "code": "QFp",
       "steps": [
         {
           "target": [
@@ -23818,13 +23818,13 @@ const KM_CHARS = [
           "target": [
             "p"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "邓",
-      "code": "[vY]-j",
+      "code": "vYj",
       "steps": [
         {
           "target": [
@@ -23837,13 +23837,13 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "凡",
-      "code": "[qO]=d",
+      "code": "qOd",
       "steps": [
         {
           "target": [
@@ -23856,13 +23856,13 @@ const KM_CHARS = [
           "target": [
             "d"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "执",
-      "code": "[rz]",
+      "code": "rz",
       "steps": [
         {
           "target": [
@@ -23875,7 +23875,7 @@ const KM_CHARS = [
     },
     {
       "char": "舒",
-      "code": "[rg]->",
+      "code": "rg>",
       "steps": [
         {
           "target": [
@@ -23888,13 +23888,13 @@ const KM_CHARS = [
           "target": [
             ">"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "稍",
-      "code": "[xE]-H",
+      "code": "xEH",
       "steps": [
         {
           "target": [
@@ -23907,13 +23907,13 @@ const KM_CHARS = [
           "target": [
             "H"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "仙",
-      "code": "[a<]-s",
+      "code": "a<s",
       "steps": [
         {
           "target": [
@@ -23926,13 +23926,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "浩",
-      "code": "[nm]-b",
+      "code": "nmb",
       "steps": [
         {
           "target": [
@@ -23945,13 +23945,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "暗",
-      "code": "[wS]-y",
+      "code": "wSy",
       "steps": [
         {
           "target": [
@@ -23964,13 +23964,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "详",
-      "code": "[uQ]-y",
+      "code": "uQy",
       "steps": [
         {
           "target": [
@@ -23983,13 +23983,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "柳",
-      "code": "[o:]-m",
+      "code": "o:m",
       "steps": [
         {
           "target": [
@@ -24002,13 +24002,13 @@ const KM_CHARS = [
           "target": [
             "m"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "煎",
-      "code": "[XH]=;",
+      "code": "XH;",
       "steps": [
         {
           "target": [
@@ -24021,13 +24021,13 @@ const KM_CHARS = [
           "target": [
             ";"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "碎",
-      "code": "[.Z]-e",
+      "code": ".Ze",
       "steps": [
         {
           "target": [
@@ -24040,13 +24040,13 @@ const KM_CHARS = [
           "target": [
             "e"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "穷",
-      "code": "[I<]=l",
+      "code": "I<l",
       "steps": [
         {
           "target": [
@@ -24059,13 +24059,13 @@ const KM_CHARS = [
           "target": [
             "l"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "腰",
-      "code": "[Ht]-Z",
+      "code": "HtZ",
       "steps": [
         {
           "target": [
@@ -24078,13 +24078,13 @@ const KM_CHARS = [
           "target": [
             "Z"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "颜",
-      "code": "[Cy]-?",
+      "code": "Cy?",
       "steps": [
         {
           "target": [
@@ -24097,13 +24097,13 @@ const KM_CHARS = [
           "target": [
             "?"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "插",
-      "code": "[ik]-?",
+      "code": "ik?",
       "steps": [
         {
           "target": [
@@ -24116,13 +24116,13 @@ const KM_CHARS = [
           "target": [
             "?"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "炖",
-      "code": "[;f]-Y",
+      "code": ";fY",
       "steps": [
         {
           "target": [
@@ -24135,13 +24135,13 @@ const KM_CHARS = [
           "target": [
             "Y"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "促",
-      "code": "[as]-u",
+      "code": "asu",
       "steps": [
         {
           "target": [
@@ -24154,13 +24154,13 @@ const KM_CHARS = [
           "target": [
             "u"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "珠",
-      "code": "[,t]-z",
+      "code": ",tz",
       "steps": [
         {
           "target": [
@@ -24173,13 +24173,13 @@ const KM_CHARS = [
           "target": [
             "z"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "填",
-      "code": "[Ve]-X",
+      "code": "VeX",
       "steps": [
         {
           "target": [
@@ -24192,13 +24192,13 @@ const KM_CHARS = [
           "target": [
             "X"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "悦",
-      "code": "[:X]-J",
+      "code": ":XJ",
       "steps": [
         {
           "target": [
@@ -24211,13 +24211,13 @@ const KM_CHARS = [
           "target": [
             "J"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "烟",
-      "code": "[;U]-T",
+      "code": ";UT",
       "steps": [
         {
           "target": [
@@ -24230,13 +24230,13 @@ const KM_CHARS = [
           "target": [
             "T"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "舍",
-      "code": "[rg]=s",
+      "code": "rgs",
       "steps": [
         {
           "target": [
@@ -24249,13 +24249,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "沟",
-      "code": "[n.]-B",
+      "code": "n.B",
       "steps": [
         {
           "target": [
@@ -24268,13 +24268,13 @@ const KM_CHARS = [
           "target": [
             "B"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "训",
-      "code": "[uY]-c",
+      "code": "uYc",
       "steps": [
         {
           "target": [
@@ -24287,13 +24287,13 @@ const KM_CHARS = [
           "target": [
             "c"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "寻",
-      "code": "[Cz]=c",
+      "code": "Czc",
       "steps": [
         {
           "target": [
@@ -24306,13 +24306,13 @@ const KM_CHARS = [
           "target": [
             "c"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "迎",
-      "code": "[WY]-p",
+      "code": "WYp",
       "steps": [
         {
           "target": [
@@ -24325,13 +24325,13 @@ const KM_CHARS = [
           "target": [
             "p"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "灰",
-      "code": "[e;]=h",
+      "code": "e;h",
       "steps": [
         {
           "target": [
@@ -24344,13 +24344,13 @@ const KM_CHARS = [
           "target": [
             "h"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "幕",
-      "code": "[PT]=Q",
+      "code": "PTQ",
       "steps": [
         {
           "target": [
@@ -24363,13 +24363,13 @@ const KM_CHARS = [
           "target": [
             "Q"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "竟",
-      "code": "[SJ]=e",
+      "code": "SJe",
       "steps": [
         {
           "target": [
@@ -24382,13 +24382,13 @@ const KM_CHARS = [
           "target": [
             "e"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "铺",
-      "code": "[zL]-f",
+      "code": "zLf",
       "steps": [
         {
           "target": [
@@ -24401,13 +24401,13 @@ const KM_CHARS = [
           "target": [
             "f"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "皇",
-      "code": "[d,]=w",
+      "code": "d,w",
       "steps": [
         {
           "target": [
@@ -24420,13 +24420,13 @@ const KM_CHARS = [
           "target": [
             "w"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "绍",
-      "code": "[Ru]-b",
+      "code": "Rub",
       "steps": [
         {
           "target": [
@@ -24439,13 +24439,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "芳",
-      "code": "[p<]=f",
+      "code": "p<f",
       "steps": [
         {
           "target": [
@@ -24458,13 +24458,13 @@ const KM_CHARS = [
           "target": [
             "f"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "丑",
-      "code": "[AV]=t",
+      "code": "AVt",
       "steps": [
         {
           "target": [
@@ -24477,13 +24477,13 @@ const KM_CHARS = [
           "target": [
             "t"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "袁",
-      "code": "[Vb]=?",
+      "code": "Vb?",
       "steps": [
         {
           "target": [
@@ -24496,13 +24496,13 @@ const KM_CHARS = [
           "target": [
             "?"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "菌",
-      "code": "[pU]=x",
+      "code": "pUx",
       "steps": [
         {
           "target": [
@@ -24515,13 +24515,13 @@ const KM_CHARS = [
           "target": [
             "x"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "扬",
-      "code": "[iA]-I",
+      "code": "iAI",
       "steps": [
         {
           "target": [
@@ -24534,13 +24534,13 @@ const KM_CHARS = [
           "target": [
             "I"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "察",
-      "code": "[jI]=j",
+      "code": "jIj",
       "steps": [
         {
           "target": [
@@ -24553,13 +24553,13 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "疾",
-      "code": "[lD]=s",
+      "code": "lDs",
       "steps": [
         {
           "target": [
@@ -24572,13 +24572,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "轴",
-      "code": "[MB]-y",
+      "code": "MBy",
       "steps": [
         {
           "target": [
@@ -24591,13 +24591,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "欣",
-      "code": "[/:]-q",
+      "code": "/:q",
       "steps": [
         {
           "target": [
@@ -24610,13 +24610,13 @@ const KM_CHARS = [
           "target": [
             "q"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "祖",
-      "code": "[Nq]-q",
+      "code": "Nqq",
       "steps": [
         {
           "target": [
@@ -24629,13 +24629,13 @@ const KM_CHARS = [
           "target": [
             "q"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "频",
-      "code": "[II]-?",
+      "code": "II?",
       "steps": [
         {
           "target": [
@@ -24648,13 +24648,13 @@ const KM_CHARS = [
           "target": [
             "?"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "凤",
-      "code": "[qv]=y",
+      "code": "qvy",
       "steps": [
         {
           "target": [
@@ -24667,13 +24667,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "刺",
-      "code": "[oF]-W",
+      "code": "oFW",
       "steps": [
         {
           "target": [
@@ -24686,13 +24686,13 @@ const KM_CHARS = [
           "target": [
             "W"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "虚",
-      "code": "[O/]=y",
+      "code": "O/y",
       "steps": [
         {
           "target": [
@@ -24705,13 +24705,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "潜",
-      "code": "[nd]-w",
+      "code": "ndw",
       "steps": [
         {
           "target": [
@@ -24724,13 +24724,13 @@ const KM_CHARS = [
           "target": [
             "w"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "脏",
-      "code": "[HJ]-V",
+      "code": "HJV",
       "steps": [
         {
           "target": [
@@ -24743,13 +24743,13 @@ const KM_CHARS = [
           "target": [
             "V"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "毕",
-      "code": "[hh]=e",
+      "code": "hhe",
       "steps": [
         {
           "target": [
@@ -24762,13 +24762,13 @@ const KM_CHARS = [
           "target": [
             "e"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "恋",
-      "code": "[G:]=x",
+      "code": "G:x",
       "steps": [
         {
           "target": [
@@ -24781,13 +24781,13 @@ const KM_CHARS = [
           "target": [
             "x"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "偶",
-      "code": "[aD]-B",
+      "code": "aDB",
       "steps": [
         {
           "target": [
@@ -24800,13 +24800,13 @@ const KM_CHARS = [
           "target": [
             "B"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "柏",
-      "code": "[od]-b",
+      "code": "odb",
       "steps": [
         {
           "target": [
@@ -24819,13 +24819,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "仲",
-      "code": "[ab]-c",
+      "code": "abc",
       "steps": [
         {
           "target": [
@@ -24838,13 +24838,13 @@ const KM_CHARS = [
           "target": [
             "c"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "替",
-      "code": "[dd]=w",
+      "code": "ddw",
       "steps": [
         {
           "target": [
@@ -24857,13 +24857,13 @@ const KM_CHARS = [
           "target": [
             "w"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "饿",
-      "code": "[ft]-U",
+      "code": "ftU",
       "steps": [
         {
           "target": [
@@ -24876,13 +24876,13 @@ const KM_CHARS = [
           "target": [
             "U"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "翼",
-      "code": "[KD]=X",
+      "code": "KDX",
       "steps": [
         {
           "target": [
@@ -24895,13 +24895,13 @@ const KM_CHARS = [
           "target": [
             "X"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "葱",
-      "code": "[p.]=:",
+      "code": "p.:",
       "steps": [
         {
           "target": [
@@ -24914,13 +24914,13 @@ const KM_CHARS = [
           "target": [
             ":"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "震",
-      "code": "[k<]=c",
+      "code": "k<c",
       "steps": [
         {
           "target": [
@@ -24933,13 +24933,13 @@ const KM_CHARS = [
           "target": [
             "c"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "丢",
-      "code": "[NB]=s",
+      "code": "NBs",
       "steps": [
         {
           "target": [
@@ -24952,13 +24952,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "摸",
-      "code": "[iP]-T",
+      "code": "iPT",
       "steps": [
         {
           "target": [
@@ -24971,13 +24971,13 @@ const KM_CHARS = [
           "target": [
             "T"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "乃",
-      "code": "[Tn]",
+      "code": "Tn",
       "steps": [
         {
           "target": [
@@ -24990,7 +24990,7 @@ const KM_CHARS = [
     },
     {
       "char": "焦",
-      "code": "[,;]=h",
+      "code": ",;h",
       "steps": [
         {
           "target": [
@@ -25003,13 +25003,13 @@ const KM_CHARS = [
           "target": [
             "h"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "猜",
-      "code": "[K>]-H",
+      "code": "K>H",
       "steps": [
         {
           "target": [
@@ -25022,13 +25022,13 @@ const KM_CHARS = [
           "target": [
             "H"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "桑",
-      "code": "[vm]=o",
+      "code": "vmo",
       "steps": [
         {
           "target": [
@@ -25041,13 +25041,13 @@ const KM_CHARS = [
           "target": [
             "o"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "拖",
-      "code": "[iK]-z",
+      "code": "iKz",
       "steps": [
         {
           "target": [
@@ -25060,13 +25060,13 @@ const KM_CHARS = [
           "target": [
             "z"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "振",
-      "code": "[i<]-c",
+      "code": "i<c",
       "steps": [
         {
           "target": [
@@ -25079,13 +25079,13 @@ const KM_CHARS = [
           "target": [
             "c"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "郎",
-      "code": "[O;]-Y",
+      "code": "O;Y",
       "steps": [
         {
           "target": [
@@ -25098,13 +25098,13 @@ const KM_CHARS = [
           "target": [
             "Y"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "洁",
-      "code": "[nJ]-j",
+      "code": "nJj",
       "steps": [
         {
           "target": [
@@ -25117,13 +25117,13 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "储",
-      "code": "[au]-q",
+      "code": "auq",
       "steps": [
         {
           "target": [
@@ -25136,13 +25136,13 @@ const KM_CHARS = [
           "target": [
             "q"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "泥",
-      "code": "[ny]-h",
+      "code": "nyh",
       "steps": [
         {
           "target": [
@@ -25155,13 +25155,13 @@ const KM_CHARS = [
           "target": [
             "h"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "休",
-      "code": "[ao]-m",
+      "code": "aom",
       "steps": [
         {
           "target": [
@@ -25174,13 +25174,13 @@ const KM_CHARS = [
           "target": [
             "m"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "盒",
-      "code": "[k;]=m",
+      "code": "k;m",
       "steps": [
         {
           "target": [
@@ -25193,13 +25193,13 @@ const KM_CHARS = [
           "target": [
             "m"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "贤",
-      "code": "[Wv]=G",
+      "code": "WvG",
       "steps": [
         {
           "target": [
@@ -25212,13 +25212,13 @@ const KM_CHARS = [
           "target": [
             "G"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "岭",
-      "code": "[<k]-O",
+      "code": "<kO",
       "steps": [
         {
           "target": [
@@ -25231,13 +25231,13 @@ const KM_CHARS = [
           "target": [
             "O"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "澳",
-      "code": "[nq]-T",
+      "code": "nqT",
       "steps": [
         {
           "target": [
@@ -25250,13 +25250,13 @@ const KM_CHARS = [
           "target": [
             "T"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "楚",
-      "code": "[mC]=s",
+      "code": "mCs",
       "steps": [
         {
           "target": [
@@ -25269,13 +25269,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "蒋",
-      "code": "[p?]=z",
+      "code": "p?z",
       "steps": [
         {
           "target": [
@@ -25288,13 +25288,13 @@ const KM_CHARS = [
           "target": [
             "z"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "夹",
-      "code": "[dX]=b",
+      "code": "dXb",
       "steps": [
         {
           "target": [
@@ -25307,13 +25307,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "粗",
-      "code": "[rq]-q",
+      "code": "rqq",
       "steps": [
         {
           "target": [
@@ -25326,13 +25326,13 @@ const KM_CHARS = [
           "target": [
             "q"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "努",
-      "code": "[Zv]=<",
+      "code": "Zv<",
       "steps": [
         {
           "target": [
@@ -25345,13 +25345,13 @@ const KM_CHARS = [
           "target": [
             "<"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "横",
-      "code": "[oR]-h",
+      "code": "oRh",
       "steps": [
         {
           "target": [
@@ -25364,13 +25364,13 @@ const KM_CHARS = [
           "target": [
             "h"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "午",
-      "code": "[Ke]=s",
+      "code": "Kes",
       "steps": [
         {
           "target": [
@@ -25383,13 +25383,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "暴",
-      "code": "[wR]=n",
+      "code": "wRn",
       "steps": [
         {
           "target": [
@@ -25402,13 +25402,13 @@ const KM_CHARS = [
           "target": [
             "n"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "碳",
-      "code": "[.<]-;",
+      "code": ".<;",
       "steps": [
         {
           "target": [
@@ -25421,13 +25421,13 @@ const KM_CHARS = [
           "target": [
             ";"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "诉",
-      "code": "[u/]-O",
+      "code": "u/O",
       "steps": [
         {
           "target": [
@@ -25440,13 +25440,13 @@ const KM_CHARS = [
           "target": [
             "O"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "判",
-      "code": "[Xi]-W",
+      "code": "XiW",
       "steps": [
         {
           "target": [
@@ -25459,13 +25459,13 @@ const KM_CHARS = [
           "target": [
             "W"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "纹",
-      "code": "[Rv]-w",
+      "code": "Rvw",
       "steps": [
         {
           "target": [
@@ -25478,13 +25478,13 @@ const KM_CHARS = [
           "target": [
             "w"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "拥",
-      "code": "[iq]-y",
+      "code": "iqy",
       "steps": [
         {
           "target": [
@@ -25497,13 +25497,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "碰",
-      "code": "[.X]-/",
+      "code": ".X/",
       "steps": [
         {
           "target": [
@@ -25516,13 +25516,13 @@ const KM_CHARS = [
           "target": [
             "/"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "闹",
-      "code": "[IZ]=Q",
+      "code": "IZQ",
       "steps": [
         {
           "target": [
@@ -25535,13 +25535,13 @@ const KM_CHARS = [
           "target": [
             "Q"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "琴",
-      "code": "[,,]=k",
+      "code": ",,k",
       "steps": [
         {
           "target": [
@@ -25554,13 +25554,13 @@ const KM_CHARS = [
           "target": [
             "k"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "琳",
-      "code": "[,m]-l",
+      "code": ",ml",
       "steps": [
         {
           "target": [
@@ -25573,13 +25573,13 @@ const KM_CHARS = [
           "target": [
             "l"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "黎",
-      "code": "[xu]=n",
+      "code": "xun",
       "steps": [
         {
           "target": [
@@ -25592,13 +25592,13 @@ const KM_CHARS = [
           "target": [
             "n"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "析",
-      "code": "[o/]-j",
+      "code": "o/j",
       "steps": [
         {
           "target": [
@@ -25611,13 +25611,13 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "败",
-      "code": "[Ga]-p",
+      "code": "Gap",
       "steps": [
         {
           "target": [
@@ -25630,13 +25630,13 @@ const KM_CHARS = [
           "target": [
             "p"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "偷",
-      "code": "[ak]-W",
+      "code": "akW",
       "steps": [
         {
           "target": [
@@ -25649,13 +25649,13 @@ const KM_CHARS = [
           "target": [
             "W"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "赏",
-      "code": "[MG]=b",
+      "code": "MGb",
       "steps": [
         {
           "target": [
@@ -25668,13 +25668,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "伴",
-      "code": "[aX]-i",
+      "code": "aXi",
       "steps": [
         {
           "target": [
@@ -25687,13 +25687,13 @@ const KM_CHARS = [
           "target": [
             "i"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "崔",
-      "code": "[<,]=i",
+      "code": "<,i",
       "steps": [
         {
           "target": [
@@ -25706,13 +25706,13 @@ const KM_CHARS = [
           "target": [
             "i"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "恶",
-      "code": "[f/]=:",
+      "code": "f/:",
       "steps": [
         {
           "target": [
@@ -25725,13 +25725,13 @@ const KM_CHARS = [
           "target": [
             ":"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "晋",
-      "code": "[f/]=w",
+      "code": "f/w",
       "steps": [
         {
           "target": [
@@ -25744,13 +25744,13 @@ const KM_CHARS = [
           "target": [
             "w"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "绕",
-      "code": "[RU]-J",
+      "code": "RUJ",
       "steps": [
         {
           "target": [
@@ -25763,13 +25763,13 @@ const KM_CHARS = [
           "target": [
             "J"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "浅",
-      "code": "[nf]-U",
+      "code": "nfU",
       "steps": [
         {
           "target": [
@@ -25782,13 +25782,13 @@ const KM_CHARS = [
           "target": [
             "U"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "耐",
-      "code": "[Bz]-c",
+      "code": "Bzc",
       "steps": [
         {
           "target": [
@@ -25801,13 +25801,13 @@ const KM_CHARS = [
           "target": [
             "c"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "私",
-      "code": "[xB]-s",
+      "code": "xBs",
       "steps": [
         {
           "target": [
@@ -25820,13 +25820,13 @@ const KM_CHARS = [
           "target": [
             "s"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "困",
-      "code": "[Uo]=m",
+      "code": "Uom",
       "steps": [
         {
           "target": [
@@ -25839,13 +25839,13 @@ const KM_CHARS = [
           "target": [
             "m"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "烫",
-      "code": "[nA]=;",
+      "code": "nA;",
       "steps": [
         {
           "target": [
@@ -25858,13 +25858,13 @@ const KM_CHARS = [
           "target": [
             ";"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "肖",
-      "code": "[EH]=y",
+      "code": "EHy",
       "steps": [
         {
           "target": [
@@ -25877,13 +25877,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "乙",
-      "code": "[ji]",
+      "code": "ji",
       "steps": [
         {
           "target": [
@@ -25896,7 +25896,7 @@ const KM_CHARS = [
     },
     {
       "char": "幸",
-      "code": "[VQ]=y",
+      "code": "VQy",
       "steps": [
         {
           "target": [
@@ -25909,13 +25909,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "膜",
-      "code": "[HP]-T",
+      "code": "HPT",
       "steps": [
         {
           "target": [
@@ -25928,13 +25928,13 @@ const KM_CHARS = [
           "target": [
             "T"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "盆",
-      "code": "[a;]=m",
+      "code": "a;m",
       "steps": [
         {
           "target": [
@@ -25947,13 +25947,13 @@ const KM_CHARS = [
           "target": [
             "m"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "驾",
-      "code": "[<b]=/",
+      "code": "<b/",
       "steps": [
         {
           "target": [
@@ -25966,13 +25966,13 @@ const KM_CHARS = [
           "target": [
             "/"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "邀",
-      "code": "[d<]-p",
+      "code": "d<p",
       "steps": [
         {
           "target": [
@@ -25985,13 +25985,13 @@ const KM_CHARS = [
           "target": [
             "p"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "探",
-      "code": "[iC]-o",
+      "code": "iCo",
       "steps": [
         {
           "target": [
@@ -26004,13 +26004,13 @@ const KM_CHARS = [
           "target": [
             "o"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "固",
-      "code": "[U/]=g",
+      "code": "U/g",
       "steps": [
         {
           "target": [
@@ -26023,13 +26023,13 @@ const KM_CHARS = [
           "target": [
             "g"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "锦",
-      "code": "[zd]-Q",
+      "code": "zdQ",
       "steps": [
         {
           "target": [
@@ -26042,13 +26042,13 @@ const KM_CHARS = [
           "target": [
             "Q"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "署",
-      "code": "[Oq]=z",
+      "code": "Oqz",
       "steps": [
         {
           "target": [
@@ -26061,13 +26061,13 @@ const KM_CHARS = [
           "target": [
             "z"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "轨",
-      "code": "[MA]-j",
+      "code": "MAj",
       "steps": [
         {
           "target": [
@@ -26080,13 +26080,13 @@ const KM_CHARS = [
           "target": [
             "j"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "寒",
-      "code": "[jh]=S",
+      "code": "jhS",
       "steps": [
         {
           "target": [
@@ -26099,13 +26099,13 @@ const KM_CHARS = [
           "target": [
             "S"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "庙",
-      "code": "[JB]=y",
+      "code": "JBy",
       "steps": [
         {
           "target": [
@@ -26118,13 +26118,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "瓜",
-      "code": "[<g]",
+      "code": "<g",
       "steps": [
         {
           "target": [
@@ -26137,7 +26137,7 @@ const KM_CHARS = [
     },
     {
       "char": "媒",
-      "code": "[Zo]-o",
+      "code": "Zoo",
       "steps": [
         {
           "target": [
@@ -26150,13 +26150,13 @@ const KM_CHARS = [
           "target": [
             "o"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "涉",
-      "code": "[nI]-I",
+      "code": "nII",
       "steps": [
         {
           "target": [
@@ -26169,13 +26169,13 @@ const KM_CHARS = [
           "target": [
             "I"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "杂",
-      "code": "[Ao]=m",
+      "code": "Aom",
       "steps": [
         {
           "target": [
@@ -26188,13 +26188,13 @@ const KM_CHARS = [
           "target": [
             "m"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "孝",
-      "code": "[qF]=i",
+      "code": "qFi",
       "steps": [
         {
           "target": [
@@ -26207,13 +26207,13 @@ const KM_CHARS = [
           "target": [
             "i"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "丸",
-      "code": "[AO]=d",
+      "code": "AOd",
       "steps": [
         {
           "target": [
@@ -26226,13 +26226,13 @@ const KM_CHARS = [
           "target": [
             "d"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "铜",
-      "code": "[zF]-t",
+      "code": "zFt",
       "steps": [
         {
           "target": [
@@ -26245,13 +26245,13 @@ const KM_CHARS = [
           "target": [
             "t"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "诸",
-      "code": "[uq]-z",
+      "code": "uqz",
       "steps": [
         {
           "target": [
@@ -26264,13 +26264,13 @@ const KM_CHARS = [
           "target": [
             "z"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "拆",
-      "code": "[i/]-O",
+      "code": "i/O",
       "steps": [
         {
           "target": [
@@ -26283,13 +26283,13 @@ const KM_CHARS = [
           "target": [
             "O"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "晨",
-      "code": "[w<]=c",
+      "code": "w<c",
       "steps": [
         {
           "target": [
@@ -26302,13 +26302,13 @@ const KM_CHARS = [
           "target": [
             "c"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "陶",
-      "code": "[Y.]-E",
+      "code": "Y.E",
       "steps": [
         {
           "target": [
@@ -26321,13 +26321,13 @@ const KM_CHARS = [
           "target": [
             "E"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "授",
-      "code": "[iA]-v",
+      "code": "iAv",
       "steps": [
         {
           "target": [
@@ -26340,13 +26340,13 @@ const KM_CHARS = [
           "target": [
             "v"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "疗",
-      "code": "[ls]=l",
+      "code": "lsl",
       "steps": [
         {
           "target": [
@@ -26359,13 +26359,13 @@ const KM_CHARS = [
           "target": [
             "l"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "岗",
-      "code": "[<F]=l",
+      "code": "<Fl",
       "steps": [
         {
           "target": [
@@ -26378,13 +26378,13 @@ const KM_CHARS = [
           "target": [
             "l"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "嫁",
-      "code": "[Zj]-Q",
+      "code": "ZjQ",
       "steps": [
         {
           "target": [
@@ -26397,13 +26397,13 @@ const KM_CHARS = [
           "target": [
             "Q"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "序",
-      "code": "[J>]=v",
+      "code": "J>v",
       "steps": [
         {
           "target": [
@@ -26416,13 +26416,13 @@ const KM_CHARS = [
           "target": [
             "v"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "肺",
-      "code": "[Hf]-Q",
+      "code": "HfQ",
       "steps": [
         {
           "target": [
@@ -26435,13 +26435,13 @@ const KM_CHARS = [
           "target": [
             "Q"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "剩",
-      "code": "[x?]-W",
+      "code": "x?W",
       "steps": [
         {
           "target": [
@@ -26454,13 +26454,13 @@ const KM_CHARS = [
           "target": [
             "W"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "革",
-      "code": "[Ag]",
+      "code": "Ag",
       "steps": [
         {
           "target": [
@@ -26473,7 +26473,7 @@ const KM_CHARS = [
     },
     {
       "char": "吵",
-      "code": "[bE]-t",
+      "code": "bEt",
       "steps": [
         {
           "target": [
@@ -26486,13 +26486,13 @@ const KM_CHARS = [
           "target": [
             "t"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "祥",
-      "code": "[NQ]-y",
+      "code": "NQy",
       "steps": [
         {
           "target": [
@@ -26505,13 +26505,13 @@ const KM_CHARS = [
           "target": [
             "y"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "译",
-      "code": "[uv]-i",
+      "code": "uvi",
       "steps": [
         {
           "target": [
@@ -26524,13 +26524,13 @@ const KM_CHARS = [
           "target": [
             "i"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "染",
-      "code": "[nA]=o",
+      "code": "nAo",
       "steps": [
         {
           "target": [
@@ -26543,13 +26543,13 @@ const KM_CHARS = [
           "target": [
             "o"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "缘",
-      "code": "[RC]-Q",
+      "code": "RCQ",
       "steps": [
         {
           "target": [
@@ -26562,13 +26562,13 @@ const KM_CHARS = [
           "target": [
             "Q"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "脂",
-      "code": "[Hh]-w",
+      "code": "Hhw",
       "steps": [
         {
           "target": [
@@ -26581,13 +26581,13 @@ const KM_CHARS = [
           "target": [
             "w"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "胎",
-      "code": "[HB]-b",
+      "code": "HBb",
       "steps": [
         {
           "target": [
@@ -26600,13 +26600,13 @@ const KM_CHARS = [
           "target": [
             "b"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "珍",
-      "code": "[,r]-I",
+      "code": ",rI",
       "steps": [
         {
           "target": [
@@ -26619,13 +26619,13 @@ const KM_CHARS = [
           "target": [
             "I"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "拌",
-      "code": "[iX]-i",
+      "code": "iXi",
       "steps": [
         {
           "target": [
@@ -26638,13 +26638,13 @@ const KM_CHARS = [
           "target": [
             "i"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "浦",
-      "code": "[nL]-f",
+      "code": "nLf",
       "steps": [
         {
           "target": [
@@ -26657,13 +26657,13 @@ const KM_CHARS = [
           "target": [
             "f"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "虫",
-      "code": "[Bc]",
+      "code": "Bc",
       "steps": [
         {
           "target": [
@@ -26676,7 +26676,7 @@ const KM_CHARS = [
     },
     {
       "char": "旁",
-      "code": "[h<]=f",
+      "code": "h<f",
       "steps": [
         {
           "target": [
@@ -26689,13 +26689,13 @@ const KM_CHARS = [
           "target": [
             "f"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "乎",
-      "code": "[tX]=e",
+      "code": "tXe",
       "steps": [
         {
           "target": [
@@ -26708,13 +26708,13 @@ const KM_CHARS = [
           "target": [
             "e"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "剪",
-      "code": "[XH]=u",
+      "code": "XHu",
       "steps": [
         {
           "target": [
@@ -26727,13 +26727,13 @@ const KM_CHARS = [
           "target": [
             "u"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "避",
-      "code": "[Wp]-c",
+      "code": "Wpc",
       "steps": [
         {
           "target": [
@@ -26746,13 +26746,13 @@ const KM_CHARS = [
           "target": [
             "c"
           ],
-          "hand": "left"
+          "hand": "either"
         }
       ]
     },
     {
       "char": "册",
-      "code": "[Fc]",
+      "code": "Fc",
       "steps": [
         {
           "target": [
@@ -26765,7 +26765,7 @@ const KM_CHARS = [
     },
     {
       "char": "芬",
-      "code": "[pa]=f",
+      "code": "paf",
       "steps": [
         {
           "target": [
@@ -26778,7 +26778,7 @@ const KM_CHARS = [
           "target": [
             "f"
           ],
-          "hand": "right"
+          "hand": "either"
         }
       ]
     }
@@ -37225,7 +37225,7 @@ const KM_WORDS = [
     },
     {
       "text": "特别是",
-      "code": "mbw",
+      "code": "mbwC",
       "steps": [
         {
           "target": [
@@ -37236,9 +37236,10 @@ const KM_WORDS = [
         },
         {
           "target": [
-            "w"
+            "w",
+            "C"
           ],
-          "hand": "either"
+          "hand": "both"
         }
       ]
     },
@@ -39399,7 +39400,7 @@ const KM_WORDS = [
     },
     {
       "text": "进一步",
-      "code": "hfI",
+      "code": "hfII",
       "steps": [
         {
           "target": [
@@ -39410,9 +39411,10 @@ const KM_WORDS = [
         },
         {
           "target": [
+            "I",
             "I"
           ],
-          "hand": "either"
+          "hand": "both"
         }
       ]
     },
@@ -43315,7 +43317,7 @@ const KM_WORDS = [
     },
     {
       "text": "看起来",
-      "code": "idz",
+      "code": "idzX",
       "steps": [
         {
           "target": [
@@ -43326,9 +43328,10 @@ const KM_WORDS = [
         },
         {
           "target": [
-            "z"
+            "z",
+            "X"
           ],
-          "hand": "either"
+          "hand": "both"
         }
       ]
     },
@@ -43664,7 +43667,7 @@ const KM_WORDS = [
     },
     {
       "text": "也可以",
-      "code": "zxh",
+      "code": "zxhr",
       "steps": [
         {
           "target": [
@@ -43675,9 +43678,10 @@ const KM_WORDS = [
         },
         {
           "target": [
-            "h"
+            "h",
+            "r"
           ],
-          "hand": "either"
+          "hand": "both"
         }
       ]
     },
@@ -44212,7 +44216,7 @@ const KM_WORDS = [
     },
     {
       "text": "每个人",
-      "code": "Krr",
+      "code": "Krrr",
       "steps": [
         {
           "target": [
@@ -44223,9 +44227,10 @@ const KM_WORDS = [
         },
         {
           "target": [
+            "r",
             "r"
           ],
-          "hand": "either"
+          "hand": "both"
         }
       ]
     },
@@ -44264,7 +44269,7 @@ const KM_WORDS = [
     },
     {
       "text": "怎么样",
-      "code": "Hto",
+      "code": "HtoQ",
       "steps": [
         {
           "target": [
@@ -44275,9 +44280,10 @@ const KM_WORDS = [
         },
         {
           "target": [
-            "o"
+            "o",
+            "Q"
           ],
-          "hand": "either"
+          "hand": "both"
         }
       ]
     },
@@ -45046,7 +45052,7 @@ const KM_WORDS = [
     },
     {
       "text": "委员会",
-      "code": "xbr",
+      "code": "xbrN",
       "steps": [
         {
           "target": [
@@ -45057,9 +45063,10 @@ const KM_WORDS = [
         },
         {
           "target": [
-            "r"
+            "r",
+            "N"
           ],
-          "hand": "either"
+          "hand": "both"
         }
       ]
     },
@@ -47715,7 +47722,7 @@ const KM_WORDS = [
     },
     {
       "text": "第一个",
-      "code": "cfr",
+      "code": "cfrc",
       "steps": [
         {
           "target": [
@@ -47726,9 +47733,10 @@ const KM_WORDS = [
         },
         {
           "target": [
-            "r"
+            "r",
+            "c"
           ],
-          "hand": "either"
+          "hand": "both"
         }
       ]
     },
@@ -48365,7 +48373,7 @@ const KM_WORDS = [
     },
     {
       "text": "亚马逊",
-      "code": "f/F",
+      "code": "f/FE",
       "steps": [
         {
           "target": [
@@ -48376,9 +48384,10 @@ const KM_WORDS = [
         },
         {
           "target": [
-            "F"
+            "F",
+            "E"
           ],
-          "hand": "either"
+          "hand": "both"
         }
       ]
     },
@@ -49266,7 +49275,7 @@ const KM_WORDS = [
     },
     {
       "text": "不可能",
-      "code": "cxB",
+      "code": "cxBH",
       "steps": [
         {
           "target": [
@@ -49277,9 +49286,10 @@ const KM_WORDS = [
         },
         {
           "target": [
-            "B"
+            "B",
+            "H"
           ],
-          "hand": "either"
+          "hand": "both"
         }
       ]
     },
@@ -49469,7 +49479,7 @@ const KM_WORDS = [
     },
     {
       "text": "一部分",
-      "code": "fCa",
+      "code": "fCaf",
       "steps": [
         {
           "target": [
@@ -49480,9 +49490,10 @@ const KM_WORDS = [
         },
         {
           "target": [
-            "a"
+            "a",
+            "f"
           ],
-          "hand": "either"
+          "hand": "both"
         }
       ]
     },
@@ -51340,7 +51351,7 @@ const KM_WORDS = [
     },
     {
       "text": "有一个",
-      "code": "efr",
+      "code": "efrc",
       "steps": [
         {
           "target": [
@@ -51351,9 +51362,10 @@ const KM_WORDS = [
         },
         {
           "target": [
-            "r"
+            "r",
+            "c"
           ],
-          "hand": "either"
+          "hand": "both"
         }
       ]
     },

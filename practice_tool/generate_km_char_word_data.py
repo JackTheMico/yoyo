@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """生成空明拳（yoyo-km）常用单字 / 常用词组 / 一简字词练习数据。
 
-数据来源：rime/yoyo-bm.dict.yaml（麓鸣·北冥·空明 的字典）。
-单字全码为三码：前两码由两手并击（无空格）打出，第三码由单手加空格打出
-（- 为左手，= 为右手）。部分常用字只有二码（二简），直接用两手并击一次完成。
-词组由 2/3/4 码构成。
+数据来源：rime/yoyo-pure.dict.yaml（麓鸣·纯形·空明 规范字典）。
+单字全码为三码：前两码由两手并击打出，第三码由单手击键完成。
+部分常用字只有二码（二简），直接用两手并击一次完成。
+词组由 4 码构成（两击两手并击）。
 
-一简字词是单手一击直出：北冥中单手无空格（_ 左 / + 右），无相中单手带空格。
+一简字词是单手一击直出（_ 左 / + 右）。
 
 常用单字 / 常用词组各按词频分成三段：前 500 / 中 500 / 后 500。
 每个字/词若有一简码则优先用一简码练习，否则用全码/多码。
@@ -24,7 +24,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parent
-DICT_PATH = REPO / "rime" / "yoyo-bm.dict.yaml"
+DICT_PATH = REPO / "rime" / "yoyo-pure.dict.yaml"
 OUTPUT = HERE / "km_char_word_data_module.js"
 
 # 每段取多少个
@@ -34,8 +34,6 @@ SEGMENTS = 3
 
 # 码元字符（空明拳可打出的码元，不含数字）
 CODE_RE = re.compile(r"^[a-zA-Z,./;:<>?]+$")
-FULL3_RE = re.compile(r"^\[([^\]]{2})\]\s*([-=])\s*([^]]+)$")
-CODE2_RE = re.compile(r"^\[([^\]]{2})\]$")
 JIAN_RE = re.compile(r"^[_+]([a-zA-Z,./;:<>?])$")
 
 
@@ -48,44 +46,43 @@ def load_entries(path: Path) -> list[tuple[str, str, int]]:
             in_data = line.strip() == "..."
             continue
         line = line.rstrip("\n")
-        if not line.strip():
+        if not line.strip() or line.startswith("#"):
             continue
         parts = line.split("\t")
         if len(parts) >= 2:
             text, code = parts[0], parts[1]
-            weight = int(parts[2]) if len(parts) > 2 and parts[2].strip() else 0
+            weight = int(parts[2]) if len(parts) > 2 and parts[2].strip().isdigit() else 0
             entries.append((text, code, weight))
     return entries
 
 
 def build_single_char_steps(code: str) -> list[dict] | None:
-    """把单字编码转成练习步骤。返回 None 表示无法解析（跳过该字）。
-
-    注意：steps 里不存 space，因为北冥空明（主单）和无相空明（主词）
-    对空格的使用规则相反，由前端根据当前体系动态决定。
-    """
-    m = FULL3_RE.match(code)
-    if m:
-        first_two = list(m.group(1))
-        third = m.group(3)
-        hand = "left" if m.group(2) == "-" else "right"
+    """把单字编码转成练习步骤。返回 None 表示无法解析（跳过该字）。"""
+    if not CODE_RE.match(code):
+        return None
+    if len(code) == 3:
+        first_two = list(code[0:2])
+        third = code[2]
         return [
             {"target": first_two, "hand": "both"},
-            {"target": [third], "hand": hand},
+            {"target": [third], "hand": "either"},
         ]
-    m2 = CODE2_RE.match(code)
-    if m2:
+    elif len(code) == 2:
         return [
-            {"target": list(m2.group(1)), "hand": "both"},
+            {"target": list(code), "hand": "both"},
+        ]
+    elif len(code) == 1:
+        return [
+            {"target": list(code), "hand": "either"},
         ]
     return None
 
 
 def build_word_steps(code: str) -> list[dict] | None:
-    """把词组编码转成练习步骤。注意不存 space，由前端按体系决定。"""
+    """把词组编码转成练习步骤。"""
     if not CODE_RE.match(code) or len(code) < 2:
         return None
-    # 词前两码：两手并击（空格规则由体系决定）
+    # 词前两码：两手并击
     steps = [{"target": list(code[0:2]), "hand": "both"}]
     # 后续每两码一组（词全码四码，共两击）
     for i in range(2, len(code), 2):
@@ -93,7 +90,7 @@ def build_word_steps(code: str) -> list[dict] | None:
         if len(chunk) == 2:
             steps.append({"target": chunk, "hand": "both"})
         else:
-            # 三码词：第三码由单手，左右手都行
+            # 三码词：第三码单手，左右手皆可
             steps.append({"target": chunk, "hand": "either"})
     return steps
 
@@ -130,9 +127,9 @@ def collect_ranked_items(entries, is_char: bool) -> list[dict]:
             for code, w in form_list:
                 if JIAN_RE.match(code) and jian_code is None:
                     jian_code = code
-                elif FULL3_RE.match(code) and full3 is None:
+                elif len(code) == 3 and CODE_RE.match(code) and full3 is None:
                     full3 = code
-                elif CODE2_RE.match(code) and code2 is None:
+                elif len(code) == 2 and CODE_RE.match(code) and code2 is None:
                     code2 = code
             # 优先一简码
             chosen = None
@@ -174,7 +171,7 @@ def collect_ranked_items(entries, is_char: bool) -> list[dict]:
                 chosen = jian_code
                 steps = build_jian_steps(jian_code)
             if not steps:
-                # 取权重最高的非一简码
+                # 取权重最高的非一简码（优先4码，其次3码/2码）
                 candidates = {k: v for k, v in code_map.items() if not JIAN_RE.match(k)}
                 if candidates:
                     chosen = max(candidates.items(), key=lambda kv: kv[1])[0]
@@ -186,7 +183,7 @@ def collect_ranked_items(entries, is_char: bool) -> list[dict]:
 
 
 def collect_jian_items(entries) -> list[dict]:
-    """收集全部一简字词（240 个），用于专门的一击上屏练习。"""
+    """收集全部一简字词，用于专门的一击上屏练习。"""
     items = []
     for text, code, weight in entries:
         steps = build_jian_steps(code)
@@ -227,7 +224,7 @@ def main() -> None:
     # ---- 输出 JS ----
     out = [
         "// 空明拳（yoyo-km）常用单字 / 常用词组 / 一简字词练习数据 —— 由 generate_km_char_word_data.py 生成，请勿手改。",
-        "// 数据来源：rime/yoyo-bm.dict.yaml（麓鸣·北冥·空明）。",
+        "// 数据来源：rime/yoyo-pure.dict.yaml（麓鸣·纯形·空明 规范字典）。",
         "// steps 表示一次输入需要进行的并击步骤（不含 space，由前端按体系决定）：",
         "//   hand=both 双手并击；hand=left/right 单手并击；hand=either 单手左右皆可。",
         "//",

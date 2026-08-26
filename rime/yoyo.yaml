@@ -675,6 +675,24 @@ menu:
     - xform|fe|y|
   # 单键码元（15 个，直出无需规则）：a b c d e f g q r s t v w x z
 
+  # 标点符号并击（16 组全 2 键无冲突）：
+    - xform/^[_+](fg|gf)$/~comma/
+    - xform/^[_+](ad|da)$/~period/
+    - xform/^[_+](ag|ga)$/~enum_comma/
+    - xform/^[_+](xb|bx)$/~semicolon/
+    - xform/^[_+](qe|eq)$/~colon/
+    - xform/^[_+](zb|bz)$/~question/
+    - xform/^[_+](zc|cz)$/~exclamation/
+    - xform/^[_+](vb|bv)$/~ellipsis/
+    - xform/^[_+](rt|tr)$/~dash/
+    - xform/^[_+](cb|bc)$/~middledot/
+    - xform/^[_+](db|bd)$/~dquote/
+    - xform/^[_+](ac|ca)$/~squote/
+    - xform/^[_+](ax|xa)$/~book_quote/
+    - xform/^[_+](fv|vf)$/~paren/
+    - xform/^[_+](ab|ba)$/~bracket/
+    - xform/^[_+](dc|cd)$/~corner_bracket/
+
     - xform|#||  # 清除内部隔离符 #
 
 寒梅: # 192指法
