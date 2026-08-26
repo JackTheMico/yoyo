@@ -59,33 +59,55 @@ def generate():
         if text not in clean_cand_list:
             clean_cand_list.append(text)
 
-    # 提取首选与次选
-    code_to_top_word = {}
-    code_to_second_word = {}
+    # 生成主单 (char_first) 与主词 (word_first) 两种视图
+    cf_top_word = {}
+    cf_second_word = {}
+    wf_top_word = {}
+    wf_second_word = {}
+
+    def process_cands(code, cands, top_dict, sec_dict, char_first=True):
+        if not cands:
+            return
+        chars = [t for t in cands if len(t) == 1]
+        words = [t for t in cands if len(t) > 1]
+        ordered = (chars + words) if char_first else (words + chars)
+        if ordered and code not in top_dict:
+            top_dict[code] = ordered[0]
+        if len(ordered) > 1 and code not in sec_dict:
+            sec_dict[code] = ordered[1]
+
     for code, cands in code_to_candidates.items():
-        if cands:
-            code_to_top_word[code] = cands[0]
-        if len(cands) > 1:
-            code_to_second_word[code] = cands[1]
+        process_cands(code, cands, cf_top_word, cf_second_word, char_first=True)
+        process_cands(code, cands, wf_top_word, wf_second_word, char_first=False)
 
     for clean, cands in clean_to_candidates.items():
-        if clean not in code_to_top_word and cands:
-            code_to_top_word[clean] = cands[0]
-        if clean not in code_to_second_word and len(cands) > 1:
-            code_to_second_word[clean] = cands[1]
+        process_cands(clean, cands, cf_top_word, cf_second_word, char_first=True)
+        process_cands(clean, cands, wf_top_word, wf_second_word, char_first=False)
 
     out = [
-        "-- Auto-generated pure shape dictionary map & sets",
+        "-- Auto-generated pure shape dictionary dual-track maps & sets",
         "local M = {",
-        "  dict_map = {",
+        "  char_first = {",
+        "    dict_map = {",
     ]
-    for code, text in sorted(code_to_top_word.items()):
-        out.append(f"    [{json.dumps(code, ensure_ascii=False)}] = {json.dumps(text, ensure_ascii=False)},")
+    for code, text in sorted(cf_top_word.items()):
+        out.append(f"      [{json.dumps(code, ensure_ascii=False)}] = {json.dumps(text, ensure_ascii=False)},")
+    out.append("    },")
+    out.append("    dict_map_2 = {")
+    for code, text in sorted(cf_second_word.items()):
+        out.append(f"      [{json.dumps(code, ensure_ascii=False)}] = {json.dumps(text, ensure_ascii=False)},")
+    out.append("    },")
     out.append("  },")
 
-    out.append("  dict_map_2 = {")
-    for code, text in sorted(code_to_second_word.items()):
-        out.append(f"    [{json.dumps(code, ensure_ascii=False)}] = {json.dumps(text, ensure_ascii=False)},")
+    out.append("  word_first = {")
+    out.append("    dict_map = {")
+    for code, text in sorted(wf_top_word.items()):
+        out.append(f"      [{json.dumps(code, ensure_ascii=False)}] = {json.dumps(text, ensure_ascii=False)},")
+    out.append("    },")
+    out.append("    dict_map_2 = {")
+    for code, text in sorted(wf_second_word.items()):
+        out.append(f"      [{json.dumps(code, ensure_ascii=False)}] = {json.dumps(text, ensure_ascii=False)},")
+    out.append("    },")
     out.append("  },")
 
     out.append("  words_4code = {")
@@ -103,12 +125,15 @@ def generate():
         out.append(f"    [{json.dumps(c, ensure_ascii=False)}] = true,")
     out.append("  },")
     out.append("}")
+    out.append("M.dict_map = M.char_first.dict_map")
+    out.append("M.dict_map_2 = M.char_first.dict_map_2")
     out.append("return M")
 
     OUTPUT_LUA.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT_LUA.write_text("\n".join(out) + "\n", encoding="utf-8")
     print(f"Successfully generated {OUTPUT_LUA}")
-    print(f"  - dict_map entries: {len(code_to_top_word)}")
+    print(f"  - char_first dict_map entries: {len(cf_top_word)}")
+    print(f"  - word_first dict_map entries: {len(wf_top_word)}")
     print(f"  - words_4code entries: {len(words_4code)}")
     print(f"  - chars_3code entries: {len(chars_3code)}")
     print(f"  - punct_3code entries: {len(punct_3code)}")
