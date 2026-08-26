@@ -48,7 +48,7 @@ __patch:
     - express_editor
 
   chord_composer:
-    alphabet: "12345qwertasdfgzxcvb 67890yuiophjkl;nm,./"
+    alphabet: "qwertasdfgzxcvb yuiophjkl;nm,./"
     prompt_format:
       - xform/[-=_+]//g
     output_format:
@@ -86,7 +86,7 @@ __patch:
 纯形统一心法:
   __append:
     # 左右手并击：以单引号分隔左右两手按键区，交由指法映射转换为纯码元
-    - xform|^([12345qwertasdfgzxcvb]+)([67890yuiophjkl;nm,./]+)$|$1'$2|
+    - xform|^([qwertasdfgzxcvb]+)([yuiophjkl;nm,./]+)$|$1'$2|
     # 单手按键：转换为 _ (左手) 或 + (右手) 开头的一简前缀
-    - xform|^([12345qwertasdfgzxcvb]+)$|_$1|
-    - xform|^([67890yuiophjkl;nm,./]+)$|+$1|
+    - xform|^([qwertasdfgzxcvb]+)$|_$1|
+    - xform|^([yuiophjkl;nm,./]+)$|+$1|
