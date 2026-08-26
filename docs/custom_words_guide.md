@@ -9,11 +9,11 @@
 
 麓鸣拥有多支方案，请根据你日常使用的方案修改对应的词库文件：
 
-| 方案分支 | 方案 ID | 核心词典文件 | 机制说明 |
-|---|---|---|---|
-| **纯形·统一流 (推荐)** | `yoyo-pure-km` (空明)<br>`yoyo-pure` (六脉) | `rime/yoyo-pure.dict.yaml` | **0 空格确定性顶功状态机**，纯净语义码，需同步更新 `pure_dict_map.lua` |
-| **纯形·传统版** | `yoyo-bm` / `yoyo-bm-km` (北冥)<br>`yoyo-wx` / `yoyo-wx-km` (无相) | `rime/yoyo-bm.dict.yaml`<br>`rime/yoyo-wx.dict.yaml` | 空格分流字词模式，含 `[]`/`()` 语法控制符 |
-| **音形·呦呦版** | `yoyo-yx` / `yoyo-yx-hm` | `rime/yoyo-yx-word.dict.yaml` | 声韵母首击分流，四码定长词库 |
+| 方案分支 | 方案 ID | 核心词典文件 | 机制说明 | 词库规模 |
+|---|---|---|---|---|
+| **纯形·统一流 (推荐)** | `yoyo-pure-km` (空明)<br>`yoyo-pure` (六脉) | `rime/yoyo-pure.dict.yaml` | **0 空格确定性顶功状态机**，纯净语义码，需同步更新 `pure_dict_map.lua` | **134,106 条** (含 5.1w 零重码小说语料) |
+| **纯形·传统版** | `yoyo-bm` / `yoyo-bm-km` (北冥)<br>`yoyo-wx` / `yoyo-wx-km` (无相) | `rime/yoyo-bm.dict.yaml`<br>`rime/yoyo-wx.dict.yaml` | 空格分流字词模式，含 `[]`/`()` 语法控制符 | 82,210 条 |
+| **音形·呦呦版** | `yoyo-yx` / `yoyo-yx-hm` | `rime/yoyo-yx-word.dict.yaml` | 声韵母首击分流，四码定长词库 | 300,000+ 条 |
 
 > [!TIP]
 > 如果你使用的是最新的 **纯形统一流 (`yoyo-pure-km` / `yoyo-pure`)**，所有词条只需维护在 `rime/yoyo-pure.dict.yaml` 即可。
@@ -40,34 +40,33 @@
   - `类似` = `类`(`rT`) + `似`(`ah`) → **`rTah`**
   - `空格` = `空`(`IS`) + `格`(`oY`) → **`ISoY`**
   - `你好` = `你`(`aL`) + `好`(`ZF`) → **`aLZF`**
+  - `修神` = `修`(`ac`) + `神`(`Nw`) → **`acNw`**
+  - `斗尊` = `斗`(`Dd`) + `尊`(`,z`) → **`Dd,z`**
 
 ### 2.2 三字词 (AbBbCbCc)
 - 取第 1 个字的首码 + 第 2 个字的首码 + 第 3 个字的前两码。
 - **示例**：
   - `互联网` = `互`(`f`C) + `联`(`F`R) + `网`(`Fl`l) → **`fFFl`**
   - `为什么` = `为`(`O`...) + `什`(`a`...) + `么`(`tB`) → **`OatB`**
-  - `小行星` = `小`(`E`...) + `行`(`g`...) + `星`(`wG`) → **`EgwG`**
+  - `散乱在` = `散`(`R`...) + `乱`(`g`...) + `在`(`ec`) → **`Rgec`**
 
 ### 2.3 四字及多字词 (AbBbCbZb)
 - 取第 1、2、3 个字的首码 + 最后一个字的首码。
 - **示例**：
   - `人工智能` = `人`(`r`) + `工`(`S`) + `智`(`D`) + `能`(`B`) → **`rSDB`**
+  - `白鹤晾翅` = `白`(`d`) + `鹤`(`C`) + `晾`(`w`) + `翅`(`;`) → **`dCw;`**
   - `中华人民共和国` = `中`(`b`) + `华`(`a`) + `人`(`r`) + `国`(`U`) → **`barU`**
   - `总的来说` = `总`(`X`) + `的`(`d`) + `来`(`z`) + `说`(`u`) → **`Xdzu`**
 
-### 2.4 一简高频词 (单手一击出)
-- 左右手单手按键直出的一简词以 `_` (左手) 或 `+` (右手) 开头：
-  - `可以` → `_x`
-  - `环境` → `+,`
-  - `故事` → `+/`
-
 ---
 
-## 3. 如何查询单字编码
+## 3. 小说与文学高频语料零重码扩充机制
 
-在为新词组合编码前，如果不知道某个字的编码：
-1. **输入法内拼音反查**：输入反查引导符 `` ` ``（反引号）+ 全拼，例如输入 `` `nihao `` 即可在候选框中看到对应字词及其纯形码元。
-2. **查阅词典文件**：在 `rime/yoyo-pure.dict.yaml` 中搜索单字，如搜索 `智\t` 查看 `智` 的编码 `Db`。
+纯形统一流拥有多达 **81 万个**理论 4 码空间容量，现有核心词库仅占用了约 6.8 万个槽位。
+在 `rime/scripts/extract_novel_corpus.py` 中实现了 **纯空码位优选扩充流水线**：
+1. **语料覆盖**：清洗整合来自 `skrik2/lexicon`、`chinese-xinhua`、`funNLP`、`THUOCL` 等权威源的 6.6 万条文学、小说、动作描写与成语语料。
+2. **零重码筛选**：仅将编码落在**完全未被占用空码位**的新词注入主词库。
+3. **效果**：扩充 **51,898 条**小说高频词，重码率增量为 **0.00%**，全部支持 0 空格唯一码直出！
 
 ---
 
@@ -83,7 +82,7 @@
 机器学习	rXwD	50000
 ```
 > [!NOTE]
-> - 列之间必须使用制表符（`Tab` / `\t`）分隔，不可使用普通空格。
+> - 列之间必须使用制表符（`Tab` / `	`）分隔，不可使用普通空格。
 > - 权重通常填写 0 到 100000 之间的整数；数值越高，在重码候选时越靠前。
 
 ---
@@ -92,15 +91,10 @@
 
 因为纯形方案采用 **确定性状态机 0 空格顶屏** 架构，Lua 处理器 `pure_popping.lua` 直接依赖 `rime/lua/yoyo/data/pure_dict_map.lua` 进行前瞻判断与直出。
 
-运行以下命令一键重新生成静态映射表：
+运行以下命令一键重新生成词典与静态映射表：
 
 ```bash
-# 生成 pure_dict_map.lua（包含 dict_map、words_4code、chars_3code）
-python3 rime/scripts/generate_pure_dict_map.py
-```
-
-如果你同时更新了 `yoyo-bm.dict.yaml` 并希望自动规范化到 pure 词典，可直接运行：
-```bash
+# 从基准词库与小说语料一键构建规范词典并生成 pure_dict_map.lua
 python3 rime/scripts/generate_pure_dict.py
 ```
 *(该脚本已配置为在生成词典后自动触发 `generate_pure_dict_map.py`)*
@@ -109,11 +103,12 @@ python3 rime/scripts/generate_pure_dict.py
 
 ### 第三步：运行自动化校验并部署
 
-1. **运行测试套件自检**：
+1. **运行全量测试套件自检**：
    ```bash
    python3 rime/scripts/verify_pure_dict.py
    python3 rime/scripts/test_pure_popping_realistic.py
    python3 rime/scripts/test_pure_integration.py
+   python3 rime/scripts/test_pure_km_enhancements.py
    ```
 
 2. **一键部署到 Fcitx5**：
@@ -131,13 +126,13 @@ python3 rime/scripts/generate_pure_dict.py
 
 ```
                    【用户击键 / 并击】
-                           │
-                           ▼
-                  chord_composer (C++)
-       (逐字符注入: '+' -> 'e', 或 'i' -> 'G')
-                           │
-                           ▼
-               pure_popping.lua (Lua 状态机)
+                            │
+                            ▼
+                   chord_composer (C++)
+        (逐字符注入: '+' -> 'e', 或 'i' -> 'G')
+                            │
+                            ▼
+                pure_popping.lua (Lua 状态机)
         ┌───────────────────────────────────────┐
         │ 依据 (context.input, incoming) 二元组 │
         │ 查询 pure_dict_map 中的静态全集：     │
@@ -145,13 +140,13 @@ python3 rime/scripts/generate_pure_dict.py
         │  - words_4code: 判断是否为合法 4 码词  │
         │  - chars_3code: 判断是否为 3 码单字   │
         └───────────────────────────────────────┘
-                           │
-             ┌─────────────┴─────────────┐
-             ▼                           ▼
-        【触发顶屏】                 【继续累积】
-    engine:commit_text()                 │
-      context:clear()                    ▼
-                                   speller (C++)
+                            │
+              ┌─────────────┴─────────────┐
+              ▼                           ▼
+         【触发顶屏】                 【继续累积】
+     engine:commit_text()                 │
+       context:clear()                    ▼
+                                    speller (C++)
 ```
 
 ### 5.1 为什么不能依靠 Rime 原生 `context:has_menu()` 判断？
@@ -164,4 +159,4 @@ python3 rime/scripts/generate_pure_dict.py
   - **命中**：说明用户正在打一个 4 码词，放行让 `W` 进入缓冲区；
   - **未命中**：说明前两码与后两码为两个独立的单字（如 `sl` "了" + `cb` "不"），状态机立即顶出前两码 `XY`，保留 `Z`，并让 `W` 成为下一个字的第 2 码。
 
-**因此：每次向词库新增 4 码词或 3 码字后，只需运行 `generate_pure_dict_map.py` 更新集合，状态机即可精准识别新词，绝不误切分！**
+**因此：每次向词库新增 4 码词或 3 码字后，只需运行 `generate_pure_dict.py` 更新集合，状态机即可精准识别新词，绝不误切分！**

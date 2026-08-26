@@ -83,11 +83,11 @@ if command -v "$RIME_DEPLOYER" >/dev/null 2>&1; then
   } || true
   # 验证新 schema 构建产物
   missing_build=()
-  for s in yoyo-bm-km yoyo-wx-km; do
+  for s in yoyo-pure-km yoyo-pure yoyo-bm-km yoyo-wx-km; do
     [ -f "$DST_DIR/build/${s}.schema.yaml" ] || missing_build+=("$s")
   done
   if [ ${#missing_build[@]} -eq 0 ]; then
-    echo "已构建 yoyo-bm-km / yoyo-wx-km 部署产物"
+    echo "已构建 yoyo-pure-km / yoyo-pure / yoyo-bm-km / yoyo-wx-km 部署产物"
   else
     echo "警告：${missing_build[*]} 构建产物缺失——方案选单可能显示英文名且无法输入中文"
     echo "  请检查 rime_deployer 输出或手动运行："
