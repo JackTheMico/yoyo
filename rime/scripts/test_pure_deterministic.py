@@ -21,7 +21,7 @@ package.path = package.path .. ";rime/lua/?.lua;rime/lua/?/init.lua;lua/?.lua"
 
 local yoyo = require "yoyo.yoyo"
 local pure_popping = require "yoyo.pure_popping"
-local pure_words = require "yoyo.data.pure_words_set"
+local pure_data = require "yoyo.data.pure_dict_map"
 
 -- Mock Dict
 local mock_dict = {
@@ -94,11 +94,13 @@ end
 
 -- 模拟物理击键通过 chord_composer 产出并触发 pure_popping
 local function simulate_stroke(ctx, env, key_str, chord_output)
-  local key = make_key(key_str)
-  if chord_output and chord_output ~= "" then
-    ctx:push_input(chord_output)
+  for i = 1, #chord_output do
+    local c = chord_output:sub(i, i)
+    local res = pure_popping.func(make_key(c), env)
+    if res == yoyo.kNoop then
+      ctx:push_input(c)
+    end
   end
-  pure_popping.func(key, env)
 end
 
 print("🧪 开始执行纯形确定性全场景测试...")

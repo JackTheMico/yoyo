@@ -88,11 +88,25 @@ function processor.func(key_event, env)
 
   if not input or input == "" then return yoyo.kNoop end
 
-  -- 特殊模式绕过（反查模式与以单引号开头的快符）
-  if input:sub(1,1) == "`" or input:sub(1,1) == "'" then return yoyo.kNoop end
+  -- 特殊模式绕过（反查模式）
+  if input:sub(1,1) == "`" then return yoyo.kNoop end
 
-  -- 选字/翻页键放行：空格、'、数字
-  if incoming == " " or incoming == "'" or (incoming >= "0" and incoming <= "9") then
+  -- 次选修饰键 ' 拦截：若当前 input 存在次选，直接提交次选上屏并清空缓冲区
+  if incoming == "'" then
+    local clean = input:gsub("[_+]", "")
+    local second_text = pure_data.dict_map_2 and (pure_data.dict_map_2[input] or pure_data.dict_map_2[clean])
+    if second_text then
+      env.processing = true
+      env.engine:commit_text(second_text)
+      context:clear()
+      env.processing = false
+      return yoyo.kAccepted
+    end
+    return yoyo.kNoop
+  end
+
+  -- 选字/翻页键放行：空格、数字
+  if incoming == " " or (incoming >= "0" and incoming <= "9") then
     return yoyo.kNoop
   end
 

@@ -64,10 +64,13 @@ local function make_key(c)
   }
 end
 
--- 模拟真实时序：pure_popping 先看，speller 再 push
+-- 模拟真实时序：pure_popping 先看，speller 在返回 kNoop 时 push
 local function sim(env, ctx, incoming)
-  pure_popping.func(make_key(incoming), env)
-  ctx:push_input(incoming)  -- speller 总是 push（pure_popping 返回 kNoop）
+  local res = pure_popping.func(make_key(incoming), env)
+  if res == yoyo.kNoop then
+    ctx:push_input(incoming)
+  end
+  return res
 end
 
 local PASS, FAIL = 0, 0
@@ -414,6 +417,39 @@ do
   sim(env, ctx, "d")
   check("recv d: '蚕' committed", ctx.committed[1] == "蚕", ctx.committed[1], "蚕")
   check("recv d: input='_d'", ctx.input == "_d", ctx.input, "_d")
+end
+
+-- T26: 并击 e' 瞬间直出次选 "真的" (0 延迟、0 空格、输入框即刻清空)
+print("\nT26: 并击 e' -> 瞬间直出 '真的'")
+do
+  local ctx = MockContext.new(); local env = make_env(ctx)
+  sim(env, ctx, "_")
+  sim(env, ctx, "e")
+  check("e: input='_e'", ctx.input == "_e", ctx.input, "_e")
+  local res = sim(env, ctx, "'")
+  check("recv ': kAccepted", res == yoyo.kAccepted, res, yoyo.kAccepted)
+  check("recv ': '真的' committed", ctx.committed[1] == "真的", ctx.committed[1], "真的")
+  check("recv ': input cleared", ctx.input == "", ctx.input, "")
+end
+
+-- T27: 并击 w' 瞬间直出次选 "时间"
+print("\nT27: 并击 w' -> 瞬间直出 '时间'")
+do
+  local ctx = MockContext.new(); local env = make_env(ctx)
+  sim(env, ctx, "_"); sim(env, ctx, "w")
+  local res = sim(env, ctx, "'")
+  check("recv ': '时间' committed", ctx.committed[1] == "时间", ctx.committed[1], "时间")
+  check("recv ': input cleared", ctx.input == "", ctx.input, "")
+end
+
+-- T28: 并击 i' 瞬间直出次选 "有点" (+e)
+print("\nT28: 并击 i' -> 瞬间直出 '有点'")
+do
+  local ctx = MockContext.new(); local env = make_env(ctx)
+  sim(env, ctx, "+"); sim(env, ctx, "e")
+  local res = sim(env, ctx, "'")
+  check("recv ': '有点' committed", ctx.committed[1] == "有点", ctx.committed[1], "有点")
+  check("recv ': input cleared", ctx.input == "", ctx.input, "")
 end
 
 print(string.format("\n%s %d/%d 通过\n", FAIL==0 and "🎉" or "💥", PASS, PASS+FAIL))

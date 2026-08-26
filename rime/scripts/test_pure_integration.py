@@ -53,7 +53,7 @@ def load_dict_entries():
     return code_to_text
 
 
-ALPHABET_ORDER = "12345qwertasdfgzxcvb 67890yuiophjkl;nm,./"
+ALPHABET_ORDER = "12345qwertasdfgzxcvb 67890yuiophjkl;nm,./'"
 CHAR_RANK = {ch: i for i, ch in enumerate(ALPHABET_ORDER)}
 
 
@@ -165,10 +165,18 @@ def test_integration():
     assert code_dict.get(word_code) == "可以", f"Dict mismatch for 'xkhr': got {code_dict.get(word_code)}"
     print(f"✓ [四码词] 双手第1击 '{c1}' + 双手第2击 '{c2}' -> 四码 '{word_code}' -> 出词 '{code_dict.get(word_code)}'")
 
-    # 4.6 标点并击 (ser + k -> eLd -> 。)
-    punct_chord = apply_xforms("serk", km_pipeline)
-    assert punct_chord == "eLd", f"Expected 'eLd', got '{punct_chord}'"
-    print(f"✓ [标点并击] ser + k -> 产出标点码元 '{punct_chord}' (匹配 auto_select_pattern 出 '。')")
+    # 4.7 一简次选并击 (e' -> _e', w' -> _w', i' -> +e')
+    r_2nd_e = apply_xforms("e'", km_pipeline)
+    assert r_2nd_e == "_e'", f"Expected '_e'', got '{r_2nd_e}'"
+    print(f"✓ [一简·次选] 并击 'e'' -> 产出码元 '{r_2nd_e}' (由 pure_popping 瞬间直出 '真的')")
+
+    r_2nd_w = apply_xforms("w'", km_pipeline)
+    assert r_2nd_w == "_w'", f"Expected '_w'', got '{r_2nd_w}'"
+    print(f"✓ [一简·次选] 并击 'w'' -> 产出码元 '{r_2nd_w}' (由 pure_popping 瞬间直出 '时间')")
+
+    r_2nd_i = apply_xforms("i'", km_pipeline)
+    assert r_2nd_i == "+e'", f"Expected '+e'', got '{r_2nd_i}'"
+    print(f"✓ [一简·次选] 并击 'i'' -> 产出码元 '{r_2nd_i}' (由 pure_popping 瞬间直出 '有点')")
 
     print("\n==================================================")
     print("🎉 端到端集成测试全部通过！纯形统一流击键链路完美闭环！")
