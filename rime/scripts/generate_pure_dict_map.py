@@ -26,7 +26,8 @@ def generate():
     print(f"Reading pure dictionary: {SOURCE_DICT}")
     lines = SOURCE_DICT.read_text(encoding="utf-8").splitlines()
 
-    code_to_top_word = {}
+    code_to_candidates = {}
+    clean_to_candidates = {}
     words_4code = set()
     chars_3code = set()
     punct_3code = set()
@@ -49,11 +50,29 @@ def generate():
         elif len(clean_code) == 3 and any(not unicodedata.category(c).startswith("L") for c in text):
             punct_3code.add(clean_code)
 
-        # 记录首选词（保留第一条遇到的最高权重/最高位词条）
-        if raw_code not in code_to_top_word:
-            code_to_top_word[raw_code] = text
-        if clean_code not in code_to_top_word:
-            code_to_top_word[clean_code] = text
+        # 记录候选词列表（按词典原始权重顺序）
+        cand_list = code_to_candidates.setdefault(raw_code, [])
+        if text not in cand_list:
+            cand_list.append(text)
+
+        clean_cand_list = clean_to_candidates.setdefault(clean_code, [])
+        if text not in clean_cand_list:
+            clean_cand_list.append(text)
+
+    # 提取首选与次选
+    code_to_top_word = {}
+    code_to_second_word = {}
+    for code, cands in code_to_candidates.items():
+        if cands:
+            code_to_top_word[code] = cands[0]
+        if len(cands) > 1:
+            code_to_second_word[code] = cands[1]
+
+    for clean, cands in clean_to_candidates.items():
+        if clean not in code_to_top_word and cands:
+            code_to_top_word[clean] = cands[0]
+        if clean not in code_to_second_word and len(cands) > 1:
+            code_to_second_word[clean] = cands[1]
 
     out = [
         "-- Auto-generated pure shape dictionary map & sets",
@@ -61,6 +80,11 @@ def generate():
         "  dict_map = {",
     ]
     for code, text in sorted(code_to_top_word.items()):
+        out.append(f"    [{json.dumps(code, ensure_ascii=False)}] = {json.dumps(text, ensure_ascii=False)},")
+    out.append("  },")
+
+    out.append("  dict_map_2 = {")
+    for code, text in sorted(code_to_second_word.items()):
         out.append(f"    [{json.dumps(code, ensure_ascii=False)}] = {json.dumps(text, ensure_ascii=False)},")
     out.append("  },")
 
