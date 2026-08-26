@@ -58,10 +58,20 @@ local function is_plain(c)
   return c:match("[a-zA-Z;:,<.>/?]") ~= nil
 end
 
+-- 获取当前生效的数据表（主单模式 vs 主词模式）
+local function get_active_tables(context)
+  local is_word_priority = context:get_option("word_priority")
+  if is_word_priority and pure_data.word_first then
+    return pure_data.word_first
+  end
+  return pure_data.char_first or pure_data
+end
+
 -- 提交中文，可选 restore 一段前缀回 input，然后让 incoming 继续走向 speller
-local function commit_and_restore(env, ctx, code, restore)
+local function commit_and_restore(env, ctx, code, restore, active_tables)
   local clean = code:gsub("[_+]", "")
-  local text = pure_data.dict_map[code] or pure_data.dict_map[clean]
+  local dict_map = active_tables and active_tables.dict_map or pure_data.dict_map
+  local text = dict_map[code] or dict_map[clean]
   if not text then return end
   env.processing = true
   env.engine:commit_text(text)
@@ -88,13 +98,16 @@ function processor.func(key_event, env)
 
   if not input or input == "" then return yoyo.kNoop end
 
+  local active_tables = get_active_tables(context)
+
   -- 特殊模式绕过（反查模式）
   if input:sub(1,1) == "`" then return yoyo.kNoop end
 
   -- 次选修饰键 ' 拦截：若当前 input 存在次选，直接提交次选上屏并清空缓冲区
   if incoming == "'" then
     local clean = input:gsub("[_+]", "")
-    local second_text = pure_data.dict_map_2 and (pure_data.dict_map_2[input] or pure_data.dict_map_2[clean])
+    local dict_map_2 = active_tables.dict_map_2 or pure_data.dict_map_2
+    local second_text = dict_map_2 and (dict_map_2[input] or dict_map_2[clean])
     if second_text then
       env.processing = true
       env.engine:commit_text(second_text)
@@ -116,7 +129,7 @@ function processor.func(key_event, env)
   -- input='_w', incoming='b' → 顶出 _w("是")，kNoop → speller push 'b'
   -- input='_d', incoming='+' → 顶出 _d("的")，kNoop → speller push '+'
   if ilen == 2 and is_jian_prefix(input:sub(1,1)) and is_plain(input:sub(2,2)) then
-    commit_and_restore(env, context, input, nil)
+    commit_and_restore(env, context, input, nil, active_tables)
     return yoyo.kNoop
   end
 
@@ -134,7 +147,7 @@ function processor.func(key_event, env)
     if pure_data.chars_3code[chord2 .. incoming] then
       return yoyo.kNoop  -- 是3码字（如 bXn）
     else
-      commit_and_restore(env, context, chord2, jian_head)
+      commit_and_restore(env, context, chord2, jian_head, active_tables)
       return yoyo.kNoop
     end
   end
@@ -146,14 +159,14 @@ function processor.func(key_event, env)
      and is_plain(input:sub(3,3)) and is_plain(incoming) then
     local jian = input:sub(1,2)   -- '_w'
     local next1 = input:sub(3,3)  -- 'b'（两码字的第1字符）
-    commit_and_restore(env, context, jian, next1)
+    commit_and_restore(env, context, jian, next1, active_tables)
     return yoyo.kNoop
   end
 
   -- ─── Pattern E: 完整3码字(XX_Y/XX+Y, ilen=4)，接任意可见键 ─────────────────
   if ilen == 4 and is_plain(input:sub(1,1)) and is_plain(input:sub(2,2))
      and is_jian_prefix(input:sub(3,3)) and is_plain(input:sub(4,4)) then
-    commit_and_restore(env, context, input, nil)
+    commit_and_restore(env, context, input, nil, active_tables)
     return yoyo.kNoop
   end
 
@@ -163,19 +176,20 @@ function processor.func(key_event, env)
       return yoyo.kNoop  -- 是4码词（如 rTah，eLjY），继续等第4码
     elseif pure_data.punct_3code and pure_data.punct_3code[input] then
       -- input 自身是完整标点条目（如 eLd='。'，fgf=','）
-      commit_and_restore(env, context, input, nil)
+      commit_and_restore(env, context, input, nil, active_tables)
       return yoyo.kNoop
     elseif is_plain(incoming) then
       -- 四码非词（如 fTB+n="天内", slc+b="了不"）：字1(前2码)上屏，字2第1字符(第3码)保留
-      commit_and_restore(env, context, input:sub(1,2), input:sub(3,3))
+      commit_and_restore(env, context, input:sub(1,2), input:sub(3,3), active_tables)
       return yoyo.kNoop
     end
   end
 
   -- ─── Pattern G: 4字符纯字母(XYZW)，接任意可见键 → 顶出词/字 ─────────────────
   if ilen == 4 and not input:find("[_+]") then
-    local text = pure_data.dict_map[input]
-    if text then commit_and_restore(env, context, input, nil) end
+    local dict_map = active_tables.dict_map or pure_data.dict_map
+    local text = dict_map[input]
+    if text then commit_and_restore(env, context, input, nil, active_tables) end
     return yoyo.kNoop
   end
 
