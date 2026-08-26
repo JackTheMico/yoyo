@@ -371,6 +371,51 @@ do
   check("total 1 committed", #ctx.committed == 1, #ctx.committed, 1)
 end
 
+-- T23: 天内 (fT + Bn) 四码非词回退 —— 顶出'天'，留'Bn'，不误出'蚕n'
+print("\nT23: 天内 (fT + Bn) 四码非词回退 -> 顶出'天'，留'Bn'")
+do
+  local ctx = MockContext.new(); local env = make_env(ctx)
+  sim(env, ctx, "f"); sim(env, ctx, "T")
+  check("fT: input='fT'", ctx.input == "fT", ctx.input, "fT")
+  check("fT: no commit", #ctx.committed == 0, #ctx.committed, 0)
+  sim(env, ctx, "B")
+  check("fTB: input='fTB'", ctx.input == "fTB", ctx.input, "fTB")
+  check("fTB: no commit", #ctx.committed == 0, #ctx.committed, 0)
+  sim(env, ctx, "n")  -- words_4code['fTBn']=nil, punct_3code['fTB']=nil → 顶出'天', restore 'B', push 'n' → input='Bn'
+  check("recv n: '天' committed", ctx.committed[1] == "天", ctx.committed[1], "天")
+  check("recv n: input='Bn' (内)", ctx.input == "Bn", ctx.input, "Bn")
+end
+
+-- T24: 天内 (fT + Bn) 接 的(_d) -> 顶出'天'和'内'，留'_d'
+print("\nT24: 天内 (fT + Bn) 接 的(_d) -> 顶出'天'和'内'，留'_d'")
+do
+  local ctx = MockContext.new(); local env = make_env(ctx)
+  sim(env, ctx, "f"); sim(env, ctx, "T")
+  sim(env, ctx, "B"); sim(env, ctx, "n")
+  check("after Bn: input='Bn'", ctx.input == "Bn", ctx.input, "Bn")
+  check("after Bn: '天' committed", ctx.committed[1] == "天", ctx.committed[1], "天")
+  sim(env, ctx, "_")
+  sim(env, ctx, "d")
+  check("recv d: '内' committed", ctx.committed[2] == "内", ctx.committed[2], "内")
+  check("recv d: input='_d'", ctx.input == "_d", ctx.input, "_d")
+end
+
+-- T25: 蚕 (fT_B) 3码单字全码不误拆
+print("\nT25: 蚕 (fT_B) 3码单字全码不误拆")
+do
+  local ctx = MockContext.new(); local env = make_env(ctx)
+  sim(env, ctx, "f"); sim(env, ctx, "T")
+  sim(env, ctx, "_")
+  check("fT_: input='fT_'", ctx.input == "fT_", ctx.input, "fT_")
+  sim(env, ctx, "B")  -- chars_3code['fTB']=true → kNoop
+  check("fT_B: input='fT_B'", ctx.input == "fT_B", ctx.input, "fT_B")
+  check("fT_B: no commit", #ctx.committed == 0, #ctx.committed, 0)
+  sim(env, ctx, "_")
+  sim(env, ctx, "d")
+  check("recv d: '蚕' committed", ctx.committed[1] == "蚕", ctx.committed[1], "蚕")
+  check("recv d: input='_d'", ctx.input == "_d", ctx.input, "_d")
+end
+
 print(string.format("\n%s %d/%d 通过\n", FAIL==0 and "🎉" or "💥", PASS, PASS+FAIL))
 if FAIL > 0 then os.exit(1) end
 """

@@ -29,6 +29,7 @@ def generate():
     code_to_top_word = {}
     words_4code = set()
     chars_3code = set()
+    punct_3code = set()
 
     for l in lines:
         if "\t" not in l or l.startswith("#"):
@@ -44,6 +45,9 @@ def generate():
         # 记录 3 码单字（必须为单字汉字，排除标点符号与快符）
         elif len(clean_code) == 3 and len(text) == 1 and unicodedata.category(text).startswith("L"):
             chars_3code.add(clean_code)
+        # 记录 3 码标点符号
+        elif len(clean_code) == 3 and any(not unicodedata.category(c).startswith("L") for c in text):
+            punct_3code.add(clean_code)
 
         # 记录首选词（保留第一条遇到的最高权重/最高位词条）
         if raw_code not in code_to_top_word:
@@ -69,6 +73,11 @@ def generate():
     for c in sorted(chars_3code):
         out.append(f"    [{json.dumps(c, ensure_ascii=False)}] = true,")
     out.append("  },")
+
+    out.append("  punct_3code = {")
+    for c in sorted(punct_3code):
+        out.append(f"    [{json.dumps(c, ensure_ascii=False)}] = true,")
+    out.append("  },")
     out.append("}")
     out.append("return M")
 
@@ -78,6 +87,7 @@ def generate():
     print(f"  - dict_map entries: {len(code_to_top_word)}")
     print(f"  - words_4code entries: {len(words_4code)}")
     print(f"  - chars_3code entries: {len(chars_3code)}")
+    print(f"  - punct_3code entries: {len(punct_3code)}")
 
 
 if __name__ == "__main__":

@@ -146,12 +146,13 @@ function processor.func(key_event, env)
   -- ─── Pattern F: 3字符纯字母(XYZ)，接任意键 ──────────────────────────────────
   if ilen == 3 and not input:find("[_+]") then
     if is_plain(incoming) and pure_data.words_4code[input .. incoming] then
-      return yoyo.kNoop  -- 是4码词（如 rTah），继续等第4码
-    elseif pure_data.dict_map[input] then
-      -- input 自身是完整条目（如标点 eLd='。'，fgf=','）
+      return yoyo.kNoop  -- 是4码词（如 rTah，eLjY），继续等第4码
+    elseif pure_data.punct_3code and pure_data.punct_3code[input] then
+      -- input 自身是完整标点条目（如 eLd='。'，fgf=','）
       commit_and_restore(env, context, input, nil)
       return yoyo.kNoop
     elseif is_plain(incoming) then
+      -- 四码非词（如 fTB+n="天内", slc+b="了不"）：字1(前2码)上屏，字2第1字符(第3码)保留
       commit_and_restore(env, context, input:sub(1,2), input:sub(3,3))
       return yoyo.kNoop
     end
