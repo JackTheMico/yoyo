@@ -48,7 +48,7 @@ __patch:
     - express_editor
 
   chord_composer:
-    alphabet: "qwertasdfgzxcvb yuiophjkl;nm,./"
+    alphabet: "qwertasdfgzxcvb yuiophjkl;nm,./'"
     prompt_format:
       - xform/[-=_+]//g
     output_format:
@@ -71,8 +71,7 @@ __patch:
   speller:
     alphabet: "zyxwvutsrqponmlkjihgfedcba;,./ZYXWVUTSRQPONMLKJIHGFEDCBA:<>?_+'"
     initials: "zyxwvutsrqponmlkjihgfedcba;,./ZYXWVUTSRQPONMLKJIHGFEDCBA:<>?_+'"
-    auto_select: true
-    auto_select_pattern: "'.+"
+    auto_select: false
     algebra:
       # 将字典中 3 码单字 (如 bXn, wCs) 派生出单手击键输入形式 (如 bX_n, wC+s)
       - derive|^([a-zA-Z;:,<.>/?]{2})([a-zA-Z;:,<.>/?])$|$1_$2|
@@ -85,8 +84,8 @@ __patch:
 
 纯形统一心法:
   __append:
-    # 左右手并击：以单引号分隔左右两手按键区，交由指法映射转换为纯码元
-    - xform|^([qwertasdfgzxcvb]+)([yuiophjkl;nm,./]+)$|$1'$2|
-    # 单手按键：转换为 _ (左手) 或 + (右手) 开头的一简前缀
-    - xform|^([qwertasdfgzxcvb]+)$|_$1|
-    - xform|^([yuiophjkl;nm,./]+)$|+$1|
+    # 左右手并击：以 # 分隔左右两手按键区，保留末尾可能存在的 ' 次选修饰符
+    - xform|^([qwertasdfgzxcvb]+)([yuiophjkl;nm,./]+)([']?)$|$1#$2$3|
+    # 单手按键：转换为 _ (左手) 或 + (右手) 开头的一简前缀，保留末尾可能存在的 ' 次选修饰符
+    - xform|^([qwertasdfgzxcvb]+)([']?)$|_$1$2|
+    - xform|^([yuiophjkl;nm,./]+)([']?)$|+$1$2|

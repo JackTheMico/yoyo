@@ -409,7 +409,7 @@ menu:
     - xform|cAbA|bM|
     - xform|rAbA|bM|
 
-    - xform|'||  # 清除所有的单引号
+    - xform|#||  # 清除内部隔离符 #
 
 
 六脉神剑: # 通用指法
@@ -541,7 +541,7 @@ menu:
     - xform|bf|N|
     - xform|fb|N|
 
-    - xform|'||  # 清除所有的单引号
+    - xform|#||  # 清除内部隔离符 #
 
 
 空明拳: # 空明码键位指法（yoyo-km）
@@ -675,7 +675,7 @@ menu:
     - xform|fe|y|
   # 单键码元（15 个，直出无需规则）：a b c d e f g q r s t v w x z
 
-    - xform|'||  # 清除所有的单引号
+    - xform|#||  # 清除内部隔离符 #
 
 寒梅: # 192指法
   __append:
@@ -1083,4 +1083,4 @@ menu:
     - xform|bAwA|bF|
     - xform|xAbA|bG|
     - xform|bAxA|bG|
-    - xform|'||  # 清除所有的单引号
+    - xform|#||  # 清除内部隔离符 #

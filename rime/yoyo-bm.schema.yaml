@@ -83,12 +83,12 @@ __patch:
 北冥神功:
   __append:
     # 将左右手（无空格）的按键组合：转换为  [左右]  的格式——打单字
-    - xform|^([12345qwertasdfgzxcvb]+)([67890yuiophjkl;nm,./]+)$|[$1'$2]|
+    - xform|^([12345qwertasdfgzxcvb]+)([67890yuiophjkl;nm,./]+)$|[$1#$2]|
     # - xform|^(?=.*[12345qwertasdfgzxcvb])(?=.*[67890yuiophjkl;nm,./])([0-9a-z;,./]+)$|[$1]|
     
     # 将左右手（带空格）的按键组合：转换为  (左右)  的格式——打词
     - xform|^(?=.*[12345qwertasdfgzxcvb])(?=.*[67890yuiophjkl;nm,./])([0-9a-z;,./]*) ([0-9a-z;,./]*)$|($1$2)|  # 这里的 “(?=.*[12345qwertasdfgzxcvb])” 是”正向预查“：用于确保左手至少有一个按键。
-    - xform|^(\([12345qwertasdfgzxcvb]+)([67890yuiophjkl;nm,./]+\))|$1'$2|
+    - xform|^(\([12345qwertasdfgzxcvb]+)([67890yuiophjkl;nm,./]+\))|$1#$2|
     
     # 单手带空格：
     - xform|^(?=.*[12345qwertasdfgzxcvb])([12345qwertasdfgzxcvb]*) ([12345qwertasdfgzxcvb]*)$|-$1$2|  # 将左手1到多个按键(带空格)转换为  -左  的格式 (用于打单字第三码，词的第三码、第四码)
