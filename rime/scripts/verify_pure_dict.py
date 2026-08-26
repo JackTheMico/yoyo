@@ -119,7 +119,7 @@ def test_pure_dict():
     # 6. 四码词条完整性
     four_code_words = [e for e in entries if len(e[0]) >= 2 and len(e[1]) == 4]
     print(f"✓ 统计四码词条总数: {len(four_code_words)}")
-    assert len(four_code_words) > 50000, "四码词条数量不足！"
+    assert len(four_code_words) > 120000, f"四码词条数量不足（当前为 {len(four_code_words)}，预期 > 120,000）！"
 
     # 7. 旧版词库不变性
     assert BM_DICT_PATH.exists(), "yoyo-bm.dict.yaml 不存在！"

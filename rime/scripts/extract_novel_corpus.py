@@ -3,8 +3,8 @@
 
 功能：
 1. 读取 rime/scripts/data/novel_corpus/ 下的多维度小说与文学语料
-2. 基于 yoyo-pure 单字字根，计算规范 4 码纯形编码
-3. 严格比对现有词典（yoyo-pure.dict.yaml）的编码槽位
+2. 基于 yoyo-bm 基准核心词库单字字根，计算规范 4 码纯形编码
+3. 严格比对基准词典（yoyo-bm.dict.yaml）的核心编码槽位
 4. 筛选并优选出占用全新空码位的零重码新词（1 槽 1 词）
 5. 输出标准格式的增量词条与冲突候选数据
 """
@@ -17,9 +17,11 @@ from pathlib import Path
 
 SCRIPTS_DIR = Path(__file__).resolve().parent
 RIME_DIR = SCRIPTS_DIR.parent
-SOURCE_DICT = RIME_DIR / "yoyo-pure.dict.yaml"
+SOURCE_DICT = RIME_DIR / "yoyo-bm.dict.yaml"
 CORPUS_DIR = SCRIPTS_DIR / "data" / "novel_corpus"
 DATA_OUTPUT_DIR = SCRIPTS_DIR / "data"
+
+MARKER_REGEX = re.compile(r"[\[\]\(\)\-_=+!@]")
 
 CATEGORY_PRIORITY = {
     "网络小说/修真武侠": 100,
@@ -53,7 +55,7 @@ CORPUS_FILES = {
 
 
 def load_pure_char_roots():
-    """解析 yoyo-pure.dict.yaml，获取单字前两码字根表 (char -> 2-code prefix)"""
+    """解析基准词典，获取单字前两码字根表 (char -> 2-code prefix)"""
     if not SOURCE_DICT.exists():
         raise FileNotFoundError(f"Source dict {SOURCE_DICT} not found.")
 
@@ -69,18 +71,19 @@ def load_pure_char_roots():
             continue
         parts = line.split("\t")
         if len(parts) >= 2:
-            text, code = parts[0], parts[1]
-            if len(text) == 1 and not (code.startswith("_") or code.startswith("+")):
-                if len(code) == 3:
-                    char_roots[text] = code[:2]
-                elif len(code) == 2 and text not in char_roots:
-                    char_roots[text] = code
+            text, raw_code = parts[0], parts[1]
+            if len(text) == 1 and not (raw_code.startswith("_") or raw_code.startswith("+")):
+                clean_code = MARKER_REGEX.sub("", raw_code)
+                if len(clean_code) == 3:
+                    char_roots[text] = clean_code[:2]
+                elif len(clean_code) == 2 and text not in char_roots:
+                    char_roots[text] = clean_code
 
     return char_roots
 
 
 def load_existing_dict_keys():
-    """解析 yoyo-pure.dict.yaml，获取既有四码词集合与既有词汇集合"""
+    """解析基准词典，获取既有核心四码词集合与既有词汇集合"""
     lines = SOURCE_DICT.read_text(encoding="utf-8").splitlines()
     existing_words = set()
     existing_4codes = set()
@@ -94,11 +97,13 @@ def load_existing_dict_keys():
             continue
         parts = line.split("\t")
         if len(parts) >= 2:
-            text, code = parts[0], parts[1]
+            text, raw_code = parts[0], parts[1]
             if len(text) > 1:
                 existing_words.add(text)
-                if len(code) == 4 and not (code.startswith("_") or code.startswith("+")):
-                    existing_4codes.add(code)
+                if not (raw_code.startswith("_") or raw_code.startswith("+")):
+                    clean_code = MARKER_REGEX.sub("", raw_code)
+                    if len(clean_code) == 4:
+                        existing_4codes.add(clean_code)
 
     return existing_words, existing_4codes
 
@@ -140,7 +145,7 @@ def extract_and_filter_novel_corpus():
     existing_words, existing_4codes = load_existing_dict_keys()
 
     word_regex = re.compile(r"^[\u4e00-\u9fa5]{2,10}$")
-    raw_candidates = [] # list of (word, category)
+    raw_candidates = []
 
     for filename, category in CORPUS_FILES.items():
         file_path = CORPUS_DIR / filename
@@ -161,8 +166,8 @@ def extract_and_filter_novel_corpus():
             print(f"Warning: Failed to parse {filename}: {e}", file=sys.stderr)
 
     # 计算编码并按槽位分组
-    empty_slots = defaultdict(list) # code -> list of (word, category)
-    colliding_slots = defaultdict(list) # code -> list of (word, category)
+    empty_slots = defaultdict(list)
+    colliding_slots = defaultdict(list)
 
     for word, category in raw_candidates:
         code = encode_pure_word(word, char_roots)
@@ -174,9 +179,8 @@ def extract_and_filter_novel_corpus():
             empty_slots[code].append((word, category))
 
     # 对全新空码位进行 1 槽 1 词优选
-    zero_collision_entries = [] # list of (word, code, category)
+    zero_collision_entries = []
     for code, cand_list in sorted(empty_slots.items()):
-        # 排序策略：类别优先级降序 > 词长适中 (4字/3字/2字优先) > 字典序
         cand_list.sort(
             key=lambda x: (
                 -CATEGORY_PRIORITY.get(x[1], 0),

@@ -349,25 +349,27 @@ do
   check("recv d: input='_d'", ctx.input == "_d", ctx.input, "_d")
 end
 
--- T21: 标点。(eLd) 接 的(_d) -> 顶出'。'，留'_d'
-print("\nT21: 标点。(eLd) 接 的(_d) -> 顶出'。'，留'_d'")
+-- T21: 小说词'白鹤晾翅'(dCw;) 接 的(_d) -> 顶出'白鹤晾翅'，留'_d'
+print("\nT21: 小说词'白鹤晾翅'(dCw;) 接 的(_d) -> 顶出'白鹤晾翅'，留'_d'")
 do
   local ctx = MockContext.new(); local env = make_env(ctx)
-  sim(env, ctx, "e"); sim(env, ctx, "L"); sim(env, ctx, "d")
+  sim(env, ctx, "d"); sim(env, ctx, "C"); sim(env, ctx, "w"); sim(env, ctx, ";")
+  check("dCw;: input='dCw;'", ctx.input == "dCw;", ctx.input, "dCw;")
   sim(env, ctx, "_")
-  check("recv _: '。' committed", ctx.committed[1] == "。", ctx.committed[1], "。")
+  check("recv _: '白鹤晾翅' committed", ctx.committed[1] == "白鹤晾翅", ctx.committed[1], "白鹤晾翅")
   check("recv _: input='_'", ctx.input == "_", ctx.input, "_")
   sim(env, ctx, "d")
   check("recv d: input='_d'", ctx.input == "_d", ctx.input, "_d")
 end
 
--- T22: 标点。(eLd) 接 博客(eL + jY) -> 顶出'。'，留'eLjY'
-print("\nT22: 标点。(eLd) 接 博客(eL + jY) -> 顶出'。'，留'eLjY'")
+-- T22: 小说词'散乱在'(Rgec) 接 博客(eLjY) -> 顶出'散乱在'，留'eLjY'
+print("\nT22: 小说词'散乱在'(Rgec) 接 博客(eLjY) -> 顶出'散乱在'，留'eLjY'")
 do
   local ctx = MockContext.new(); local env = make_env(ctx)
-  sim(env, ctx, "e"); sim(env, ctx, "L"); sim(env, ctx, "d")
+  sim(env, ctx, "R"); sim(env, ctx, "g"); sim(env, ctx, "e"); sim(env, ctx, "c")
+  check("Rgec: input='Rgec'", ctx.input == "Rgec", ctx.input, "Rgec")
   sim(env, ctx, "e")
-  check("recv e: '。' committed", ctx.committed[1] == "。", ctx.committed[1], "。")
+  check("recv e: '散乱在' committed", ctx.committed[1] == "散乱在", ctx.committed[1], "散乱在")
   check("recv e: input='e'", ctx.input == "e", ctx.input, "e")
   sim(env, ctx, "L"); sim(env, ctx, "j"); sim(env, ctx, "Y")
   check("eLjY: input='eLjY'", ctx.input == "eLjY", ctx.input, "eLjY")
@@ -450,6 +452,29 @@ do
   local res = sim(env, ctx, "'")
   check("recv ': '有点' committed", ctx.committed[1] == "有点", ctx.committed[1], "有点")
   check("recv ': input cleared", ctx.input == "", ctx.input, "")
+end
+
+
+-- T29: 小说四码新词 0 空格确定性顶屏（修神 acNw + 斗尊 Dd,z）
+print("\nT29: 小说四码新词 0 空格顶屏 acNw'修神' + Dd,z'斗尊'")
+do
+  local ctx = MockContext.new(); local env = make_env(ctx)
+  sim(env, ctx, "a"); sim(env, ctx, "c")
+  sim(env, ctx, "N"); sim(env, ctx, "w")
+  check("acNw: input='acNw'", ctx.input == "acNw", ctx.input, "acNw")
+  check("acNw: no commit yet", #ctx.committed == 0, #ctx.committed, 0)
+
+  -- 接下一词 '斗尊' (Dd,z)
+  sim(env, ctx, "D")
+  check("recv D: '修神' committed", ctx.committed[1] == "修神", ctx.committed[1], "修神")
+  sim(env, ctx, "d")
+  sim(env, ctx, ",")
+  sim(env, ctx, "z")
+  check("Dd,z: input='Dd,z'", ctx.input == "Dd,z", ctx.input, "Dd,z")
+  -- 接一简 '_d' 顶出 '斗尊'
+  sim(env, ctx, "_")
+  sim(env, ctx, "d")
+  check("recv _d: '斗尊' committed", ctx.committed[2] == "斗尊", ctx.committed[2], "斗尊")
 end
 
 print(string.format("\n%s %d/%d 通过\n", FAIL==0 and "🎉" or "💥", PASS, PASS+FAIL))

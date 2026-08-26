@@ -165,6 +165,20 @@ def test_integration():
     assert code_dict.get(word_code) == "可以", f"Dict mismatch for 'xkhr': got {code_dict.get(word_code)}"
     print(f"✓ [四码词] 双手第1击 '{c1}' + 双手第2击 '{c2}' -> 四码 '{word_code}' -> 出词 '{code_dict.get(word_code)}'")
 
+
+    # 4.6 小说与文学四码新词验证
+    assert code_dict.get("acNw") == "修神", f"Dict mismatch for 'acNw': got {code_dict.get('acNw')}"
+    print(f"✓ [小说词·修真] 四码 'acNw' -> 出词 '{code_dict.get('acNw')}' (100% 零重码唯一直出)")
+
+    assert code_dict.get("Dd,z") == "斗尊", f"Dict mismatch for 'Dd,z': got {code_dict.get('Dd,z')}"
+    print(f"✓ [小说词·修真] 四码 'Dd,z' -> 出词 '{code_dict.get('Dd,z')}' (100% 零重码唯一直出)")
+
+    assert code_dict.get("dCw;") == "白鹤晾翅", f"Dict mismatch for 'dCw;': got {code_dict.get('dCw;')}"
+    print(f"✓ [小说词·动作] 四码 'dCw;' -> 出词 '{code_dict.get('dCw;')}' (100% 零重码唯一直出)")
+
+    assert code_dict.get("Rgec") == "散乱在", f"Dict mismatch for 'Rgec': got {code_dict.get('Rgec')}"
+    print(f"✓ [小说词·三字] 四码 'Rgec' -> 出词 '{code_dict.get('Rgec')}' (100% 零重码唯一直出)")
+
     # 4.7 一简次选并击 (e' -> _e', w' -> _w', i' -> +e')
     r_2nd_e = apply_xforms("e'", km_pipeline)
     assert r_2nd_e == "_e'", f"Expected '_e'', got '{r_2nd_e}'"
