@@ -178,6 +178,23 @@ def test_integration():
     assert r_2nd_i == "+e'", f"Expected '+e'', got '{r_2nd_i}'"
     print(f"✓ [一简·次选] 并击 'i'' -> 产出码元 '{r_2nd_i}' (由 pure_popping 瞬间直出 '有点')")
 
+    # 4.8 验证 Schema 主单/主词开关配置与 Filter 挂载
+    switches = km_data.get("__patch", {}).get("switches", [])
+    wp_switch = next((s for s in switches if s.get("name") == "word_priority"), None)
+    assert wp_switch is not None, "word_priority switch not found in schema"
+    assert wp_switch.get("states") == ["主单", "主词"], f"Unexpected states: {wp_switch.get('states')}"
+    print("✓ [Schema 开关] word_priority 开关定义完整 (states: [主单, 主词])")
+
+    filters = km_data.get("__patch", {}).get("engine/filters", [])
+    assert "lua_filter@*yoyo.priority_filter" in filters, "priority_filter not found in engine/filters"
+    print("✓ [Schema Filter] lua_filter@*yoyo.priority_filter 挂载正常")
+
+    bindings = km_data.get("__patch", {}).get("key_binder/+", {}).get("bindings", [])
+    wp_binding = next((b for b in bindings if b.get("toggle") == "word_priority"), None)
+    assert wp_binding is not None, "word_priority hotkey binding not found"
+    assert wp_binding.get("accept") == "Control+Shift+C", f"Unexpected hotkey: {wp_binding.get('accept')}"
+    print("✓ [Schema 快捷键] Control+Shift+C 动态切换 word_priority 绑定正常")
+
     print("\n==================================================")
     print("🎉 端到端集成测试全部通过！纯形统一流击键链路完美闭环！")
     print("==================================================")
