@@ -376,8 +376,8 @@ do
   check("total 1 committed", #ctx.committed == 1, #ctx.committed, 1)
 end
 
--- T23: 天内 (fT + Bn) 四码非词回退 —— 顶出'天'，留'Bn'，不误出'蚕n'
-print("\nT23: 天内 (fT + Bn) 四码非词回退 -> 顶出'天'，留'Bn'")
+-- T23: 天内 (fT + Bn) 已是合法四码词 —— 缓冲 fTBn 待顶屏，不再回退成'天'+'内'
+print("\\nT23: 天内 (fT + Bn) 已是合法四码词 -> 缓冲 fTBn 待顶屏")
 do
   local ctx = MockContext.new(); local env = make_env(ctx)
   sim(env, ctx, "f"); sim(env, ctx, "T")
@@ -386,23 +386,23 @@ do
   sim(env, ctx, "B")
   check("fTB: input='fTB'", ctx.input == "fTB", ctx.input, "fTB")
   check("fTB: no commit", #ctx.committed == 0, #ctx.committed, 0)
-  sim(env, ctx, "n")  -- words_4code['fTBn']=nil, punct_3code['fTB']=nil → 顶出'天', restore 'B', push 'n' → input='Bn'
-  check("recv n: '天' committed", ctx.committed[1] == "天", ctx.committed[1], "天")
-  check("recv n: input='Bn' (内)", ctx.input == "Bn", ctx.input, "Bn")
+  -- words_4code['fTBn']=true（天内 已是合法四码词）-> 缓冲 fTBn 待顶屏，不再回退成 天+内
+  sim(env, ctx, "n")
+  check("recv n: input='fTBn' (缓冲四码词)", ctx.input == "fTBn", ctx.input, "fTBn")
+  check("recv n: 未提前顶屏", #ctx.committed == 0, #ctx.committed, 0)
 end
 
--- T24: 天内 (fT + Bn) 接 的(_d) -> 顶出'天'和'内'，留'_d'
-print("\nT24: 天内 (fT + Bn) 接 的(_d) -> 顶出'天'和'内'，留'_d'")
+-- T24: 天内 (fT + Bn) 接 的(_d) -> 先顶出'天内'，再输入'的'
+print("\\nT24: 天内 (fT + Bn) 接 的(_d) -> 先顶出'天内'，再输入'的'")
 do
   local ctx = MockContext.new(); local env = make_env(ctx)
   sim(env, ctx, "f"); sim(env, ctx, "T")
   sim(env, ctx, "B"); sim(env, ctx, "n")
-  check("after Bn: input='Bn'", ctx.input == "Bn", ctx.input, "Bn")
-  check("after Bn: '天' committed", ctx.committed[1] == "天", ctx.committed[1], "天")
   sim(env, ctx, "_")
   sim(env, ctx, "d")
-  check("recv d: '内' committed", ctx.committed[2] == "内", ctx.committed[2], "内")
-  check("recv d: input='_d'", ctx.input == "_d", ctx.input, "_d")
+  -- fTBn 作为四码词在下一键(_)触发顶屏提交'天内'，随后 '_d' 进入'的'输入
+  check("recv d: '天内' committed", ctx.committed[1] == "天内", ctx.committed[1], "天内")
+  check("recv d: input='_d' (的 输入中)", ctx.input == "_d", ctx.input, "_d")
 end
 
 -- T25: 蚕 (fT_B) 3码单字全码不误拆
