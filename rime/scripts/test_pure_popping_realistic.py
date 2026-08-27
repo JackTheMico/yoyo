@@ -454,6 +454,34 @@ do
   check("recv ': input cleared", ctx.input == "", ctx.input, "")
 end
 
+-- T29: 无次选时 ' 兼作「手动顶出键」（修复：打完 做(a/) 想顶出自/己 却卡住）
+print("\nT29: 无次选 ' 顶出当前缓冲 (做=a/ 后接自首码 g，再按 ' )")
+do
+  local ctx = MockContext.new(); local env = make_env(ctx)
+  sim(env, ctx, "a"); sim(env, ctx, "/")   -- 做 的码 a/
+  check("a/: input", ctx.input == "a/", ctx.input, "a/")
+  sim(env, ctx, "g")   -- 自首码，缓冲变 a/g
+  check("recv g: input='a/g'", ctx.input == "a/g", ctx.input, "a/g")
+  local res = sim(env, ctx, "'")  -- a/g 无次选 -> 顶出 做，保留 g
+  check("recv ': kAccepted", res == yoyo.kAccepted, res, yoyo.kAccepted)
+  check("recv ': '做' committed", ctx.committed[1] == "做", ctx.committed[1], "做")
+  check("recv ': 'g' restored", ctx.input == "g", ctx.input, "g")
+  -- 续打 自：g 已在缓冲，接 i -> 自(gi) 正确缓冲（无需 ' 即可继续）
+  sim(env, ctx, "i")
+  check("recv i: input='gi' (自)", ctx.input == "gi", ctx.input, "gi")
+end
+
+-- T30: 次选优先级不被破坏 —— a/ 有次选 '估计'，' 紧跟 a/ 仍出次选而非顶出做
+print("\nT30: 次选优先级保留 (a/ ' -> 估计，而非 做)")
+do
+  local ctx = MockContext.new(); local env = make_env(ctx)
+  sim(env, ctx, "a"); sim(env, ctx, "/")
+  local res = sim(env, ctx, "'")
+  check("a/ ': kAccepted", res == yoyo.kAccepted, res, yoyo.kAccepted)
+  check("a/ ': '估计' committed (次选优先)", ctx.committed[1] == "估计", ctx.committed[1], "估计")
+  check("a/ ': input cleared", ctx.input == "", ctx.input, "")
+end
+
 print(string.format("\n%s %d/%d 通过\n", FAIL==0 and "🎉" or "💥", PASS, PASS+FAIL))
 if FAIL > 0 then os.exit(1) end
 """

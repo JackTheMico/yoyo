@@ -12,3 +12,4 @@ rime/build/
 rime/user.yaml
 *.bin
 *.userdb*
+/.workbuddy/memory

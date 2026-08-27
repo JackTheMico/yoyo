@@ -115,6 +115,28 @@ function processor.func(key_event, env)
       env.processing = false
       return yoyo.kAccepted
     end
+    -- 无次选时，' 兼作「手动顶出键」：把当前缓冲里已完整可提交的部分上屏。
+    -- 仅当无次选才走到这里，故不影响次选规则，也不改变其它 Pattern 行为。
+    local dict_map = active_tables.dict_map or pure_data.dict_map
+    local ilen = #input
+    local function pop_code(code, restore)
+      local t = dict_map[code] or dict_map[code:gsub("[_+]", "")]
+      if not t then return false end
+      env.processing = true
+      env.engine:commit_text(t)
+      context:clear()
+      if restore and restore ~= "" then context:push_input(restore) end
+      env.processing = false
+      return true
+    end
+    if ilen == 2 then
+      if pop_code(input, nil) then return yoyo.kAccepted end
+    elseif ilen == 3 and not input:find("[_+]") then
+      -- 形如 XYz：前2码若是完整字/词则顶出，第3码(下一字首码)保留继续
+      if pop_code(input:sub(1,2), input:sub(3,3)) then return yoyo.kAccepted end
+    elseif ilen == 4 then
+      if pop_code(input, nil) then return yoyo.kAccepted end
+    end
     return yoyo.kNoop
   end
 
