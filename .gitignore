@@ -13,3 +13,4 @@ rime/user.yaml
 *.bin
 *.userdb*
 /.workbuddy/memory
+/tools/yoyo-km-tui/target

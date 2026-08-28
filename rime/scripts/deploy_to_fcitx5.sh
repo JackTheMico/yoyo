@@ -41,6 +41,7 @@ adds = [
     ("yoyo-pure", "    - {schema: yoyo-pure} # 纯形·统一流·六脉（状态机0空格并击）\n"),
     ("yoyo-bm-km", "    - {schema: yoyo-bm-km} # 纯形·北冥·空明（空明拳指法）\n"),
     ("yoyo-wx-km", "    - {schema: yoyo-wx-km} # 纯形·无相·空明（空明拳指法）\n"),
+    ("yoyo-user", "    - {schema: yoyo-user} # 纯形·用户词表（构建用，由 yoyo-km-tui 写入）\n"),
 ]
 missing = [a for a in adds if f"schema: {a[0]}" not in text]
 if not missing:

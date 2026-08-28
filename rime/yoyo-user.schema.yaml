@@ -1,12 +1,15 @@
-# Rime schema - 麓鸣·纯形·六脉 (yoyo-pure)
+# Rime schema - 麓鸣·纯形·用户词表（仅构建用，不进输入法选单）
+# 作用：让 rime_deployer 把 yoyo-user.dict.yaml 编译成 yoyo-user.table.bin，
+#       供 yoyo-pure / yoyo-pure-km 通过 translator/import_tables 在运行时加载。
+# 注意：本 schema 故意不注册进 default.custom.yaml 的 schema_list，因此不会
+#       出现在输入法选单里，只用于构建用户词表二进制。
 schema:
   author:
     - Rayalizing
   description: |
-    麓鸣纯形统一流（六脉神剑指法），基于上下文感知状态机（FSM）消除并击空格，
-    6638字【零重码】、单字3码与词语4码无缝混打、0空格一击顶功。
-  name: "麓鸣·纯形·六脉"
-  schema_id: yoyo-pure
+    麓鸣纯形用户词表（构建专用）。由 yoyo-km-tui 写入。
+  name: "麓鸣·纯形·用户词（构建）"
+  schema_id: yoyo-user
   version: 1.0
 
 #=============================== 
@@ -18,27 +21,8 @@ schema:
 
 __include: yoyo:/
 __patch:
-  translator/dictionary: yoyo-pure
-  translator/prism: yoyo-pure
-  # 用户加词表（由 yoyo-km-tui 写入）。yoyo-user 通过 build-only schema
-  # (yoyo-user.schema.yaml) 被 rime_deployer 编译成 yoyo-user.table.bin，
-  # 这里在运行时把它加载进翻译器；不被 generate_pure_dict.py 覆盖。
-  translator/import_tables: [yoyo-user]
-
-  switches:
-    - name: ascii_mode
-      states: [ 中文, 西文 ]
-    - name: full_shape
-      states: [ 半角, 全角 ]
-    - name: simplification
-    - name: ascii_punct
-      states: [ 。，, ．， ]
-    - name: instant_commit_3code
-      states: [ 顶屏, 直出 ]
-      reset: 0
-    - name: word_priority
-      states: [ 主单, 主词 ]
-      reset: 0
+  translator/dictionary: yoyo-user
+  translator/prism: yoyo-user
 
   engine/processors:
     - ascii_composer
@@ -58,10 +42,6 @@ __patch:
     - lua_filter@*yoyo.priority_filter
     - uniquifier
     - simplifier
-
-  key_binder/+:
-    bindings:
-      - {accept: "Control+Shift+C", toggle: word_priority, when: always}
 
   chord_composer:
     alphabet: "12345qwertasdfgzxcvb 67890yuiophjkl;nm,./'"
@@ -89,10 +69,8 @@ __patch:
     initials: "zyxwvutsrqponmlkjihgfedcba;,./ZYXWVUTSRQPONMLKJIHGFEDCBA:<>?_+'0123456789"
     auto_select: false
     algebra:
-      # 将字典中 3 码单字 (如 bXn, wCs) 派生出单手击键输入形式 (如 bX_n, wC+s)
       - derive|^([a-zA-Z;:,<.>/?]{2})([a-zA-Z;:,<.>/?])$|$1_$2|
       - derive|^([a-zA-Z;:,<.>/?]{2})([a-zA-Z;:,<.>/?])$|$1+$2|
-      # 将字典中 4 码词 (如 xkhr) 派生出第3/4码单手击键输入形式
       - derive|^([a-zA-Z;:,<.>/?]{2})([a-zA-Z;:,<.>/?]{2})$|$1_$2|
       - derive|^([a-zA-Z;:,<.>/?]{2})([a-zA-Z;:,<.>/?]{2})$|$1+$2|
       - derive|^([a-zA-Z;:,<.>/?]{3})([a-zA-Z;:,<.>/?])$|$1_$2|
@@ -100,8 +78,6 @@ __patch:
 
 纯形统一心法:
   __append:
-    # 左右手并击：以 # 分隔左右两手按键区，保留末尾可能存在的 ' 次选修饰符
     - xform|^([12345qwertasdfgzxcvb]+)([67890yuiophjkl;nm,./]+)([']?)$|$1#$2$3|
-    # 单手按键：转换为 _ (左手) 或 + (右手) 开头的一简前缀，保留末尾可能存在的 ' 次选修饰符
     - xform|^([12345qwertasdfgzxcvb]+)([']?)$|_$1$2|
     - xform|^([67890yuiophjkl;nm,./]+)([']?)$|+$1$2|

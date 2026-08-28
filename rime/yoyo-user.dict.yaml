@@ -1,0 +1,13 @@
+# Rime dictionary: yoyo-user
+# encoding: utf-8
+---
+name: yoyo-user
+version: 1.0
+sort: by_weight
+columns:
+  - text
+  - code
+  - weight
+...
+
+生动形象	GNf,	100

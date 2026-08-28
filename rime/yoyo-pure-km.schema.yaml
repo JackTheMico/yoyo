@@ -20,7 +20,11 @@ __include: yoyo:/
 __patch:
   translator/dictionary: yoyo-pure
   translator/prism: yoyo-pure-km
-  
+  # 用户加词表（由 yoyo-km-tui 写入）。yoyo-user 通过 build-only schema
+  # (yoyo-user.schema.yaml) 被 rime_deployer 编译成 yoyo-user.table.bin，
+  # 这里在运行时把它加载进翻译器；不被 generate_pure_dict.py 覆盖。
+  translator/import_tables: [yoyo-user]
+
   switches:
     - name: ascii_mode
       states: [ 中文, 西文 ]

@@ -40,7 +40,7 @@ encoder:
       formula: "AbBbCbZb"
 import_tables:
   - yoyo_kf
-  - yoyo_char_kuozhan
+  - yoyo-user
 ...
 """
 
