@@ -680,13 +680,13 @@ menu:
     - xform/^[_+](ad|da)$/~period/
     - xform/^[_+](ag|ga)$/~enum_comma/
     - xform/^[_+](xb|bx)$/~semicolon/
-    - xform/^[_+](qe|eq)$/~colon/
+    - xform/^[_+](rt|tr)$/~colon/
     - xform/^[_+](zb|bz)$/~question/
     - xform/^[_+](zc|cz)$/~exclamation/
     - xform/^[_+](vb|bv)$/~ellipsis/
-    - xform/^[_+](rt|tr)$/~dash/
+    - xform/^[_+](qe|eq)$/~dash/
     - xform/^[_+](cb|bc)$/~middledot/
-    - xform/^[_+](db|bd)$/~dquote/
+    - xform/^[_+](fb|bf)$/~dquote/
     - xform/^[_+](ac|ca)$/~squote/
     - xform/^[_+](ax|xa)$/~book_quote/
     - xform/^[_+](fv|vf)$/~paren/
