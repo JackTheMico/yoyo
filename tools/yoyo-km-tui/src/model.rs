@@ -56,8 +56,14 @@ impl App {
         let user = cfg.user_dict.clone();
         let ud = UserDict::open(&user)?; // 确保存在后再纳入并集
         let pure = cfg.rime_dir.join("yoyo-pure.dict.yaml");
-        let kf = cfg.rime_dir.join("yoyo_kf.dict.yaml");
-        let paths: Vec<&Path> = vec![pure.as_path(), kf.as_path(), user.as_path()];
+        // 核心词典：优先 yoyo-pure，缺失时回退 yoyo-bm。
+        // yoyo_kf 不纳入（用户未使用）。
+        let core = if pure.exists() {
+            pure
+        } else {
+            cfg.rime_dir.join("yoyo-bm.dict.yaml")
+        };
+        let paths: Vec<&Path> = vec![core.as_path(), user.as_path()];
         let dict = Dict::load(&paths)?;
         let count = dict.entries().len();
         Ok(Self {
@@ -69,7 +75,7 @@ impl App {
             manual: HashMap::new(),
             phase: Phase::Input,
             log: vec![format!(
-                "已加载词库并集: {} 条（yoyo-pure + yoyo_kf + yoyo-user）",
+                "已加载词库并集: {} 条（yoyo-pure + yoyo-user）",
                 count
             )],
             should_quit: false,

@@ -17,7 +17,6 @@ encoder:
     - length_in_range: [4, 99]
       formula: "AbBbCbZb"
 import_tables:
-  - yoyo_kf
   - yoyo-user
 ...
 的	_d	92123018

@@ -4,7 +4,14 @@
 数据源（均为仓库内 tracked 文件）：
   - 单字读音表：scripts/编码生成和重码可视化/data/pinyin.txt
   - 词拼音源：  scripts/编码生成和重码可视化/data/base.dict.yaml.gz
-  - 字/词编码：rime/yoyo-bm.dict.yaml（纯形支四方案共用此字典）
+  - 字/词主码： rime/yoyo-pure.dict.yaml（核心，纯形支共用，缺失时回退 yoyo-bm.dict.yaml）
+  - 用户词码：  rime/yoyo-user.dict.yaml（经 yoyo-km-tui 写入，并入词码并集；
+                yoyo_kf 不纳入，因用户未使用）
+
+说明：
+  - 核心词典未收录、但用户词表里有的词（如「生动形象」），也能被反查到。
+  - 白霜拼音源(base.dict.yaml.gz)缺拼音的词，按单字读音表(pinyin.txt)按字拼接兜底，
+    使这类用户新增词仍有拼音键可索引（多音字取权重最高读音，可能偶有不精确）。
 
 产出：26 个 reverse_<initial>.lua 分片，每个形如：
   return {
@@ -31,11 +38,16 @@ DATA_DIR = SCRIPTS_DIR / "编码生成和重码可视化" / "data"
 
 PINYIN_TXT = DATA_DIR / "pinyin.txt"
 BASE_DICT_GZ = DATA_DIR / "base.dict.yaml.gz"
-BM_DICT = (
-    RIME_DIR / "yoyo-pure.dict.yaml"
-    if (RIME_DIR / "yoyo-pure.dict.yaml").exists()
-    else RIME_DIR / "yoyo-bm.dict.yaml"
-)
+# 用户词表（通过 yoyo-km-tui 写入）。反查数据需并入它，否则用户加的词查不到反查。
+USER_DICT = RIME_DIR / "yoyo-user.dict.yaml"
+
+
+def select_core_dict():
+    """核心词典（单字/词主码来源）：优先 yoyo-pure，缺失时回退 yoyo-bm。"""
+    pure = RIME_DIR / "yoyo-pure.dict.yaml"
+    if pure.exists():
+        return pure
+    return RIME_DIR / "yoyo-bm.dict.yaml"
 
 DEFAULT_OUT_DIR = RIME_DIR / "lua" / "yoyo" / "data"
 
@@ -240,6 +252,37 @@ def load_word_pinyin():
     for (word, key), w in raw.items():
         out[word] = (key, w)
     return out
+
+
+def synthesize_word_pinyin(word_codes, char_pinyin, word_pinyin):
+    """白霜拼音源(base.dict.yaml.gz)缺拼音的词，按单字读音表(pinyin.txt)拼接兜底。
+
+    仅处理多字词（单字在 build_candidates 里直接用 char_pinyin）。
+    每个字取权重最高的读音；任一字无读音则跳过该词（无法合成）。
+    就地写入 word_pinyin（键=拼接拼音, 权重=0.0），返回新增的 [(词, 拼接拼音)]。
+    """
+    added = []
+    for word in word_codes:
+        if word in word_pinyin:
+            continue
+        if len(word) <= 1:
+            continue
+        keys = []
+        ok = True
+        for ch in word:
+            readings = char_pinyin.get(ch)
+            if not readings:
+                ok = False
+                break
+            # 取权重最高的读音作为该字的代表读音
+            best = max(readings, key=lambda r: r[1])[0]
+            keys.append(best)
+        if ok and keys:
+            key = "".join(keys)
+            if key and key.isascii() and key.isalpha():
+                word_pinyin[word] = (key, 0.0)
+                added.append((word, key))
+    return added
 
 
 def build_candidates(char_codes, word_codes, char_pinyin, word_pinyin):
@@ -484,11 +527,29 @@ def main():
 
     out_dir = Path(args.out_dir)
     print("读取数据源 ...")
-    entries = parse_dict_yaml(BM_DICT)
-    char_codes_map, char_codes_full = load_char_codes(entries)
-    word_codes_map, word_codes_full = load_word_codes(entries)
+    core = select_core_dict()
+    print("  核心词典: {}".format(core.name))
+    entries_core = parse_dict_yaml(core)
+    char_codes_map, char_codes_full = load_char_codes(entries_core)
+
+    # 词码来源 = 核心词典 + 用户词表（并集）。
+    # yoyo_kf 不纳入（用户未使用）。单字码仍只取核心词典，
+    # 避免用户词表里的生僻单字触发“单字表字无读音”自检 FAIL 而中断生成。
+    dict_sources = [core]
+    if USER_DICT.exists():
+        dict_sources.append(USER_DICT)
+        print("  并入用户词表: {}".format(USER_DICT.name))
+    entries_all = []
+    for s in dict_sources:
+        entries_all.extend(parse_dict_yaml(s))
+    word_codes_map, word_codes_full = load_word_codes(entries_all)
+
     char_pinyin = load_char_pinyin()
     word_pinyin = load_word_pinyin()
+    # 白霜拼音源缺拼音的词（含用户新增词）按单字读音表拼接兜底。
+    synth = synthesize_word_pinyin(word_codes_map, char_pinyin, word_pinyin)
+    if synth:
+        print("  拼音兜底(单字拼接): {} 词".format(len(synth)))
     print("  单字编码: {} 字 | 词编码: {} 词".format(len(char_codes_map), len(word_codes_map)))
     print("  单字读音: {} 条 (字,键) | 词拼音: {} 条 (词,键)".format(
         sum(len(v) for v in char_pinyin.values()), len(word_pinyin)))

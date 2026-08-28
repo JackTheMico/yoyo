@@ -4,6 +4,10 @@
 //! 结合 `pinyin.txt`（字读音）与 `base.dict.yaml.gz`（词拼音，需 gzip 解压）
 //! 构建「拼音键 -> 候选(文本, 码, 权重)」，按权重降序后按拼音首字母分 26 片写出。
 //! 与 Python 版一致的产出，保证 `reverse_lookup` 翻译器可用。
+//!
+//! 词码来源 = yoyo-pure（缺失回退 yoyo-bm）+ yoyo-user（并集）；yoyo_kf 不纳入。
+//! 白霜拼音源(base.dict.yaml.gz)缺拼音的词（含用户经 yoyo-km-tui 新增的词），
+//! 按 `pinyin.txt` 单字读音（取权重最高）拼接兜底，使这类词仍可被反查到。
 
 use crate::dict::Entry;
 use flate2::read::GzDecoder;
@@ -160,6 +164,52 @@ pub fn generate(rime_dir: &Path, entries: &[Entry], out_dir: &Path) -> color_eyr
         word_pinyin.entry(text.to_string()).or_insert((key, w));
     }
 
+    // 3.5 拼音兜底：白霜拼音源缺拼音的词（含用户经 yoyo-km-tui 新增的词），
+    // 按 pinyin.txt 单字读音（取权重最高者）拼接，使其仍有拼音键可索引。
+    let mut synth_count = 0usize;
+    for (word, _) in &word_codes {
+        if word_pinyin.contains_key(word) {
+            continue;
+        }
+        if word.chars().count() <= 1 {
+            continue;
+        }
+        let mut keys = String::new();
+        let mut ok = true;
+        for ch in word.chars() {
+            match char_pinyin.get(&ch) {
+                Some(readings) => {
+                    let best = readings
+                        .iter()
+                        .max_by(|a, b| {
+                            a.1.partial_cmp(&b.1).unwrap_or(std::cmp::Ordering::Equal)
+                        })
+                        .map(|(k, _)| k.clone())
+                        .unwrap_or_default();
+                    if best.is_empty() {
+                        ok = false;
+                        break;
+                    }
+                    keys.push_str(&best);
+                }
+                None => {
+                    ok = false;
+                    break;
+                }
+            }
+        }
+        if ok && !keys.is_empty() && keys.is_ascii() && keys.chars().all(|c| c.is_alphabetic()) {
+            word_pinyin.insert(word.clone(), (keys, 0.0));
+            synth_count += 1;
+        }
+    }
+    if synth_count > 0 {
+        eprintln!(
+            "[reverse] 拼音兜底(单字拼接): {} 个词（白霜源缺拼音，已按 pinyin.txt 合成）",
+            synth_count
+        );
+    }
+
     // 4. 合并候选: key -> [(text, code, weight)]
     let mut candidates: HashMap<String, Vec<(String, String, f64)>> = HashMap::new();
     let mut missing_words = 0usize;
@@ -242,4 +292,40 @@ pub fn generate(rime_dir: &Path, entries: &[Entry], out_dir: &Path) -> color_eyr
         keys: keys.len(),
         written,
     })
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::dict::Entry;
+    use std::path::PathBuf;
+
+    #[test]
+    fn synthesizes_pinyin_for_word_absent_in_baishuang() {
+        // 词库并集里有一个白霜拼音源(base.dict.yaml.gz)缺拼音的词，
+        // 应由 pinyin.txt 单字读音拼接出拼音键，使其可被反查到。
+        let manifest = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+        let rime_dir = manifest
+            .parent()
+            .and_then(|p| p.parent())
+            .unwrap()
+            .join("rime");
+        let entries = vec![Entry {
+            text: "生动形象".into(),
+            raw: "GNf,".into(),
+            clean: "GNf,".into(),
+            weight: 100.0,
+            source: "yoyo-user".into(),
+        }];
+        let tmp = std::env::temp_dir().join("yoyo_rev_synth_test");
+        let st = generate(&rime_dir, &entries, &tmp).unwrap();
+        let shard = std::fs::read_to_string(tmp.join("reverse_s.lua")).unwrap();
+        assert!(
+            shard.contains("shengdongxingxiang"),
+            "期望合成拼音键 shengdongxingxiang 出现在分片:\n{}",
+            shard
+        );
+        let _ = st;
+        std::fs::remove_dir_all(&tmp).ok();
+    }
 }
