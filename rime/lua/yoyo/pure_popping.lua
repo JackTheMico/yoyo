@@ -199,7 +199,12 @@ function processor.func(key_event, env)
      and is_jian_prefix(input:sub(3,3)) and is_plain(incoming) then
     local chord2 = input:sub(1,2)
     local jian_head = input:sub(3,3)
-    if pure_data.chars_3code[chord2 .. incoming] then
+    -- 去掉 chord2 内部可能携带的分隔符(/ _ +) 再拼 incoming 作为 3 码字判定键。
+    -- 否则 做(a/) 接 自己(_g) 时 chord2..incoming="a/g" 会误命中 3 码字 估(a/g)，
+    -- 导致状态机一直等待、不顶出 做。strip 后 candidate="ag"（非 3 码字）→ 正常顶出。
+    -- 普通两码字(如 bX)内部无分隔符，strip 为 no-op，bX+n→bXn 仍正确命中 鸣。
+    local candidate = chord2:gsub("[/_+]", "") .. incoming
+    if pure_data.chars_3code[candidate] then
       return yoyo.kNoop  -- 是3码字（如 bXn）
     else
       commit_and_restore(env, context, chord2, jian_head, active_tables)

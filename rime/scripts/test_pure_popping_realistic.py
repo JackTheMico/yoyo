@@ -454,6 +454,20 @@ do
   check("recv ': input cleared", ctx.input == "", ctx.input, "")
 end
 
+-- T29: 做(a/) + 自己(_g) —— 修复 做(a/) 接 自己(_g) 被误判成 3 码字 估(a/g) 而卡死
+-- 收到 'g' 时 input='a/_' → 候选 strip('/') 后 'ag' 非 3 码字 → 顶出'做'，restore '_'，speller push 'g' → '_g'
+print("\nT29: 做(a/) + 自己(_g) -> 顶出'做'，留'_g'（修复估误判）")
+do
+  local ctx = MockContext.new(); local env = make_env(ctx)
+  sim(env, ctx, "a"); sim(env, ctx, "/")
+  sim(env, ctx, "_")
+  check("a/_: input", ctx.input == "a/_", ctx.input, "a/_")
+  check("a/_: no commit yet", #ctx.committed == 0, #ctx.committed, 0)
+  sim(env, ctx, "g")  -- input='a/_', incoming='g' → 候选 'ag' 非 3 码字 → 顶出'做'，restore '_'
+  check("recv g: '做' committed", ctx.committed[1] == "做", ctx.committed[1], "做")
+  check("recv g: input='_g'", ctx.input == "_g", ctx.input, "_g")
+end
+
 print(string.format("\n%s %d/%d 通过\n", FAIL==0 and "🎉" or "💥", PASS, PASS+FAIL))
 if FAIL > 0 then os.exit(1) end
 """
