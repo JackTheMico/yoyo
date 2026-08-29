@@ -3,9 +3,10 @@
 //! 忠实移植 `rime/scripts/generate_pure_dict_map.py`：从词表并集构建
 //! 双轨 dict_map（char_first / word_first，各含 dict_map / dict_map_2）、
 //! `words_4code`（4码词集，状态机据此区分合法4码词与自动切分）、
-//! `chars_3code`（3码单字集）、`brief_map`（前置单引号扩展简词 '_X / '+X / 'XY）。
-//! `'` 前缀码只进 brief_map，不进入其他映射。输出格式与 Python 版逐字节等价，
-//! 保证 `pure_popping` 状态机正确工作。
+//! `chars_3code`（3码单字集）、`brief_map`（前置单引号扩展简词 '_X / '+X / 'XY）、
+//! `space_brief_map`（空格并击简词 %XY / %_X / %+X）。
+//! `'`/`%` 前缀码只进各自的 brief 映射，不进入其他映射。输出格式与 Python 版
+//! 逐字节等价，保证 `pure_popping` 状态机正确工作。
 
 use crate::dict::Entry;
 use std::collections::{HashMap, HashSet};
@@ -18,6 +19,7 @@ pub struct MapStats {
     pub words_4code: usize,
     pub chars_3code: usize,
     pub brief_map: usize,
+    pub space_brief_map: usize,
 }
 
 fn lua_str(s: &str) -> String {
@@ -58,9 +60,17 @@ pub fn generate(entries: &[Entry], out: &Path) -> color_eyre::Result<MapStats> {
     let mut words_4code: HashSet<String> = HashSet::new();
     let mut chars_3code: HashSet<String> = HashSet::new();
     let mut brief_map: HashMap<String, String> = HashMap::new();
+    let mut space_brief_map: HashMap<String, String> = HashMap::new();
 
     for e in entries {
         let raw = e.raw.clone();
+        // 空格并击简词（% 前缀）：单独收入 space_brief_map，不进入其他映射
+        if raw.starts_with('%') {
+            if raw.chars().count() == 3 {
+                space_brief_map.entry(raw).or_insert_with(|| e.text.clone());
+            }
+            continue;
+        }
         // 前置单引号扩展简词：单独收入 brief_map，不进入其他映射
         if raw.starts_with('\'') {
             if raw.chars().count() == 3 {
@@ -172,6 +182,13 @@ pub fn generate(entries: &[Entry], out: &Path) -> color_eyre::Result<MapStats> {
         out_lines.push(format!("    [{}] = {},", lua_str(code), lua_str(text)));
     }
     out_lines.push("  },".into());
+    out_lines.push("  space_brief_map = {".into());
+    let mut sbm: Vec<(&String, &String)> = space_brief_map.iter().collect();
+    sbm.sort();
+    for (code, text) in sbm {
+        out_lines.push(format!("    [{}] = {},", lua_str(code), lua_str(text)));
+    }
+    out_lines.push("  },".into());
     out_lines.push("}".into());
     out_lines.push("M.dict_map = M.char_first.dict_map".into());
     out_lines.push("M.dict_map_2 = M.char_first.dict_map_2".into());
@@ -189,6 +206,7 @@ pub fn generate(entries: &[Entry], out: &Path) -> color_eyre::Result<MapStats> {
         words_4code: words_4code.len(),
         chars_3code: chars_3code.len(),
         brief_map: brief_map.len(),
+        space_brief_map: space_brief_map.len(),
     })
 }
 

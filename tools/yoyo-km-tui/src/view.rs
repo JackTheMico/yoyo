@@ -30,7 +30,7 @@ pub fn render(app: &App, f: &mut Frame) {
         Phase::NeedChar { ch, .. } => format!("为缺码字『{}』输入其形码: > {}", ch, app.input),
         _ => format!("> {}", app.input),
     };
-    let hints = " Enter 搜索/确认 · Esc 退出/返回 · 粘贴中文词 ";
+    let hints = " Enter 搜索/确认 · Ctrl+Q 退出 · Esc 返回 · 粘贴中文词 ";
     let footer_line = Line::from(vec![prompt.into(), "  ".into(), hints.dim().into()]);
     f.render_widget(
         Paragraph::new(footer_line).block(Block::bordered().title("输入")),

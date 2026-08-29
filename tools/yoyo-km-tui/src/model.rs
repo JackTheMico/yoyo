@@ -13,7 +13,7 @@ use crate::userdict::UserDict;
 use crossterm::event::{self, Event, KeyCode, KeyEvent, KeyEventKind, KeyModifiers};
 use ratatui::backend::CrosstermBackend;
 use ratatui::Terminal;
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 use std::io::Stdout;
 use std::path::{Path, PathBuf};
 
@@ -37,6 +37,15 @@ pub enum Phase {
     },
     Done(String),
     Message(String),
+}
+
+/// 批量加词结果汇总（供 CLI 打印）。
+pub struct BatchSummary {
+    pub total: usize,
+    pub added: Vec<(String, String)>,
+    pub skipped_exists: Vec<String>,
+    pub skipped_missing: Vec<(String, char)>,
+    pub skipped_len: Vec<(String, usize)>,
 }
 
 pub struct App {
@@ -140,25 +149,30 @@ impl App {
         self.user.append(text, code, 100.0)?;
         self.log
             .push(format!("✓ 写入 yoyo-user.dict.yaml: {} → {}", text, code));
-
-        let mut all = self.dict.entries().to_vec();
-        all.push(Entry {
+        self.dict.entries.push(Entry {
             text: text.to_string(),
             raw: code.to_string(),
             clean: code.to_string(),
             weight: 100.0,
             source: "yoyo-user".into(),
         });
+        self.rebuild()?;
+        self.log.push("✓ 部署完成".into());
+        Ok(())
+    }
 
+    /// 重生成状态机映射 + 拼音反查 + 部署（所有新词落盘后只跑一次）。
+    fn rebuild(&mut self) -> color_eyre::Result<()> {
         let map_path = self.cfg.rime_dir.join("lua/yoyo/data/pure_dict_map.lua");
-        let st = mapgen::generate(&all, &map_path)?;
+        let st = mapgen::generate(&self.dict.entries, &map_path)?;
         self.log.push(format!(
-            "✓ 状态机映射 pure_dict_map.lua: char_first={} word_first={} 4码词={} 3码字={} 简词={}",
-            st.char_first, st.word_first, st.words_4code, st.chars_3code, st.brief_map
+            "✓ 状态机映射 pure_dict_map.lua: char_first={} word_first={} 4码词={} 3码字={} '简词={} 空格简词={}",
+            st.char_first, st.word_first, st.words_4code, st.chars_3code,
+            st.brief_map, st.space_brief_map
         ));
 
         let rev_dir = self.cfg.rime_dir.join("lua/yoyo/data");
-        let rs = reversegen::generate(&self.cfg.rime_dir, &all, &rev_dir)?;
+        let rs = reversegen::generate(&self.cfg.rime_dir, &self.dict.entries, &rev_dir)?;
         self.log.push(format!(
             "✓ 拼音反查 reverse_*.lua: 拼音键={} 分片={}",
             rs.keys, rs.written
@@ -170,8 +184,71 @@ impl App {
                 self.log.push(format!("  {l}"));
             }
         }
-        self.log.push("✓ 部署完成".into());
         Ok(())
+    }
+
+    /// 批量加词（--batch）：从文件逐行读取，已存在的跳过；可自动编码的写入
+    /// yoyo-user 后统一重生成+部署一次。每行格式：`词` 或 `词\t编码`
+    /// （含 \t编码 时强制使用该码，绕过自动编码，用于缺形码字的词）。
+    pub fn add_words_batch(&mut self, file: &Path) -> color_eyre::Result<BatchSummary> {
+        let content = std::fs::read_to_string(file)?;
+        let mut to_add: Vec<(String, String)> = Vec::new();
+        let mut skipped_exists: Vec<String> = Vec::new();
+        let mut skipped_missing: Vec<(String, char)> = Vec::new();
+        let mut skipped_len: Vec<(String, usize)> = Vec::new();
+        let mut added_set: HashSet<String> = HashSet::new();
+        for raw in content.lines() {
+            let line = raw.trim();
+            if line.is_empty() || line.starts_with('#') {
+                continue;
+            }
+            let (word, forced) = match line.split_once('\t') {
+                Some((w, c)) => (w.trim().to_string(), Some(c.trim().to_string())),
+                None => (line.to_string(), None),
+            };
+            if word.is_empty() {
+                continue;
+            }
+            if self.dict.contains(&word).is_some() || added_set.contains(&word) {
+                skipped_exists.push(word);
+                continue;
+            }
+            match forced {
+                Some(code) => {
+                    added_set.insert(word.clone());
+                    to_add.push((word, code));
+                }
+                None => match encoder::encode(&word, &self.dict.char_code) {
+                    EncodeResult::Code(c) => {
+                        added_set.insert(word.clone());
+                        to_add.push((word, c));
+                    }
+                    EncodeResult::MissingChar(ch) => skipped_missing.push((word, ch)),
+                    EncodeResult::UnsupportedLen(n) => skipped_len.push((word, n)),
+                },
+            }
+        }
+        let total = skipped_exists.len() + skipped_missing.len() + skipped_len.len() + to_add.len();
+        if !to_add.is_empty() {
+            for (w, c) in &to_add {
+                self.user.append(w, c, 100.0)?;
+                self.dict.entries.push(Entry {
+                    text: w.clone(),
+                    raw: c.clone(),
+                    clean: c.clone(),
+                    weight: 100.0,
+                    source: "yoyo-user".into(),
+                });
+            }
+            self.rebuild()?;
+        }
+        Ok(BatchSummary {
+            total,
+            added: to_add,
+            skipped_exists,
+            skipped_missing,
+            skipped_len,
+        })
     }
 
     fn do_add(&mut self) {
@@ -219,12 +296,11 @@ impl App {
     }
 
     pub fn on_key(&mut self, key: KeyEvent) {
+        let ctrl_q = key.code == KeyCode::Char('q')
+            && key.modifiers.contains(KeyModifiers::CONTROL);
         match self.phase {
             Phase::Input => match key.code {
-                KeyCode::Char('c') if key.modifiers.contains(KeyModifiers::CONTROL) => {
-                    self.should_quit = true
-                }
-                KeyCode::Esc => self.should_quit = true,
+                _ if ctrl_q => self.should_quit = true,
                 KeyCode::Enter => self.search(),
                 KeyCode::Backspace => {
                     self.input.pop();
@@ -233,6 +309,7 @@ impl App {
                 _ => {}
             },
             Phase::NeedChar { .. } => match key.code {
+                _ if ctrl_q => self.should_quit = true,
                 KeyCode::Enter => {
                     let ch = match &self.phase {
                         Phase::NeedChar { ch, .. } => *ch,
@@ -251,12 +328,14 @@ impl App {
                 _ => {}
             },
             Phase::ConfirmAdd { .. } => match key.code {
+                _ if ctrl_q => self.should_quit = true,
                 KeyCode::Enter => self.do_add(),
                 KeyCode::Esc | KeyCode::Char('n') | KeyCode::Char('N') => self.reset_input(),
                 _ => {}
             },
             Phase::Found(_, _, _) | Phase::Message(_) | Phase::Done(_) => match key.code {
-                KeyCode::Esc => self.should_quit = true,
+                _ if ctrl_q => self.should_quit = true,
+                KeyCode::Esc => self.reset_input(),
                 KeyCode::Enter | KeyCode::Char('n') | KeyCode::Char('N') => self.reset_input(),
                 _ => {}
             },
