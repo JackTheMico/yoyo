@@ -1,13 +1,17 @@
 #!/usr/bin/env python3
 """空格并击简词的编码空间仿真（test_space_chord_brief.py）。
 
-验证：
-1. 空格在 chord alphabet 中位于左右手区之间（"qwertasdfgzxcvb yuiophjkl;nm,./'"），
-   故「左+空格+右」序列化为 "left right"；北冥神功心法已用同样的形态规则（实证）。
-2. 新增心法规则把「双手+空格」映射成简词码形后，经空明拳指法归并能得到 3600 个
-   互不重复的码位；「单手+空格」另有 120 个。
-3. 新码形与既有编码空间（一简 _X/+X、两码字 XY、三码字、四码词、' 简词 'XY、
-   标点 ~xxx、次选后缀 '）是否相交。
+直接读取**真实配置**验证：
+  - 心法：rime/yoyo-pure-km.schema.yaml 的「纯形统一心法」（含新增的空格并击规则）
+  - 指法：rime/yoyo.yaml 的「空明拳」
+  - chord alphabet：yoyo-pure-km.schema.yaml 的 chord_composer/alphabet
+
+验证内容：
+1. 空格在 alphabet 中位于左右手键区之间 ⇒ 双手+空格序列化为 "左 右"、
+   左手+空格为 "左 "、右手+空格为 " 右"（右手键下标大于空格，故空格在前）。
+2. 心法 + 指法把三类空格并击分别归一为 %XY（3600）/ %_X（60）/ %+X（60）。
+3. 这些新码形与既有编码空间（一简 _X/+X、两码字 XY、三码字、四码词、
+   ' 简词 'XY、次选 XY'）零冲突。
 """
 
 import re
@@ -24,23 +28,15 @@ YOYO_YAML = RIME_DIR / "yoyo.yaml"
 
 LEFT_KEYS = "qwertasdfgzxcvb"
 RIGHT_KEYS = "yuiophjkl;nm,./"
-CHORD_ALPHABET = "qwertasdfgzxcvb yuiophjkl;nm,./'"
 DAU_SET = set("abcdefghijklmnopqrstuvwxyz") | set("ABCDEFGHIJKLMNOPQRSTUVWXYZ") | set(";:,<.>/?")
-
-# 新心法规则：' ' 分隔左右手（空格并击），% 为简词标记
 MARK = "%"
-SPACE_XINFA = [
-    rf"^([{LEFT_KEYS}]+) ([{RIGHT_KEYS}]+)$",
-    rf"^([{LEFT_KEYS}]+) $",
-    rf"^([{RIGHT_KEYS}]+) $",
-]
 
 
 def apply_xforms(s, xforms, alphabet_order, sort_input=True):
-    """模拟 chord_composer：按键按 alphabet 下标排序，再依次执行 xform 流水线。
+    """模拟 chord_composer：按键按 alphabet 下标排序后执行 xform 流水线。
 
-    sort_input=False 用于「心法已输出带标记串」的阶段——此时不能再按 alphabet 排序，
-    否则新加的标记符（不在 alphabet 中）会被排到末尾。
+    sort_input=False 用于「心法已输出带标记串」的阶段（此时不能再按 alphabet 排序，
+    否则新加的标记符会被排到末尾）。
     """
     if sort_input:
         rank = {ch: i for i, ch in enumerate(alphabet_order)}
@@ -53,9 +49,13 @@ def apply_xforms(s, xforms, alphabet_order, sort_input=True):
         delim = rule[5]
         parts = rule[6:].split(delim)
         if len(parts) >= 2:
-            pattern, replacement = parts[0], parts[1]
-            cur = re.sub(pattern, re.sub(r"\$(\d+)", r"\\\1", replacement), cur)
+            cur = re.sub(parts[0], re.sub(r"\$(\d+)", r"\\\1", parts[1]), cur)
     return cur
+
+
+def chord_out(keys, xinfa, fingering, alphabet):
+    """一次并击（keys 为按键集合，可含空格）经 心法+指法的最终输出。"""
+    return apply_xforms("".join(keys), xinfa + fingering, alphabet)
 
 
 def enumerate_dau(fingering, alphabet, hand_keys):
@@ -75,81 +75,89 @@ def main():
     fingering = yoyo_data["空明拳"]["__append"]
     xinfa = km_data["纯形统一心法"]["__append"]
     alphabet = km_data["__patch"]["chord_composer"]["alphabet"]
-    print("=" * 70)
-    print("🧪 空格并击简词 — 编码空间仿真")
-    print("=" * 70)
+
+    print("=" * 72)
+    print("🧪 空格并击简词 — 编码空间仿真（读取真实心法/指法）")
+    print("=" * 72)
     print(f"chord alphabet : {alphabet!r}")
     print(f"空格下标       : {alphabet.index(' ')}（左手区之后、右手区之前）")
-
-    # ── 1. 现状：含空格的和弦是否命中现有心法 ───────────────────────────
-    print("\n[1] 现有心法对「含空格和弦」的处理")
-    sample = "sd hj"  # 左手 s+d、空格、右手 h+j
-    out_raw = apply_xforms(sample, xinfa + fingering, alphabet)
-    print(f"    {sample!r} → 心法+指法 → {out_raw!r}")
-    assert " " in out_raw or True
-    matched = out_raw != sample
-    print(f"    是否被任一心法规则改写：{matched}（未改写 = 该位置目前空闲/裸漏）")
+    print(f"心法规则数     : {len(xinfa)}（前 3 条为空格并击规则）")
 
     left_dau = enumerate_dau(fingering, alphabet, LEFT_KEYS)
     right_dau = enumerate_dau(fingering, alphabet, RIGHT_KEYS)
-    print(f"\n[2] 码元枚举：左手 {len(left_dau)}、右手 {len(right_dau)}")
+    assert len(left_dau) == 60 and len(right_dau) == 60
+    print(f"码元枚举       : 左手 {len(left_dau)}、右手 {len(right_dau)}")
 
-    # ── 3. 空格并击的新码位（心法：' ' → 标记，再走指法）─────────────────
-    def brief(keys):
-        """keys: 物理按键串（含空格）；先套新的空格心法，再套指法。"""
-        ranked = "".join(sorted(keys, key=lambda c: CHORD_ALPHABET.index(c)))
-        m = re.match(SPACE_XINFA[0], ranked)
-        if not m:
-            return None
-        marked = f"{MARK}{m.group(1)}#{m.group(2)}"   # 沿用现有 # 分隔
-        return apply_xforms(marked, fingering, alphabet, sort_input=False)
-
-    space_codes = {}
+    # ── 1. 三类空格并击的码位 ──────────────────────────────────────────
+    print("\n[1] 空格并击码位")
+    both = {}
     for dl, kl in left_dau.items():
         for dr, kr in right_dau.items():
-            code = brief(kl + " " + kr)
-            assert code, f"未匹配: {kl} {kr}"
-            space_codes.setdefault(code, (kl, kr, dl, dr))
-    print(f"\n[3] 「双手+空格」码位：{len(space_codes)}")
-    print(f"    样例：{list(space_codes.items())[:4]}")
-    assert len(space_codes) == 3600, f"应为 3600，实得 {len(space_codes)}"
+            code = chord_out(kl + " " + kr, xinfa, fingering, alphabet)
+            assert code.startswith(MARK) and len(code) == 3 and " " not in code, \
+                f"双手+空格码形异常 {kl}+空格+{kr} -> {code!r}"
+            both[code] = (kl, kr, dl, dr)
+    print(f"    双手+空格 → %XY : {len(both)} 位")
+    assert len(both) == 3600, f"应为 3600，实得 {len(both)}"
 
-    # 单手+空格
-    def brief_one(keys, hand):
-        ranked = "".join(sorted(keys, key=lambda c: CHORD_ALPHABET.index(c)))
-        return apply_xforms(f"{MARK}{ranked}", fingering, alphabet)
+    left_one, right_one = {}, {}
+    for d, keys in left_dau.items():
+        code = chord_out(keys + " ", xinfa, fingering, alphabet)
+        assert code.startswith(f"{MARK}_") and len(code) == 3, \
+            f"左手+空格码形异常 {keys} -> {code!r}"
+        left_one[code] = (keys, d)
+    for d, keys in right_dau.items():
+        code = chord_out(" " + keys, xinfa, fingering, alphabet)
+        assert code.startswith(f"{MARK}+") and len(code) == 3, \
+            f"右手+空格码形异常 {keys} -> {code!r}"
+        right_one[code] = (keys, d)
+    print(f"    左手+空格 → %_X : {len(left_one)} 位")
+    print(f"    右手+空格 → %+X : {len(right_one)} 位")
+    assert len(left_one) == 60 and len(right_one) == 60
+    print(f"    合计 {len(both) + len(left_one) + len(right_one)} 位")
 
-    one_codes = {}
-    for d, keys in list(left_dau.items()) + list(right_dau.items()):
-        one_codes.setdefault(brief_one(keys, d), keys)
-    print(f"    「单手+空格」码位（含左右手重复）: {len(one_codes)}")
+    # ── 2. 样例对照（与 ' 版同键位，只是把 ' 换成空格）──────────────────
+    print("\n[2] 样例")
+    for (kl, kr, dl, dr) in [both[c] for c in list(both)[:3]]:
+        print(f"    左手 {kl:>3} + 空格 + 右手 {kr:<3} → {chord_out(kl + ' ' + kr, xinfa, fingering, alphabet)}")
+    for code, (keys, d) in list(left_one.items())[:2]:
+        print(f"    左手 {keys:>3} + 空格（无右手）      → {code}")
+    for code, (keys, d) in list(right_one.items())[:2]:
+        print(f"    右手 {keys:>3} + 空格（无左手）      → {code}")
 
-    # ── 4. 与既有编码空间冲突检测 ──────────────────────────────────────
+    # ── 3. 无空格的既有规则未受影响 ────────────────────────────────────
+    print("\n[3] 回归：无空格并击仍走原路径")
+    for keys, expect_prefix in ((left_dau["a"], "_"), (right_dau["a"], "+")):
+        out = chord_out(keys, xinfa, fingering, alphabet)
+        print(f"    {keys!r} → {out!r}")
+        assert out.startswith(expect_prefix) and not out.startswith(MARK), out
+    out_both = chord_out(left_dau["w"] + right_dau["S"], xinfa, fingering, alphabet)
+    print(f"    {left_dau['w'] + right_dau['S']!r}（双手无空格）→ {out_both!r}")
+    assert out_both == "wS", out_both  # 与「最多」的全码前两码一致
+    print("    ✅ 一简(_X/+X) 与两码字(XY) 未被空格规则影响")
+
+    # ── 4. 冲突检测 ──────────────────────────────────────────────────
     print("\n[4] 冲突检测")
     daus = sorted(left_dau)
     existing = set()
-    existing |= {f"_{x}" for x in daus} | {f"+{x}" for x in daus}          # 一简
-    existing |= {f"{x}{y}" for x in daus for y in daus}                    # 两码字
-    existing |= {f"{x}{y}{z}" for x in daus[:5] for y in daus[:5] for z in daus[:5]}  # 三码字
+    existing |= {f"_{x}" for x in daus} | {f"+{x}" for x in daus}
+    existing |= {f"{x}{y}" for x in daus for y in daus}
+    existing |= {f"{x}{y}{z}" for x in daus[:6] for y in daus[:6] for z in daus[:6]}
     existing |= {f"{a}{b}{c}{d}" for a in daus[:4] for b in daus[:4]
-                 for c in daus[:4] for d in daus[:4]}                      # 四码词
-    existing |= {f"'{x}{y}" for x in daus for y in daus}                   # 现 ' 简词
-    existing |= {f"{x}{y}'" for x in daus for y in daus}                   # 次选
-    overlap = set(space_codes) & existing
-    print(f"    既有码形（一简/两码/三码/四码/'简词/次选）共 {len(existing)} 个样本")
-    print(f"    与「双手+空格」码位重叠：{len(overlap)} 个")
+                 for c in daus[:4] for d in daus[:4]}
+    existing |= {f"'{x}{y}" for x in daus for y in daus}     # 现 ' 简词
+    existing |= {f"{x}{y}'" for x in daus for y in daus}     # 次选
+    new_codes = set(both) | set(left_one) | set(right_one)
+    overlap = new_codes & existing
+    print(f"    既有码形样本 {len(existing)} 个，新码位 {len(new_codes)} 个，重叠 {len(overlap)} 个")
     assert not overlap, f"存在重叠: {sorted(overlap)[:5]}"
+    print("    三类空格码位互不重复：",
+          len(set(both) | set(left_one) | set(right_one)) == len(both) + len(left_one) + len(right_one))
 
-    # 新码形自身：全部以 % 开头、长度 3、无空格
-    bad = [c for c in space_codes if not c.startswith(MARK) or len(c) != 3 or " " in c]
-    assert not bad, f"码形异常: {bad[:5]}"
-    print(f"    新码形统一为 {MARK}XY（长度 3、无空格）✅")
-
-    print("\n" + "=" * 70)
-    print("🎉 全部通过：空格并击（双手 3600 + 单手 120）在编码空间层面成立，")
-    print(f"   与既有空间零冲突；但需把标记符 {MARK} 加入 speller/alphabet，")
-    print("   并在 pure_popping 加「末字符到达即顶屏」的 Pattern 才是一击上屏。")
-    print("=" * 70)
+    print("\n" + "=" * 72)
+    print("🎉 全部通过：双手+空格 3600 + 左手+空格 60 + 右手+空格 60 = 3720 位，")
+    print("   与既有编码空间零冲突；配合 pure_popping 的 Pattern S 可一击上屏。")
+    print("=" * 72)
     return True
 
 

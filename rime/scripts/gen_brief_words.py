@@ -1,23 +1,28 @@
 #!/usr/bin/env python3
-"""把第一档空明码一击词写入 yoyo-user.dict.yaml（' 前缀简词码位分配）。
+"""简词码位分配器：把第一档空明码一击词写入 yoyo-user.dict.yaml。
 
-码位空间（时序前缀路径，见 test_apostrophe_prefix_brief.py）：
-  '_X（' + 左手一击）/ '+X（' + 右手一击）/ 'XY（' + 左右并击），X/Y ∈ 60 码元。
+两种模式：
+  默认（' 版）  码形 '_X / '+X / 'XY，需先点按-松开 ' 再并击，接下一键顶屏（2 击）
+  --space（空格版）码形 %XY / %_X / %+X，空格与码元同时并击，末字符到达即上屏（1 击）
+两套编码互不干扰，可并存（' 版留作备用，待空格版验证后再删）。
 
-分配策略（v2，2026-08-29 用户规则）：
-  1. 过滤：词的**每个字**都是一简字（yoyo-pure 中有单字母母码 _X/+X）→ 不占简词位
-     （逐字一简已是两击，如「不用」「人的」）。
-  2. 首选码 = ' + 字1首根 + 字2首根（取每字最长形码，与词编码器同一 cc 表），
-     与 yoyo-pure-km 词编码公式（2字 AbAcBbBc / 3字 AbBbCbCc）的字根完全一致：
-     最多→'wS（最wFv[0]+多SSx[0]）、看起来→'id（看iTm[0]+起dPj[0]）。
-  3. 冲突（同码多词/缺字根）：词频高者得首选码，其余按人体工学次序回退分配
-     （单键 30 位 > 跨手1+1 并击 225 位 > 同手双键 > …）。
+分配规则（两种模式共用）：
+  1. 过滤：词的每个字都是一简字（yoyo-pure 中有单字母母码 _X/+X）→ 不占简词位
+     （逐字一简已是两击，如「不用」「人的」）
+  2. 首选码 = 前缀 + 字1首根 + 字2首根（取每字最长形码，与词编码公式
+     AbAcBbBc / AbBbCbCc 的字根一致：最多→'wS、看起来→'id）
+  3. --space 额外：词频最高的 120 个词改用「单手+空格」位 %_X（左，前 60 词）
+     与 %+X（右，第 61~120 词），键数最少；取不到则回退到 %XY
+  4. 冲突（同码多词/缺字根）→ 词频高者得，其余按人体工学次序回退分配
 
-用法：python3 gen_brief_words.py            # 预览统计（不写文件）
-      python3 gen_brief_words.py --write    # 实际写入 yoyo-user.dict.yaml
+用法：python3 gen_brief_words.py            # ' 版预览
+      python3 gen_brief_words.py --write    # ' 版写入
+      python3 gen_brief_words.py --space            # 空格版预览
+      python3 gen_brief_words.py --space --write    # 空格版写入（保留 ' 版条目）
 """
 
 import sys
+import subprocess
 from collections import defaultdict
 from pathlib import Path
 
@@ -34,6 +39,10 @@ PURE_DICT = RIME_DIR / "yoyo-pure.dict.yaml"
 USER_DICT = RIME_DIR / "yoyo-user.dict.yaml"
 TIER1 = SCRIPTS_DIR.parent.parent / "research" / "km_one_chord_tier1.txt"
 
+ONE_HAND_SLOTS = 60          # 单手+空格位：左手 60 + 右手 60
+MARK_BRIEF = "'"
+MARK_SPACE = "%"
+
 REGULAR_HEADER = """# Rime dictionary: yoyo-user
 # encoding: utf-8
 ---
@@ -47,15 +56,25 @@ columns:
 ...
 """
 
-BRIEF_COMMENT = """
+BRIEF_COMMENT = {
+    "'": """
 # ── 前置单引号扩展简词（' + 左手一击 / 右手一击 / 左右并击，共 3720 位）──
 # 用法：先点按-松开 '，再击键；与「' 同按=次选」时序分流，互不冲突。
 # 码形：'_X（左手一击）/ '+X（右手一击）/ 'XY（左右并击），X/Y 为码元。
-# 编码规则：' + 字1首根 + 字2首根（每字取最长形码，与词编码公式字根一致）；
-#   冲突或字根缺失者按人体工学次序回退；全一简字词不入简词位。
+# 编码规则：' + 字1首根 + 字2首根（每字取最长形码，与词编码公式字根一致）。
 # 来源：research/km_one_chord_tier1.txt（空明码一击词 ∩ 万象词频）。
-# 生成：gen_brief_words.py --write（重跑可重新分配，会覆盖本段、保留普通词条）。
-"""
+# 生成：gen_brief_words.py --write（重跑可重新分配，保留普通词条）。
+""",
+    "%": """
+# ── 空格并击简词（空格 + 码元同时按，一击上屏，共 3720 位）──
+# 码形：%XY（双手+空格）/ %_X（左手+空格）/ %+X（右手+空格）。
+# 编码规则：% + 字1首根 + 字2首根（与 ' 版同码，只是把 ' 换成空格并击）；
+#   词频最高的 120 个词占用更短的单手+空格位 %_X / %+X（取字1首根）。
+# 一击上屏由 pure_popping 的 Pattern S 完成（末字符到达即提交并吞掉），
+#   不需要 speller/auto_select。与 ' 版互不干扰，可并存。
+# 生成：gen_brief_words.py --space --write（重跑可重新分配，保留普通与 ' 版词条）。
+""",
+}
 
 
 def load_char_codes():
@@ -80,52 +99,53 @@ def load_char_codes():
     return cc, yijian
 
 
-def build_slots():
-    """返回 [(rank_tuple, code)]，rank 越小码位越好打。"""
+def build_slots(mark):
+    """返回 [(rank_tuple, code)]，rank 越小码位越好打（键数少、跨手优先）。"""
     yoyo_data = load_yaml(YOYO_YAML)
     km_data = load_yaml(KM_SCHEMA)
     pipes = build_pipelines(yoyo_data, km_data)
     alphabet, pipeline = pipes["A 后置"]
-    fingering = yoyo_data["空明拳"]["__append"]  # 指法单独用于码元枚举
+    fingering = yoyo_data["空明拳"]["__append"]
 
     left_dau = enumerate_dau(fingering, alphabet, LEFT_KEYS)
     right_dau = enumerate_dau(fingering, alphabet, RIGHT_KEYS)
     assert len(left_dau) == 60 and len(right_dau) == 60
 
-    # 校验：码元的最小键组合经完整代数链输出的确是 _X / +X 形
     for dau, keys in list(left_dau.items())[:5] + list(right_dau.items())[:5]:
         plain = apply_xforms(keys, pipeline, alphabet)
         expect = ("_" if keys[0] in LEFT_KEYS else "+") + dau
         assert plain == expect, f"{keys} -> {plain!r} != {expect!r}"
 
     slots = []
-    # 单手码元位：'_X / '+X（同手多键给 +1 惩罚，排在同键数跨手并击之后）
-    for hand, (daus, mark) in enumerate(((left_dau, "_"), (right_dau, "+"))):
+    # 单手位（' 版为 '_X/'+X；空格版对应 %_X/%+X，只有空格版启用）
+    for hand, (daus, sym) in enumerate(((left_dau, "_"), (right_dau, "+"))):
         for d, keys in daus.items():
             n = len(keys)
-            slots.append(((n, 1 if n > 1 else 0, f"{hand}{d}"), f"'{mark}{d}"))
-    # 并击位：'XY（键数 = 左键数 + 右键数，跨手先于同手多键）
+            slots.append(((n, 1 if n > 1 else 0, f"{hand}{d}"), f"{mark}{sym}{d}"))
+    # 双手位：'XY / %XY（键数 = 左键数 + 右键数，跨手优先）
     for ld, kl in left_dau.items():
         for rd, kr in right_dau.items():
-            n = len(kl) + len(kr)
-            slots.append(((n, 0, f"{kl}{kr}"), f"'{ld}{rd}"))
+            slots.append(((len(kl) + len(kr), 0, f"{kl}{kr}"), f"{mark}{ld}{rd}"))
     slots.sort(key=lambda x: x[0])
     return slots
 
 
 def main():
     write = "--write" in sys.argv
+    space = "--space" in sys.argv
+    mark = MARK_SPACE if space else MARK_BRIEF
+    label = "空格并击版(%)" if space else "前置单引号版(')"
+
     cc, yijian = load_char_codes()
+    print(f"模式：{label}　码前缀：{mark}")
     print(f"yoyo-pure 字根表: {len(cc)} 字，其中一简字 {len(yijian)}")
 
-    slots = build_slots()
+    slots = build_slots(mark)
+    assert len(slots) == 3720 and len({c for _, c in slots}) == 3720
     print(f"码位总数: {len(slots)}（应 3720）")
-    assert len(slots) == 3720
-    assert len({c for _, c in slots}) == 3720
 
-    # 读第一档并应用规则 1：全一简字词跳过
-    words = []  # (word, freq)
-    skipped = []
+    # 读第一档并应用规则 1
+    words, skipped = [], []
     for line in TIER1.read_text(encoding="utf-8").splitlines():
         if not line.strip():
             continue
@@ -135,69 +155,96 @@ def main():
             continue
         words.append((w, int(f)))
     words.sort(key=lambda x: (-x[1], x[0]))
-    print(f"第一档 {len(words) + len(skipped)} → 规则1(全一简字)剔除 {len(skipped)} → "
-          f"待分配 {len(words)}")
-    print(f"  剔除样例: {skipped[:12]}")
+    print(f"第一档 {len(words) + len(skipped)} → 规则1剔除 {len(skipped)} → 待分配 {len(words)}")
 
-    # 规则 2：首选码 = ' + 字1首根 + 字2首根；冲突回退人体工学码位
-    used = set()
-    assigned = []   # (code, word, freq)
-    fallback = []   # 需要回退的 (word, freq)
-    slot_iter = iter(slots)
+    used, assigned, fallback = set(), [], []
 
-    def next_free_slot():
-        for rank, code in slot_iter:
-            if code not in used:
-                return code
-        return None
+    def two_dau_code(w):
+        s1, s2 = cc.get(w[0]), cc.get(w[1])
+        return (mark + s1[0] + s2[0]) if (s1 and s2) else None
+
+    def one_hand_code(w, sym):
+        s1 = cc.get(w[0])
+        return (mark + sym + s1[0]) if s1 else None
+
+    # 规则 3（仅空格版）：最高频 120 词占用单手+空格位
+    top_one_hand = []
+    if space:
+        for i, (w, f) in enumerate(words[:ONE_HAND_SLOTS * 2]):
+            sym = "_" if i < ONE_HAND_SLOTS else "+"
+            code = one_hand_code(w, sym)
+            if code and code not in used:
+                used.add(code)
+                assigned.append((code, w, f))
+                top_one_hand.append(w)
+        print(f"规则3 单手+空格位分配：{len(top_one_hand)} 词")
 
     for w, f in words:
-        s1, s2 = cc.get(w[0]), cc.get(w[1])
-        desired = ("'" + s1[0] + s2[0]) if (s1 and s2) else None
-        if desired and desired not in used:
-            used.add(desired)
-            assigned.append((desired, w, f))
+        if w in top_one_hand:
+            continue
+        code = two_dau_code(w)
+        if code and code not in used:
+            used.add(code)
+            assigned.append((code, w, f))
         else:
             fallback.append((w, f))
 
-    # 冲突者按词频降序（已在序）依次取剩余最好打的码位
+    slot_iter = iter(slots)
     clashes = 0
     for w, f in fallback:
-        code = next_free_slot()
+        code = None
+        for _rank, cand in slot_iter:
+            if cand not in used:
+                code = cand
+                break
         assert code, "码位耗尽"
         used.add(code)
         assigned.append((code, w, f))
         clashes += 1
-    print(f"规则2 首选码直配 {len(assigned) - clashes}，冲突/缺字根回退 {clashes}")
+    print(f"规则2 字根码直配 {len(assigned) - clashes}，冲突/缺字根回退 {clashes}")
 
-    # 分布统计
     from collections import Counter
-    shape = Counter("单手" if ("_" in c or "+" in c) else "并击" for c, _, _ in assigned)
+    shape = Counter("单手位" if (c[1] in "_+") else "双手位" for c, _, _ in assigned)
     print(f"码形分布: {dict(shape)}")
-    print(f"前 12 分配: {[(w, c) for c, w, _ in assigned[:12]]}")
-    print(f"回退样例  : {[(w, c) for c, w, _ in assigned[-clashes:][:6]]}")
+    print(f"前 8 分配  : {[(w, c) for c, w, _ in assigned[:8]]}")
+    print(f"末 4 分配  : {[(w, c) for c, w, _ in assigned[-4:]]}")
 
     if not write:
         print("（预览模式，加 --write 实际写入）")
         return
 
-    # 写入：保留普通用户词条（非 ' 码行），重写简词段
-    lines = USER_DICT.read_text(encoding="utf-8").splitlines()
-    regular = []
-    for l in lines:
+    # 写入：保留普通词条与另一种简词（' 版 / % 版）条目，只重写本模式的简词段
+    other_mark = MARK_BRIEF if space else MARK_SPACE
+    kept, other = [], []
+    for l in USER_DICT.read_text(encoding="utf-8").splitlines():
         if not l.strip() or l.startswith("#"):
             continue
         p = l.split("\t")
-        if len(p) >= 2 and not p[1].startswith("'"):
-            regular.append(l)
+        if len(p) >= 2 and p[1].startswith(other_mark):
+            other.append(l)          # 另一版简词，原样保留
+        elif len(p) >= 2 and not p[1].startswith(mark):
+            kept.append(l)           # 普通词条
 
     out = [REGULAR_HEADER.rstrip("\n"), ""]
-    out += regular
-    out.append(BRIEF_COMMENT.rstrip("\n"))
+    out += kept
+    out.append(BRIEF_COMMENT[mark].rstrip("\n"))
     for code, w, f in assigned:
         out.append(f"{w}\t{code}\t{f}")
+    if other:
+        out.append(f"\n# ── 另一版简词（{other_mark} 前缀，{len(other)} 条）原样保留 ──")
+        out += other
     USER_DICT.write_text("\n".join(out) + "\n", encoding="utf-8")
-    print(f"✅ 已写入 {USER_DICT.name}：普通词条 {len(regular)} + 简词 {len(assigned)}")
+    print(f"✅ 已写入 {USER_DICT.name}：普通 {len(kept)} + {label} {len(assigned)}"
+          + (f" + 保留另一版 {len(other)}" if other else ""))
+
+    # 写完词条后必须重生成 pure_dict_map.lua（否则 brief_map / space_brief_map
+    # 为空 → 状态机 Pattern H/S 查不到 → 简词落 speller 成候选，需再按一次空格）。
+    try:
+        subprocess.run([sys.executable, str(SCRIPTS_DIR / "generate_pure_dict_map.py")],
+                      check=True)
+    except Exception as e:  # 重生成失败不阻断写词，仅告警
+        print(f"⚠️ 自动重生成 pure_dict_map.lua 失败：{e}；请手动跑 "
+              f"scripts/generate_pure_dict_map.py 后再部署。")
 
 
 if __name__ == "__main__":

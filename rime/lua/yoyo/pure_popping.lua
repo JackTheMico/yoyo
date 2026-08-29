@@ -46,6 +46,13 @@
 --    → else: 清空死缓冲，kNoop
 --    简词 = 先点按-松开 '（独立 chord 输出 ' 进 input），再击键拼成；
 --    次选 = ' 与键同按（码形后缀 '，由上方拦截块处理）——时序天然分流。
+--
+-- S. 空格并击简词（% 前缀：%XY 双手+空格 / %_X 左手+空格 / %+X 右手+空格）
+--    chord 输出是逐字符注入的（% → X → Y），故在「末字符 incoming」到达时：
+--    → if space_brief_map[input .. incoming]: 顶出简词并 kAccepted（吞掉末字符）
+--      ⇒ 真正的一击上屏，无需再接下一键；
+--    → else: 拼满 3 字符仍未命中则清空死缓冲，kNoop
+--    与 ' 版互不干扰：两套编码不同（'XY vs %XY），可并存。
 
 local yoyo = require "yoyo.yoyo"
 local pure_data = require "yoyo.data.pure_dict_map"
@@ -130,6 +137,30 @@ function processor.func(key_event, env)
   end
 
   local ilen = #input
+
+  -- ─── Pattern S: 空格并击简词(% 前缀，一击上屏) ──────────────────────────
+  -- chord 输出逐字符注入：'%' → 'X' → 'Y'。末字符到达时 input..incoming 才完整，
+  -- 此时命中 space_brief_map 立即提交并吞掉该字符（kAccepted），实现一击上屏。
+  -- 与「' 次选拦截」同一手法，不依赖 speller/auto_select（本方案为 false）。
+  if input:sub(1, 1) == "%" then
+    local full = input .. incoming
+    local space_map = pure_data.space_brief_map
+    local text = space_map and space_map[full]
+    if text then
+      env.processing = true
+      env.engine:commit_text(text)
+      context:clear()
+      env.processing = false
+      return yoyo.kAccepted
+    end
+    -- 未命中且已拼满 3 字符（%XY / %_X / %+X 都是 3 字符）→ 清空死缓冲
+    if #full >= 3 then
+      env.processing = true
+      context:clear()
+      env.processing = false
+    end
+    return yoyo.kNoop
+  end
 
   -- ─── Pattern H: 扩展简词(' 前缀码，'_X / '+X / 'XY，ilen=3)，接任意可见键 ──
   -- input="'_w", incoming='b' → 顶出简词("_w"位定义的词)，kNoop → speller push 'b'

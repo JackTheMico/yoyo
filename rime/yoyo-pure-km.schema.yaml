@@ -88,8 +88,9 @@ __patch:
       Eisu_toggle: clear
 
   speller:
-    alphabet: "zyxwvutsrqponmlkjihgfedcba;,./ZYXWVUTSRQPONMLKJIHGFEDCBA:<>?_+'"
-    initials: "zyxwvutsrqponmlkjihgfedcba;,./ZYXWVUTSRQPONMLKJIHGFEDCBA:<>?_+'"
+    # % 为「空格并击简词」标记（见纯形统一心法三条空格规则）
+    alphabet: "zyxwvutsrqponmlkjihgfedcba;,./%ZYXWVUTSRQPONMLKJIHGFEDCBA:<>?_+'"
+    initials: "zyxwvutsrqponmlkjihgfedcba;,./%ZYXWVUTSRQPONMLKJIHGFEDCBA:<>?_+'"
     auto_select: false
     algebra:
       # 将字典中 3 码单字 (如 bXn, wCs) 派生出单手击键输入形式 (如 bX_n, wC+s)
@@ -103,6 +104,14 @@ __patch:
 
 纯形统一心法:
   __append:
+    # ── 空格并击简词（一击上屏）──
+    # 空格在 alphabet 中下标 15，位于左右手键区之间：
+    #   双手+空格 → 输出 "左 右"    → %左#右（# 由指法末尾的 xform|#|| 清除）
+    #   左手+空格 → 输出 "左 "      → %_X
+    #   右手+空格 → 输出 " 右"（右手键排在空格之后，故空格在前）→ %+X
+    - xform|^([qwertasdfgzxcvb]+) ([yuiophjkl;nm,./]+)$|%$1#$2|
+    - xform|^([qwertasdfgzxcvb]+) $|%_$1|
+    - xform|^ ([yuiophjkl;nm,./]+)$|%+$1|
     # 左右手并击：以 # 分隔左右两手按键区，保留末尾可能存在的 ' 次选修饰符
     - xform|^([qwertasdfgzxcvb]+)([yuiophjkl;nm,./]+)([']?)$|$1#$2$3|
     # 单手按键：转换为 _ (左手) 或 + (右手) 开头的一简前缀，保留末尾可能存在的 ' 次选修饰符

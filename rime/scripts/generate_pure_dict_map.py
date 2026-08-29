@@ -8,6 +8,9 @@
 从 rime/yoyo-user.dict.yaml（及主词表，防御性）额外提取：
 4. brief_map: 前置单引号扩展简词映射（码形 '_X / '+X / 'XY -> 词）
    —— 状态机 Pattern H 顶屏用；' 码不进入 dict_map 等既有映射。
+5. space_brief_map: 空格并击简词映射（码形 %XY / %_X / %+X -> 词）
+   —— 状态机 Pattern S 一击上屏用；% 码同样不进入其他映射。
+   %XY = 双手+空格，%_X = 左手+空格，%+X = 右手+空格（见纯形统一心法）。
 """
 
 import json
@@ -38,6 +41,7 @@ def generate():
     words_4code = set()
     chars_3code = set()
     brief_map = {}
+    space_brief_map = {}
 
     for l in lines:
         if "\t" not in l or l.startswith("#"):
@@ -46,6 +50,11 @@ def generate():
         text = parts[0]
         raw_code = parts[1]
 
+        # 空格并击简词（% 前缀）：单独收入 space_brief_map，不进入其他映射
+        if raw_code.startswith("%"):
+            if len(raw_code) == 3:
+                space_brief_map.setdefault(raw_code, text)
+            continue
         # 前置单引号扩展简词：单独收入 brief_map，不进入其他映射
         if raw_code.startswith("'"):
             if len(raw_code) == 3:
@@ -135,6 +144,11 @@ def generate():
     for code, text in sorted(brief_map.items()):
         out.append(f"    [{json.dumps(code, ensure_ascii=False)}] = {json.dumps(text, ensure_ascii=False)},")
     out.append("  },")
+
+    out.append("  space_brief_map = {")
+    for code, text in sorted(space_brief_map.items()):
+        out.append(f"    [{json.dumps(code, ensure_ascii=False)}] = {json.dumps(text, ensure_ascii=False)},")
+    out.append("  },")
     out.append("}")
     out.append("M.dict_map = M.char_first.dict_map")
     out.append("M.dict_map_2 = M.char_first.dict_map_2")
@@ -148,6 +162,7 @@ def generate():
     print(f"  - words_4code entries: {len(words_4code)}")
     print(f"  - chars_3code entries: {len(chars_3code)}")
     print(f"  - brief_map entries:   {len(brief_map)}")
+    print(f"  - space_brief_map entries: {len(space_brief_map)}")
 
 
 if __name__ == "__main__":

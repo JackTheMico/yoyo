@@ -28,7 +28,11 @@ local function check(name, cond, detail)
 end
 
 -- ── stubs ────────────────────────────────────────────────────────────
-local function make_env()
+-- prism 为「棱镜里存在的拼写集合」：模拟 librime 的分段语义——
+-- 取最长后缀，若在棱镜中则整段是一个音节，否则退化为最后一个字符。
+-- yoyo.current(context) 返回的正是最后一个分段的编码（不是整个 input）。
+local function make_env(prism)
+  prism = prism or {}
   local commits = {}
   local cleared = 0
   local ctx
@@ -37,6 +41,18 @@ local function make_env()
     get_option = function(_, name) return false end,
     clear = function(_) ctx.input = ""; cleared = cleared + 1 end,
     push_input = function(_, s) ctx.input = ctx.input .. s end,
+    composition = {
+      toSegmentation = function()
+        local s = ctx.input
+        if s == "" then return nil end
+        local start_idx = #s            -- 默认：最后一个字符（1-based）
+        for i = 1, #s do
+          if prism[s:sub(i)] then start_idx = i break end
+        end
+        local seg = { start = start_idx - 1, _end = #s }
+        return { back = function() return seg end }
+      end,
+    },
   }
   local engine = {
     context = ctx,
@@ -45,6 +61,26 @@ local function make_env()
   local env = { engine = engine, context = ctx, processing = false }
   return env, ctx, commits, function() return cleared end
 end
+
+-- 棱镜拼写集合：词典里真实存在的全部编码（一简/两码/三码/四码/简词/次选）。
+-- 只有装了这些，分段语义才和真实运行时一致：
+--   完整编码（如 '_U、wC）→ 整段一个音节；
+--   注入过程中的中间态（如 %S）→ 棱镜里没有，退化为最后一个字符。
+local space_prism = {}
+do
+  local function add(t) for k in pairs(t or {}) do space_prism[k] = true end end
+  add(pure_data.dict_map)
+  add(pure_data.dict_map_2)
+  add(pure_data.brief_map)
+  add(pure_data.space_brief_map)
+  local cf = pure_data.char_first or {}
+  add(cf.dict_map)
+  add(cf.dict_map_2)
+  for c in pairs(pure_data.words_4code or {}) do space_prism[c] = true end
+  for c in pairs(pure_data.chars_3code or {}) do space_prism[c] = true end
+end
+print(("  [棱镜拼写 %d 条]"):format((function()
+  local n = 0 for _ in pairs(space_prism) do n = n + 1 end return n end)()))
 
 local function key(char)
   local kc = string.byte(char)
@@ -172,6 +208,73 @@ do
         and bm[sample_chord[1]] ~= nil)
   check("dict_map 未被 ' 码污染",
         (pure_data.dict_map["'_a"] == nil) and (pure_data.dict_map["'a"] == nil))
+end
+
+-- 7. Pattern S：空格并击简词（% 前缀）一击上屏
+-- chord 输出逐字符注入 % → X → Y；末字符到达时应立即提交并吞掉（kAccepted）
+local function space_sample(kind)
+  for code, text in pairs(pure_data.space_brief_map or {}) do
+    if #code == 3 then
+      local c2 = code:sub(2, 2)
+      if kind == "chord" and c2 ~= "_" and c2 ~= "+" then return code, text end
+      if kind == "left" and c2 == "_" then return code, text end
+      if kind == "right" and c2 == "+" then return code, text end
+    end
+  end
+end
+
+local function drive_space(code, prism)
+  local env, ctx, commits = make_env(prism)
+  pure_popping.init(env)
+  -- 前 n-1 个字符正常入缓冲（返回 kNoop 由 feed 写入 input）
+  feed(env, ctx, code:sub(1, 2))
+  -- 末字符：由状态机判定
+  local last = code:sub(3, 3)
+  local r = pure_popping.func(key(last), env)
+  return r, commits, ctx, env
+end
+
+do
+  local sm = pure_data.space_brief_map or {}
+  local n = 0
+  for _ in pairs(sm) do n = n + 1 end
+  check("space_brief_map 非空（≥900 条）", n >= 900, "n=" .. tostring(n))
+
+  for _, kind in ipairs({ "chord", "left", "right" }) do
+    local code, text = space_sample(kind)
+    if not code then
+      check(("空格简词样例(%s)存在"):format(kind), false, "无此码形")
+    else
+      -- 传入棱镜拼写集合 ⇒ yoyo.current() 会像真实运行时那样只返回最后一个分段
+      local r, commits, ctx = drive_space(code, space_prism)
+      check(("空格简词 %s(%s) 一击上屏"):format(code, kind),
+            commits[1] == text, "commit=" .. tostring(commits[1]))
+      check(("空格简词 %s 末字符被吞掉(kAccepted)"):format(code), r == yoyo.kAccepted,
+            "r=" .. tostring(r))
+      check(("空格简词 %s 缓冲已清空"):format(code), ctx.input == "", "input=" .. ctx.input)
+    end
+  end
+
+  -- 未定义的 % 码：拼满 3 字符后清空死缓冲，不上屏
+  local undef
+  local charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ;:,<.>/?_+"
+  for i = 1, #charset do
+    for j = 1, #charset do
+      local cand = "%" .. charset:sub(i, i) .. charset:sub(j, j)
+      if not pure_data.space_brief_map[cand] and cand:sub(2, 2) ~= "_" and cand:sub(2, 2) ~= "+" then
+        undef = cand break
+      end
+    end
+    if undef then break end
+  end
+  assert(undef, "找不到未定义的 % 码")
+  local env, ctx, commits = make_env()
+  pure_popping.init(env)
+  feed(env, ctx, undef:sub(1, 2))
+  local r = pure_popping.func(key(undef:sub(3, 3)), env)
+  check("未定义 % 码不上屏", #commits == 0, "commits=" .. table.concat(commits, ","))
+  check("未定义 % 码清空死缓冲", ctx.input == "", "input=" .. ctx.input)
+  check("未定义 % 码 kNoop", r == yoyo.kNoop, "r=" .. tostring(r))
 end
 
 print(("==================================================\n%s: %d 通过, %d 失败\n"):format(
