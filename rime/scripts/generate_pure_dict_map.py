@@ -6,9 +6,7 @@
 2. words_4code: 四码词集合（用于状态机区分合法4码词与非词自动切分）
 3. chars_3code: 三码单字集合（用于状态机区分3码单字全码与两码字接一简）
 从 rime/yoyo-user.dict.yaml（及主词表，防御性）额外提取：
-4. brief_map: 前置单引号扩展简词映射（码形 '_X / '+X / 'XY -> 词）
-   —— 状态机 Pattern H 顶屏用；' 码不进入 dict_map 等既有映射。
-5. space_brief_map: 空格并击简词映射（码形 %XY / %_X / %+X -> 词）
+4. space_brief_map: 空格并击简词映射（码形 %XY / %_X / %+X -> 词）
    —— 状态机 Pattern S 一击上屏用；% 码同样不进入其他映射。
    %XY = 双手+空格，%_X = 左手+空格，%+X = 右手+空格（见纯形统一心法）。
 """
@@ -40,7 +38,6 @@ def generate():
     clean_to_candidates = {}
     words_4code = set()
     chars_3code = set()
-    brief_map = {}
     space_brief_map = {}
 
     for l in lines:
@@ -54,11 +51,6 @@ def generate():
         if raw_code.startswith("%"):
             if len(raw_code) == 3:
                 space_brief_map.setdefault(raw_code, text)
-            continue
-        # 前置单引号扩展简词：单独收入 brief_map，不进入其他映射
-        if raw_code.startswith("'"):
-            if len(raw_code) == 3:
-                brief_map.setdefault(raw_code, text)
             continue
 
         clean_code = raw_code.replace("_", "").replace("+", "")
@@ -140,11 +132,6 @@ def generate():
         out.append(f"    [{json.dumps(c, ensure_ascii=False)}] = true,")
     out.append("  },")
 
-    out.append("  brief_map = {")
-    for code, text in sorted(brief_map.items()):
-        out.append(f"    [{json.dumps(code, ensure_ascii=False)}] = {json.dumps(text, ensure_ascii=False)},")
-    out.append("  },")
-
     out.append("  space_brief_map = {")
     for code, text in sorted(space_brief_map.items()):
         out.append(f"    [{json.dumps(code, ensure_ascii=False)}] = {json.dumps(text, ensure_ascii=False)},")
@@ -161,7 +148,6 @@ def generate():
     print(f"  - word_first dict_map entries: {len(wf_top_word)}")
     print(f"  - words_4code entries: {len(words_4code)}")
     print(f"  - chars_3code entries: {len(chars_3code)}")
-    print(f"  - brief_map entries:   {len(brief_map)}")
     print(f"  - space_brief_map entries: {len(space_brief_map)}")
 
 

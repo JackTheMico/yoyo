@@ -1,5 +1,5 @@
 // km_brief_practice.js 冒烟测试：node test_km_brief.js
-// stub 浏览器环境后加载真实练习逻辑，驱动状态机验证两套打法（空格并击 / ' 前缀）。
+// stub 浏览器环境后加载真实练习逻辑，驱动状态机验证空格并击打法。
 
 const path = require('path');
 process.chdir(path.join(__dirname));
@@ -31,10 +31,9 @@ global.window = { addEventListener() {} };
 global.localStorage = { getItem: () => null, setItem() {} };
 
 const kmData = require('./km_data_module.js');
-const { KM_BRIEF_WORDS, KM_BRIEF_SPACE } = require('./km_brief_data_module.js');
+const { KM_BRIEF_SPACE } = require('./km_brief_data_module.js');
 // km_brief_practice.js 依赖浏览器全局作用域里的数据常量，挂到 global 再加载
 Object.assign(global, kmData);
-global.KM_BRIEF_WORDS = KM_BRIEF_WORDS;
 global.KM_BRIEF_SPACE = KM_BRIEF_SPACE;
 const bp = require('./km_brief_practice.js');
 
@@ -44,20 +43,16 @@ function check(name, cond, detail) {
   else { failed++; console.log(`  ✗ ${name}  ${detail || ''}`); }
 }
 
-// ---- 1. 数据完整性（两套）----
-check('简词两套各 992 条',
-  KM_BRIEF_WORDS.length === 992 && KM_BRIEF_SPACE.length === 992,
-  `${KM_BRIEF_WORDS.length}/${KM_BRIEF_SPACE.length}`);
-for (const [label, list, mark] of [["' 版", KM_BRIEF_WORDS, "'"], ['% 版', KM_BRIEF_SPACE, '%']]) {
-  check(`${label} 码形 3 字符且前缀正确`,
-    list.every((w) => w.code.length === 3 && w.code[0] === mark));
-  check(`${label} 码元均在 KM_BEST_CHORD 中`,
-    list.every((w) => {
-      const rest = w.code[1] === '_' || w.code[1] === '+' ? w.code[2] : w.code.slice(1);
-      return [...rest].every((ch) => kmData.KM_BEST_CHORD[ch]);
-    }));
-  check(`${label} 码位唯一`, new Set(list.map((w) => w.code)).size === list.length);
-}
+// ---- 1. 数据完整性（空格并击版）----
+check('空格简词 992 条', KM_BRIEF_SPACE.length === 992, String(KM_BRIEF_SPACE.length));
+check('% 版 码形 3 字符且前缀正确',
+  KM_BRIEF_SPACE.every((w) => w.code.length === 3 && w.code[0] === '%'));
+check('% 版 码元均在 KM_BEST_CHORD 中',
+  KM_BRIEF_SPACE.every((w) => {
+    const rest = w.code[1] === '_' || w.code[1] === '+' ? w.code[2] : w.code.slice(1);
+    return [...rest].every((ch) => kmData.KM_BEST_CHORD[ch]);
+  }));
+check('% 版 码位唯一', new Set(KM_BRIEF_SPACE.map((w) => w.code)).size === KM_BRIEF_SPACE.length);
 check("% 版码形覆盖三类", (() => {
   const kinds = new Set(KM_BRIEF_SPACE.map((w) => (w.code[1] === '_' ? 'L' : w.code[1] === '+' ? 'R' : 'B')));
   return kinds.has('L') && kinds.has('R') && kinds.has('B');
@@ -119,32 +114,22 @@ bp._setStroke(bp.fingeringOf(rDau).right, true);
 bp.settleStroke();
 check(`空格版 右手+空格（${rItem.answer}）一击通过`, bp.state.stats.done === 1);
 
-// ---- 4. ' 版：两步流程仍正常 ----
-const aposIdx = bp.state.bank.length; // 切模式后重新取
-bp.loadMode('brief_0');
-const aIdx = bp.state.bank.findIndex((it) => it.answer.includes('最多'));
-forceFirst('brief_0', aIdx);
-bp._setStroke(["'"]);
-bp.settleStroke();
-check("' 版 第1击 ' 通过", bp.state.step === 1, `step=${bp.state.step}`);
-bp._setStroke(['w', 'l', 'm'], false);
-bp.settleStroke();
-check("' 版 第2击并击通过", bp.state.stats.done === 1 && bp.state.stats.right === 1);
-
-// ---- 5. 真实按键入口：必须拦截默认行为（否则空格会滚动页面 / 激活按钮）----
-for (const [label, key, code] of [
-  ['空格', ' ', 'Space'],
-  ["单引号", "'", 'Quote'],
-  ['字母 a', 'a', 'KeyA'],
-]) {
+// ---- 4. 真实按键入口：并击键（空格 / 码元）必须拦截默认行为，否则会滚动页面 / 激活按钮 ----
+// 单引号键在空格并击版不再作为输入键，仅验证不抛错（不强制 preventDefault）。
+function keyProbe(label, key, code, expectPrevent) {
   const kd = fire('keydown', key, code);
   check(`keydown ${label} 未抛错`, kd.threw === null,
     kd.threw ? `${kd.threw.constructor.name}: ${kd.threw.message}` : '');
-  check(`keydown ${label} 已 preventDefault`, kd.prevented === true);
+  if (expectPrevent) {
+    check(`keydown ${label} 已 preventDefault`, kd.prevented === true);
+  }
   const ku = fire('keyup', key, code);
   check(`keyup ${label} 未抛错`, ku.threw === null,
     ku.threw ? `${ku.threw.constructor.name}: ${ku.threw.message}` : '');
 }
+keyProbe('空格', ' ', 'Space', true);
+keyProbe("单引号", "'", 'Quote', false);
+keyProbe('字母 a', 'a', 'KeyA', true);
 // 空格并击一击完成（走真实 keydown/keyup，不再直接调 settleStroke）
 bp.loadMode('space_0');
 const bothIdxReal = bp.state.bank.findIndex((it) => it.answer.includes('%wS'));
@@ -159,8 +144,8 @@ check('真实按键序列：空格并击一击通过',
   bp.state.stats.done === 1 && bp.state.stats.right === 1,
   `done=${bp.state.stats.done} right=${bp.state.stats.right}`);
 
-// ---- 6. 六个模式题库规模 ----
-for (const m of ['brief_0', 'brief_1', 'brief_2', 'space_0', 'space_1', 'space_2']) {
+// ---- 5. 三个模式题库规模 ----
+for (const m of ['space_0', 'space_1', 'space_2']) {
   bp.loadMode(m);
   check(`${m} 题库 ${bp.state.bank.length} 条`, bp.state.bank.length > 300,
     String(bp.state.bank.length));

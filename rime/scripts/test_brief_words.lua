@@ -1,13 +1,12 @@
--- 扩展简词（前置单引号）pure_popping 状态机测试 (test_brief_words.lua)
+-- 空格并击简词（% 前缀）pure_popping 状态机测试 (test_brief_words.lua)
 -- 用法：lua5.4 test_brief_words.lua
 --
 -- 直接加载真实的 pure_popping.lua 与 pure_dict_map.lua，用 stub 的
 -- engine/context/key_event 驱动状态机，验证：
---   1. 简词完整流程：' → '_ → '_w → 接下一键顶出简词
---   2. 中间态放行（ilen<3 不误触发）
---   3. 未定义简词位 → 清空死缓冲、不上屏
---   4. 回归：次选拦截（' 同按语义）不受影响
---   5. 回归：Pattern A 一简顶屏不受影响
+--   1. 空格并击简词（%XY / %_X / %+X）在末字符到达时一击上屏并吞字符
+--   2. 未定义 % 码 → 清空死缓冲、不上屏
+--   3. 回归：次选拦截（' 同按语义）不受影响
+--   4. 回归：Pattern A 一简顶屏不受影响
 
 local SCRIPTS_DIR = (arg and arg[0] and arg[0]:match("(.*/)")) or "./"
 package.path = SCRIPTS_DIR .. "../lua/?.lua;" .. package.path
@@ -45,11 +44,10 @@ local function make_env(prism)
       toSegmentation = function()
         local s = ctx.input
         if s == "" then return nil end
-        local start_idx = #s            -- 默认：最后一个字符（1-based）
-        for i = 1, #s do
-          if prism[s:sub(i)] then start_idx = i break end
-        end
-        local seg = { start = start_idx - 1, _end = #s }
+        -- 真实 librime 中，% 前缀的并击串（%XY/%_X/%+X）因 % 不参与任何拼写，
+        -- 整段是一个未确认 segment，yoyo.current() 返回整个 input；
+        -- 单串输入（未混合多词）时末分段即整串，故这里不切分。
+        local seg = { start = 0, _end = #s }
         return { back = function() return seg end }
       end,
     },
@@ -62,7 +60,7 @@ local function make_env(prism)
   return env, ctx, commits, function() return cleared end
 end
 
--- 棱镜拼写集合：词典里真实存在的全部编码（一简/两码/三码/四码/简词/次选）。
+-- 棱镜拼写集合：词典里真实存在的全部编码（一简/两码/三码/四码/空格简词/次选）。
 -- 只有装了这些，分段语义才和真实运行时一致：
 --   完整编码（如 '_U、wC）→ 整段一个音节；
 --   注入过程中的中间态（如 %S）→ 棱镜里没有，退化为最后一个字符。
@@ -71,7 +69,6 @@ do
   local function add(t) for k in pairs(t or {}) do space_prism[k] = true end end
   add(pure_data.dict_map)
   add(pure_data.dict_map_2)
-  add(pure_data.brief_map)
   add(pure_data.space_brief_map)
   local cf = pure_data.char_first or {}
   add(cf.dict_map)
@@ -104,113 +101,10 @@ local function feed(env, ctx, seq)
 end
 
 print("==================================================")
-print("🧪 前置单引号扩展简词 — pure_popping 状态机测试")
+print("🧪 空格并击简词 — pure_popping 状态机测试")
 print("==================================================")
 
--- 1. 简词完整流程（数据驱动：取 brief_map 里任一 '_X 形条目）
-local sample_left, sample_right, sample_chord
-for code, text in pairs(pure_data.brief_map or {}) do
-  if #code == 3 then
-    if code:sub(2, 2) == "_" and not sample_left then sample_left = { code, text } end
-    if code:sub(2, 2) == "+" and not sample_right then sample_right = { code, text } end
-    if code:sub(2, 2) ~= "_" and code:sub(2, 2) ~= "+" and not sample_chord then
-      sample_chord = { code, text }
-    end
-  end
-end
-
-do
-  local env, ctx, commits = make_env()
-  pure_popping.init(env)
-  feed(env, ctx, "'")          -- 点按 ' → input="'"
-  check("点 ' 入缓冲", ctx.input == "'", "input=" .. ctx.input)
-  feed(env, ctx, sample_left[1]:sub(2, 2))
-  check("中间态放行(2)", ctx.input == sample_left[1]:sub(1, 2), "input=" .. ctx.input)
-  feed(env, ctx, sample_left[1]:sub(3, 3))
-  check("中间态放行(3)", ctx.input == sample_left[1], "input=" .. ctx.input)
-  local r = pure_popping.func(key("b"), env)
-  check("完整简词接下一键 kNoop", r == yoyo.kNoop, "r=" .. tostring(r))
-  check("顶出简词", commits[1] == sample_left[2], "commit=" .. tostring(commits[1]))
-  check("缓冲已清空", ctx.input == "", "input=" .. ctx.input)
-end
-
--- 2. 右手一击与并击简词
-do
-  local env, ctx, commits = make_env()
-  pure_popping.init(env)
-  feed(env, ctx, sample_right[1])
-  pure_popping.func(key("b"), env)
-  check("右手简词 " .. sample_right[1] .. " 顶出", commits[1] == sample_right[2],
-        "commit=" .. tostring(commits[1]))
-end
-do
-  local env, ctx, commits = make_env()
-  pure_popping.init(env)
-  feed(env, ctx, sample_chord[1])
-  pure_popping.func(key("_"), env)
-  check("并击简词 " .. sample_chord[1] .. " 顶出", commits[1] == sample_chord[2],
-        "commit=" .. tostring(commits[1]))
-end
-
--- 3. 未定义简词位 → 清空死缓冲，不上屏（取一个不在 brief_map 的 3 长度 ' 码）
-do
-  local env, ctx, commits = make_env()
-  pure_popping.init(env)
-  local undefined
-  local charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ;:,<.>/?"
-  for i = 1, #charset do
-    for j = 1, #charset do
-      local cand = "'" .. charset:sub(i, i) .. charset:sub(j, j)
-      if not pure_data.brief_map[cand] then undefined = cand break end
-    end
-    if undefined then break end
-  end
-  assert(undefined, "找不到未定义简词位")
-  feed(env, ctx, undefined)
-  check("中间态未误触发", #commits == 0 and ctx.input == undefined,
-        ("input=%s commits=%s"):format(ctx.input, table.concat(commits, ",")))
-  local r = pure_popping.func(key("b"), env)
-  check("未定义简词位 kNoop", r == yoyo.kNoop)
-  check("未定义简词位不上屏", #commits == 0, "commits=" .. table.concat(commits, ","))
-  check("死缓冲已清空", ctx.input == "", "input=" .. ctx.input)
-end
-
--- 4. 回归：次选拦截（' 与键同按 → 注入序列 _ w '，最后一步 incoming='）
-do
-  local env, ctx, commits = make_env()
-  pure_popping.init(env)
-  feed(env, ctx, "_w")
-  local expect2 = pure_data.dict_map_2["_w"] or pure_data.dict_map_2["w"]
-  local r = pure_popping.func(key("'"), env)
-  check("次选拦截保留: kAccepted", r == yoyo.kAccepted, "r=" .. tostring(r))
-  check("次选上屏内容一致", commits[1] == expect2,
-        ("commit=%s expect=%s"):format(tostring(commits[1]), tostring(expect2)))
-end
-
--- 5. 回归：Pattern A 一简顶屏
-do
-  local env, ctx, commits = make_env()
-  pure_popping.init(env)
-  feed(env, ctx, "_w")
-  local expect1 = pure_data.dict_map["_w"] or pure_data.dict_map["w"]
-  pure_popping.func(key("b"), env)
-  check("一简顶屏保留", commits[1] == expect1,
-        ("commit=%s expect=%s"):format(tostring(commits[1]), tostring(expect1)))
-end
-
--- 6. brief_map 数据完整性
-do
-  local bm = pure_data.brief_map or {}
-  local n = 0
-  for _ in pairs(bm) do n = n + 1 end
-  check("brief_map 非空（≥900 条）", n >= 900, "n=" .. tostring(n))
-  check("样例条目在位", bm[sample_left[1]] ~= nil and bm[sample_right[1]] ~= nil
-        and bm[sample_chord[1]] ~= nil)
-  check("dict_map 未被 ' 码污染",
-        (pure_data.dict_map["'_a"] == nil) and (pure_data.dict_map["'a"] == nil))
-end
-
--- 7. Pattern S：空格并击简词（% 前缀）一击上屏
+-- 1. Pattern S：空格并击简词（% 前缀）一击上屏
 -- chord 输出逐字符注入 % → X → Y；末字符到达时应立即提交并吞掉（kAccepted）
 local function space_sample(kind)
   for code, text in pairs(pure_data.space_brief_map or {}) do
@@ -275,6 +169,29 @@ do
   check("未定义 % 码不上屏", #commits == 0, "commits=" .. table.concat(commits, ","))
   check("未定义 % 码清空死缓冲", ctx.input == "", "input=" .. ctx.input)
   check("未定义 % 码 kNoop", r == yoyo.kNoop, "r=" .. tostring(r))
+end
+
+-- 2. 回归：次选拦截（' 与键同按 → 注入序列 _ w '，最后一步 incoming='）
+do
+  local env, ctx, commits = make_env()
+  pure_popping.init(env)
+  feed(env, ctx, "_w")
+  local expect2 = pure_data.dict_map_2["_w"] or pure_data.dict_map_2["w"]
+  local r = pure_popping.func(key("'"), env)
+  check("次选拦截保留: kAccepted", r == yoyo.kAccepted, "r=" .. tostring(r))
+  check("次选上屏内容一致", commits[1] == expect2,
+        ("commit=%s expect=%s"):format(tostring(commits[1]), tostring(expect2)))
+end
+
+-- 3. 回归：Pattern A 一简顶屏
+do
+  local env, ctx, commits = make_env()
+  pure_popping.init(env)
+  feed(env, ctx, "_w")
+  local expect1 = pure_data.dict_map["_w"] or pure_data.dict_map["w"]
+  pure_popping.func(key("b"), env)
+  check("一简顶屏保留", commits[1] == expect1,
+        ("commit=%s expect=%s"):format(tostring(commits[1]), tostring(expect1)))
 end
 
 print(("==================================================\n%s: %d 通过, %d 失败\n"):format(

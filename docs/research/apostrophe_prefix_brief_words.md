@@ -1,5 +1,11 @@
 # 前置单引号扩展简词 — 可行性研究报告
 
+> ⚠️ **已弃用（2026-08-29）**：本方案（前置单引号 `'` 简词）经评估后未采用，
+> 最终只保留**空格并击版**（% 前缀，一击上屏，见 `space_chord_brief_words.md`）。
+> 文中的编码空间仿真代码已并入 `rime/scripts/chord_utils.py`（通用并击代数工具库），
+> 状态机测试见 `rime/scripts/test_brief_words.lua`，冲突检测见 `rime/scripts/test_space_chord_brief.py`。
+> 下文保留当时（' 版）的可行性分析记录。
+
 日期：2026-08-29
 问题：目前单引号 `'` 只用于并击上屏次选。设想用**前置单引号**打扩展简词：
 1. `'` + 左手一击（60 种码元）
@@ -91,7 +97,7 @@ void ChordComposer::FinishChord(const Chord& chord) {
 ⇒ **prism/table 对 `'` 编码无任何硬约束**，`rime_deployer` 正常编译。
 （dict.yaml 中含 `'` 的编码行建议用双引号包裹，避免 YAML 单引号转义歧义。）
 
-### 4. 编码空间仿真（`rime/scripts/test_apostrophe_prefix_brief.py`）
+### 4. 编码空间仿真（现并入 `rime/scripts/chord_utils.py`，参见 `test_space_chord_brief.py`）
 
 对现行心法+空明拳指法做 1~3 键暴力枚举仿真，全部断言通过：
 
@@ -142,7 +148,7 @@ void ChordComposer::FinishChord(const Chord& chord) {
 ## 复现
 
 ```bash
-python3 rime/scripts/test_apostrophe_prefix_brief.py   # 编码空间仿真
+python3 rime/scripts/test_space_chord_brief.py       # 空格并击码位仿真 + 冲突检测
 lua rime/scripts/test_brief_words.lua                  # 状态机集成测试（16 用例）
 # 词典编译实证见 /tmp/rimetest（rime_deployer --build + rime_table_decompiler）
 ```

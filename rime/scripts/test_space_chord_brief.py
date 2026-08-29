@@ -116,7 +116,7 @@ def main():
     assert len(left_one) == 60 and len(right_one) == 60
     print(f"    合计 {len(both) + len(left_one) + len(right_one)} 位")
 
-    # ── 2. 样例对照（与 ' 版同键位，只是把 ' 换成空格）──────────────────
+    # ── 2. 样例（空格并击：空格 + 双手/单手码元同时按）──────────────────
     print("\n[2] 样例")
     for (kl, kr, dl, dr) in [both[c] for c in list(both)[:3]]:
         print(f"    左手 {kl:>3} + 空格 + 右手 {kr:<3} → {chord_out(kl + ' ' + kr, xinfa, fingering, alphabet)}")

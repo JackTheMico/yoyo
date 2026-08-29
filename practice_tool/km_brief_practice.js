@@ -1,11 +1,10 @@
 // 空明拳（yoyo-km）简词练习逻辑
 // 依赖 km_data_module.js（KM_CHORDS / KM_BEST_CHORD / KM_MIRROR / KM_LEFT_ORDER）
-// 与 km_brief_data_module.js（KM_BRIEF_WORDS：' 版；KM_BRIEF_SPACE：空格并击版）。
+// 与 km_brief_data_module.js（KM_BRIEF_SPACE：空格并击版）。
 //
-// 两套打法（编码不同、互不干扰，可并存）：
-//   ' 版（两击）   第 1 击单独点按-松开 '，第 2 击并击码元，实际输入再接下一键顶屏
-//   空格版（一击） 空格与码元同时并击即上屏：%XY 双手+空格 / %_X 左手+空格 / %+X 右手+空格
-//                 （由 pure_popping 的 Pattern S 在末字符到达时提交）
+// 空格并击（一击上屏）：空格与码元同时并击即上屏：
+//   %XY 双手+空格 / %_X 左手+空格 / %+X 右手+空格
+//   （由 pure_popping 的 Pattern S 在末字符到达时提交）
 
 const LEFT_OF = {};
 for (const [left, right] of Object.entries(KM_MIRROR)) LEFT_OF[right] = left;
@@ -56,18 +55,11 @@ function fingeringOf(code) {
   return { left, right: left.map((key) => KM_MIRROR[key]) };
 }
 
-/** 解析简词码 → 码元目标与手别（' 版与 % 版同一套码元规则）。 */
+/** 解析简词码 → 码元目标与手别（% 版：%XY / %_X / %+X）。 */
 function parseBriefCode(code) {
   if (code[1] === '_') return { daus: [code[2]], hand: 'left' };
   if (code[1] === '+') return { daus: [code[2]], hand: 'right' };
   return { daus: [code[1], code[2]], hand: 'both' };
-}
-
-function apostropheHint(step, total) {
-  if (step.hand === 'apostrophe') {
-    return `第 1 击：单独点按并松开 <kbd>'</kbd>（小指右下角那个键）`;
-  }
-  return `第 ${total} 击：${dauHint(step)}`;
 }
 
 function spaceHint(step) {
@@ -96,21 +88,6 @@ function codeLabel(code) {
   return '两手并击';
 }
 
-function apostropheItem(item) {
-  const { daus, hand } = parseBriefCode(item.code);
-  const steps = [
-    { target: ["'"], hand: 'apostrophe', space: false },
-    { target: daus, hand, space: false },
-  ];
-  return {
-    key: `${item.text}/${item.code}`,
-    steps,
-    prompt: `<div class="km-code-big">${esc(item.text)}</div>`,
-    hint: steps.map((s, i) => apostropheHint(s, i + 1)).join('<br>'),
-    answer: `${item.text}（${esc(item.code)}，${codeLabel(item.code)}）`,
-  };
-}
-
 function spaceItem(item) {
   const { daus, hand } = parseBriefCode(item.code);
   const steps = [{ target: daus, hand, space: true }];
@@ -129,9 +106,6 @@ function segment(list, i, n) {
 }
 
 const BANKS = {
-  brief_0: () => segment(KM_BRIEF_WORDS, 0, 3).map(apostropheItem),
-  brief_1: () => segment(KM_BRIEF_WORDS, 1, 3).map(apostropheItem),
-  brief_2: () => segment(KM_BRIEF_WORDS, 2, 3).map(apostropheItem),
   space_0: () => segment(KM_BRIEF_SPACE, 0, 3).map(spaceItem),
   space_1: () => segment(KM_BRIEF_SPACE, 1, 3).map(spaceItem),
   space_2: () => segment(KM_BRIEF_SPACE, 2, 3).map(spaceItem),
@@ -255,26 +229,7 @@ function settleStroke() {
   strokeSpace = false;
   if (!item || !step || (keys.size === 0 && !hadSpace)) return;
 
-  // 第 1 击（' 版）：单独点按 '
-  if (step.hand === 'apostrophe') {
-    if (keys.size === 1 && keys.has("'") && !hadSpace) {
-      state.step += 1;
-      flash('\' 对了，接着并击码元', 'good');
-    } else {
-      state.wrongOnThis = true;
-      flash('第 1 击只按一个 ' + "'" + '（不要带其他键）', 'bad');
-    }
-    render();
-    return;
-  }
-
-  // 码元击：空格版要求同按空格，' 版要求不带空格
-  if (keys.has("'")) {
-    state.wrongOnThis = true;
-    flash('码元并击里不能带 ' + "'" + '（' + "'" + ' 永远单独成击）', 'bad');
-    render();
-    return;
-  }
+  // 码元击：空格版要求同按空格
   if (step.space !== hadSpace) {
     state.wrongOnThis = true;
     flash(step.space ? '这一击需要同时按住空格' : '这一击不需要空格', 'bad');
@@ -369,18 +324,14 @@ function render() {
 
   const highlight = { left: [], right: [] };
   if (showAnswer && step) {
-    if (step.hand === 'apostrophe') {
-      highlight.right.push("'");
-    } else {
-      for (const code of step.target) {
-        const f = fingeringOf(code);
-        if (!f) continue;
-        if (step.hand === 'left') highlight.left.push(...f.left);
-        else if (step.hand === 'right') highlight.right.push(...f.right);
-        else {
-          highlight.left.push(...f.left);
-          highlight.right.push(...f.right);
-        }
+    for (const code of step.target) {
+      const f = fingeringOf(code);
+      if (!f) continue;
+      if (step.hand === 'left') highlight.left.push(...f.left);
+      else if (step.hand === 'right') highlight.right.push(...f.right);
+      else {
+        highlight.left.push(...f.left);
+        highlight.right.push(...f.right);
       }
     }
   }
@@ -398,7 +349,7 @@ function render() {
 // ---------------------------------------------------------------- 输入捕获
 
 function isTracked(key) {
-  return key === ' ' || key === "'" || IS_LEFT.has(key) || IS_RIGHT.has(key);
+  return key === ' ' || IS_LEFT.has(key) || IS_RIGHT.has(key);
 }
 
 document.addEventListener('keydown', (event) => {
@@ -471,7 +422,7 @@ document.addEventListener('DOMContentLoaded', () => {
 if (typeof module !== 'undefined') {
   module.exports = {
     state, pressed, BANKS,
-    parseBriefCode, decodeStroke, fingeringOf, apostropheItem, spaceItem, loadMode,
+    parseBriefCode, decodeStroke, fingeringOf, spaceItem, loadMode,
     settleStroke,
     _setStroke: (keys, space = false) => { strokeKeys = new Set(keys); strokeSpace = space; },
   };

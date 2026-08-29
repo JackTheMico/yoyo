@@ -1,24 +1,22 @@
 #!/usr/bin/env python3
 """简词码位分配器：把第一档空明码一击词写入 yoyo-user.dict.yaml。
 
-两种模式：
-  默认（' 版）  码形 '_X / '+X / 'XY，需先点按-松开 ' 再并击，接下一键顶屏（2 击）
-  --space（空格版）码形 %XY / %_X / %+X，空格与码元同时并击，末字符到达即上屏（1 击）
-两套编码互不干扰，可并存（' 版留作备用，待空格版验证后再删）。
+码形：%XY（双手+空格）/ %_X（左手+空格）/ %+X（右手+空格），空格与码元同时并击，
+末字符到达即一击上屏（由 pure_popping 的 Pattern S 提交并吞掉）。
 
-分配规则（两种模式共用）：
+分配规则：
   1. 过滤：词的每个字都是一简字（yoyo-pure 中有单字母母码 _X/+X）→ 不占简词位
      （逐字一简已是两击，如「不用」「人的」）
-  2. 首选码 = 前缀 + 字1首根 + 字2首根（取每字最长形码，与词编码公式
-     AbAcBbBc / AbBbCbCc 的字根一致：最多→'wS、看起来→'id）
-  3. --space 额外：词频最高的 120 个词改用「单手+空格」位 %_X（左，前 60 词）
+  2. 首选码 = % + 字1首根 + 字2首根（取每字最长形码，与词编码公式
+     AbAcBbBc / AbBbCbCc 的字根一致：最多→%wS、看起来→%id）
+  3. 词频最高的 120 个词改用「单手+空格」位 %_X（左，前 60 词）
      与 %+X（右，第 61~120 词），键数最少；取不到则回退到 %XY
   4. 冲突（同码多词/缺字根）→ 词频高者得，其余按人体工学次序回退分配
 
-用法：python3 gen_brief_words.py            # ' 版预览
-      python3 gen_brief_words.py --write    # ' 版写入
-      python3 gen_brief_words.py --space            # 空格版预览
-      python3 gen_brief_words.py --space --write    # 空格版写入（保留 ' 版条目）
+用法：python3 gen_brief_words.py            # 预览
+      python3 gen_brief_words.py --write    # 写入 yoyo-user.dict.yaml
+      python3 gen_brief_words.py --space        # 预览（同默认）
+      python3 gen_brief_words.py --space --write  # 写入（同默认，兼容旧调用）
 """
 
 import sys
@@ -29,7 +27,7 @@ from pathlib import Path
 SCRIPTS_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(SCRIPTS_DIR))
 
-from test_apostrophe_prefix_brief import (  # noqa: E402
+from chord_utils import (  # noqa: E402
     LEFT_KEYS, RIGHT_KEYS, YOYO_YAML, KM_SCHEMA,
     build_pipelines, enumerate_dau, apply_xforms, load_yaml,
 )
@@ -40,7 +38,6 @@ USER_DICT = RIME_DIR / "yoyo-user.dict.yaml"
 TIER1 = SCRIPTS_DIR.parent.parent / "research" / "km_one_chord_tier1.txt"
 
 ONE_HAND_SLOTS = 60          # 单手+空格位：左手 60 + 右手 60
-MARK_BRIEF = "'"
 MARK_SPACE = "%"
 
 REGULAR_HEADER = """# Rime dictionary: yoyo-user
@@ -56,25 +53,15 @@ columns:
 ...
 """
 
-BRIEF_COMMENT = {
-    "'": """
-# ── 前置单引号扩展简词（' + 左手一击 / 右手一击 / 左右并击，共 3720 位）──
-# 用法：先点按-松开 '，再击键；与「' 同按=次选」时序分流，互不冲突。
-# 码形：'_X（左手一击）/ '+X（右手一击）/ 'XY（左右并击），X/Y 为码元。
-# 编码规则：' + 字1首根 + 字2首根（每字取最长形码，与词编码公式字根一致）。
-# 来源：research/km_one_chord_tier1.txt（空明码一击词 ∩ 万象词频）。
-# 生成：gen_brief_words.py --write（重跑可重新分配，保留普通词条）。
-""",
-    "%": """
+BRIEF_COMMENT = """
 # ── 空格并击简词（空格 + 码元同时按，一击上屏，共 3720 位）──
 # 码形：%XY（双手+空格）/ %_X（左手+空格）/ %+X（右手+空格）。
-# 编码规则：% + 字1首根 + 字2首根（与 ' 版同码，只是把 ' 换成空格并击）；
+# 编码规则：% + 字1首根 + 字2首根（每字取最长形码，与词编码公式字根一致）；
 #   词频最高的 120 个词占用更短的单手+空格位 %_X / %+X（取字1首根）。
 # 一击上屏由 pure_popping 的 Pattern S 完成（末字符到达即提交并吞掉），
-#   不需要 speller/auto_select。与 ' 版互不干扰，可并存。
-# 生成：gen_brief_words.py --space --write（重跑可重新分配，保留普通与 ' 版词条）。
-""",
-}
+#   不需要 speller/auto_select。
+# 生成：gen_brief_words.py --write（重跑可重新分配，保留普通词条）。
+"""
 
 
 def load_char_codes():
@@ -117,12 +104,12 @@ def build_slots(mark):
         assert plain == expect, f"{keys} -> {plain!r} != {expect!r}"
 
     slots = []
-    # 单手位（' 版为 '_X/'+X；空格版对应 %_X/%+X，只有空格版启用）
+    # 单手位：%_X / %+X（空格版单手+空格）
     for hand, (daus, sym) in enumerate(((left_dau, "_"), (right_dau, "+"))):
         for d, keys in daus.items():
             n = len(keys)
             slots.append(((n, 1 if n > 1 else 0, f"{hand}{d}"), f"{mark}{sym}{d}"))
-    # 双手位：'XY / %XY（键数 = 左键数 + 右键数，跨手优先）
+    # 双手位：%XY（键数 = 左键数 + 右键数，跨手优先）
     for ld, kl in left_dau.items():
         for rd, kr in right_dau.items():
             slots.append(((len(kl) + len(kr), 0, f"{kl}{kr}"), f"{mark}{ld}{rd}"))
@@ -132,9 +119,8 @@ def build_slots(mark):
 
 def main():
     write = "--write" in sys.argv
-    space = "--space" in sys.argv
-    mark = MARK_SPACE if space else MARK_BRIEF
-    label = "空格并击版(%)" if space else "前置单引号版(')"
+    mark = MARK_SPACE
+    label = "空格并击版(%)"
 
     cc, yijian = load_char_codes()
     print(f"模式：{label}　码前缀：{mark}")
@@ -167,9 +153,9 @@ def main():
         s1 = cc.get(w[0])
         return (mark + sym + s1[0]) if s1 else None
 
-    # 规则 3（仅空格版）：最高频 120 词占用单手+空格位
+    # 规则 3：最高频 120 词占用单手+空格位
     top_one_hand = []
-    if space:
+    if True:
         for i, (w, f) in enumerate(words[:ONE_HAND_SLOTS * 2]):
             sym = "_" if i < ONE_HAND_SLOTS else "+"
             code = one_hand_code(w, sym)
@@ -213,32 +199,26 @@ def main():
         print("（预览模式，加 --write 实际写入）")
         return
 
-    # 写入：保留普通词条与另一种简词（' 版 / % 版）条目，只重写本模式的简词段
-    other_mark = MARK_BRIEF if space else MARK_SPACE
-    kept, other = [], []
+    # 写入：保留普通词条，丢弃旧 ' 简词（不再使用），只重写本模式（空格并击版）的简词段
+    kept = []
     for l in USER_DICT.read_text(encoding="utf-8").splitlines():
         if not l.strip() or l.startswith("#"):
             continue
         p = l.split("\t")
-        if len(p) >= 2 and p[1].startswith(other_mark):
-            other.append(l)          # 另一版简词，原样保留
-        elif len(p) >= 2 and not p[1].startswith(mark):
-            kept.append(l)           # 普通词条
+        if len(p) >= 2 and (p[1].startswith("'") or p[1].startswith(mark)):
+            continue                 # ' 简词丢弃；% 简词将被下方重新生成
+        kept.append(l)               # 普通词条
 
     out = [REGULAR_HEADER.rstrip("\n"), ""]
     out += kept
-    out.append(BRIEF_COMMENT[mark].rstrip("\n"))
+    out.append(BRIEF_COMMENT.rstrip("\n"))
     for code, w, f in assigned:
         out.append(f"{w}\t{code}\t{f}")
-    if other:
-        out.append(f"\n# ── 另一版简词（{other_mark} 前缀，{len(other)} 条）原样保留 ──")
-        out += other
     USER_DICT.write_text("\n".join(out) + "\n", encoding="utf-8")
-    print(f"✅ 已写入 {USER_DICT.name}：普通 {len(kept)} + {label} {len(assigned)}"
-          + (f" + 保留另一版 {len(other)}" if other else ""))
+    print(f"✅ 已写入 {USER_DICT.name}：普通 {len(kept)} + {label} {len(assigned)}")
 
-    # 写完词条后必须重生成 pure_dict_map.lua（否则 brief_map / space_brief_map
-    # 为空 → 状态机 Pattern H/S 查不到 → 简词落 speller 成候选，需再按一次空格）。
+    # 写完词条后必须重生成 pure_dict_map.lua（否则 space_brief_map
+    # 为空 → 状态机 Pattern S 查不到 → 简词落 speller 成候选，需再按一次空格）。
     try:
         subprocess.run([sys.executable, str(SCRIPTS_DIR / "generate_pure_dict_map.py")],
                       check=True)

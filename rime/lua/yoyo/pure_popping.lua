@@ -41,12 +41,6 @@
 -- G. input=4字符纯字母(XYZW)，incoming=任意可见键
 --    → 顶出XYZW（词或字），kNoop
 --
--- H. input=简词(' 前缀，如 '_w / '+w / 'sl，ilen=3)，incoming=任意可见键
---    → if brief_map[input]: 顶出简词，kNoop（speller push incoming）
---    → else: 清空死缓冲，kNoop
---    简词 = 先点按-松开 '（独立 chord 输出 ' 进 input），再击键拼成；
---    次选 = ' 与键同按（码形后缀 '，由上方拦截块处理）——时序天然分流。
---
 -- S. 空格并击简词（% 前缀：%XY 双手+空格 / %_X 左手+空格 / %+X 右手+空格）
 --    chord 输出是逐字符注入的（% → X → Y），故在「末字符 incoming」到达时：
 --    → if space_brief_map[input .. incoming]: 顶出简词并 kAccepted（吞掉末字符）
@@ -156,24 +150,6 @@ function processor.func(key_event, env)
     -- 未命中且已拼满 3 字符（%XY / %_X / %+X 都是 3 字符）→ 清空死缓冲
     if #full >= 3 then
       env.processing = true
-      context:clear()
-      env.processing = false
-    end
-    return yoyo.kNoop
-  end
-
-  -- ─── Pattern H: 扩展简词(' 前缀码，'_X / '+X / 'XY，ilen=3)，接任意可见键 ──
-  -- input="'_w", incoming='b' → 顶出简词("_w"位定义的词)，kNoop → speller push 'b'
-  -- 未定义简词位（brief_map 未命中）→ 清空死缓冲，kNoop（避免垃圾滞留）
-  -- 注意：speller 收 ' 进 input 后，中间态 "' / '_ / 'X" 由 ilen<3 分支自然放行
-  if input:sub(1, 1) == "'" then
-    if ilen >= 3 then
-      local brief_map = pure_data.brief_map
-      local text = brief_map and brief_map[input]
-      env.processing = true
-      if text then
-        env.engine:commit_text(text)
-      end
       context:clear()
       env.processing = false
     end
