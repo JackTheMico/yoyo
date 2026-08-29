@@ -1,11 +1,11 @@
-// 空明拳（yoyo-km）前置单引号简词练习逻辑
+// 空明拳（yoyo-km）简词练习逻辑
 // 依赖 km_data_module.js（KM_CHORDS / KM_BEST_CHORD / KM_MIRROR / KM_LEFT_ORDER）
-// 与 km_brief_data_module.js（KM_BRIEF_WORDS，992 条 ' 前缀简词）。
+// 与 km_brief_data_module.js（KM_BRIEF_WORDS：' 版；KM_BRIEF_SPACE：空格并击版）。
 //
-// 每个简词的输入流程（对应 rime/lua/yoyo/pure_popping.lua 的 Pattern H）：
-//   第 1 击：单独点按并松开 '（进 input 缓冲）
-//   第 2 击：并击打出码元——'_X 左手一击 / '+X 右手一击 / 'XY 左右两手并击
-//   （实际输入时第 2 击后接任意下一键即顶出上屏，练习中打完两击即算对）
+// 两套打法（编码不同、互不干扰，可并存）：
+//   ' 版（两击）   第 1 击单独点按-松开 '，第 2 击并击码元，实际输入再接下一键顶屏
+//   空格版（一击） 空格与码元同时并击即上屏：%XY 双手+空格 / %_X 左手+空格 / %+X 右手+空格
+//                 （由 pure_popping 的 Pattern S 在末字符到达时提交）
 
 const LEFT_OF = {};
 for (const [left, right] of Object.entries(KM_MIRROR)) LEFT_OF[right] = left;
@@ -31,12 +31,12 @@ function orderLeft(keys) {
     .join('');
 }
 
-/** 解一次「击」：返回左右手各自命中的码元与手别。 */
+/** 解一次「击」：返回左右手各自命中的码元与手别。' 与空格由调用方单独判定。 */
 function decodeStroke(keys) {
   const left = [];
   const right = [];
   for (const key of keys) {
-    if (key === "'") continue; // ' 由专门的步骤判定
+    if (key === "'") continue;
     if (IS_LEFT.has(key)) left.push(key);
     else if (IS_RIGHT.has(key)) right.push(LEFT_OF[key]);
   }
@@ -49,7 +49,6 @@ function decodeStroke(keys) {
   };
 }
 
-/** 某个码元该怎么按：左手键与右手镜像键。 */
 function fingeringOf(code) {
   const chord = KM_BEST_CHORD[code];
   if (!chord) return null;
@@ -57,48 +56,70 @@ function fingeringOf(code) {
   return { left, right: left.map((key) => KM_MIRROR[key]) };
 }
 
-/** 解析简词码 → 第二击的目标码元与手别。 */
+/** 解析简词码 → 码元目标与手别（' 版与 % 版同一套码元规则）。 */
 function parseBriefCode(code) {
   if (code[1] === '_') return { daus: [code[2]], hand: 'left' };
   if (code[1] === '+') return { daus: [code[2]], hand: 'right' };
   return { daus: [code[1], code[2]], hand: 'both' };
 }
 
-function briefHint(step) {
+function apostropheHint(step, total) {
   if (step.hand === 'apostrophe') {
     return `第 1 击：单独点按并松开 <kbd>'</kbd>（小指右下角那个键）`;
   }
-  const parts = step.target.map((d) => {
-    const f = fingeringOf(d);
-    if (!f) return `<b>${esc(d)}</b>`;
-    if (step.hand === 'left') return `左手 <b>${esc(f.left.join(' '))}</b> 打 <b>${esc(d)}</b>`;
-    if (step.hand === 'right') return `右手 <b>${esc(f.right.join(' '))}</b> 打 <b>${esc(d)}</b>`;
-    return null;
-  }).filter(Boolean);
+  return `第 ${total} 击：${dauHint(step)}`;
+}
+
+function spaceHint(step) {
+  const handName = { both: '两手同时并击', left: '左手一击', right: '右手一击' }[step.hand];
+  return `一击完成：<kbd>Space</kbd> 与 ${dauHint(step)} 同时按下（${handName}）`;
+}
+
+function dauHint(step) {
   if (step.hand === 'both') {
     const f0 = fingeringOf(step.target[0]);
     const f1 = fingeringOf(step.target[1]);
-    return `第 2 击：两手同时并击——左手 <b>${esc(f0.left.join(' '))}</b> 打 <b>${esc(step.target[0])}</b>，`
+    return `左手 <b>${esc(f0.left.join(' '))}</b> 打 <b>${esc(step.target[0])}</b>，`
       + `右手 <b>${esc(f1.right.join(' '))}</b> 打 <b>${esc(step.target[1])}</b>`;
   }
-  return `第 2 击：${parts.join('')}（${step.hand === 'left' ? '左手' : '右手'}一击）`;
+  const code = step.target[0];
+  const f = fingeringOf(code);
+  const keys = step.hand === 'left' ? f.left : f.right;
+  return `${step.hand === 'left' ? '左手' : '右手'} <b>${esc(keys.join(' '))}</b> 打 <b>${esc(code)}</b>`;
 }
 
 // ---------------------------------------------------------------- 题库
 
-function briefItem(item) {
+function codeLabel(code) {
+  if (code[1] === '_') return '左手一击';
+  if (code[1] === '+') return '右手一击';
+  return '两手并击';
+}
+
+function apostropheItem(item) {
   const { daus, hand } = parseBriefCode(item.code);
   const steps = [
     { target: ["'"], hand: 'apostrophe', space: false },
     { target: daus, hand, space: false },
   ];
-  const keyLabel = item.code[1] === '_' ? '左手一击' : item.code[1] === '+' ? '右手一击' : '两手并击';
   return {
     key: `${item.text}/${item.code}`,
     steps,
     prompt: `<div class="km-code-big">${esc(item.text)}</div>`,
-    hint: steps.map((s) => briefHint(s)).join('<br>'),
-    answer: `${item.text}（${esc(item.code)}，${keyLabel}）`,
+    hint: steps.map((s, i) => apostropheHint(s, i + 1)).join('<br>'),
+    answer: `${item.text}（${esc(item.code)}，${codeLabel(item.code)}）`,
+  };
+}
+
+function spaceItem(item) {
+  const { daus, hand } = parseBriefCode(item.code);
+  const steps = [{ target: daus, hand, space: true }];
+  return {
+    key: `${item.text}/${item.code}`,
+    steps,
+    prompt: `<div class="km-code-big">${esc(item.text)}</div>`,
+    hint: spaceHint(steps[0]) + '<br>（空格与码元同时按下并同时松开）',
+    answer: `${item.text}（${esc(item.code)}，${codeLabel(item.code)} + 空格）`,
   };
 }
 
@@ -108,19 +129,22 @@ function segment(list, i, n) {
 }
 
 const BANKS = {
-  brief_0: () => segment(KM_BRIEF_WORDS, 0, 3).map(briefItem),
-  brief_1: () => segment(KM_BRIEF_WORDS, 1, 3).map(briefItem),
-  brief_2: () => segment(KM_BRIEF_WORDS, 2, 3).map(briefItem),
+  brief_0: () => segment(KM_BRIEF_WORDS, 0, 3).map(apostropheItem),
+  brief_1: () => segment(KM_BRIEF_WORDS, 1, 3).map(apostropheItem),
+  brief_2: () => segment(KM_BRIEF_WORDS, 2, 3).map(apostropheItem),
+  space_0: () => segment(KM_BRIEF_SPACE, 0, 3).map(spaceItem),
+  space_1: () => segment(KM_BRIEF_SPACE, 1, 3).map(spaceItem),
+  space_2: () => segment(KM_BRIEF_SPACE, 2, 3).map(spaceItem),
 };
 
 // ---------------------------------------------------------------- 状态（间隔重复）
 
-const SPACED_MODES = new Set(['brief_0', 'brief_1', 'brief_2']);
+const SPACED_MODES = new Set(Object.keys(BANKS));
 const MASTERY_COUNT = 3;
 const SPACED_INTERVALS = [2, 4, 8, 12, 20, 40, 60, 100];
 
 const state = {
-  mode: 'brief_0',
+  mode: 'space_0',
   bank: [],
   progress: [],
   progressByMode: {},
@@ -231,7 +255,7 @@ function settleStroke() {
   strokeSpace = false;
   if (!item || !step || (keys.size === 0 && !hadSpace)) return;
 
-  // 第 1 击：单独点按 '
+  // 第 1 击（' 版）：单独点按 '
   if (step.hand === 'apostrophe') {
     if (keys.size === 1 && keys.has("'") && !hadSpace) {
       state.step += 1;
@@ -244,13 +268,20 @@ function settleStroke() {
     return;
   }
 
-  // 第 2 击：并击码元
+  // 码元击：空格版要求同按空格，' 版要求不带空格
   if (keys.has("'")) {
     state.wrongOnThis = true;
     flash('码元并击里不能带 ' + "'" + '（' + "'" + ' 永远单独成击）', 'bad');
     render();
     return;
   }
+  if (step.space !== hadSpace) {
+    state.wrongOnThis = true;
+    flash(step.space ? '这一击需要同时按住空格' : '这一击不需要空格', 'bad');
+    render();
+    return;
+  }
+
   const result = decodeStroke([...keys]);
   if (result.invalid) {
     flash('这个组合不是合法指法', 'bad');
@@ -258,16 +289,15 @@ function settleStroke() {
     render();
     return;
   }
-  const wantHands = step.hand;
   const gotHandsName = { L: 'left', R: 'right', LR: 'both' }[result.hands] || null;
-  if (wantHands === 'both' && gotHandsName !== 'both') {
+  if (step.hand === 'both' && gotHandsName !== 'both') {
     flash('请两手同时并击（左右手各出一码元）', 'bad');
     state.wrongOnThis = true;
     render();
     return;
   }
-  if ((wantHands === 'left' || wantHands === 'right') && gotHandsName !== wantHands) {
-    flash(`请用${wantHands === 'left' ? '左手' : '右手'}一击`, 'bad');
+  if ((step.hand === 'left' || step.hand === 'right') && gotHandsName !== step.hand) {
+    flash(`请用${step.hand === 'left' ? '左手' : '右手'}一击`, 'bad');
     state.wrongOnThis = true;
     render();
     return;
@@ -281,8 +311,16 @@ function settleStroke() {
     return;
   }
 
-  flash('对了！实际输入中再接任意下一键即上屏', 'good');
-  nextItem(!state.wrongOnThis && !state.revealed);
+  const lastStep = state.step === item.steps.length - 1;
+  if (lastStep) {
+    flash(step.space ? '对了！空格并击一击上屏' : '对了！实际输入中再接任意下一键即上屏', 'good');
+    nextItem(!state.wrongOnThis && !state.revealed);
+  } else {
+    state.step += 1;
+    state.wrongOnThis = false;
+    state.revealed = false;
+    flash(`第 ${state.step} 击对了，继续第 ${state.step + 1} 击`, 'good');
+  }
   render();
 }
 
@@ -299,7 +337,7 @@ function flash(text, kind) {
   }, 1400);
 }
 
-function renderKeyboard(highlight) {
+function renderKeyboard(highlight, wantSpace) {
   const rows = KEYBOARD.map((row) => {
     const cell = (key, side) => {
       const on = highlight[side].includes(key);
@@ -312,7 +350,8 @@ function renderKeyboard(highlight) {
         <span class="km-hand">${row.right.map((k) => cell(k, 'right')).join('')}</span>
       </div>`;
   });
-  return rows.join('');
+  const bar = `<div class="km-kb-row"><span class="km-space${wantSpace ? ' on' : ''}">空格</span></div>`;
+  return rows.join('') + bar;
 }
 
 function render() {
@@ -325,10 +364,9 @@ function render() {
   const showAnswer = state.revealed || state.wrongOnThis;
   document.getElementById('km-hint').innerHTML = showAnswer ? (item.hint || '') : '';
   document.getElementById('km-answer').innerHTML = showAnswer
-    ? `本题答案 <b>${esc(item.answer)}</b>　当前第 ${state.step + 1} 击`
+    ? `本题答案 <b>${esc(item.answer)}</b>　共 ${item.steps.length} 击，当前第 ${state.step + 1} 击`
     : '';
 
-  // 答错/看答案时点亮键位：' 步点亮 ' 键，码元步按手别点亮
   const highlight = { left: [], right: [] };
   if (showAnswer && step) {
     if (step.hand === 'apostrophe') {
@@ -346,7 +384,8 @@ function render() {
       }
     }
   }
-  document.getElementById('km-keyboard').innerHTML = renderKeyboard(highlight);
+  const wantSpace = Boolean(showAnswer && step && step.space);
+  document.getElementById('km-keyboard').innerHTML = renderKeyboard(highlight, wantSpace);
 
   const { done, right, wrong } = state.stats;
   const mastered = countMastered();
@@ -364,7 +403,10 @@ function isTracked(key) {
 
 document.addEventListener('keydown', (event) => {
   if (event.metaKey || event.ctrlKey || event.altKey) return;
-  const key = event.key.length === 1 ? event.key.toLowerCase() : event.key;
+  // 注意：这里必须是 let——早期版本用 const 又在空格分支里重新赋值，
+  // 导致按空格时抛 TypeError，preventDefault 没跑到，浏览器就会滚动页面。
+  let key = event.key.length === 1 ? event.key.toLowerCase() : event.key;
+  if (event.code === 'Space') key = ' ';
   if (key === 'Enter') {
     state.revealed = true;
     render();
@@ -386,11 +428,11 @@ document.addEventListener('keydown', (event) => {
 });
 
 document.addEventListener('keyup', (event) => {
-  const key = event.key.length === 1 ? event.key.toLowerCase() : event.key;
+  let key = event.key.length === 1 ? event.key.toLowerCase() : event.key;
+  if (event.code === 'Space') key = ' ';
   if (!isTracked(key)) return;
   event.preventDefault();
   pressed.delete(key);
-  // 全部松开才算一击结束
   if (pressed.size === 0) settleStroke();
   else render();
 });
@@ -409,6 +451,8 @@ document.addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll('[data-mode]').forEach((b) => b.classList.remove('active'));
       button.classList.add('active');
       loadMode(button.dataset.mode);
+      // 点完按钮立刻失焦，否则空格/回车会被浏览器当成「再点一次这个按钮」
+      if (button.blur) button.blur();
     });
   });
   const resetBtn = document.getElementById('km-reset-progress');
@@ -420,16 +464,15 @@ document.addEventListener('DOMContentLoaded', () => {
       flash('间隔重复进度已重置', 'good');
     });
   }
-  loadMode('brief_0');
+  loadMode('space_0');
 });
 
 // Node 测试用导出（浏览器中无效）
 if (typeof module !== 'undefined') {
   module.exports = {
-    state, pressed,
-    parseBriefCode, decodeStroke, fingeringOf, briefItem, loadMode,
+    state, pressed, BANKS,
+    parseBriefCode, decodeStroke, fingeringOf, apostropheItem, spaceItem, loadMode,
     settleStroke,
     _setStroke: (keys, space = false) => { strokeKeys = new Set(keys); strokeSpace = space; },
-    _getStroke: () => ({ keys: [...strokeKeys], space: strokeSpace }),
   };
 }
