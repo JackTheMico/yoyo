@@ -3,7 +3,8 @@
 //! 忠实移植 `rime/scripts/generate_pure_dict_map.py`：从词表并集构建
 //! 双轨 dict_map（char_first / word_first，各含 dict_map / dict_map_2）、
 //! `words_4code`（4码词集，状态机据此区分合法4码词与自动切分）、
-//! `chars_3code`（3码单字集）。输出格式与 Python 版逐字节等价，
+//! `chars_3code`（3码单字集）、`brief_map`（前置单引号扩展简词 '_X / '+X / 'XY）。
+//! `'` 前缀码只进 brief_map，不进入其他映射。输出格式与 Python 版逐字节等价，
 //! 保证 `pure_popping` 状态机正确工作。
 
 use crate::dict::Entry;
@@ -16,6 +17,7 @@ pub struct MapStats {
     pub word_first: usize,
     pub words_4code: usize,
     pub chars_3code: usize,
+    pub brief_map: usize,
 }
 
 fn lua_str(s: &str) -> String {
@@ -55,9 +57,17 @@ pub fn generate(entries: &[Entry], out: &Path) -> color_eyre::Result<MapStats> {
     let mut clean_to_cands: HashMap<String, Vec<String>> = HashMap::new();
     let mut words_4code: HashSet<String> = HashSet::new();
     let mut chars_3code: HashSet<String> = HashSet::new();
+    let mut brief_map: HashMap<String, String> = HashMap::new();
 
     for e in entries {
         let raw = e.raw.clone();
+        // 前置单引号扩展简词：单独收入 brief_map，不进入其他映射
+        if raw.starts_with('\'') {
+            if raw.chars().count() == 3 {
+                brief_map.entry(raw).or_insert_with(|| e.text.clone());
+            }
+            continue;
+        }
         let clean = raw.replace('_', "").replace('+', "");
         let n_clean = clean.chars().count();
         let n_text = e.text.chars().count();
@@ -155,6 +165,13 @@ pub fn generate(entries: &[Entry], out: &Path) -> color_eyre::Result<MapStats> {
         out_lines.push(format!("    [{}] = true,", lua_str(c)));
     }
     out_lines.push("  },".into());
+    out_lines.push("  brief_map = {".into());
+    let mut bm: Vec<(&String, &String)> = brief_map.iter().collect();
+    bm.sort();
+    for (code, text) in bm {
+        out_lines.push(format!("    [{}] = {},", lua_str(code), lua_str(text)));
+    }
+    out_lines.push("  },".into());
     out_lines.push("}".into());
     out_lines.push("M.dict_map = M.char_first.dict_map".into());
     out_lines.push("M.dict_map_2 = M.char_first.dict_map_2".into());
@@ -171,6 +188,7 @@ pub fn generate(entries: &[Entry], out: &Path) -> color_eyre::Result<MapStats> {
         word_first: wf_top.len(),
         words_4code: words_4code.len(),
         chars_3code: chars_3code.len(),
+        brief_map: brief_map.len(),
     })
 }
 

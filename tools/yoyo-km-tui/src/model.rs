@@ -153,8 +153,8 @@ impl App {
         let map_path = self.cfg.rime_dir.join("lua/yoyo/data/pure_dict_map.lua");
         let st = mapgen::generate(&all, &map_path)?;
         self.log.push(format!(
-            "✓ 状态机映射 pure_dict_map.lua: char_first={} word_first={} 4码词={} 3码字={}",
-            st.char_first, st.word_first, st.words_4code, st.chars_3code
+            "✓ 状态机映射 pure_dict_map.lua: char_first={} word_first={} 4码词={} 3码字={} 简词={}",
+            st.char_first, st.word_first, st.words_4code, st.chars_3code, st.brief_map
         ));
 
         let rev_dir = self.cfg.rime_dir.join("lua/yoyo/data");

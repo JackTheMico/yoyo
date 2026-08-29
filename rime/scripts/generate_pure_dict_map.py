@@ -5,6 +5,9 @@
 1. dict_map: 编码 -> 首选中文文本映射
 2. words_4code: 四码词集合（用于状态机区分合法4码词与非词自动切分）
 3. chars_3code: 三码单字集合（用于状态机区分3码单字全码与两码字接一简）
+从 rime/yoyo-user.dict.yaml（及主词表，防御性）额外提取：
+4. brief_map: 前置单引号扩展简词映射（码形 '_X / '+X / 'XY -> 词）
+   —— 状态机 Pattern H 顶屏用；' 码不进入 dict_map 等既有映射。
 """
 
 import json
@@ -15,6 +18,7 @@ from pathlib import Path
 SCRIPTS_DIR = Path(__file__).resolve().parent
 RIME_DIR = SCRIPTS_DIR.parent
 SOURCE_DICT = RIME_DIR / "yoyo-pure.dict.yaml"
+USER_DICT = RIME_DIR / "yoyo-user.dict.yaml"
 OUTPUT_LUA = RIME_DIR / "lua" / "yoyo" / "data" / "pure_dict_map.lua"
 
 
@@ -25,11 +29,15 @@ def generate():
 
     print(f"Reading pure dictionary: {SOURCE_DICT}")
     lines = SOURCE_DICT.read_text(encoding="utf-8").splitlines()
+    if USER_DICT.exists():
+        print(f"Reading user dictionary: {USER_DICT}")
+        lines += USER_DICT.read_text(encoding="utf-8").splitlines()
 
     code_to_candidates = {}
     clean_to_candidates = {}
     words_4code = set()
     chars_3code = set()
+    brief_map = {}
 
     for l in lines:
         if "\t" not in l or l.startswith("#"):
@@ -37,6 +45,13 @@ def generate():
         parts = l.split("\t")
         text = parts[0]
         raw_code = parts[1]
+
+        # 前置单引号扩展简词：单独收入 brief_map，不进入其他映射
+        if raw_code.startswith("'"):
+            if len(raw_code) == 3:
+                brief_map.setdefault(raw_code, text)
+            continue
+
         clean_code = raw_code.replace("_", "").replace("+", "")
 
         # 记录 4 码词
@@ -115,6 +130,11 @@ def generate():
     for c in sorted(chars_3code):
         out.append(f"    [{json.dumps(c, ensure_ascii=False)}] = true,")
     out.append("  },")
+
+    out.append("  brief_map = {")
+    for code, text in sorted(brief_map.items()):
+        out.append(f"    [{json.dumps(code, ensure_ascii=False)}] = {json.dumps(text, ensure_ascii=False)},")
+    out.append("  },")
     out.append("}")
     out.append("M.dict_map = M.char_first.dict_map")
     out.append("M.dict_map_2 = M.char_first.dict_map_2")
@@ -127,6 +147,7 @@ def generate():
     print(f"  - word_first dict_map entries: {len(wf_top_word)}")
     print(f"  - words_4code entries: {len(words_4code)}")
     print(f"  - chars_3code entries: {len(chars_3code)}")
+    print(f"  - brief_map entries:   {len(brief_map)}")
 
 
 if __name__ == "__main__":
