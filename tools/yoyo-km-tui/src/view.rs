@@ -23,14 +23,25 @@ pub fn render(app: &App, f: &mut Frame) {
     f.render_widget(Paragraph::new(h), header);
 
     let [left, right] = Layout::horizontal([Constraint::Percentage(55), Constraint::Fill(1)]).areas(main);
-    render_feedback(app, f, left);
+    if matches!(app.phase, Phase::BatchReview { .. }) {
+        render_batch_review(app, f, left);
+    } else {
+        render_feedback(app, f, left);
+    }
     render_log(app, f, right);
 
     let prompt = match &app.phase {
         Phase::NeedChar { ch, .. } => format!("为缺码字『{}』输入其形码: > {}", ch, app.input),
+        Phase::BatchInput => format!("批量模式 ({} 行) >", app.batch_input.lines().count()),
         _ => format!("> {}", app.input),
     };
-    let hints = " Enter 搜索/确认 · Ctrl+Q 退出 · Esc 返回 · 粘贴中文词 ";
+    let hints = match &app.phase {
+        Phase::BatchReview { .. } => {
+            " j/k 移动 · space 选中 · a 全选新词 · Enter 添加并部署 · Esc 返回 · Ctrl+Q 退出 "
+        }
+        Phase::BatchInput => " 粘贴多词 · Enter 检索 · Esc 返回 · Ctrl+Q 退出 ",
+        _ => " Enter 搜索/确认 · Ctrl+Q 退出 · Esc 返回 · 粘贴中文词 · (Ctrl+B 批量) ",
+    };
     let footer_line = Line::from(vec![prompt.into(), "  ".into(), hints.dim().into()]);
     f.render_widget(
         Paragraph::new(footer_line).block(Block::bordered().title("输入")),
@@ -75,6 +86,15 @@ fn render_feedback(app: &App, f: &mut Frame, area: ratatui::layout::Rect) {
         ),
         Phase::Done(msg) => ("完成".into(), Text::from(msg.clone().green())),
         Phase::Message(msg) => ("提示".into(), Text::from(msg.clone().yellow())),
+        Phase::BatchInput => (
+            "批量输入".into(),
+            Text::from(vec![
+                Line::from("粘贴/输入多个词（每行一个，或空格/逗号分隔），Enter 检索。"),
+                Line::from(format!("当前 {} 行:", app.batch_input.lines().count())).dim(),
+                Line::from(app.batch_input.clone()),
+            ]),
+        ),
+        _ => ("".into(), Text::default()),
     };
     let p = Paragraph::new(body)
         .block(Block::bordered().title(title))
@@ -91,4 +111,48 @@ fn render_log(app: &App, f: &mut Frame, area: ratatui::layout::Rect) {
         .collect();
     let list = List::new(shown).block(Block::bordered().title("操作日志"));
     f.render_widget(list, area);
+}
+
+fn render_batch_review(app: &App, f: &mut Frame, area: ratatui::layout::Rect) {
+    use ratatui::style::Style;
+    use ratatui::widgets::ListState;
+    let (items, cursor) = match &app.phase {
+        Phase::BatchReview { items, cursor } => (items, *cursor),
+        _ => return,
+    };
+    let rows: Vec<ListItem> = items
+        .iter()
+        .map(|it| {
+            let mark = if it.selected { "[x]" } else { "[ ]" };
+            let status = match &it.status {
+                crate::model::ItemStatus::Exists(c) => format!("已在库: {c}"),
+                crate::model::ItemStatus::New(c) => format!("建议码: {c}"),
+                crate::model::ItemStatus::MissingChar(ch) => format!("缺形码字『{ch}』"),
+                crate::model::ItemStatus::UnsupportedLen(n) => format!("{n} 字(不支持)"),
+            };
+            let mut line = Line::from(format!(" {mark} {}   {}", it.text, status));
+            if matches!(it.status, crate::model::ItemStatus::Exists(_)) {
+                line = line.dim();
+            }
+            ListItem::new(line)
+        })
+        .collect();
+    let mut state = ListState::default();
+    state.select(Some(cursor));
+    let selected_count = items.iter().filter(|it| it.selected).count();
+    let addable = items
+        .iter()
+        .filter(|it| matches!(it.status, crate::model::ItemStatus::New(_)))
+        .count();
+    let title = format!(
+        "批量核对 (选中 {}/可加 {} 共 {})",
+        selected_count,
+        addable,
+        items.len()
+    );
+    let list = List::new(rows)
+        .block(Block::bordered().title(title))
+        .highlight_symbol("▶ ")
+        .highlight_style(Style::default().reversed());
+    f.render_stateful_widget(list, area, &mut state);
 }

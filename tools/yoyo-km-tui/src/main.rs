@@ -25,6 +25,9 @@ struct Cli {
     /// 批量加词：从文件逐行读取（每行一词，# 开头为注释，可加 \t编码 强制指定）
     #[arg(long)]
     batch: Option<PathBuf>,
+    /// 启动即进入交互批量加词模式（多行输入→核对→选中→部署）
+    #[arg(long)]
+    batch_ui: bool,
     /// 部署时不重启 fcitx5（FCITX5_NO_RESTART=1）
     #[arg(long)]
     no_restart: bool,
@@ -48,6 +51,17 @@ fn main() -> color_eyre::Result<()> {
         user_dict,
         no_restart: cli.no_restart,
     };
+
+    if cli.batch_ui {
+        let mut terminal = ratatui::init();
+        let result = {
+            let mut app = App::new(cfg)?;
+            app.phase = model::Phase::BatchInput;
+            app.run(&mut terminal)
+        };
+        ratatui::restore();
+        return result;
+    }
 
     if let Some(b) = cli.batch {
         let mut app = App::new(cfg)?;

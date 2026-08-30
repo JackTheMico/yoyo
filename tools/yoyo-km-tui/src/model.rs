@@ -25,6 +25,8 @@ pub struct Config {
 
 pub enum Phase {
     Input,
+    BatchInput,
+    BatchReview { items: Vec<BatchItem>, cursor: usize },
     Found(String, String, String),
     ConfirmAdd {
         text: String,
@@ -48,11 +50,29 @@ pub struct BatchSummary {
     pub skipped_len: Vec<(String, usize)>,
 }
 
+/// 交互批量核对：每个词的在库状态。
+#[derive(Clone)]
+pub enum ItemStatus {
+    Exists(String),
+    New(String),
+    MissingChar(char),
+    UnsupportedLen(usize),
+}
+
+/// 交互批量核对列表中的一行。
+#[derive(Clone)]
+pub struct BatchItem {
+    pub text: String,
+    pub status: ItemStatus,
+    pub selected: bool,
+}
+
 pub struct App {
     pub cfg: Config,
     pub dict: Dict,
     user: UserDict,
     pub input: String,
+    pub batch_input: String,
     pub pending: String,
     pub manual: HashMap<char, String>,
     pub phase: Phase,
@@ -80,6 +100,7 @@ impl App {
             dict,
             user: ud,
             input: String::new(),
+            batch_input: String::new(),
             pending: String::new(),
             manual: HashMap::new(),
             phase: Phase::Input,
@@ -295,17 +316,183 @@ impl App {
         }
     }
 
+    /// 解析批量输入缓冲（按空白/逗号/换行分词，去重），逐词检索给出在库状态，
+    /// 进入核对列表。每条「新词（可自动编码）」默认选中，已存在/缺码字/长度不符默认不选中。
+    fn start_batch_review(&mut self) {
+        let words: Vec<String> = self
+            .batch_input
+            .split(|c: char| c.is_whitespace() || c == ',')
+            .map(|w| w.trim().to_string())
+            .filter(|w| !w.is_empty())
+            .collect();
+        let mut seen = HashSet::new();
+        let mut items: Vec<BatchItem> = Vec::new();
+        for w in words {
+            if !seen.insert(w.clone()) {
+                continue;
+            }
+            let status = if let Some(e) = self.dict.contains(&w) {
+                ItemStatus::Exists(e.clean.clone())
+            } else {
+                match encoder::encode(&w, &self.dict.char_code) {
+                    EncodeResult::Code(c) => ItemStatus::New(c),
+                    EncodeResult::MissingChar(ch) => ItemStatus::MissingChar(ch),
+                    EncodeResult::UnsupportedLen(n) => ItemStatus::UnsupportedLen(n),
+                }
+            };
+            let selected = matches!(status, ItemStatus::New(_));
+            items.push(BatchItem {
+                text: w,
+                status,
+                selected,
+            });
+        }
+        if items.is_empty() {
+            self.log.push("批量输入为空，无可检索词。".into());
+            return;
+        }
+        self.phase = Phase::BatchReview { items, cursor: 0 };
+    }
+
+    fn cursor_down(&mut self) {
+        if let Phase::BatchReview { items, cursor } = &mut self.phase {
+            if *cursor + 1 < items.len() {
+                *cursor += 1;
+            }
+        }
+    }
+
+    fn cursor_up(&mut self) {
+        if let Phase::BatchReview { cursor, .. } = &mut self.phase {
+            if *cursor > 0 {
+                *cursor -= 1;
+            }
+        }
+    }
+
+    fn cursor_top(&mut self) {
+        if let Phase::BatchReview { cursor, .. } = &mut self.phase {
+            *cursor = 0;
+        }
+    }
+
+    fn cursor_bottom(&mut self) {
+        if let Phase::BatchReview { items, cursor } = &mut self.phase {
+            *cursor = items.len().saturating_sub(1);
+        }
+    }
+
+    fn toggle_at_cursor(&mut self) {
+        if let Phase::BatchReview { items, cursor } = &mut self.phase {
+            if let Some(it) = items.get_mut(*cursor) {
+                it.selected = !it.selected;
+            }
+        }
+    }
+
+    /// a：切换「所有可加新词」的选中态（全选↔全不选）。
+    fn toggle_all_new(&mut self) {
+        if let Phase::BatchReview { items, .. } = &mut self.phase {
+            let any_unsel = items
+                .iter()
+                .any(|it| matches!(it.status, ItemStatus::New(_)) && !it.selected);
+            for it in items.iter_mut() {
+                if matches!(it.status, ItemStatus::New(_)) {
+                    it.selected = any_unsel;
+                }
+            }
+        }
+    }
+
+    /// 把核对列表中选中的可加词（New）写入 yoyo-user，统一重生成+部署一次。
+    /// 已存在词(Eixists)、缺码字、长度不符即使被选中也跳过并提示。
+    fn add_selected(&mut self) -> color_eyre::Result<()> {
+        let items = match &self.phase {
+            Phase::BatchReview { items, .. } => items.clone(),
+            _ => return Ok(()),
+        };
+        let mut to_add: Vec<(String, String)> = Vec::new();
+        let mut skipped_missing: Vec<(String, char)> = Vec::new();
+        let mut skipped_len: Vec<(String, usize)> = Vec::new();
+        for it in &items {
+            if !it.selected {
+                continue;
+            }
+            match &it.status {
+                ItemStatus::New(c) => to_add.push((it.text.clone(), c.clone())),
+                ItemStatus::MissingChar(ch) => skipped_missing.push((it.text.clone(), *ch)),
+                ItemStatus::UnsupportedLen(n) => skipped_len.push((it.text.clone(), *n)),
+                ItemStatus::Exists(_) => {}
+            }
+        }
+        if to_add.is_empty() {
+            self.phase = Phase::Message("没有选中可添加的新词（已存在的词无需加）。".into());
+            return Ok(());
+        }
+        for (w, c) in &to_add {
+            self.user.append(w, c, 100.0)?;
+            self.dict.entries.push(Entry {
+                text: w.clone(),
+                raw: c.clone(),
+                clean: c.clone(),
+                weight: 100.0,
+                source: "yoyo-user".into(),
+            });
+        }
+        self.rebuild()?;
+        let added_list: Vec<String> = to_add.iter().map(|(w, c)| format!("{}→{}", w, c)).collect();
+        self.log.push(format!(
+            "批量添加完成({}): {}",
+            to_add.len(),
+            added_list.join(", ")
+        ));
+        self.phase = Phase::Done(format!(
+            "✓ 批量添加 {} 个词并完成重生成与部署",
+            to_add.len()
+        ));
+        Ok(())
+    }
+
     pub fn on_key(&mut self, key: KeyEvent) {
         let ctrl_q = key.code == KeyCode::Char('q')
             && key.modifiers.contains(KeyModifiers::CONTROL);
         match self.phase {
             Phase::Input => match key.code {
                 _ if ctrl_q => self.should_quit = true,
+                KeyCode::Char('b') if key.modifiers.contains(KeyModifiers::CONTROL) => {
+                    self.phase = Phase::BatchInput;
+                }
                 KeyCode::Enter => self.search(),
                 KeyCode::Backspace => {
                     self.input.pop();
                 }
                 KeyCode::Char(c) => self.input.push(c),
+                _ => {}
+            },
+            Phase::BatchInput => match key.code {
+                _ if ctrl_q => self.should_quit = true,
+                KeyCode::Enter => self.start_batch_review(),
+                KeyCode::Esc => self.reset_input(),
+                KeyCode::Backspace => {
+                    self.batch_input.pop();
+                }
+                KeyCode::Char(c) => self.batch_input.push(c),
+                _ => {}
+            },
+            Phase::BatchReview { .. } => match key.code {
+                _ if ctrl_q => self.should_quit = true,
+                KeyCode::Char('j') | KeyCode::Down => self.cursor_down(),
+                KeyCode::Char('k') | KeyCode::Up => self.cursor_up(),
+                KeyCode::Char('g') => self.cursor_top(),
+                KeyCode::Char('G') => self.cursor_bottom(),
+                KeyCode::Char(' ') => self.toggle_at_cursor(),
+                KeyCode::Char('a') => self.toggle_all_new(),
+                KeyCode::Enter => {
+                    if let Err(e) = self.add_selected() {
+                        self.phase = Phase::Message(format!("批量添加失败: {e}"));
+                    }
+                }
+                KeyCode::Esc => self.phase = Phase::BatchInput,
                 _ => {}
             },
             Phase::NeedChar { .. } => match key.code {
@@ -343,8 +530,10 @@ impl App {
     }
 
     pub fn on_paste(&mut self, s: &str) {
-        if let Phase::Input = self.phase {
-            self.input.push_str(s);
+        match self.phase {
+            Phase::Input => self.input.push_str(s),
+            Phase::BatchInput => self.batch_input.push_str(s),
+            _ => {}
         }
     }
 
@@ -365,5 +554,100 @@ impl App {
         }
         crossterm::execute!(std::io::stdout(), crossterm::event::DisableBracketedPaste)?;
         Ok(())
+    }
+
+    #[cfg(test)]
+    pub fn phase_item_selected(&self, text: &str) -> Option<bool> {
+        if let Phase::BatchReview { items, .. } = &self.phase {
+            items.iter().find(|i| i.text == text).map(|i| i.selected)
+        } else {
+            None
+        }
+    }
+}
+
+    #[cfg(test)]
+    mod tests {
+        use super::*;
+        use std::path::PathBuf;
+        use std::process::Command;
+
+    fn setup() -> PathBuf {
+        let manifest = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+        let rime_src = manifest
+            .parent()
+            .and_then(|p| p.parent())
+            .unwrap()
+            .join("rime");
+        let tmp = std::env::temp_dir().join("yoyo_ibatch_test");
+        let _ = std::fs::remove_dir_all(&tmp);
+        Command::new("cp")
+            .arg("-r")
+            .arg(&rime_src)
+            .arg(&tmp)
+            .status()
+            .unwrap();
+        let deploy = std::env::temp_dir().join("yoyo_ibatch_deploy");
+        let _ = std::fs::remove_dir_all(&deploy);
+        unsafe {
+            std::env::set_var("FCITX5_RIME_DIR", &deploy);
+        }
+        tmp
+    }
+
+    #[test]
+    fn interactive_batch_review_and_add() {
+        let rime = setup();
+        let cfg = Config {
+            rime_dir: rime.clone(),
+            user_dict: rime.join("yoyo-user.dict.yaml"),
+            no_restart: true,
+        };
+        let mut app = App::new(cfg).unwrap();
+
+        // 多词输入（换行/空格/逗号分隔皆可），含已存在词与一条新词
+        app.batch_input = "生动形象 好我\n中国,测试".to_string();
+        app.start_batch_review();
+
+        // 进入核对列表
+        let items = match &app.phase {
+            Phase::BatchReview { items, .. } => items,
+            _ => panic!("start_batch_review 未进入 BatchReview"),
+        };
+        assert_eq!(items.len(), 4, "应解析出 4 个去重词");
+        let hao_wo = items.iter().find(|i| i.text == "好我").expect("应有 好我");
+        assert!(matches!(hao_wo.status, ItemStatus::New(_)), "好我 应为 New");
+        assert!(hao_wo.selected, "New 词默认选中");
+        let exists = items
+            .iter()
+            .filter(|i| matches!(i.status, ItemStatus::Exists(_)))
+            .count();
+        assert_eq!(exists, 3, "其余 3 个应为已存在");
+        assert_eq!(items.iter().filter(|i| i.selected).count(), 1);
+
+        // 光标移到 好我 并 toggle 两次验证选中态切换
+        let idx = items.iter().position(|i| i.text == "好我").unwrap();
+        if let Phase::BatchReview { cursor, .. } = &mut app.phase {
+            *cursor = idx;
+        }
+        app.toggle_at_cursor();
+        assert!(!app.phase_item_selected("好我").unwrap_or(true));
+        app.toggle_at_cursor();
+        assert!(app.phase_item_selected("好我").unwrap_or(false));
+
+        // 添加选中词 -> 应写入 yoyo-user 并进入 Done
+        app.add_selected().unwrap();
+        assert!(matches!(app.phase, Phase::Done(_)), "添加后应进入 Done");
+
+        let user = std::fs::read_to_string(rime.join("yoyo-user.dict.yaml")).unwrap();
+        assert!(user.contains("好我"), "yoyo-user 应包含新词 好我");
+        // 每次只应写入一次（幂等，不重复）
+        let hao_wo_lines = user.lines().filter(|l| l.starts_with("好我\t")).count();
+        assert_eq!(hao_wo_lines, 1, "好我 应仅被写入一次");
+        // 已存在词（生动形象）不应被本次批量添加重复写入 yoyo-user
+        let before = std::fs::read_to_string(rime.join("yoyo-user.dict.yaml")).unwrap();
+        let exists_before = before.lines().filter(|l| l.starts_with("生动形象\t")).count();
+        let exists_after = user.lines().filter(|l| l.starts_with("生动形象\t")).count();
+        assert_eq!(exists_before, exists_after, "已存在词不应被重复写入");
     }
 }
