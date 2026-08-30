@@ -40,7 +40,10 @@ pub fn render(app: &App, f: &mut Frame) {
             " j/k 移动 · space 选中 · a 全选新词 · Enter 添加并部署 · Esc 返回 · Ctrl+Q 退出 "
         }
         Phase::BatchInput => " 粘贴多词 · Enter 检索 · Esc 返回 · Ctrl+Q 退出 ",
-        _ => " Enter 搜索/确认 · Ctrl+Q 退出 · Esc 返回 · 粘贴中文词 · (Ctrl+B 批量) ",
+        Phase::BriefChord => " 输入按键串 · Enter 计算%码 · Esc 返回 · Ctrl+Q 退出 ",
+        Phase::BriefWord { .. } => " 输入词 · Enter 确认 · Esc 返回 ",
+        Phase::ConfirmBrief { .. } => " Enter 添加并部署 · Esc 取消 ",
+        _ => " Enter 搜索/确认 · Ctrl+Q 退出 · Esc 返回 · 粘贴中文词 · (Ctrl+B 批量) · (Ctrl+K 加空格简词) ",
     };
     let footer_line = Line::from(vec![prompt.into(), "  ".into(), hints.dim().into()]);
     f.render_widget(
@@ -75,6 +78,29 @@ fn render_feedback(app: &App, f: &mut Frame, area: ratatui::layout::Rect) {
                     Line::from("编码无冲突。").green()
                 },
                 Line::from("Enter 确认添加并触发重生成+部署 · Esc 取消").dim(),
+            ]),
+        ),
+        Phase::BriefChord => (
+            "加空格并击简词（按键）".into(),
+            Text::from(vec![
+                Line::from("输入空格并击的「实际按键串」（不含空格触发符），如 er:（左手er+右手:）"),
+                Line::from("工具会算出 % 码并校验可达性/冲突。").dim(),
+                Line::from("Enter 计算%码 · Esc 返回 · Ctrl+Q 退出").dim(),
+            ]),
+        ),
+        Phase::BriefWord { code } => (
+            "加空格并击简词（绑词）".into(),
+            Text::from(vec![
+                Line::from(format!("按键串算出码: {}", code)),
+                Line::from("请输入要绑定到该码的词（2–4 字）。").dim(),
+                Line::from("Enter 确认 · Esc 返回").dim(),
+            ]),
+        ),
+        Phase::ConfirmBrief { code, word } => (
+            "确认添加空格并击简词".into(),
+            Text::from(vec![
+                Line::from(format!("「{}」→ {}（空格并击一击上屏）", word, code)),
+                Line::from("Enter 添加到手动段并触发重生成+部署 · Esc 取消").dim(),
             ]),
         ),
         Phase::NeedChar { text, ch, .. } => (

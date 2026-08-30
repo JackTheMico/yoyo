@@ -33,6 +33,12 @@ pub enum Phase {
         code: String,
         conflict: bool,
     },
+    /// 加空格并击简词：第一步收集「实际按键串」
+    BriefChord,
+    /// 第二步：按键串已算出 % 码，收集要绑定的词
+    BriefWord { code: String },
+    /// 第三步：确认添加空格并击简词
+    ConfirmBrief { code: String, word: String },
     NeedChar {
         text: String,
         ch: char,
@@ -78,6 +84,41 @@ pub struct App {
     pub phase: Phase,
     pub log: Vec<String>,
     pub should_quit: bool,
+}
+
+/// 把「实际并按下的空格并击按键串」（不含空格触发符）算成 `%` 简词码。
+///
+/// 调用 `scripts/chord_utils.py keys-to-code`，复用与 chord_composer 一致的代数：
+///   - Ok(Some(code))：算出合法 3 字符 % 码
+///   - Ok(None)      ：算出但非合法空格并击简词码（两右手键等，4 字符）
+///   - Err(msg)      ：按键串非法（含字母表外字符）或 python 调用失败
+fn compute_brief_code(keys: &str, rime_dir: &Path) -> Result<Option<String>, String> {
+    let script = rime_dir.join("scripts").join("chord_utils.py");
+    let out = std::process::Command::new("python3")
+        .arg(&script)
+        .arg("keys-to-code")
+        .arg(keys)
+        .output();
+    match out {
+        Ok(o) => {
+            if o.status.success() {
+                let code = String::from_utf8_lossy(&o.stdout).trim().to_string();
+                if code.is_empty() {
+                    Ok(None)
+                } else {
+                    Ok(Some(code))
+                }
+            } else {
+                let stderr = String::from_utf8_lossy(&o.stderr).trim().to_string();
+                Err(if stderr.is_empty() {
+                    format!("按键串 {keys:?} 不能构成合法空格并击简词码")
+                } else {
+                    stderr
+                })
+            }
+        }
+        Err(e) => Err(format!("调用 chord_utils.py 失败：{e}（需 python3 在 PATH）")),
+    }
 }
 
 impl App {
@@ -180,6 +221,110 @@ impl App {
         self.rebuild()?;
         self.log.push("✓ 部署完成".into());
         Ok(())
+    }
+
+    /// 添加空格并击简词（% 前缀）到手动段：写 yoyo-user 手动段 + 同步内存 +
+    /// 重生成映射/反查 + 部署。冲突保护由调用方（compute+has_code）保证。
+    fn perform_add_brief(&mut self, text: &str, code: &str) -> color_eyre::Result<()> {
+        self.user.append_brief(text, code, 100.0)?;
+        self.log
+            .push(format!("✓ 写入手动段 yoyo-user.dict.yaml: {} → {}", text, code));
+        self.dict.note_brief(text, code);
+        self.rebuild()?;
+        self.log.push("✓ 部署完成".into());
+        Ok(())
+    }
+
+    /// CLI：--brief <词> <按键串>。算出 % 码、查冲突、写手动段、重生成+部署。
+    /// 冲突/非法返回 Err（调用方非零退出并打印原因）。
+    pub fn add_brief_cli(&mut self, word: &str, keys: &str) -> color_eyre::Result<String> {
+        let code = match compute_brief_code(keys, &self.cfg.rime_dir) {
+            Ok(Some(c)) => c,
+            Ok(None) => {
+                return Err(color_eyre::eyre::eyre!(
+                    "按键串 {keys:?} 不能构成合法空格并击简词码（需 %+2字符，且为合法左右手并击）"
+                ))
+            }
+            Err(e) => return Err(color_eyre::eyre::eyre!(e)),
+        };
+        if let Some(owner) = self.dict.word_for_code(&code) {
+            return Err(color_eyre::eyre::eyre!(
+                "该码 {} 已被「{}」占用，无法添加（冲突保护）",
+                code,
+                owner
+            ));
+        }
+        self.perform_add_brief(word, &code)?;
+        Ok(format!(
+            "✅ 已添加空格并击简词 {} → {}（手动段，重生成+部署完成）",
+            word, code
+        ))
+    }
+
+    /// 批量加空格并击简词（--batch-brief）：文件每行 `按键串\t词`。
+    /// 合法且未冲突的词收集后统一写手动段 + 一次重生成 + 部署。
+    pub fn add_briefs_batch(&mut self, file: &Path) -> color_eyre::Result<BatchSummary> {
+        use std::collections::HashMap;
+        let content = std::fs::read_to_string(file)?;
+        let mut to_add: Vec<(String, String)> = Vec::new();
+        let mut skipped_exists: Vec<String> = Vec::new();
+        let mut skipped_missing: Vec<(String, char)> = Vec::new();
+        // 已占用码 -> 占用词（初始化自现有 % 简词；批量内后续行也会登记，便于批内去重提示）
+        let mut taken: HashMap<String, String> = self
+            .dict
+            .entries()
+            .iter()
+            .filter(|e| e.raw.starts_with('%'))
+            .map(|e| (e.raw.clone(), e.text.clone()))
+            .collect();
+
+        let mut total = 0;
+        for raw in content.lines() {
+            let line = raw.trim();
+            if line.is_empty() || line.starts_with('#') {
+                continue;
+            }
+            total += 1;
+            let parts: Vec<&str> = line.split('\t').collect();
+            if parts.len() < 2 {
+                skipped_missing.push((line.to_string(), '?'));
+                continue;
+            }
+            let (keys, word) = (parts[0].trim(), parts[1].trim());
+            match compute_brief_code(keys, &self.cfg.rime_dir) {
+                Ok(Some(code)) => {
+                    if let Some(owner) = taken.get(&code) {
+                        skipped_exists.push(format!("{}（码{}被「{}」占用）", word, code, owner));
+                    } else {
+                        taken.insert(code.clone(), word.to_string());
+                        to_add.push((word.to_string(), code));
+                    }
+                }
+                _ => skipped_missing.push((format!("{}（按键{}非法）", word, keys), '?')),
+            }
+        }
+
+        if !to_add.is_empty() {
+            for (w, c) in &to_add {
+                self.user.append_brief(w, c, 100.0)?;
+                self.dict.note_brief(w, c);
+                self.log
+                    .push(format!("✓ 写入手动段 yoyo-user.dict.yaml: {} → {}", w, c));
+            }
+            self.rebuild()?;
+            self.log.push("✓ 部署完成".into());
+        }
+
+        Ok(BatchSummary {
+            total,
+            added: to_add,
+            skipped_exists,
+            skipped_missing: skipped_missing
+                .into_iter()
+                .map(|(s, _)| (s, '?'))
+                .collect(),
+            skipped_len: Vec::new(),
+        })
     }
 
     /// 重生成状态机映射 + 拼音反查 + 部署（所有新词落盘后只跑一次）。
@@ -462,11 +607,89 @@ impl App {
                 KeyCode::Char('b') if key.modifiers.contains(KeyModifiers::CONTROL) => {
                     self.phase = Phase::BatchInput;
                 }
+                KeyCode::Char('k') if key.modifiers.contains(KeyModifiers::CONTROL) => {
+                    self.input.clear();
+                    self.phase = Phase::BriefChord;
+                }
                 KeyCode::Enter => self.search(),
                 KeyCode::Backspace => {
                     self.input.pop();
                 }
                 KeyCode::Char(c) => self.input.push(c),
+                _ => {}
+            },
+            Phase::BriefChord => match key.code {
+                _ if ctrl_q => self.should_quit = true,
+                KeyCode::Enter => {
+                    let keys = self.input.trim().to_string();
+                    if keys.is_empty() {
+                        self.phase = Phase::Message("请输入并击按键串（如 er:）".into());
+                        return;
+                    }
+                    match compute_brief_code(&keys, &self.cfg.rime_dir) {
+                        Ok(Some(code)) => {
+                            if let Some(owner) = self.dict.word_for_code(&code) {
+                                self.phase = Phase::Message(format!(
+                                    "⚠ 该码 {} 已被「{}」占用，无法添加（冲突保护）",
+                                    code, owner
+                                ));
+                            } else {
+                                self.input.clear();
+                                self.phase = Phase::BriefWord { code };
+                            }
+                        }
+                        Ok(None) => self.phase =
+                            Phase::Message("该按键串不能构成合法空格并击简词码（需 %+2字符）".into()),
+                        Err(e) => self.phase = Phase::Message(format!("⚠ {e}")),
+                    }
+                }
+                KeyCode::Esc => self.reset_input(),
+                KeyCode::Backspace => {
+                    self.input.pop();
+                }
+                KeyCode::Char(c) => self.input.push(c),
+                _ => {}
+            },
+            Phase::BriefWord { .. } => match key.code {
+                _ if ctrl_q => self.should_quit = true,
+                KeyCode::Enter => {
+                    let code = match &self.phase {
+                        Phase::BriefWord { code } => code.clone(),
+                        _ => unreachable!(),
+                    };
+                    let word = self.input.trim().to_string();
+                    if word.is_empty() {
+                        self.phase = Phase::Message("请输入要绑定的词".into());
+                    } else if word.chars().count() > 4 {
+                        self.phase = Phase::Message("空格并击简词仅支持 2–4 字词".into());
+                    } else {
+                        self.phase = Phase::ConfirmBrief { code, word };
+                    }
+                }
+                KeyCode::Esc => self.reset_input(),
+                KeyCode::Backspace => {
+                    self.input.pop();
+                }
+                KeyCode::Char(c) => self.input.push(c),
+                _ => {}
+            },
+            Phase::ConfirmBrief { .. } => match key.code {
+                _ if ctrl_q => self.should_quit = true,
+                KeyCode::Enter => {
+                    let (code, word) = match &self.phase {
+                        Phase::ConfirmBrief { code, word } => (code.clone(), word.clone()),
+                        _ => unreachable!(),
+                    };
+                    if let Err(e) = self.perform_add_brief(&word, &code) {
+                        self.phase = Phase::Message(format!("添加失败: {e}"));
+                    } else {
+                        self.phase = Phase::Done(format!(
+                            "已添加 {} → {}（空格并击简词，手动段）",
+                            word, code
+                        ));
+                    }
+                }
+                KeyCode::Esc | KeyCode::Char('n') | KeyCode::Char('N') => self.reset_input(),
                 _ => {}
             },
             Phase::BatchInput => match key.code {

@@ -60,8 +60,50 @@ BRIEF_COMMENT = """
 #   词频最高的 120 个词占用更短的单手+空格位 %_X / %+X（取字1首根）。
 # 一击上屏由 pure_popping 的 Pattern S 完成（末字符到达即提交并吞掉），
 #   不需要 speller/auto_select。
-# 生成：gen_brief_words.py --write（重跑可重新分配，保留普通词条）。
+# 生成：gen_brief_words.py --write（重跑可重新分配，保留普通词条与手动简词段）。
 """
+
+# 手动简词段标记：加词工具（yoyo-km-tui --brief）写入的 % 简词，
+# 用 MANUAL_START/END 包住；gen_brief_words.py --write 重跑时原样保留，
+# 且手动码位会被预占（used），保证手动优先（自动词不抢手动码）。
+AUTO_START = "# === 自动空格并击简词（gen_brief_words.py 生成，勿手改）==="
+AUTO_END = "# === 自动段结束 ==="
+MANUAL_START = "# === 手动空格并击简词（加词工具写入，gen_brief_words.py 保留）==="
+MANUAL_END = "# === 手动段结束 ==="
+
+
+def _parse_user_dict(path: Path):
+    """拆出 yoyo-user.dict.yaml 的「普通词条」与「手动简词段」。
+
+    返回 (regular, manual_lines)：
+      - regular:     真实词条（含 \\t 且码非 %/'），YAML 头/注释/空行丢弃，由 REGULAR_HEADER 重建
+      - manual_lines: 手动段标记之间的 % 行（原样保留）
+    """
+    lines = path.read_text(encoding="utf-8").splitlines()
+    regular: list[str] = []
+    manual_lines: list[str] = []
+    in_manual = False
+    for l in lines:
+        s = l.strip()
+        if s == MANUAL_START:
+            in_manual = True
+            continue
+        if s == MANUAL_END:
+            in_manual = False
+            continue
+        if s == AUTO_START or s == AUTO_END:  # 旧自动段标记，若有则丢弃（下方重写）
+            continue
+        if in_manual:
+            manual_lines.append(l)
+            continue
+        if "\t" in l:
+            p = l.split("\t")
+            if len(p) >= 2 and (p[1].startswith("'") or p[1].startswith(MARK_SPACE)):
+                continue  # % / ' 简词不进 regular，自动段下方重写、手动段上方保留
+            regular.append(l)
+        # 无 \t 的行（YAML 头/注释/空行）一律丢弃
+    return regular, manual_lines
+
 
 
 def load_char_codes():
@@ -143,7 +185,17 @@ def main():
     words.sort(key=lambda x: (-x[1], x[0]))
     print(f"第一档 {len(words) + len(skipped)} → 规则1剔除 {len(skipped)} → 待分配 {len(words)}")
 
-    used, assigned, fallback = set(), [], []
+    # 读取已有手动简词段（加词工具写入），重跑保留 + 预占码位（手动优先）
+    regular_lines, manual_lines = _parse_user_dict(USER_DICT)
+    manual_codes = {
+        l.split("\t")[1]
+        for l in manual_lines
+        if len(l.split("\t")) >= 2 and l.split("\t")[1].startswith(mark)
+    }
+    if manual_codes:
+        print(f"手动简词段：{len(manual_codes)} 条（重跑保留，码位预占）")
+
+    used, assigned, fallback = set(manual_codes), [], []
 
     def two_dau_code(w):
         s1, s2 = cc.get(w[0]), cc.get(w[1])
@@ -199,23 +251,23 @@ def main():
         print("（预览模式，加 --write 实际写入）")
         return
 
-    # 写入：保留普通词条，丢弃旧 ' 简词（不再使用），只重写本模式（空格并击版）的简词段
-    kept = []
-    for l in USER_DICT.read_text(encoding="utf-8").splitlines():
-        if not l.strip() or l.startswith("#"):
-            continue
-        p = l.split("\t")
-        if len(p) >= 2 and (p[1].startswith("'") or p[1].startswith(mark)):
-            continue                 # ' 简词丢弃；% 简词将被下方重新生成
-        kept.append(l)               # 普通词条
-
+    # 写入：普通词条（regular_lines，单头重建）+ 手动简词段（原样保留）+ 自动段（重写）
     out = [REGULAR_HEADER.rstrip("\n"), ""]
-    out += kept
+    out += regular_lines
+    out.append("")
+    out.append(MANUAL_START)
+    out += manual_lines
+    out.append(MANUAL_END)
+    out.append("")
+    out.append(AUTO_START)
     out.append(BRIEF_COMMENT.rstrip("\n"))
     for code, w, f in assigned:
         out.append(f"{w}\t{code}\t{f}")
+    out.append(AUTO_END)
+    out.append("")
     USER_DICT.write_text("\n".join(out) + "\n", encoding="utf-8")
-    print(f"✅ 已写入 {USER_DICT.name}：普通 {len(kept)} + {label} {len(assigned)}")
+    manual_info = f" + 手动 {len(manual_codes)}（保留）" if manual_codes else ""
+    print(f"✅ 已写入 {USER_DICT.name}：普通 {len(regular_lines)} + 自动 {label} {len(assigned)}{manual_info}")
 
     # 写完词条后必须重生成 pure_dict_map.lua（否则 space_brief_map
     # 为空 → 状态机 Pattern S 查不到 → 简词落 speller 成候选，需再按一次空格）。

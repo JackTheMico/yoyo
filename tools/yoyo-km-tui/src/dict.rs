@@ -1,8 +1,8 @@
 //! 词库加载与检索（深模块）。
 //!
 //! 对外只暴露一个很薄的接口：`load` -> `contains` / `char_code` / `has_code` /
-//! `entries`。内部解析 Rime `dict.yaml`（跳过 frontmatter、tab 分隔），并构建
-//! 三个索引：text->条目、单字->最长干净形码、干净码集合（用于重码检测）。
+//! `word_for_code` / `entries`。内部解析 Rime `dict.yaml`（跳过 frontmatter、tab 分隔），
+//! 并构建三个索引：text->条目、单字->最长干净形码、干净码集合（用于重码检测）。
 //! 调用方与测试都只跨这一个 seam，行为全部封在内部。
 
 use std::collections::{HashMap, HashSet};
@@ -58,6 +58,30 @@ impl Dict {
     /// 干净码是否已被占用（重码检测）
     pub fn has_code(&self, clean: &str) -> bool {
         self.codes.contains(clean)
+    }
+
+    /// 查找占用该干净码的词（冲突时用于告知用户「被哪个词占用了」）。
+    /// 返回第一个匹配条目的文本；无占用则返回 None。
+    pub fn word_for_code(&self, clean: &str) -> Option<&str> {
+        self.entries
+            .iter()
+            .find(|e| e.clean == clean)
+            .map(|e| e.text.as_str())
+    }
+
+    /// 内存登记一条 % 前缀空格并击简词（文件写入后调用，使后续冲突检查可见）。
+    pub fn note_brief(&mut self, text: &str, raw: &str) {
+        let cl = clean_code(raw);
+        let idx = self.entries.len();
+        self.entries.push(Entry {
+            text: text.to_string(),
+            raw: raw.to_string(),
+            clean: cl.clone(),
+            weight: 100.0,
+            source: "yoyo-user".to_string(),
+        });
+        self.by_text.entry(text.to_string()).or_insert(idx);
+        self.codes.insert(cl);
     }
 
     pub fn entries(&self) -> &[Entry] {
@@ -153,6 +177,26 @@ name: x
         assert!(d.contains("中国").is_some());
         assert_eq!(d.char_code.get(&'我'), Some(&"qS".to_string()));
         assert!(d.has_code("bcU,"));
+        std::fs::remove_file(&tmp).ok();
+    }
+
+    #[test]
+    fn word_for_code_finds_space_brief_owner() {
+        // 含 % 前缀空格并击简词，word_for_code 应能反查占用词
+        let sample = "\
+# Rime dictionary
+---
+name: x
+...
+记忆\t%u:\t100
+一下\t%ff\t159752
+";
+        let tmp = std::env::temp_dir().join("yoyo_km_test_brief.yaml");
+        std::fs::write(&tmp, sample).unwrap();
+        let d = Dict::load(&[tmp.as_path()]).unwrap();
+        assert_eq!(d.word_for_code("%u:"), Some("记忆"));
+        assert_eq!(d.word_for_code("%ff"), Some("一下"));
+        assert_eq!(d.word_for_code("%zz"), None);
         std::fs::remove_file(&tmp).ok();
     }
 }

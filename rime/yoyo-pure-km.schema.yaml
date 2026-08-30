@@ -67,7 +67,7 @@ __patch:
       - { accept: "Control+Shift+C", toggle: word_priority, when: always }
 
   chord_composer:
-    alphabet: "qwertasdfgzxcvb yuiophjkl;nm,./'"
+    alphabet: "qwertasdfgzxcvb yuiophjkl;nm,./:'"
     prompt_format:
       - xform/[-=_+]//g
     output_format:
@@ -109,11 +109,11 @@ __patch:
     #   双手+空格 → 输出 "左 右"    → %左#右（# 由指法末尾的 xform|#|| 清除）
     #   左手+空格 → 输出 "左 "      → %_X
     #   右手+空格 → 输出 " 右"（右手键排在空格之后，故空格在前）→ %+X
-    - xform|^([qwertasdfgzxcvb]+) ([yuiophjkl;nm,./]+)$|%$1#$2|
+    - xform|^([qwertasdfgzxcvb]+) ([yuiophjkl;nm,./:]+)$|%$1#$2|
     - xform|^([qwertasdfgzxcvb]+) $|%_$1|
-    - xform|^ ([yuiophjkl;nm,./]+)$|%+$1|
+    - xform|^ ([yuiophjkl;nm,./:]+)$|%+$1|
     # 左右手并击：以 # 分隔左右两手按键区，保留末尾可能存在的 ' 次选修饰符
-    - xform|^([qwertasdfgzxcvb]+)([yuiophjkl;nm,./]+)([']?)$|$1#$2$3|
+    - xform|^([qwertasdfgzxcvb]+)([yuiophjkl;nm,./:]+)([']?)$|$1#$2$3|
     # 单手按键：转换为 _ (左手) 或 + (右手) 开头的一简前缀，保留末尾可能存在的 ' 次选修饰符
     - xform|^([qwertasdfgzxcvb]+)([']?)$|_$1$2|
-    - xform|^([yuiophjkl;nm,./]+)([']?)$|+$1$2|
+    - xform|^([yuiophjkl;nm,./:]+)([']?)$|+$1$2|

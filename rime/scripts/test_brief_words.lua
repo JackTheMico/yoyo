@@ -183,6 +183,37 @@ do
         ("commit=%s expect=%s"):format(tostring(commits[1]), tostring(expect2)))
 end
 
+-- 2b. 回归：次选拦截未命中（无次选的和键按 '）必须吞掉 '，不得漏进 speller
+-- 这是 2026-08-30 卡顿修复的回归点：' 未命中时若返回 kNoop，' 会落到
+-- speller.alphabet 被塞进拼写缓冲，表现为「卡住 / 要再敲一下才动」。
+-- 修复后未命中应返回 kAccepted（吃掉该键），且保留已输入的和键、不上屏。
+do
+  -- 找一个确实没有次选的码：在 dict_map 里、且其原始码与去前缀码都不在 dict_map_2
+  local miss_code
+  for code in pairs(pure_data.dict_map or {}) do
+    if #code == 2 and not code:find("[_+]") then
+      local clean = code:gsub("[_+]", "")
+      local d2 = pure_data.dict_map_2 or {}
+      if not d2[code] and not d2[clean] then
+        miss_code = code
+        break
+      end
+    end
+  end
+  assert(miss_code, "找不到无次选的两码字样本")
+  local env, ctx, commits = make_env()
+  pure_popping.init(env)
+  feed(env, ctx, miss_code)
+  local before = ctx.input
+  local r = pure_popping.func(key("'"), env)
+  check(("次选未命中 %s: 吞掉 ' (kAccepted)"):format(miss_code),
+        r == yoyo.kAccepted, "r=" .. tostring(r))
+  check(("次选未命中 %s: 不上屏"):format(miss_code),
+        #commits == 0, "commits=" .. table.concat(commits, ","))
+  check(("次选未命中 %s: 保留已输入和键(不污染拼写)"):format(miss_code),
+        ctx.input == before, ("input=%s before=%s"):format(ctx.input, before))
+end
+
 -- 3. 回归：Pattern A 一简顶屏
 do
   local env, ctx, commits = make_env()

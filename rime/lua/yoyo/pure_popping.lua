@@ -122,7 +122,9 @@ function processor.func(key_event, env)
       env.processing = false
       return yoyo.kAccepted
     end
-    return yoyo.kNoop
+    -- 未命中次选：吞掉 '，保留已输入的和键，避免 ' 漏进 speller 污染拼写。
+    -- （' 在 speller.alphabet 内，若返回 kNoop 会被塞进拼写缓冲，表现为卡顿/假死）
+    return yoyo.kAccepted
   end
 
   -- 选字/翻页键放行：空格、数字

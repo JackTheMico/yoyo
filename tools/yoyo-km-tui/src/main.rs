@@ -31,6 +31,12 @@ struct Cli {
     /// 部署时不重启 fcitx5（FCITX5_NO_RESTART=1）
     #[arg(long)]
     no_restart: bool,
+    /// 加空格并击简词（非交互）：--brief <词> <按键串>（如 --brief 记忆 er:）
+    #[arg(long, num_args = 2, value_names = ["词", "按键串"])]
+    brief: Option<Vec<String>>,
+    /// 批量加空格并击简词：文件每行 `按键串\t词`（# 开头注释）
+    #[arg(long)]
+    batch_brief: Option<PathBuf>,
 }
 
 fn main() -> color_eyre::Result<()> {
@@ -108,6 +114,40 @@ fn main() -> color_eyre::Result<()> {
     if let Some(w) = cli.word {
         let mut app = App::new(cfg)?;
         return app.add_word_cli(&w);
+    }
+
+    if let Some(b) = cli.brief {
+        let mut app = App::new(cfg)?;
+        match app.add_brief_cli(&b[0], &b[1]) {
+            Ok(msg) => println!("{}", msg),
+            Err(e) => {
+                eprintln!("⚠ {e}");
+                std::process::exit(1);
+            }
+        }
+        return Ok(());
+    }
+
+    if let Some(bf) = cli.batch_brief {
+        let mut app = App::new(cfg)?;
+        let s = app.add_briefs_batch(&bf)?;
+        println!("批量加空格并击简词完成：{}", bf.display());
+        println!("  待处理总数: {}", s.total);
+        if !s.added.is_empty() {
+            let list: Vec<String> = s.added.iter().map(|(w, c)| format!("{}→{}", w, c)).collect();
+            println!("  已添加({}): {}", s.added.len(), list.join(", "));
+            println!("  已重生成 pure_dict_map.lua / reverse_*.lua 并完成部署。");
+        } else {
+            println!("  无新简词可加，未触发重生成/部署。");
+        }
+        if !s.skipped_exists.is_empty() {
+            println!("  冲突跳过({}): {}", s.skipped_exists.len(), s.skipped_exists.join("; "));
+        }
+        if !s.skipped_missing.is_empty() {
+            let list: Vec<String> = s.skipped_missing.iter().map(|(w, _)| w.clone()).collect();
+            println!("  非法跳过({}): {}", s.skipped_missing.len(), list.join("; "));
+        }
+        return Ok(());
     }
 
     let mut terminal = ratatui::init();
