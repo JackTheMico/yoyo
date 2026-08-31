@@ -5099,6 +5099,7 @@ return {
   ["shushiwudu"] = {{"熟视无睹","sN",0.0}},
   ["shushixing"] = {{"舒适性","rg:G",1661.0}},
   ["shushiyi"] = {{"数十亿","reaj",328.0}},
+  ["shushizai"] = {{"数十载","reLz",0.0}},
   ["shushou"] = {{"熟手","sFio",247.0}, {"束手","Csio",64.0}},
   ["shushoudaibi"] = {{"束手待毙","Cigh",29.0}},
   ["shushoujiuqin"] = {{"束手就擒","Cisi",114.0}},
