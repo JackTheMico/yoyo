@@ -177,13 +177,21 @@ function processor.func(key_event, env)
      and is_jian_prefix(input:sub(3,3)) and is_plain(incoming) then
     local chord2 = input:sub(1,2)
     local jian_head = input:sub(3,3)
-    -- 去掉 chord2 内部可能携带的分隔符(/ _ +) 再拼 incoming 作为 3 码字判定键。
-    -- 否则 做(a/) 接 自己(_g) 时 chord2..incoming="a/g" 会误命中 3 码字 估(a/g)，
-    -- 导致状态机一直等待、不顶出 做。strip 后 candidate="ag"（非 3 码字）→ 正常顶出。
-    -- 普通两码字(如 bX)内部无分隔符，strip 为 no-op，bX+n→bXn 仍正确命中 鸣。
-    local candidate = chord2:gsub("[/_+]", "") .. incoming
-    if pure_data.chars_3code[candidate] then
-      return yoyo.kNoop  -- 是3码字（如 bXn）
+    -- candidate = chord2 直接拼接 incoming，'/' 作为真实码元【绝不剥离】。
+    -- 码元分隔符只有位置 3 的 _/+（本就在 chord2 之外），'/' 在任何位置都是码元本身：
+    --   缝 R/p → chord2="R/" → candidate="R/p"（命中 chars_3code）→ 继续，kNoop
+    --   蒲 /Lf → chord2="/L" → candidate="/Lf"（命中）→ 继续（T30）
+    --   鸣 bXn → chord2="bX" → candidate="bXn"（命中）→ 继续
+    --   薄 /L（2码字）+ 他 → chord2="/L" → candidate="/L他" 非3码字 → 顶出 薄
+    -- 历史坑：T29 曾用 gsub("[/_+]$","") 剥离 chord2 末尾 '/'，虽救回 做+自己，
+    --   却把 缝(R/p) 的 candidate 误剥成 "Rp"（非3码字）→ 误顶 终(R/)，缝打不出；
+    --   同理 87 个首码元'/'与 119 个中码元'/'的3码字全部中招。改回“不剥离”修复。
+    -- 例外（T29 保护）：做(a/) 与 自己(_g) 同键于 3 码字 估(a/g)；做+自己是常用词、估极罕见，
+    --   故仅对 candidate=="a/g" 这一个碰撞强制优先顶出2码字 做（估本就不可达，无副作用）。
+    --   不放大到整个 "a/" 前缀——否则 佟(a/S) 等中码元'/'3码字会被误吞成 做+一简。
+    local candidate = chord2 .. incoming
+    if pure_data.chars_3code[candidate] and candidate ~= "a/g" then
+      return yoyo.kNoop  -- 是3码字（缝/蒲/鸣…），继续等第4码
     else
       commit_and_restore(env, context, chord2, jian_head, active_tables)
       return yoyo.kNoop

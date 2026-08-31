@@ -468,6 +468,53 @@ do
   check("recv g: input='_g'", ctx.input == "_g", ctx.input, "_g")
 end
 
+-- T30: 蒲(/Lf) 首码元为 '/' —— 修复 Pattern C 把前导 '/' 当分隔符剥掉，
+--      误把 3 码字 蒲 判成 2 码字 薄(/L) 而顶出错误字、导致 蒲 打不出
+-- 收到 'f' 时 input='/L_' → 候选应为 '/Lf'（保留前导 '/'），chars_3code['/Lf']=true → kNoop（3码字继续）
+print("\nT30: 蒲(/Lf) 首码元为 / -> 3码字正确继续，不误顶为 薄(/L)")
+do
+  local ctx = MockContext.new(); local env = make_env(ctx)
+  sim(env, ctx, "/"); sim(env, ctx, "L")
+  sim(env, ctx, "_")
+  check("/L_: input", ctx.input == "/L_", ctx.input, "/L_")
+  check("/L_: no commit yet", #ctx.committed == 0, #ctx.committed, 0)
+  sim(env, ctx, "f")  -- input='/L_', incoming='f' -> 候选 '/Lf' 是3码字 -> kNoop
+  check("recv f: no commit (是3码字)", #ctx.committed == 0, #ctx.committed, 0)
+  check("recv f: input='/L_f'", ctx.input == "/L_f", ctx.input, "/L_f")
+  sim(env, ctx, "i")  -- 下一键触发 Pattern E 顶出 蒲
+  check("recv i: '蒲' committed", ctx.committed[1] == "蒲", ctx.committed[1], "蒲")
+  check("recv i: input='i'", ctx.input == "i", ctx.input, "i")
+end
+
+-- T31: 缝(R/p) 中码元为 '/' —— 修复 Pattern C 把 chord2('R/') 末尾的 '/' 当分隔符剥掉，
+--      误把 3 码字 缝 判成 2 码字 终(R/) 而顶出错误字、导致 缝 打不出
+-- 收到 'p' 时 input='R/_' → 候选应为 'R/p'（保留中置 '/'），chars_3code['R/p']=true → kNoop（3码字继续）
+print("\nT31: 缝(R/p) 中码元为 / -> 3码字正确继续，不误顶为 终(R/)")
+do
+  local ctx = MockContext.new(); local env = make_env(ctx)
+  sim(env, ctx, "R"); sim(env, ctx, "/")
+  sim(env, ctx, "_")
+  check("R/_: input", ctx.input == "R/_", ctx.input, "R/_")
+  check("R/_: no commit yet", #ctx.committed == 0, #ctx.committed, 0)
+  sim(env, ctx, "p")  -- input='R/_', incoming='p' -> 候选 'R/p' 是3码字 -> kNoop
+  check("recv p: no commit (是3码字)", #ctx.committed == 0, #ctx.committed, 0)
+  check("recv p: input='R/_p'", ctx.input == "R/_p", ctx.input, "R/_p")
+  sim(env, ctx, "i")  -- 下一键触发 Pattern E 顶出 缝
+  check("recv i: '缝' committed", ctx.committed[1] == "缝", ctx.committed[1], "缝")
+  check("recv i: input='i'", ctx.input == "i", ctx.input, "i")
+end
+
+-- T32: 终(R/) 作为 2 码字仍可正常顶出（缝 R/p 修复后，R/ 不应被错误吞掉）
+print("\nT32: 终(R/) 2码字 -> 顶出 终，不误判为 缝(R/p)")
+do
+  local ctx = MockContext.new(); local env = make_env(ctx)
+  sim(env, ctx, "R"); sim(env, ctx, "/")
+  sim(env, ctx, "_")
+  sim(env, ctx, "x")  -- R/_ + x：'R/x' 非 3 码字 -> 顶出 终，restore '_'，incoming 'x' 流入 speller
+  check("recv x: '终' committed", ctx.committed[1] == "终", ctx.committed[1], "终")
+  check("recv x: input='_x'", ctx.input == "_x", ctx.input, "_x")
+end
+
 print(string.format("\n%s %d/%d 通过\n", FAIL==0 and "🎉" or "💥", PASS, PASS+FAIL))
 if FAIL > 0 then os.exit(1) end
 """
