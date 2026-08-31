@@ -1,7 +1,8 @@
 -- 纯形支拼音反查翻译器
 -- 输入以反引号 ` 开头即进入反查模式，剩余串作为无声调全拼键，
 -- 按拼音首字母懒加载 26 分片（rime/lua/yoyo/data/reverse_<initial>.lua），
--- 支持前缀补全匹配。候选注释显示去并击标记的纯形码元（单字全码 / 词主码）。
+-- 支持前缀补全匹配。候选注释显示去并击标记的纯形码元（单字全码 / 词主码）；
+-- 若词有简码（分片候选第4元素 % 前缀），注释显示为「全码 | 简码」。
 -- 详见 CONTEXT.md「反查（拼音反查）」与 issue #18。
 
 local yoyo = require "yoyo.yoyo"
@@ -31,6 +32,19 @@ local function get_shard(initial)
     yoyo.warnf("reverse_lookup: 分片 %s 载入失败: %s", modname, tostring(result))
   end
   return shards[initial]
+end
+
+--- 反查注释：全码（c[2]）；若该词有简码（c[4]，% 前缀且不同于全码），
+--- 显示为「全码 | 简码」，帮助用户同时记忆两种打法。
+---@param c table  候选 {text, code, weight, brief?}
+---@return string
+local function make_comment(c)
+  local comment = c[2]
+  local brief = c[4]
+  if brief and brief ~= "" and brief ~= c[2] then
+    comment = comment .. " | " .. brief
+  end
+  return comment
 end
 
 ---@param input string  当前输入（含反查前缀 `）
@@ -86,14 +100,14 @@ function translator.func(input, seg, env)
   for _, c in ipairs(chars) do
     local cand = Candidate("yoyo", seg.start, seg._end, c[1], c[2])
     if cand then
-      cand.comment = c[2]
+      cand.comment = make_comment(c)
       yield(cand)
     end
   end
   for _, c in ipairs(words) do
     local cand = Candidate("yoyo", seg.start, seg._end, c[1], c[2])
     if cand then
-      cand.comment = c[2]
+      cand.comment = make_comment(c)
       yield(cand)
     end
   end

@@ -278,6 +278,16 @@ def main():
         print(f"⚠️ 自动重生成 pure_dict_map.lua 失败：{e}；请手动跑 "
               f"scripts/generate_pure_dict_map.py 后再部署。")
 
+    # 同步重生成反查分片（reverse_lookup 现在会在注释里同时显示
+    # 词的「全码 | 简码」；不重跑则新简词进了字典却不进反查）。
+    try:
+        subprocess.run([sys.executable, str(SCRIPTS_DIR / "generate_reverse_data.py")],
+                      check=True)
+        print("✅ 已同步重生成反查分片（含简码）")
+    except Exception as e:  # 重生成失败不阻断写词，仅告警
+        print(f"⚠️ 自动重生成反查分片失败：{e}；请手动跑 "
+              f"scripts/generate_reverse_data.py 后再部署。")
+
 
 if __name__ == "__main__":
     main()

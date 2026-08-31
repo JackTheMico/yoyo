@@ -16,9 +16,11 @@
 产出：26 个 reverse_<initial>.lua 分片，每个形如：
   return {
     ["hanmei"] = {{"寒梅","sHqL",123}, ...},
+    ["zhezhong"] = {{"这种","vpxb",3182828,"%_v"}, ...},   -- 第4元素=简码(无则省略)
     ...
   }
 字词同池；候选按权重降序，同权重按 text 稳定排序。
+有简码的词，反查注释显示为「全码 | 简码」（如 vpxb | %_v）。
 
 用法：
   python3 generate_reverse_data.py            # 自检通过后写文件
@@ -160,28 +162,41 @@ def load_char_codes(entries):
 
 
 def load_word_codes(entries):
-    """词 -> 显示码（主码优先：权重最高者，同权重取去标记后最短）。
+    """词 -> (全码, 简码)。仅词(len>1)。
 
-    主码条目权重 > 0（平时打词实际使用的编码，较短）；
-    全码条目权重 = 0（完整击键序列，较长，仅供展示备选）。
+    全码：非 % 前缀、去并击标记后权重最高者（词的常规编码/全码）。
+    简码：% 前缀码（空格并击简词，保留 _/+ 手指示符），权重最高者。
+    仅用户词表有、核心词典无全码的词（如用户新增词），主码回退为该简码，
+    保证仍可反查。
+    返回 (full_map, brief_map)，均为 {text: code}。
     """
-    word_codes = {}  # text -> (stripped_code, weight)
+    full = {}    # text -> (code, weight)  非%码（已去标记）
+    brief = {}   # text -> (code, weight)  %码（保留标记）
     for text, code, weight in entries:
         if len(text) <= 1:
             continue
-        stripped = strip_marks(code)
-        if not stripped:
-            continue
-        cur = word_codes.get(text)
-        if cur is None:
-            word_codes[text] = (stripped, weight)
-        else:
-            cur_code, cur_w = cur
-            if weight > cur_w or (
-                weight == cur_w and len(stripped) < len(cur_code)
+        if code.startswith("%"):
+            cur = brief.get(text)
+            if cur is None or weight > cur[1] or (
+                weight == cur[1] and len(code) < len(cur[0])
             ):
-                word_codes[text] = (stripped, weight)
-    return {t: v[0] for t, v in word_codes.items()}, word_codes
+                brief[text] = (code, weight)
+        else:
+            stripped = strip_marks(code)
+            if not stripped:
+                continue
+            cur = full.get(text)
+            if cur is None or weight > cur[1] or (
+                weight == cur[1] and len(stripped) < len(cur[0])
+            ):
+                full[text] = (stripped, weight)
+    full_map = {t: v[0] for t, v in full.items()}
+    # 回退：无全码但有简码的词，主码用简码，保证仍可反查
+    for t, v in brief.items():
+        if t not in full_map:
+            full_map[t] = v[0]
+    brief_map = {t: v[0] for t, v in brief.items()}
+    return full_map, brief_map
 
 
 def load_char_pinyin():
@@ -285,9 +300,14 @@ def synthesize_word_pinyin(word_codes, char_pinyin, word_pinyin):
     return added
 
 
-def build_candidates(char_codes, word_codes, char_pinyin, word_pinyin):
-    """合并字/词候选：键 -> [(text, code, weight)]。返回 (候选表, 缺失报告)。"""
-    candidates = {}  # key -> [(text, code, weight)]
+def build_candidates(char_codes, word_codes, char_pinyin, word_pinyin,
+                     brief_map=None):
+    """合并字/词候选：键 -> [(text, code, weight, brief)]。
+
+    brief 为简码（% 前缀，保留 _/+），无简码时为 ""。返回 (候选表, 缺失报告)。
+    """
+    brief_map = brief_map or {}
+    candidates = {}  # key -> [(text, code, weight, brief)]
     missing_words = []  # 词库词在拼音源中缺拼音
 
     # 单字
@@ -295,8 +315,11 @@ def build_candidates(char_codes, word_codes, char_pinyin, word_pinyin):
         if char not in char_codes:
             continue  # 读音表字无编码，不收录（繁体/生僻字）
         code = char_codes[char]
+        b = brief_map.get(char, "")
+        if b == code:
+            b = ""
         for key, w in keys:
-            candidates.setdefault(key, []).append((char, code, w))
+            candidates.setdefault(key, []).append((char, code, w, b))
 
     # 词
     for word, code in word_codes.items():
@@ -304,7 +327,10 @@ def build_candidates(char_codes, word_codes, char_pinyin, word_pinyin):
             missing_words.append(word)
             continue
         key, w = word_pinyin[word]
-        candidates.setdefault(key, []).append((word, code, w))
+        b = brief_map.get(word, "")
+        if b == code:
+            b = ""
+        candidates.setdefault(key, []).append((word, code, w, b))
 
     return candidates, missing_words
 
@@ -327,14 +353,19 @@ def lua_escape(s: str) -> str:
     return s.replace("\\", "\\\\").replace('"', '\\"')
 
 
+def _fmt_cand(t, c, w, b):
+    """渲染单个候选为 Lua 表字面量。有简码时挂第 4 元素。"""
+    if b:
+        return '{{"{}","{}",{},"{}"}}'.format(
+            lua_escape(t), lua_escape(c), w, lua_escape(b))
+    return '{{"{}","{}",{}}}'.format(lua_escape(t), lua_escape(c), w)
+
+
 def render_shard(key_to_cands):
-    """渲染单个分片为 Lua 表源码字符串。"""
+    """渲染单个分片为 Lua 表源码字符串。候选形态 {text, code, weight[, brief]}。"""
     lines = ["return {"]
     for key, cands in key_to_cands.items():
-        items = ", ".join(
-            '{{"{}","{}",{}}}'.format(lua_escape(t), lua_escape(c), w)
-            for t, c, w in cands
-        )
+        items = ", ".join(_fmt_cand(t, c, w, b) for t, c, w, b in cands)
         lines.append('  ["{}"] = {{'.format(lua_escape(key)) + items + "},")
     lines.append("}")
     return "\n".join(lines) + "\n"
@@ -407,7 +438,7 @@ def self_check(char_codes, word_codes, char_pinyin, word_pinyin,
     char_code_set = set(char_codes.values())
     stray = []
     for items in candidates.values():
-        for text, code, _ in items:
+        for text, code, _w, _b in items:
             if len(text) == 1 and code not in char_code_set:
                 stray.append(code)
     stray = sorted(set(stray))
@@ -426,7 +457,7 @@ def self_check(char_codes, word_codes, char_pinyin, word_pinyin,
     word_code_set = set(word_codes.values())
     stray_w = []
     for items in candidates.values():
-        for text, code, _ in items:
+        for text, code, _w, _b in items:
             if len(text) > 1 and code not in word_code_set:
                 stray_w.append(code)
     stray_w = sorted(set(stray_w))
@@ -475,9 +506,13 @@ def self_check(char_codes, word_codes, char_pinyin, word_pinyin,
         report.append("[ok] 26 分片均非空")
 
     # 8. 码长/标记异常（去标记后无残留 + 码长偶数且 ≤24）
+    # % 简码（空格并击简词）含 _/+ 手指示符且总长奇数，是合法简码，
+    # 不参与标记残留/码长自检，故对 % 前缀主码整体跳过本项。
     bad_codes = []
     for items in candidates.values():
-        for text, code, _ in items:
+        for text, code, _w, _b in items:
+            if code.startswith("%"):
+                continue
             if any(c in MARK_CHARS for c in code):
                 bad_codes.append((text, code))
                 continue
@@ -500,7 +535,7 @@ def self_check(char_codes, word_codes, char_pinyin, word_pinyin,
     # 9. 单字码长 ∈ {1, 2, 3, 5}（纯形支一简/两码/全码）
     bad_char_len = []
     for items in candidates.values():
-        for text, code, _ in items:
+        for text, code, _w, _b in items:
             if len(text) == 1 and len(code) not in (1, 2, 3, 5):
                 bad_char_len.append((text, code, len(code)))
     if bad_char_len:
@@ -542,7 +577,9 @@ def main():
     entries_all = []
     for s in dict_sources:
         entries_all.extend(parse_dict_yaml(s))
-    word_codes_map, word_codes_full = load_word_codes(entries_all)
+    word_codes_map, brief_map = load_word_codes(entries_all)
+    if brief_map:
+        print("  简码(反查展示): {} 条".format(len(brief_map)))
 
     char_pinyin = load_char_pinyin()
     word_pinyin = load_word_pinyin()
@@ -556,12 +593,12 @@ def main():
 
     print("合并候选 ...")
     candidates, missing_words = build_candidates(
-        char_codes_map, word_codes_map, char_pinyin, word_pinyin)
+        char_codes_map, word_codes_map, char_pinyin, word_pinyin, brief_map)
     candidates = sort_candidates(candidates)
 
     print("自检 ...")
     ok, report = self_check(
-        char_codes_full, word_codes_full, char_pinyin, word_pinyin,
+        char_codes_full, word_codes_map, char_pinyin, word_pinyin,
         candidates, missing_words)
     for line in report:
         print("  " + line)
