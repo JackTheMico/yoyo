@@ -9,7 +9,9 @@
 一简字词是单手一击直出（_ 左 / + 右）。
 
 常用单字 / 常用词组各按词频分成三段：前 500 / 中 500 / 后 500。
-每个字/词若有一简码则优先用一简码练习，否则用全码/多码。
+每个字的取码优先级：一简（_X/+X，单手一击）> 二简（XY，双手并击一次）>
+三码全码（XX_Y/XX+Y）。字典里每条 text→code 都是可独立上屏的完整码，
+二简/一简一旦存在就不该再要求打第三码。
 另外单独生成全部一简字词（KM_JIAN），供“简码字词”子页面使用。
 
 用法:
@@ -131,16 +133,20 @@ def collect_ranked_items(entries, is_char: bool) -> list[dict]:
                     full3 = code
                 elif len(code) == 2 and CODE_RE.match(code) and code2 is None:
                     code2 = code
-            # 优先一简码
+            # 优先一简码（单手一击）；其次二简（双手并击一次，weight 通常远高于三码全码）；
+            # 最后才用三码全码。字典里每条 text→code 都是可独立上屏的完整码，
+            # 故二简/一简一旦存在就不应再要求打第三码。
             chosen = None
             steps = None
             if jian_code:
                 chosen = jian_code
                 steps = build_jian_steps(jian_code)
-            if not steps:
-                chosen = full3 or code2
-                if chosen:
-                    steps = build_single_char_steps(chosen)
+            if not steps and code2:
+                chosen = code2
+                steps = build_single_char_steps(code2)
+            if not steps and full3:
+                chosen = full3
+                steps = build_single_char_steps(full3)
             if not steps:
                 continue
             items.append({"char": text, "code": chosen, "steps": steps})
@@ -231,7 +237,8 @@ def main() -> None:
         "// 常用单字 / 常用词组各分三段（按词频降序）：",
         "//   KM_CHARS[0] = 前 500，KM_CHARS[1] = 中 500，KM_CHARS[2] = 后 500",
         "//   KM_WORDS[0] = 前 500，KM_WORDS[1] = 中 500，KM_WORDS[2] = 后 500",
-        "// 每个字/词若有一简码则优先用一简码（steps 只有一步，hand=left/right）。",
+        "// 每个字取码优先级：一简（单手一步）> 二简（双手并击一步）> 三码全码（双手+单手两步）；",
+        "//   二简/一简存在时不再要求打第三码。",
         f"// 全部一简字词：{len(jian_items)} 个（单字 {sum(1 for x in jian_items if x['is_char'])} + 词组 {sum(1 for x in jian_items if not x['is_char'])}）",
         "",
         f"// 常用单字（{sum(len(s) for s in char_segments)} 个，分 {len(char_segments)} 段）",

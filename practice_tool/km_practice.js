@@ -115,28 +115,16 @@ function zigenItem(root) {
   };
 }
 
-/** 根据当前体系（北冥/无相）计算某一步是否需要按空格。
+/** 纯形统一流 (yoyo-pure-km) 全程 0 空格：空格仅用于选字/翻页，不参与任何字词编码。
  *
- * 北冥空明（主单）：单字第一击（双手前两码）无空格，第三击（单手）带空格；
- *                  词的所有并击都带空格；一简字词单手无空格。
- * 无相空明（主词）：单字所有并击都带空格；词的所有并击都不带空格；
- *                  一简字词单手带空格。
+ * 因此每一步并击都不需要按空格（见 rime/lua/yoyo/pure_popping.lua：空格走 kNoop 放行）：
+ *   - 单字：第一击双手并击前两码，第二击（第三码）单手，均不按空格；
+ *   - 词组：两击均双手并击，不按空格；
+ *   - 一简字词：单手一击直出，不按空格。
+ * （yoyo-pure-km 的「主单 / 主词」开关只是候选排序偏好，不改变取码与并击方式。）
  */
 function resolveStepSpace(type, stepIndex, steps) {
-  // 一简字词：只有一步且为单手（left/right）
-  const isJian = steps.length === 1 && (steps[0].hand === 'left' || steps[0].hand === 'right');
-  if (isJian) {
-    return state.system === 'wx'; // 北冥一简无空格，无相一简带空格
-  }
-  if (state.system === 'wx') {
-    // 无相空明：主词
-    return type === 'char'; // 单字全部带空格，词全部不带空格
-  }
-  // 北冥空明：主单
-  if (type === 'char') {
-    return stepIndex > 0; // 单字第一击无空格，后续（第三码）带空格
-  }
-  return true; // 词全部带空格
+  return false;
 }
 
 /** 把常用单字 / 词组 / 一简字词数据包装成练习条目。 */
@@ -210,7 +198,7 @@ const SPACED_INTERVALS = [2, 4, 8, 12, 20, 40, 60, 100]; // count → 后移位�
 
 const state = {
   mode: 'finger',
-  system: 'bm',  // 指法体系：'bm' = 北冥空明（主单），'wx' = 无相空明（主词）
+  system: 'pure',  // 纯形统一流 yoyo-pure-km：全程 0 空格并击（主单/主词仅候选排序差异，不改变取码）
   // 指法练习用顺序队列 + 游标
   queue: [],
   index: 0,
@@ -551,6 +539,7 @@ function isTracked(key) {
   return key === ' ' || ((IS_LEFT.has(key) || IS_RIGHT.has(key)) && !DIGITS.has(key));
 }
 
+if (typeof document !== 'undefined') {
 document.addEventListener('keydown', (event) => {
   if (event.metaKey || event.ctrlKey || event.altKey) return;
   const key = event.key.length === 1 ? event.key.toLowerCase() : event.key;
@@ -591,33 +580,33 @@ window.addEventListener('blur', () => {
   strokeSpace = false;
   render();
 });
+}
 
-document.addEventListener('DOMContentLoaded', () => {
-  loadSpacedProgress();
-  document.querySelectorAll('[data-mode]').forEach((button) => {
-    button.addEventListener('click', () => {
-      document.querySelectorAll('[data-mode]').forEach((b) => b.classList.remove('active'));
-      button.classList.add('active');
-      loadMode(button.dataset.mode);
+// 北冥/无相是「纯形·传统版」的体系（靠空格分流字词、含 []/() 控制符）。
+// 本练习页现对齐「纯形统一流 (yoyo-pure-km)」：0 空格、单字双手并击前两码 + 单手第三码、
+// 词组两次双手并击、一简单手一击。详见 resolveStepSpace 与下方帮助文案。
+if (typeof document !== 'undefined') {
+  document.addEventListener('DOMContentLoaded', () => {
+    loadSpacedProgress();
+    document.querySelectorAll('[data-mode]').forEach((button) => {
+      button.addEventListener('click', () => {
+        document.querySelectorAll('[data-mode]').forEach((b) => b.classList.remove('active'));
+        button.classList.add('active');
+        loadMode(button.dataset.mode);
+      });
     });
+    const resetBtn = document.getElementById('km-reset-progress');
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => {
+        resetSpacedProgress();
+        loadMode(state.mode);
+        flash('间隔重复进度已重置', 'good');
+      });
+    }
+    loadMode('finger');
   });
-  document.querySelectorAll('[data-system]').forEach((button) => {
-    button.addEventListener('click', () => {
-      document.querySelectorAll('[data-system]').forEach((b) => b.classList.remove('active'));
-      button.classList.add('active');
-      state.system = button.dataset.system;
-      // 切换体系后，常用单字/词组的空格规则会变，需要重新加载当前模式
-      loadMode(state.mode);
-      flash(state.system === 'bm' ? '已切换：北冥空明（主单）' : '已切换：无相空明（主词）', 'good');
-    });
-  });
-  const resetBtn = document.getElementById('km-reset-progress');
-  if (resetBtn) {
-    resetBtn.addEventListener('click', () => {
-      resetSpacedProgress();
-      loadMode(state.mode);
-      flash('间隔重复进度已重置', 'good');
-    });
-  }
-  loadMode('finger');
-});
+}
+
+if (typeof module !== 'undefined') {
+  module.exports = { resolveStepSpace, charWordItem, state };
+}
