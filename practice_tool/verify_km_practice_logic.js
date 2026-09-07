@@ -82,6 +82,41 @@ for (let i = 0; i < KM_CHARS.length; i++) merge(checkSegment(KM_CHARS[i], 'char'
 for (let i = 0; i < KM_WORDS.length; i++) merge(checkSegment(KM_WORDS[i], 'word', `词组[${i}]`));
 merge(checkSegment(KM_JIAN, 'word', '一简'));
 
+// 指法练习（左右手同时并击）：每个码元一击，左手打码元 + 右手镜像键打同一码元，
+// 一击应解出两个相同码元且 hands === 'LR'（镜像回环校验）。
+(() => {
+  const bank = kmp.BANKS.finger();
+  let fingerBad = 0;
+  if (bank.length !== 60) {
+    all.bad.push(`指法练习: 应有 60 个码元，实际 ${bank.length}`);
+    fingerBad++;
+  }
+  for (const item of bank) {
+    const code = item.key;
+    const structOk = !item.steps
+      && item.target.length === 2
+      && item.target[0] === code && item.target[1] === code;
+    if (!structOk) {
+      if (fingerBad < 10) all.bad.push(`指法练习: 码元 ${code} 结构应为无 steps 且 target=[${code},${code}]，实际 ${JSON.stringify({ steps: item.steps, target: item.target })}`);
+      fingerBad++;
+      continue;
+    }
+    const f = kmp.fingeringOf(code);
+    const res = kmp.decodeStroke(f.left.concat(f.right), false);
+    if (res.invalid || res.hands !== 'LR' || res.codes.length !== 2
+      || res.codes[0] !== code || res.codes[1] !== code) {
+      if (fingerBad < 10) {
+        all.bad.push(`指法练习: 码元 ${code} 双手并击（左 ${f.left.join('')} + 右 ${f.right.join('')}）`
+          + ` 未解出两个 ${code}: ${JSON.stringify(res)}`);
+      }
+      fingerBad++;
+    }
+  }
+  all.total += bank.length;
+  all.structBad += fingerBad;
+  console.log(`指法练习: ${bank.length} 个码元 × 双手同时并击 1 击 = ${bank.length} 击`);
+})();
+
 // 针对性断言：用户明确要求「等」用二简 cV 打，不再要求第三码 z。
 (() => {
   let deng = null;

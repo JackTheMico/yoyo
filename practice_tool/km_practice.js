@@ -146,7 +146,9 @@ function charWordItem(item, type) {
 }
 
 const BANKS = {
-  // 指法练习：60 个码元按「单键 → 双键小写 → 大写 → 符号」渐进，逐个过关
+  // 指法练习：60 个码元按「单键 → 双键小写 → 大写 → 符号」渐进。
+  // 每个码元一击过关：左右手同时并击，左手打码元、右手用镜像键打同一个码元，
+  // 一击即验证「左右手镜像输出同一批码元」这条空明拳指法（同 base/advanced 的两手并击判定）。
   finger: () => {
     function kind(code) {
       const c = code.charCodeAt(0);
@@ -160,9 +162,9 @@ const BANKS = {
         const f = fingeringOf(code);
         return {
           key: code,
-          target: [code],
+          target: [code, code],
           prompt: `<div class="km-code-big">${esc(code)}</div>`,
-          hint: `码元 <b>${esc(code)}</b> → 左手 <b>${f.left.join(' ')}</b> / 右手 <b>${f.right.join(' ')}</b>`,
+          hint: `码元 <b>${esc(code)}</b> → 两手同时并击：左手 <b>${f.left.join(' ')}</b>、右手 <b>${f.right.join(' ')}</b>，各打出 <b>${esc(code)}</b>`,
           answer: code,
         };
       });
@@ -300,7 +302,7 @@ function currentStep() {
   const item = currentItem();
   if (!item) return null;
   if (item.steps) return item.steps[state.step];
-  // 单码元（指法练习）左右手都行；双码元（字根）必须两手并击
+  // 字根（双码元）必须两手并击；带 steps 的条目（指法/单字/词组）以 step.hand 为准
   const hand = item.target && item.target.length === 1 ? 'either' : 'both';
   return { target: item.target, space: false, hand };
 }
@@ -473,12 +475,20 @@ function renderKeyboard(highlight) {
   return rows.join('');
 }
 
+// 多击条目常驻显示「第 i/n 击 · 手别」——只说明该用哪只手，不泄露键位。
+const HAND_NAMES = { left: '左手', right: '右手', both: '双手并击', either: '单手' };
+function strokeBadge(item, step) {
+  if (!item.steps || item.steps.length < 2 || !step) return '';
+  return `<div style="margin-top:10px;font-size:15px;color:var(--text-secondary)">`
+    + `第 ${state.step + 1} / ${item.steps.length} 击 · <b style="color:var(--text-deer)">${HAND_NAMES[step.hand] || '单手'}</b></div>`;
+}
+
 function render() {
   const item = currentItem();
   const step = currentStep();
   if (!item) return;
 
-  document.getElementById('km-prompt').innerHTML = item.prompt;
+  document.getElementById('km-prompt').innerHTML = item.prompt + strokeBadge(item, step);
 
   const showAnswer = state.revealed || state.wrongOnThis;
   const hasSteps = Boolean(item.steps);
@@ -608,5 +618,5 @@ if (typeof document !== 'undefined') {
 }
 
 if (typeof module !== 'undefined') {
-  module.exports = { resolveStepSpace, charWordItem, state };
+  module.exports = { resolveStepSpace, charWordItem, state, BANKS, decodeStroke, fingeringOf };
 }
