@@ -589,8 +589,10 @@ menu:
     - xform|zv|/|
     - xform|at|<|
     - xform|ta|<|
-    - xform|de|>|
-    - xform|ed|>|
+    # > 原为 de/ik（中指同指纵压：中指同时压 e、d），2026-10-26 改为 t+d
+    # 指法：左手 t(食内·上) + d(中·中)，右手镜像 y + k；属表中「中+食内 / 中→上」格
+    - xform|td|>|
+    - xform|dt|>|
     - xform|xz|?|
     - xform|zx|?|
   # 大写码元（25 个双键 + 1 个三键）：
