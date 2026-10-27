@@ -1,0 +1,23 @@
+# yoyo-pure-cj tracer：证明「schema 能加载、码表能翻译、探针能断言」三者同时成立
+#
+# 选用码位说明（为什么要用这些字，而不是「了」）：
+#   字典里 `sl` 同时是「了」(权重 0) 与「了得」(权重 24474) 的码位 —— 全码条目权重被
+#   置 0 是这份码表的既有缺陷（见 issue #52 的字频回填），所以纯 Rime 翻译器会优先
+#   给出「了得」。tracer 阶段没有状态机介入，因此改用「码位唯一」的条目来验证链路：
+#     ps -> 蒿    （小写二码唯一单字码位，全表仅 3 个）
+#     jeug -> 家乡话（来自 yoyo-user 的用户加词，全部小写，可验证 import_tables 生效）
+#   「sl 必须出「了」」这条断言属于状态机票 #53（届时由判定数据决定，而不是由 Rime 菜单决定）。
+
+case cj_二码单元_空格上屏_蒿
+schema yoyo-pure-cj
+step p      ""    "p"
+step s      ""    "ps"
+step space  "蒿"  ""
+
+case cj_用户加词表四码词_家乡话
+schema yoyo-pure-cj
+step j      ""      "j"
+step e      ""      "je"
+step u      ""      "jeu"
+step g      ""      "jeug"
+step space  "家乡话" ""

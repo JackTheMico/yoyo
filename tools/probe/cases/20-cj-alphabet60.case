@@ -1,0 +1,82 @@
+# 60 码元全通路（issue #50）
+#
+# 码元集：26 小写 + 26 大写 + 8 符号（; : , . / < > ?）
+# 用例全部选「码位唯一」的条目，使断言与字频排序无关 —— 串击版的排序由 #52/#53 决定，
+# 这里只证明「一个码元 = 一次击键，引擎按原样收下」。
+
+case cj_大写码元_二码_猷
+schema yoyo-pure-cj
+step ,      ""    ","
+step K      ""    ",K"
+step space  "猷"  ""
+
+case cj_大写码元_二码_砀
+schema yoyo-pure-cj
+step .      ""    "."
+step A      ""    ".A"
+step space  "砀"  ""
+
+case cj_大写码元_二码_邡
+schema yoyo-pure-cj
+step <      ""    "<"
+step Y      ""    "<Y"
+step space  "邡"  ""
+
+case cj_大写码元_三码_珏
+schema yoyo-pure-cj
+step ,      ""    ","
+step ,      ""    ",,"
+# ,,O 不是任何 4 码词的前缀 → 第 3 键立即上屏（#53 确定性规则）
+step O      "珏"  ""
+
+case cj_大写码元_三码_瑚
+schema yoyo-pure-cj
+step ,      ""    ","
+step /      ""    ",/"
+step H      "瑚"  ""
+
+case cj_大写码元_三码_瑶
+schema yoyo-pure-cj
+step ,      ""    ","
+step :      ""    ",:"
+step E      "瑶"  ""
+
+case cj_符号码元_二码_做
+schema yoyo-pure-cj
+step a      ""    "a"
+step /      ""    "a/"
+step space  "做"  ""
+
+# ── 输送方式对照：字面量大写 vs Shift 修饰 ──────────────────────────────────
+# 结论：**必须走字面量**。librime 只看 keycode，不看 shift 位；Shift+k 送进来的仍是
+# 小写 k（input 变成 ",k"），落到完全不同的码位。因此键盘层要用「文本」动作送 "K"，
+# 不能用「Shift+k 按键」动作。
+case cj_输送方式_字面量大写K_是猷
+schema yoyo-pure-cj
+step ,      ""    ","
+step K      ""    ",K"
+step space  "猷"  ""
+
+# 输送方式对照：Shift 修饰送进 librime 后仍是小写 k，落到 ",k" 而不是 ",K"。
+# 所以这里断言的上屏字应当是 ",k" 的候选，而不是 ",K" 的「猷」——本用例只证明
+# 「两路落在不同码位」，具体出哪个字由 2 码位的视图决定（见下方主单/主词对照）。
+case cj_输送方式_Shift加k_不是大写码元_落到小写k位
+schema yoyo-pure-cj
+step ,      ""    ","
+step S+k    ""    ",k"
+step space  "玲"  ""
+
+# ",k" 是典型的字词共存位：词「瑜伽」权重 249,259 > 字「玲」141,655。
+# 主单视图取字，主词视图取词，次选键取另一类（#55）。
+case cj_主词模式_小写k位出瑜伽
+schema yoyo-pure-cj
+option word_priority on
+step ,      ""    ","
+step k      ""    ",k"
+step space  "瑜伽" ""
+
+case cj_主单模式_次选键直出瑜伽
+schema yoyo-pure-cj
+step ,      ""    ","
+step k      ""    ",k"
+step '      "瑜伽" ""

@@ -1,0 +1,20 @@
+# 并击方案（yoyo-pure-km）回归 —— 证明探针能跑 chord_composer + lua_processor 全链路
+#
+# 观察事实（librime 1.17）：
+#   - 按下并击键时 context.input 为空，preedit 显示的是「和弦提示」（prompt_format 已剥掉 _/+）；
+#   - 抬起全部键（kReleaseMask = 1<<30）才结算和弦，注入合成码元；
+#   - 一简 _d 在键盘上就是「左手单键 d」，由指法 xform 派生出 _d。
+
+case km_一简_空格上屏_的
+schema yoyo-pure-km
+step d       ""    "d"
+step -d      ""    "d"
+step space   ""    "d"
+step -space  "的"  ""
+
+case km_一简_由下一弦触发顶屏_的
+schema yoyo-pure-km
+step d     ""    "d"
+step -d    ""    "d"
+step a     ""    "da"
+step -a    "的"  "a"

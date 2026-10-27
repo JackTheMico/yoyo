@@ -1,0 +1,73 @@
+# Rime schema - 麓鸣·纯形·串击 (yoyo-pure-cj)
+#
+# 与 yoyo-pure-km（空明并击）的区别只在「怎么敲」：
+#   - 并击：一次同时按下若干键 → chord_composer 合成一个码元 → 一弦一字
+#   - 串击：一次触摸产生一个码元 → 线性码流 → 状态机按码长切分
+# 码表（yoyo-pure.dict.yaml）两端共用，编码记忆不变。
+#
+# 60 码元全部可敲（26 小写 + 26 大写 + 8 符号），切分与上屏由 cj_popping.lua
+# 驱动 cj_parser.lua 完成。规则与代价见 docs/design/cj-parsing-rules.md，
+# 码元到触摸键位的落位见 docs/design/cj-keymap-table.md。
+schema:
+  author:
+    - Rayalizing
+  description: |
+    麓鸣纯形·串击。为触摸键盘设计：一个码元一次击键，线性码流由状态机切分，
+    保留 0 空格自动顶屏。与桌面并击版共用同一份码表。
+  name: "麓鸣·纯形·串击"
+  schema_id: yoyo-pure-cj
+  version: 0.1.0
+  dependencies:
+    - yoyo-user
+
+__include: yoyo:/
+
+__patch:
+  translator/dictionary: yoyo-pure
+  translator/prism: yoyo-pure-cj
+  translator/import_tables: [yoyo-user]
+
+  switches:
+    - name: ascii_mode
+      states: [ 中文, 西文 ]
+    - name: full_shape
+      states: [ 半角, 全角 ]
+    - name: simplification
+    - name: ascii_punct
+      states: [ 。，, ．， ]
+    # 主单/主词：2 码位同时有字与词时改首选顺序（#55）。
+    # 桌面并击版同名同义、同切换键；数据见 cj_decision.lua 的 split2。
+    - name: word_priority
+      states: [ 主单, 主词 ]
+      reset: 0
+
+  # 串击版不并击：没有 chord_composer，也没有 _/+ 派生代数。
+  # cj_popping 负责切分与上屏，必须在 speller 之前——它要抢先看到按键。
+  engine/processors:
+    - ascii_composer
+    - recognizer
+    - key_binder
+    - lua_processor@*yoyo.cj_popping
+    - speller
+    - punctuator
+    - selector
+    - navigator
+    - express_editor
+
+  engine/filters:
+    - uniquifier
+    - simplifier
+
+  speller:
+    # 60 码元 = 26 小写 + 26 大写 + 8 符号（; : , . / < > ?）
+    # 与 yoyo-pure.dict.yaml 的码元集合严格一致：少一个就静默打不出若干字。
+    # 键位映射（哪个码元落在哪个触摸键上）不在这里，见 rime/lua/yoyo/data/cj_keymap.lua。
+    alphabet: "zyxwvutsrqponmlkjihgfedcba;:,.<>/?ZYXWVUTSRQPONMLKJIHGFEDCBA"
+    initials: "zyxwvutsrqponmlkjihgfedcba;:,.<>/?ZYXWVUTSRQPONMLKJIHGFEDCBA"
+    auto_select: false
+
+  key_binder/+:
+    bindings:
+      # 退格与 Esc 由 cj_popping 自己处理（清空整个码元缓冲），
+      # 因此这里不再把它们改绑成 Escape，否则会绕过状态机。
+      - { accept: "Control+Shift+C", toggle: word_priority, when: always }

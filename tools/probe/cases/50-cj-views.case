@@ -1,0 +1,91 @@
+# #55 主单 / 主词 / 次选
+#
+# 验收对象：2 码位同时承载单字与词时，按 word_priority 开关路由首选，
+# 并用 ' 一键直出另一类。数据依据 cj_decision.lua 的 split2（2655 个双类码位）。
+#
+# 样例位说明：
+#   sl  —— 字「了」(59,562,863) / 词「了得」(24,474)    字权重占优
+#   ,k  —— 字「玲」(141,655)    / 词「瑜伽」(249,259)    词权重占优
+#   vp  —— 只有词「这些」，无单字（单一类别位，次选应不可用）
+
+# ── 主单（默认） ────────────────────────────────────────────────────────────
+case view_主单默认_sl出了
+schema yoyo-pure-cj
+step s      ""   "s"
+step l      ""   "sl"
+step space  "了" ""
+
+case view_主单默认_词权重占优时仍出单字_kl
+schema yoyo-pure-cj
+step ,      ""    ","
+step k      ""    ",k"
+step space  "玲"  ""
+
+# ── 主词 ────────────────────────────────────────────────────────────────────
+case view_主词_sl出了得
+schema yoyo-pure-cj
+option word_priority on
+step s      ""     "s"
+step l      ""     "sl"
+step space  "了得" ""
+
+case view_主词_kl出瑜伽
+schema yoyo-pure-cj
+option word_priority on
+step ,      ""     ","
+step k      ""     ",k"
+step space  "瑜伽" ""
+
+# 开关可在用例中途切换：同一会话内先主词后主单
+case view_中途切换开关_各自生效
+schema yoyo-pure-cj
+option word_priority on
+step s      ""     "s"
+step l      ""     "sl"
+step space  "了得" ""
+option word_priority off
+step s      ""     "s"
+step l      ""     "sl"
+step space  "了"   ""
+
+# ── 次选直出 ────────────────────────────────────────────────────────────────
+case view_次选_主单下直出词
+schema yoyo-pure-cj
+step s      ""     "s"
+step l      ""     "sl"
+step '      "了得" ""
+
+case view_次选_主词下直出单字
+schema yoyo-pure-cj
+option word_priority on
+step s      ""   "s"
+step l      ""   "sl"
+step '      "了" ""
+
+# 次选只消费当前 2 码缓冲，之后必须能从空缓冲重新开码（不污染）
+case view_次选后不污染缓冲
+schema yoyo-pure-cj
+step s      ""     "s"
+step l      ""     "sl"
+step '      "了得" ""
+step s      ""     "s"
+step l      ""     "sl"
+step space  "了"   ""
+
+# 单一类别位没有次选：' 被吞掉，缓冲保留，空格照常出词
+case view_单一类别位_次选不可用
+schema yoyo-pure-cj
+step v      ""     "v"
+step p      ""     "vp"
+step '      ""     "vp"
+step space  "这些" ""
+
+# 空缓冲下 ' 不是次选键：不上屏、不产生预编辑，也不破坏后续开码。
+# 与桌面并击版行为一致（pure_popping 同样在空缓冲时放行 '，由标点层决定，
+# 而本方案未给 ' 配标点映射，故无输出）。
+case view_空缓冲下撇号不干扰
+schema yoyo-pure-cj
+step '      ""     ""
+step s      ""     "s"
+step l      ""     "sl"
+step space  "了"   ""

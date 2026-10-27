@@ -86,6 +86,32 @@
 
 
 
+## 手机串击版（`yoyo-pure-cj`）
+
+前面几支方案都靠**并击**（一次同时按下若干键合成一个码元）打码。这在物理键盘上是速度优势，在触摸屏上不成立：软键盘没有「按住」态——`KeyView.onPress` 只做按键音与预览，真正的 keydown 在 `onRelease` 才发，随后立刻补 keyup，而 `chord_composer` 要求所有并击键物理按住才成弦。所以手机端另立一支**串击**方案：一个码元一次击键，线性码流由状态机切分。
+
+|  | 桌面并击（`yoyo-pure-km`） | 手机串击（`yoyo-pure-cj`） |
+|---|---|---|
+| 一次击键 | 一个和弦（可含 2–4 个键） | 一个码元 |
+| 组字 | `chord_composer` + `pure_popping.lua` | `cj_parser` + `cj_popping.lua`，按码长切分 |
+| 一简（一击出高频字） | 有，`_d`=的 | **无**（编码层没有第二层可用），改由键盘上方快捷字条补偿 |
+| 0 空格顶屏 | 全流程 | 仅 4 码词；2 码与多数 3 码要按空格定界 |
+| 码表 | `yoyo-pure.dict.yaml` | **同一份**，编码记忆两端通用 |
+
+**击键代价要讲清楚**：并击版约 1.2 击/字，串击版平均 **2.44 击/字**（有 2 码简码的字 55.9% 走 2 击，其余 3 击）。仍在拼音之下，但确实比桌面版慢——这是「一键一码元」的必然结果，不是实现缺陷。
+
+原因在数据里：60 个码元占满单键，2 码组合又被 2 码字占用 97.2%（3,500 个 2 码位里只有 1 个不会再延长），所以「一击出字」在串击下没有编码空间可用。
+
+**装机与部署**
+
+- Rime 用户目录放 `yoyo-pure-cj.schema.yaml` 与 `rime/lua/yoyo/{cj_parser,cj_popping}.lua`、`rime/lua/yoyo/data/cj_{decision,keymap,quickbar}.lua`；与 `yoyo-pure-km` 同目录并存即可，两者的 prism 各自独立、互不覆盖。
+- 手机外壳（LyraIME）：把 `rime/lyraime/themes/yoyo-pure-cj.lua` 放到 `<Rime 用户目录>/themes/`，主题选单里选「麓鸣·纯形·串击」。不改客户端源码。
+- 本地验证：`bash tools/probe/run.sh`（真引擎黑盒用例，含并击版回归）；
+  `lua rime/scripts/test_cj_parser.lua`（11 万码位全量自洽）；
+  `python3 rime/scripts/test_cj_theme.py`（键盘配置与码元映射逐键对齐）。
+
+三份设计文档：[切分规则](docs/design/cj-parsing-rules.md)、[键位映射表](docs/design/cj-keymap-table.md)、[判定数据](docs/design/cj-decision-data.md)。
+
 ## 项目结构
 
 ```

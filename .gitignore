@@ -13,4 +13,8 @@ rime/user.yaml
 *.bin
 *.userdb*
 /.workbuddy/memory
+# 探针与共存验证的隔离 Rime 用户目录：每次跑测试重建，不入库
+/.workbuddy/probe
+/.workbuddy/coexist
+/.workbuddy/tmp
 /tools/yoyo-km-tui/target
