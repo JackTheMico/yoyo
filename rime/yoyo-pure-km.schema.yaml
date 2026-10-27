@@ -8,6 +8,10 @@ schema:
   name: "麓鸣·纯形·空明"
   schema_id: yoyo-pure-km
   version: 1.0
+  # yoyo-user 只做构建依赖（编译出 build/yoyo-user.table.bin 供运行时 import_tables 加载），
+  # 不列进 default.custom.yaml 的 schema_list，因此不会出现在输入法选单里。
+  dependencies:
+    - yoyo-user
 
 #=============================== 
 心法:
