@@ -198,6 +198,7 @@ def main() -> None:
     align: dict[str, str] = {}
     stats = Counter()
     unknown: set[str] = set()
+    degraded: list[str] = []
 
     for ch, roots in decomposition.items():
         forms = chars.get(ch)
@@ -209,10 +210,12 @@ def main() -> None:
         if missing:
             stats["根不在表"] += 1
             unknown.update(missing)
+            degraded.append(ch)
             continue
         groups = render(full, roots, root_codes)
         if groups is None:
             stats["无法逐位对齐"] += 1
+            degraded.append(ch)
             continue
         stats["按根数 " + ("1" if len(roots) == 1 else "2" if len(roots) == 2 else "≥3")] += 1
         align[ch] = "·".join(
@@ -220,11 +223,13 @@ def main() -> None:
         )
 
     total = len(decomposition)
-    print(f"拆分序列 {total} 字 | 可显示 {len(align)} 字")
+    print(f"拆分序列 {total} 字 | 可显示 {len(align)} 字（{len(align) / total * 100:.1f}%）")
     for k, v in stats.most_common():
         print(f"  {k}: {v}")
     if unknown:
         print(f"  未知字根 {len(unknown)} 个：{''.join(sorted(unknown)[:20])}")
+    if degraded:
+        print(f"  降级字 {len(degraded)} 个（注释退回纯编码）：{''.join(sorted(degraded)[:40])}")
 
     order = ["的", "和", "你", "德", "鹿", "寒", "是", "上", "梅", "能", "中"]
     print("\n样例:")

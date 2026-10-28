@@ -20,9 +20,13 @@ npm ci
 
 ```bash
 python3 make_analysis_config.py     # 生成 ../yoyo-analysis-0.4.yaml
+node export_decomposition.mjs       # 全字符集导出 → ../decomposition.tsv（入库）
 node probe.mjs                      # 抽查若干字的完整拆分序列
 node estimate_consistency.mjs 8000  # 体检：拆分能否重现已发布全码
 ```
+
+`export_decomposition.mjs` 的字符集取自 `rime/yoyo-pure.dict.yaml` 的全部单字条目（实测 6640 字，
+2.7 秒）。分批跑，单批失败时回退逐字重试并记 `miss`，不让一个字带崩整批。
 
 `probe.mjs` 退出码 0 表示拿到了完整序列（序列长度 ≥3 的字不少于 3 个）。
 

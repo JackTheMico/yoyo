@@ -142,37 +142,33 @@ local function ascii_count(s)
   end
   return n
 end
-local bad_len = {}
-for _, c in ipairs(lookup("`shi")) do
-  local full = full_codes[c.text]
-  if utf8.len(c.text) == 1 and full and c.comment:find("·", 1, true) then
-    if ascii_count(c.comment) ~= #full then
-      bad_len[#bad_len + 1] = string.format("%s 注释=%s 字母%d≠全码%d(%s)",
-        c.text, c.comment, ascii_count(c.comment), #full, full)
+local bad_len, checked = {}, 0
+for _, input in ipairs({ "`shi", "`de", "`han", "`wo", "`yi" }) do
+  for _, c in ipairs(lookup(input)) do
+    local full = full_codes[c.text]
+    if utf8.len(c.text) == 1 and full and c.comment:find("·", 1, true) then
+      checked = checked + 1
+      if ascii_count(c.comment) ~= #full then
+        bad_len[#bad_len + 1] = string.format("%s 注释=%s 字母%d≠全码%d(%s)",
+          c.text, c.comment, ascii_count(c.comment), #full, full)
+      end
     end
   end
 end
-check("单字注释字母数 == 全码长度", #bad_len == 0, table.concat(bad_len, " / "))
+check("单字注释字母数 == 全码长度（" .. checked .. " 字）", #bad_len == 0, table.concat(bad_len, " / "))
+print(string.format("  字母数不变量覆盖 %d 字", checked))
 
 -- 5. 词条注释形态不变（可以 主码是一简 x，无简码后缀）
 local word_comment = comment_of("`keyi", "可以")
 check("词条注释保持纯编码", word_comment == "x", word_comment)
 
--- 6. 没有拆分数据的字退回纯全码（不加标记）
-local samples = { ["的"] = true, ["和"] = true, ["你"] = true, ["德"] = true, ["鹿"] = true,
-  ["上"] = true, ["是"] = true, ["寒"] = true, ["中"] = true, ["梅"] = true, ["白"] = true,
-  ["木"] = true, ["可"] = true, ["以"] = true, ["能"] = true, ["禾"] = true, ["口"] = true }
-local degraded, degraded_bad = 0, {}
-for _, c in ipairs(lookup("`de")) do
-  if utf8.len(c.text) == 1 and not samples[c.text] then
-    degraded = degraded + 1
-    if c.comment ~= c.raw_code then
-      degraded_bad[#degraded_bad + 1] = c.text .. "=" .. c.comment
-    end
-  end
+-- 6. 过不了「全有或全无」的字退回纯编码（不加标记、不留占位符）
+--    哀 与 微 是全量数据里真实降级的两个字，分属不同分片
+for _, case in ipairs({ { "`ai", "哀" }, { "`wei", "微" } }) do
+  local c = cand_of(case[1], case[2])
+  check("降级字 " .. case[2] .. " 退回纯编码", c and c.comment == c.raw_code,
+    c and (c.comment .. " ≠ " .. c.raw_code) or "无此候选")
 end
-check("无拆分数据的字退回纯全码", degraded > 0 and #degraded_bad == 0,
-  string.format("%d 个降级字，其中 %d 个异常：%s", degraded, #degraded_bad, table.concat(degraded_bad, " ")))
 
 -- 7. 全量候选注释非空
 local empty, total = 0, 0
