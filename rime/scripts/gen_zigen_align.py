@@ -42,6 +42,7 @@
 from __future__ import annotations
 
 import argparse
+import sys
 from collections import Counter, defaultdict
 from pathlib import Path
 
@@ -57,9 +58,17 @@ MAPPING = REPO_DIR / "zigen_table" / "mapping.yaml"
 PURE_DICT = RIME_DIR / "yoyo-pure.dict.yaml"
 OUTPUT = RIME_DIR / "lua" / "yoyo" / "data" / "zigen_align.lua"
 
+LEGACY_ELEMENTS = SCRIPTS_DIR / "编码生成和重码可视化" / "data" / "elements.txt"
+
+# 闸门与体检线（见 docs/design/2026-10-28-反查字根拆分-第二根设计.md 第 2 节）
+GATE_CONSISTENCY = 0.95  # 自洽率下限：低于此值拆分不可信，停止
+GATE_DRIFT = 0.05  # 漂移率上限：超过说明与 0.2 历史分歧过大，停下来重估
+
 MARK_CHARS = set("!@-_+()[]=")
 STROKE_ROOTS = set("123456")
 STROKE_NAMES = {"1": "一", "2": "丨", "3": "丿", "4": "丶", "5": "乛", "6": "乙"}
+SHENGMU_PREFIX = "双拼声母-"
+YUNMU_PREFIX = "双拼韵母-"
 
 
 # ── 读取 ────────────────────────────────────────────────────────────────
@@ -104,6 +113,41 @@ def load_decomposition(path: Path) -> dict[str, list[str]]:
         roots = [r for r in seq.split(" ") if r]
         if roots:
             out[ch] = roots
+    return out
+
+
+def load_legacy_elements(path: Path) -> dict[str, tuple[str, str]]:
+    """旧口径的首根/末根，只作漂移体检的对照物，不参与生成。
+
+    每行给出「首根.0 首根.1 末根.0 末根.1」（单根字则两对同根）。取权重最高的一行。
+    """
+    if not path.exists():
+        return {}
+    best: dict[str, tuple[list[str], int]] = {}
+    for line in path.open(encoding="utf-8"):
+        parts = line.rstrip("\n").split("\t")
+        if len(parts) < 2 or len(parts[0]) != 1:
+            continue
+        try:
+            w = int(parts[2]) if len(parts) > 2 else 0
+        except ValueError:
+            w = 0
+        prev = best.get(parts[0])
+        if prev is None or w > prev[1]:
+            inst = [
+                e
+                for e in parts[1].split()
+                if not e.startswith((SHENGMU_PREFIX, YUNMU_PREFIX))
+            ]
+            best[parts[0]] = (inst, w)
+    out: dict[str, tuple[str, str]] = {}
+    for ch, (inst, _w) in best.items():
+        if len(inst) >= 4:
+            out[ch] = (inst[0].rpartition(".")[0], inst[2].rpartition(".")[0])
+        elif len(inst) == 2:
+            root = inst[0].rpartition(".")[0]
+            if inst[1].rpartition(".")[0] == root:
+                out[ch] = (root, root)
     return out
 
 
@@ -223,13 +267,31 @@ def main() -> None:
         )
 
     total = len(decomposition)
-    print(f"拆分序列 {total} 字 | 可显示 {len(align)} 字（{len(align) / total * 100:.1f}%）")
+    consistency = len(align) / total if total else 0.0
+    print(f"拆分序列 {total} 字 | 可显示 {len(align)} 字")
+    print(f"  自洽率 {consistency * 100:.1f}%（闸门 ≥{GATE_CONSISTENCY * 100:g}%）")
     for k, v in stats.most_common():
         print(f"  {k}: {v}")
     if unknown:
         print(f"  未知字根 {len(unknown)} 个：{''.join(sorted(unknown)[:20])}")
     if degraded:
         print(f"  降级字 {len(degraded)} 个（注释退回纯编码）：{''.join(sorted(degraded)[:40])}")
+
+    # 漂移体检：新首/末根与旧口径不一致的比例。只作体检，不是数据对错的判据。
+    legacy = load_legacy_elements(LEGACY_ELEMENTS)
+    both = [ch for ch in decomposition if ch in legacy]
+    drifted = [
+        ch for ch in both
+        if (decomposition[ch][0], decomposition[ch][-1]) != legacy[ch]
+    ]
+    drift = len(drifted) / len(both) if both else 0.0
+    print(
+        f"  漂移率 {drift * 100:.1f}%（体检线 ≤{GATE_DRIFT * 100:g}%；"
+        f"与旧口径可比 {len(both)} 字，分歧 {len(drifted)} 字）"
+    )
+    for ch in drifted[:12]:
+        print(f"     {ch}  新 {'/'.join((decomposition[ch][0], decomposition[ch][-1]))}"
+              f"  旧 {'/'.join(legacy[ch])}")
 
     order = ["的", "和", "你", "德", "鹿", "寒", "是", "上", "梅", "能", "中"]
     print("\n样例:")
@@ -238,8 +300,27 @@ def main() -> None:
             full = max((c for c, _ in chars[ch]), key=len)
             print(f"   {ch}  {full:4s}  →  {align[ch]}")
 
+    # ── 闸门 ──
+    # 自洽率不达标 = 拆分无法重现已发布编码，数据不可信，停止。
+    # 漂移率超线 ≠ 数据错——它是「0.4 与 0.2 分歧过大，该人来看一眼」的信号，
+    # 所以用不同的退出码区分，别让后来的人把它当成同一个问题。
+    if consistency < GATE_CONSISTENCY:
+        print(
+            f"\n[闸门不通过] 自洽率 {consistency * 100:.1f}% < {GATE_CONSISTENCY * 100:g}%："
+            "拆分无法重现已发布编码，数据不可信，不写文件。",
+            file=sys.stderr,
+        )
+        raise SystemExit(1)
+    if drift > GATE_DRIFT:
+        print(
+            f"\n[体检报警] 漂移率 {drift * 100:.1f}% > {GATE_DRIFT * 100:g}%："
+            "与 0.2 历史分歧过大，停下重估信任口径。"
+            "注意这不算数据错——分歧本身是 ADR-0001 允许的，报警只为了让人看一眼。",
+            file=sys.stderr,
+        )
+        raise SystemExit(2)
+
     if args.dry_run:
-        print("\n[dry-run] 未写文件")
         return
 
     lines = [
