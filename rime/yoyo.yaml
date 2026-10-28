@@ -15,6 +15,11 @@ switches:
   - name: popping
     # states: [ 连击, 并击 ]
     reset: 1 # 1: 并击
+  # 取反命名：名为 no_zigen。未声明此开关的方案，get_option 返回 false/nil 都等于
+  # 「没开 no_zigen」，于是默认显示字根拆分——新增方案不必记得补声明。
+  - name: no_zigen
+    states: [ 显示字根, 纯码 ]
+    reset: 0
   # - name: input_style
     # states: [ 打单, 打词 ]
     # reset: 0

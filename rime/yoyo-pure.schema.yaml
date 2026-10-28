@@ -39,6 +39,10 @@ __patch:
     - name: word_priority
       states: [ 主单, 主词 ]
       reset: 0
+    # 取反命名，未声明也默认显示字根；见 yoyo.yaml 同项注释
+    - name: no_zigen
+      states: [ 显示字根, 纯码 ]
+      reset: 0
 
   engine/processors:
     - ascii_composer

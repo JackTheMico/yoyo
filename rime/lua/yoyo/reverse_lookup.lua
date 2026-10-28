@@ -1,9 +1,13 @@
 -- 纯形支拼音反查翻译器
 -- 输入以反引号 ` 开头即进入反查模式，剩余串作为无声调全拼键，
 -- 按拼音首字母懒加载 26 分片（rime/lua/yoyo/data/reverse_<initial>.lua），
--- 支持前缀补全匹配。候选注释显示去并击标记的纯形码元（单字全码 / 词主码）；
--- 若词有简码（分片候选第4元素 % 前缀），注释显示为「全码 | 简码」。
--- 详见 CONTEXT.md「反查（拼音反查）」与 issue #18。
+-- 支持前缀补全匹配。
+-- 候选注释：
+--   单字 → 「根+它产生的字母」逐位贴身，组间用 · 连接，如 的 → "白d·勹.·丶O"
+--   词   → 主码；若词有简码（分片候选第4元素 % 前缀），显示为「全码 | 简码」
+-- 字根拆分见 docs/research/2026-10-27-反查候选注释加字根拆分.md 与
+-- docs/design/2026-10-28-反查字根拆分-第二根设计.md；
+-- 反查本身详见 CONTEXT.md「反查（拼音反查）」与 issue #18。
 
 local yoyo = require "yoyo.yoyo"
 
@@ -14,6 +18,42 @@ local shards = {}
 
 -- 数据目录（相对 Rime 用户目录下的 lua/yoyo/data）
 local DATA_DIR = "yoyo/data"
+
+-- 字根拆分表：首次反查时才载入（不在启动时读）
+local align_table = nil
+local align_loaded = false
+
+--- 是否显示字根拆分。
+--- 开关语义取反：名字是 no_zigen。未声明该开关的方案，get_option 返回 false 或 nil
+--- 都等于「没开 no_zigen」，于是默认显示——新增方案不必记得补声明。
+---@param env Env|nil
+---@return boolean
+local function hint_enabled(env)
+  local ctx = env and env.engine and env.engine.context
+  if not ctx or not ctx.get_option then
+    return true
+  end
+  return not ctx:get_option("no_zigen")
+end
+
+---@param text string
+---@param env Env|nil
+---@return string|nil
+local function align_of(text, env)
+  if not hint_enabled(env) then
+    return nil
+  end
+  if not align_loaded then
+    align_loaded = true
+    local ok, result = pcall(require, DATA_DIR .. ".zigen_align")
+    if ok and type(result) == "table" then
+      align_table = result
+    else
+      yoyo.warnf("reverse_lookup: 字根拆分表载入失败: %s", tostring(result))
+    end
+  end
+  return align_table and align_table[text] or nil
+end
 
 --- 首次命中某首字母时载入对应分片
 ---@param initial string  单字母
@@ -34,11 +74,19 @@ local function get_shard(initial)
   return shards[initial]
 end
 
---- 反查注释：全码（c[2]）；若该词有简码（c[4]，% 前缀且不同于全码），
+--- 反查注释。
+--- 单字：有字根拆分数据就用「根+它产生的字母」（如 白d·勹.·丶O），
+--- 让用户看到每个字母是哪个字根给的；没有数据时退回纯编码。
+--- 词：全码（c[2]）；若该词有简码（c[4]，% 前缀且不同于全码），
 --- 显示为「全码 | 简码」，帮助用户同时记忆两种打法。
 ---@param c table  候选 {text, code, weight, brief?}
+---@param env Env|nil
 ---@return string
-local function make_comment(c)
+local function make_comment(c, env)
+  local align = align_of(c[1], env)
+  if align then
+    return align
+  end
   local comment = c[2]
   local brief = c[4]
   if brief and brief ~= "" and brief ~= c[2] then
@@ -100,14 +148,14 @@ function translator.func(input, seg, env)
   for _, c in ipairs(chars) do
     local cand = Candidate("yoyo", seg.start, seg._end, c[1], c[2])
     if cand then
-      cand.comment = make_comment(c)
+      cand.comment = make_comment(c, env)
       yield(cand)
     end
   end
   for _, c in ipairs(words) do
     local cand = Candidate("yoyo", seg.start, seg._end, c[1], c[2])
     if cand then
-      cand.comment = make_comment(c)
+      cand.comment = make_comment(c, env)
       yield(cand)
     end
   end
