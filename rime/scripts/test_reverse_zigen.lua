@@ -7,7 +7,10 @@
 --   2. 三种取码形态各按「根+字母贴身」渲染，且不再带全码前缀
 --   3. 私用区字根归一到主字根、笔画根归一成笔画名
 --   4. 硬约束：注释里的字母数恒等于该字全码长度（防「部分归属」静默吞字母）
---   5. 词条注释形态不变
+--   5. 词条注释形态不变，且一简标记只给单字（词的主码可能也是一位）
+--   6. 降级字退回纯编码
+--   7. 一简标记的判定规则（单字 + 分片码长 1），用真实候选压规则
+--   8. 数据守卫：一简码恒等于全码首码（否则「一简」标在首根之后的读法就是假话）
 
 local SCRIPTS_DIR = (arg and arg[0] and arg[0]:match("(.*/)")) or "./"
 package.path = SCRIPTS_DIR .. "../lua/?.lua;" .. package.path
@@ -90,22 +93,22 @@ local function comment_of(input, text, no_zigen)
 end
 
 -- 1. 开关关闭：注释退回主码（分片里的 c[2]，不是全码——全码只有拆分串才带），
---    且拆分表一次都不载入
+--    且拆分表一次都不载入。「的」是 120 个一简字之一，主码即一简码，故带一简标记。
 local off_comment = comment_of("`de", "的", true)
-check("关闭时 的 注释 = 主码", off_comment == "d", off_comment)
+check("关闭时 的 注释 = 主码 + 一简标记", off_comment == "d 一简", off_comment)
 check("关闭时未加载拆分表", align_loads == 0, align_loads .. " 次")
 
--- 2. 三种取码形态
+-- 2. 三种取码形态。和/的 是一简字，注释尾部带「 一简」，其余不带。
 check("单根占两码：鹿", comment_of("`lu", "鹿") == "鹿Al", comment_of("`lu", "鹿"))
-check("双根末根占两码：和", comment_of("`he", "和") == "禾x·口bk", comment_of("`he", "和"))
-check("多根首次末各一码：的", comment_of("`de", "的") == "白d·勹.·丶O", comment_of("`de", "的"))
+check("双根末根占两码：和", comment_of("`he", "和") == "禾x·口bk 一简", comment_of("`he", "和"))
+check("多根首次末各一码：的", comment_of("`de", "的") == "白d·勹.·丶O 一简", comment_of("`de", "的"))
 
 -- 3. 中间根不显示；私用区根与笔画根要归一
 check("五个根只显示首/次/末：德", comment_of("`de", "德") == "彳g·十e·心:", comment_of("`de", "德"))
 check("四个根只显示首/次/末：寒", comment_of("`han", "寒") == "宀j·井h·冫S", comment_of("`han", "寒"))
-check("私用区根归一成主字根：你", comment_of("`ni", "你") == "亻a·角L·小E", comment_of("`ni", "你"))
-check("私用区根归一成主字根：是", comment_of("`shi", "是") == "日w·疋Cs", comment_of("`shi", "是"))
-check("笔画根归一成笔画名：上", comment_of("`shang", "上") == "卜x·一fi", comment_of("`shang", "上"))
+check("私用区根归一成主字根：你", comment_of("`ni", "你") == "亻a·角L·小E 一简", comment_of("`ni", "你"))
+check("私用区根归一成主字根：是", comment_of("`shi", "是") == "日w·疋Cs 一简", comment_of("`shi", "是"))
+check("笔画根归一成笔画名：上", comment_of("`shang", "上") == "卜x·一fi 一简", comment_of("`shang", "上"))
 
 -- 4. 硬约束：注释里的字母数 == 该字全码长度
 --    没有这条，「部分归属」时会把 Al 渲染成 鹿A 而没人发现。
@@ -158,9 +161,10 @@ end
 check("单字注释字母数 == 全码长度（" .. checked .. " 字）", #bad_len == 0, table.concat(bad_len, " / "))
 print(string.format("  字母数不变量覆盖 %d 字", checked))
 
--- 5. 词条注释形态不变（可以 主码是一简 x，无简码后缀）
+-- 5. 词条注释形态不变，且一简标记只给单字：
+--    「可以」的主码就是一位（x），若按「码长 1」判定就会误标，故必须带单字判定
 local word_comment = comment_of("`keyi", "可以")
-check("词条注释保持纯编码", word_comment == "x", word_comment)
+check("词条注释保持纯编码（主码一位也不加一简）", word_comment == "x", word_comment)
 
 -- 6. 过不了「全有或全无」的字退回纯编码（不加标记、不留占位符）
 --    哀 与 微 是全量数据里真实降级的两个字，分属不同分片
@@ -179,6 +183,53 @@ for _, c in ipairs(lookup("`shi")) do
   end
 end
 check("`shi 候选均有注释", total > 0 and empty == 0, string.format("%d/%d 为空", empty, total))
+
+-- 8. 一简标记的判定规则：单字且分片编码只有一位。
+--    这条用真实候选压规则本身，防止标记加错对象（词、多码字）或漏标。
+local mark_bad, mark_checked, mark_brief = {}, 0, 0
+for _, input in ipairs({ "`de", "`shi", "`ni", "`wo", "`yi", "`bu", "`shi" }) do
+  for _, c in ipairs(lookup(input)) do
+    if utf8.len(c.text) == 1 then
+      mark_checked = mark_checked + 1
+      local marked = c.comment:find(" 一简", 1, true) ~= nil
+      local expect = #c.raw_code == 1
+      if expect then
+        mark_brief = mark_brief + 1
+      end
+      if marked ~= expect then
+        mark_bad[#mark_bad + 1] = string.format("%s 码=%s 注释=%s 期望%s", c.text, c.raw_code,
+          c.comment, expect and "带标记" or "不带标记")
+      end
+    end
+  end
+end
+check(string.format("一简标记判定（%d 字，其中一简 %d）", mark_checked, mark_brief),
+  #mark_bad == 0 and mark_brief > 0, table.concat(mark_bad, " / "))
+
+-- 9. 数据守卫：一简码恒等于全码首码。
+--    「 一简」标在首根之后，读者会把它读成「首码可单打」；若哪天数据里
+--    一简与首码脱钩，这个读法就成了假话，必须先在这里炸掉。
+local off_brief, brief_total, seen = {}, 0, {}
+for _, initial in ipairs({ "a", "b", "c", "d", "e", "f", "g", "h", "j", "k", "l", "m", "n",
+  "o", "p", "q", "r", "s", "t", "w", "x", "y", "z" }) do
+  local ok, shard = pcall(real_require, "yoyo/data.reverse_" .. initial)
+  if ok and type(shard) == "table" then
+    for _, cands in pairs(shard) do
+      for _, c in ipairs(cands) do
+        if utf8.len(c[1]) == 1 and #c[2] == 1 and not seen[c[1]] then
+          seen[c[1]] = true
+          brief_total = brief_total + 1
+          local full = full_codes[c[1]]
+          if not full or full:sub(1, 1) ~= c[2] then
+            off_brief[#off_brief + 1] = c[1] .. " 一简=" .. c[2] .. " 全码=" .. tostring(full)
+          end
+        end
+      end
+    end
+  end
+end
+check(string.format("一简码 == 全码首码（%d 个一简字）", brief_total),
+  #off_brief == 0 and brief_total > 0, table.concat(off_brief, " / "))
 
 require = real_require
 print(string.format("\n通过 %d，失败 %d", passed, failed))

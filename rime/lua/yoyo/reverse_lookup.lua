@@ -3,7 +3,8 @@
 -- 按拼音首字母懒加载 26 分片（rime/lua/yoyo/data/reverse_<initial>.lua），
 -- 支持前缀补全匹配。
 -- 候选注释：
---   单字 → 「根+它产生的字母」逐位贴身，组间用 · 连接，如 的 → "白d·勹.·丶O"
+--   单字 → 「根+它产生的字母」逐位贴身，组间用 · 连接，如 的 → "白d·勹.·丶O 一简"
+--   一简字 → 尾部追加「 一简」（一简码恒等于全码首码，故标在首根之后即可读懂）
 --   词   → 主码；若词有简码（分片候选第4元素 % 前缀），显示为「全码 | 简码」
 -- 字根拆分见 docs/research/2026-10-27-反查候选注释加字根拆分.md 与
 -- docs/design/2026-10-28-反查字根拆分-第二根设计.md；
@@ -74,25 +75,34 @@ local function get_shard(initial)
   return shards[initial]
 end
 
+--- 一简字标记：接在注释尾部，与「全码 | 简码」的竖线约定区分开。
+local BRIEF_MARK = " 一简"
+
 --- 反查注释。
 --- 单字：有字根拆分数据就用「根+它产生的字母」（如 白d·勹.·丶O），
 --- 让用户看到每个字母是哪个字根给的；没有数据时退回纯编码。
+--- 一简字（分片编码只有一位）在注释尾部追加「 一简」，与普通字区分开：
+--- 一简码恒等于全码首码（见 test_reverse_zigen.lua 第 9 条守卫），所以读者
+--- 看到的正好是「首根那一位可以单独上屏」。全码最短两位，码长 1 不会与全码混淆。
 --- 词：全码（c[2]）；若该词有简码（c[4]，% 前缀且不同于全码），
---- 显示为「全码 | 简码」，帮助用户同时记忆两种打法。
+--- 显示为「全码 | 简码」，帮助用户同时记忆两种打法。词不加一简标记——
+--- 即使它的主码只有一位（如 可以 = x），也走词自己的约定。
 ---@param c table  候选 {text, code, weight, brief?}
 ---@param env Env|nil
+---@param is_char boolean  是否单字（由调用方判定，避免重复计算 UTF-8 长度）
 ---@return string
-local function make_comment(c, env)
+local function make_comment(c, env, is_char)
+  local brief = is_char and #c[2] == 1
   local align = align_of(c[1], env)
   if align then
-    return align
+    return brief and (align .. BRIEF_MARK) or align
   end
   local comment = c[2]
-  local brief = c[4]
-  if brief and brief ~= "" and brief ~= c[2] then
-    comment = comment .. " | " .. brief
+  local word_brief = c[4]
+  if word_brief and word_brief ~= "" and word_brief ~= c[2] then
+    comment = comment .. " | " .. word_brief
   end
-  return comment
+  return brief and (comment .. BRIEF_MARK) or comment
 end
 
 ---@param input string  当前输入（含反查前缀 `）
@@ -148,14 +158,14 @@ function translator.func(input, seg, env)
   for _, c in ipairs(chars) do
     local cand = Candidate("yoyo", seg.start, seg._end, c[1], c[2])
     if cand then
-      cand.comment = make_comment(c, env)
+      cand.comment = make_comment(c, env, true)
       yield(cand)
     end
   end
   for _, c in ipairs(words) do
     local cand = Candidate("yoyo", seg.start, seg._end, c[1], c[2])
     if cand then
-      cand.comment = make_comment(c, env)
+      cand.comment = make_comment(c, env, false)
       yield(cand)
     end
   end
