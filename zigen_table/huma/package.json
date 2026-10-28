@@ -1,0 +1,13 @@
+{
+  "name": "yoyo-huma",
+  "version": "0.0.0",
+  "private": true,
+  "description": "离线跑 hanzi-chai 分析，产出麓鸣码的字根拆分序列（一次性管线，产物入库）",
+  "type": "module",
+  "scripts": {
+    "probe": "node probe.mjs"
+  },
+  "dependencies": {
+    "hanzi-chai": "0.3.1"
+  }
+}
