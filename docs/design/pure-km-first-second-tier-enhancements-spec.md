@@ -65,13 +65,13 @@ Deliver a coordinated enhancement across the toolchain, schema key-binding layer
     - `ad` / `;k` $\to$ `~period`（`。`）
     - `ag` / `;h` $\to$ `~enum_comma`（`、`）
     - `xb` / `n.` $\to$ `~semicolon`（`；`）
-    - `eq` / `ip` $\to$ `~colon`（`：`）
+    - `rt` / `uy` $\to$ `~colon`（`：`）
     - `bz` / `n/` $\to$ `~question`（`？`）
     - `cz` / `,/` $\to$ `~exclamation`（`！`）
     - `vb` / `nm` $\to$ `~ellipsis`（`……`）
-    - `rt` / `uy` $\to$ `~dash`（`——`）
+    - `qe` / `ip` $\to$ `~dash`（`——`）
     - `cb` / `n,` $\to$ `~middledot`（`·`）
-    - `db` / `kn` $\to$ `~dquote`（`“”` toggle）
+    - `fb` / `jn` $\to$ `~dquote`（`“”` toggle）
     - `ac` / `;,` $\to$ `~squote`（`‘’` toggle）
     - `ax` / `;.\` $\to$ `~book_quote`（`《》` toggle）
     - `fv` / `jm` $\to$ `~paren`（`（）` toggle）

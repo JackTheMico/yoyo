@@ -42,6 +42,27 @@ else
   echo "跳过（缺 python3 或生成脚本）"
 fi
 
+# ---- 1.6 陈旧守卫：并击标点键位表是否跟上了 yoyo.yaml 的指法 ----
+# 16 组标点的键位散落在 yoyo.yaml（代数层）与测试/文档（人读表）两处。
+# 改键位时只改 yoyo.yaml 会让测试和文档静默过期——2026-08-28 的 996f12c
+# （冒号↔破折号互换、双引号 db→fb）就这样让增强测试红了两个月没人发现。
+# 仅告警不阻断——部署本身仍然有效，只是「哪个键出哪个标点」的说法可能已失真。
+echo "== 校验并击标点键位表是否与 yoyo.yaml 同步 =="
+PUNCT_TEST="$SRC_DIR/scripts/test_pure_km_enhancements.py"
+if command -v python3 >/dev/null 2>&1 && [ -f "$PUNCT_TEST" ]; then
+  if PUNCT_OUT=$(python3 "$PUNCT_TEST" 2>&1); then
+    echo "标点键位表与代数层一致"
+  else
+    echo "警告：并击标点键位表与 yoyo.yaml 不一致（测试/文档的键位可能已过期）"
+    # grep/head 无匹配或提前关闭管道都会返回非 0，set -e + pipefail 下必须兜住
+    { echo "$PUNCT_OUT" | grep -E "AssertionError" | head -3 | sed 's/^/  /'; } || true
+    echo "  修复：比对 yoyo.yaml「空明拳」段的 16 条 xform/^[_+](..)$/~.../，"
+    echo "        同步本测试的 punct_cases 与 docs/km_punct_guide.md、README.md 的键位表"
+  fi
+else
+  echo "跳过（缺 python3 或测试脚本）"
+fi
+
 # ---- 2. 在 default.custom.yaml 注册新方案（幂等）----
 CUSTOM="$DST_DIR/default.custom.yaml"
 if [ -f "$CUSTOM" ]; then

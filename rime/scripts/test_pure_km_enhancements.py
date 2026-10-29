@@ -63,18 +63,20 @@ def test_enhancements():
     # 1. 验证 16 组全 2 键标点并击（左右手镜像双向验证）
     # ────────────────────────────────────────────────────────
     print("\n--- 1. 验证 16 组全 2 键标点并击映射 ---")
+    # 键位以 rime/yoyo.yaml「空明拳」段为准（提交 996f12c 起：冒号↔破折号互换、双引号 db→fb）。
+    # 右手为左手键位经镜像规则（y→t, u→r, …, n→b, m→v …）换算所得。
     punct_cases = [
         ("，", "fg", "hj", "~comma"),
         ("。", "ad", ";k", "~period"),
         ("、", "ag", ";h", "~enum_comma"),
         ("；", "xb", "n.", "~semicolon"),
-        ("：", "qe", "ip", "~colon"),
+        ("：", "rt", "uy", "~colon"),
         ("？", "zb", "n/", "~question"),
         ("！", "zc", ",/", "~exclamation"),
         ("……", "vb", "nm", "~ellipsis"),
-        ("——", "rt", "uy", "~dash"),
+        ("——", "qe", "ip", "~dash"),
         ("·", "cb", "n,", "~middledot"),
-        ("“”", "db", "kn", "~dquote"),
+        ("“”", "fb", "jn", "~dquote"),
         ("‘’", "ac", ";,", "~squote"),
         ("《》", "ax", ";.", "~book_quote"),
         ("（）", "fv", "jm", "~paren"),
@@ -149,6 +151,48 @@ def test_enhancements():
     assert "yoyo-pure.dict.yaml" in js_content, "Practice JS header does not reference yoyo-pure.dict.yaml"
     assert "KM_CHARS" in js_content and "KM_WORDS" in js_content and "KM_JIAN" in js_content
     print("✓ [练习工具] km_char_word_data_module.js 数据源已 100% 对齐 yoyo-pure 规范字典")
+
+    # ────────────────────────────────────────────────────────
+    # 5. 人读文档的键位表是否还跟得上代数层
+    #    2026-08-28 的 996f12c（冒号↔破折号互换、双引号 db→fb）只改了 yoyo.yaml，
+    #    README / spec 的键位表静默过期两个月。这里以 yoyo.yaml 为唯一事实源反查文档。
+    # ────────────────────────────────────────────────────────
+    print("\n--- 5. 校验文档键位表与代数层同步 ---")
+    alphabet = km_data.get("__patch", {}).get("chord_composer", {}).get("alphabet", "")
+    rank = {c: i for i, c in enumerate(alphabet)}
+    # 代数层反查：xform/^[_+](XY|YX)$/~token/
+    canonical = {}   # token -> 排序后的两键，如 "~dquote" -> "fb"
+    for rule in km_fingering:
+        m = re.match(r"^xform/\^\[_\+\]\((\w\w)\|(\w\w)\)\$/~(\w+)/$", rule)
+        if not m:
+            continue
+        a, b, token = m.group(1), m.group(2), m.group(3)
+        assert sorted(a) == sorted(b), f"{token} 的正反两种顺序不是同一组键: {a} / {b}"
+        canonical["~" + token] = "".join(sorted(a, key=lambda c: rank.get(c, 999)))
+
+    assert len(canonical) == 16, f"代数层应识别出 16 组标点，实际 {len(canonical)}"
+
+    # 各文档的三类写法：(左手两键的渲染集合, 文件路径)
+    DOCS = [
+        ("docs/km_punct_guide.md",
+         lambda k: (f"{k[0]} {k[1]} / {k[1]} {k[0]}",)),
+        ("docs/design/pure-km-first-second-tier-enhancements-spec.md",
+         lambda k: (f"`{k}`", f"`{k[::-1]}`")),
+        ("README.md",
+         lambda k: (f"`{k[0]} + {k[1]}`", f"`{k[0]}+{k[1]}`",
+                    f"`{k[1]} + {k[0]}`", f"`{k[1]}+{k[0]}`")),
+    ]
+    for rel, render in DOCS:
+        path = REPO_DIR / rel
+        assert path.exists(), f"{rel} 不存在！"
+        text = path.read_text(encoding="utf-8")
+        stale = [tok for tok, keys in canonical.items()
+                 if not any(form in text for form in render(keys))]
+        assert not stale, (
+            f"{rel} 的键位表已过期，未找到这些标点的新键位：{sorted(stale)}；"
+            f"现行键位见 yoyo.yaml「空明拳」段（{ {t: canonical[t] for t in sorted(stale)} }）"
+        )
+        print(f"✓ [文档同步] {rel} 的 16 组标点键位与代数层一致")
 
     print("\n==================================================")
     print("🎉 体验增强综合测试全部通过！首两梯队改进完美落地！")
