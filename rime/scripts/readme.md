@@ -99,15 +99,26 @@ python convert_to_dazhu.py for_dazhu.yaml yoyo-dazhu.txt
 
 `rime/lua/yoyo/data/reverse_<initial>.lua`，按拼音首字母分 23 片
 （`i`/`u`/`v` 不构成合法拼音首字母，无对应分片）。
-每片形如 `return { ["key"] = {{"text","code",weight}, ...}, ... }`。
+每片形如 `return { ["key"] = {{"text","code","weight"}[,"brief"], ...}, ... }`。
+
+第 4 元素 `brief` 是空格并击简码（`%` 前缀，保留 `_`/`+` 手指示符），
+反查注释因此显示为 `全码 | 简码`（例：`vpxb | %_v`）。
+仅当简码与全码不同才挂第 4 元素；用户词表里只有简码、无全码的词，
+主码本身就取简码（注释即 `%tD`），不再重复显示。
 
 ### 用法
 
 ```bash
 python3 rime/scripts/generate_reverse_data.py            # 自检通过后写 26 分片
 python3 rime/scripts/generate_reverse_data.py --dry-run  # 仅自检不写文件
+python3 rime/scripts/generate_reverse_data.py --check    # 校验磁盘分片是否陈旧（不一致退出码 1）
 python3 rime/scripts/generate_reverse_data.py --out-dir DIR
 ```
+
+`--check` 是**陈旧守卫**。分片是 tracked 的生成物，与数据源脱钩不会报错也不会崩，
+只会安静地按过期数据出候选（2026-09-07 就发生过一次：`brief` 字段整批丢失，
+反查里 996 条空格并击简词全部退回只显示全码，直到 2026-10-29 才被发现）。
+改动数据源或生成器后请先跑 `--check`，它通过才说明仓库里的分片是当前的。
 
 ### 自检门槛
 
@@ -121,3 +132,6 @@ python3 rime/scripts/generate_reverse_data.py --out-dir DIR
 ### 联动
 
 **键位重排 / 改词库后必须重跑此脚本**，否则反查候选注释里的纯形码元会过期。
+`gen_brief_words.py --write` 写完 `yoyo-user.dict.yaml` 后已自动重跑本脚本；
+手工加词、改 `yoyo-pure.dict.yaml`、或改本脚本人手改后，请自行重跑，
+并用 `--check` 确认分片已跟上。

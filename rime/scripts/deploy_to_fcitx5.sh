@@ -26,6 +26,22 @@ rsync -a --ignore-times "$SRC_DIR"/yoyo*.yaml "$DST_DIR"/
 rsync -a --ignore-times "$SRC_DIR"/lua/ "$DST_DIR"/lua/
 echo "已同步 yoyo*.yaml 与 lua/（不删目标多余文件，不覆盖用户 default.yaml）"
 
+# ---- 1.5 陈旧守卫：反查分片是否跟上了数据源 ----
+# 分片是 tracked 的生成物，过期不会报错，只会让反查按旧数据出候选（注释里丢字根/丢简码）。
+# 仅告警不阻断——部署本身仍然有效，只是反查提示可能不准。
+echo "== 校验反查分片是否陈旧 =="
+REVERSE_GEN="$SRC_DIR/scripts/generate_reverse_data.py"
+if command -v python3 >/dev/null 2>&1 && [ -f "$REVERSE_GEN" ]; then
+  if python3 "$REVERSE_GEN" --check --out-dir "$SRC_DIR/lua/yoyo/data" >/dev/null 2>&1; then
+    echo "反查分片与数据源一致"
+  else
+    echo "警告：反查分片与数据源不一致（反查注释可能缺字根/简码）"
+    echo "  修复：python3 $REVERSE_GEN && 重新部署"
+  fi
+else
+  echo "跳过（缺 python3 或生成脚本）"
+fi
+
 # ---- 2. 在 default.custom.yaml 注册新方案（幂等）----
 CUSTOM="$DST_DIR/default.custom.yaml"
 if [ -f "$CUSTOM" ]; then

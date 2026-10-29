@@ -25,6 +25,7 @@
 用法：
   python3 generate_reverse_data.py            # 自检通过后写文件
   python3 generate_reverse_data.py --dry-run  # 仅打印统计与自检，不写文件
+  python3 generate_reverse_data.py --check    # 校验磁盘分片是否陈旧（不一致退出码 1）
   python3 generate_reverse_data.py --out-dir DIR
 """
 
@@ -361,6 +362,9 @@ def _fmt_cand(t, c, w, b):
     return '{{"{}","{}",{}}}'.format(lua_escape(t), lua_escape(c), w)
 
 
+SHARD_HEADER = "-- 自动生成，请勿手改。由 rime/scripts/generate_reverse_data.py 生成。\n"
+
+
 def render_shard(key_to_cands):
     """渲染单个分片为 Lua 表源码字符串。候选形态 {text, code, weight[, brief]}。"""
     lines = ["return {"]
@@ -369,6 +373,17 @@ def render_shard(key_to_cands):
         lines.append('  ["{}"] = {{'.format(lua_escape(key)) + items + "},")
     lines.append("}")
     return "\n".join(lines) + "\n"
+
+
+def render_all_shards(candidates):
+    """按首字母切分成 {文件名: 内容}。写文件与 --check 共用同一份渲染逻辑。"""
+    out = {}
+    for initial in "abcdefghijklmnopqrstuvwxyz":
+        shard_items = {k: v for k, v in candidates.items() if k.startswith(initial)}
+        if not shard_items:
+            continue
+        out["reverse_{}.lua".format(initial)] = SHARD_HEADER + render_shard(shard_items)
+    return out
 
 
 def self_check(char_codes, word_codes, char_pinyin, word_pinyin,
@@ -556,9 +571,13 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     parser.add_argument("--dry-run", action="store_true",
                         help="只打印统计与自检，不写文件")
+    parser.add_argument("--check", action="store_true",
+                        help="校验磁盘上的分片是否与当前数据源一致（陈旧则退出码 1）")
     parser.add_argument("--out-dir", default=str(DEFAULT_OUT_DIR),
                         help="输出目录（默认 rime/lua/yoyo/data）")
     args = parser.parse_args()
+    if args.check and args.dry_run:
+        parser.error("--check 与 --dry-run 不可同时使用")
 
     out_dir = Path(args.out_dir)
     print("读取数据源 ...")
@@ -607,8 +626,9 @@ def main():
     n_keys = len(candidates)
     n_cands = sum(len(items) for items in candidates.values())
     shards = sorted({k[0] for k in candidates if k})
-    print("\n统计: 拼音键 {} 个 | 候选 {} 条 | 分片首字母 {} 个".format(
-        n_keys, n_cands, len(shards)))
+    n_briefs = sum(1 for items in candidates.values() for c in items if c[3])
+    print("\n统计: 拼音键 {} 个 | 候选 {} 条 | 分片首字母 {} 个 | 带简码候选 {} 条".format(
+        n_keys, n_cands, len(shards), n_briefs))
 
     if not ok:
         print("\n自检未通过，终止（不写文件）")
@@ -618,22 +638,36 @@ def main():
         print("\n[dry-run] 自检通过，未写文件")
         return
 
+    rendered = render_all_shards(candidates)
+
+    if args.check:
+        # 陈旧守卫：分片是 tracked 的生成物，改了数据源/生成器却忘记重跑，
+        # 反查就会一直按过期数据出候选（曾发生：简码字段整批丢失而无人察觉）。
+        stale = []
+        for name, content in sorted(rendered.items()):
+            path = out_dir / name
+            if not path.exists():
+                stale.append("{} 缺失".format(name))
+            elif path.read_text(encoding="utf-8") != content:
+                stale.append("{} 内容不一致".format(name))
+        orphan = sorted(
+            p.name for p in out_dir.glob("reverse_*.lua")
+            if p.name not in rendered)
+        stale.extend("{} 多余（应删除）".format(n) for n in orphan)
+        if stale:
+            print("\n[FAIL] 反查分片与数据源不一致，请重跑 "
+                  "generate_reverse_data.py：")
+            for item in stale:
+                print("  - " + item)
+            sys.exit(1)
+        print("\n[ok] 反查分片与数据源一致（{} 个分片）".format(len(rendered)))
+        return
+
     # 写 26 分片
     out_dir.mkdir(parents=True, exist_ok=True)
-    written = 0
-    for initial in "abcdefghijklmnopqrstuvwxyz":
-        shard_items = {k: v for k, v in candidates.items()
-                       if k.startswith(initial)}
-        if not shard_items:
-            continue
-        path = out_dir / "reverse_{}.lua".format(initial)
-        content = (
-            "-- 自动生成，请勿手改。由 rime/scripts/generate_reverse_data.py 生成。\n"
-            + render_shard(shard_items)
-        )
-        path.write_text(content, encoding="utf-8")
-        written += 1
-    print("\n已写入 {} 个分片到 {}".format(written, out_dir))
+    for name, content in rendered.items():
+        (out_dir / name).write_text(content, encoding="utf-8")
+    print("\n已写入 {} 个分片到 {}".format(len(rendered), out_dir))
 
 
 if __name__ == "__main__":
