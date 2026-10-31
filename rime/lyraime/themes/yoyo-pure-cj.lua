@@ -55,36 +55,38 @@ local digit_row = {
   key { click = "cj_C", label = "C", label_symbol = "0", long_click = "0" }
 }
 
--- ── 字母区：小写码元点击，大写码元上滑 ──────────────────────────────────────
--- 没有大写码元的 10 个字母（c f h r s t u x y z）不设上滑，避免滑了没反应还
--- 误触滑动光标。label_symbol 标出上滑内容，便于学习期对照。
+-- ── 字母区：小写码元点击，大写码元上滑 / 长按 ──────────────────────────────
+-- 大写码元（16 个）同时挂 swipe_up 与 long_click：
+--   开了「滑动距离」的人用上滑；没开（或不想滑）的人长按也能出大写码元。
+--   LyraIME 滑动手势默认关闭（AppPrefs swipeTravel=0），long_click 不依赖该开关，
+--   是更稳的兜底。没有大写码元的 10 个字母（c f h r s t u x y z）两者都不设。
 local letter_rows = {
   row {
     keys = {
-      key { click = "q", label = "q", label_symbol = "Q", swipe_up = "cj_Q" },
-      key { click = "w", label = "w", label_symbol = "W", swipe_up = "cj_W" },
-      key { click = "e", label = "e", label_symbol = "E", swipe_up = "cj_E" },
+      key { click = "q", label = "q", label_symbol = "Q", swipe_up = "cj_Q", long_click = "cj_Q" },
+      key { click = "w", label = "w", label_symbol = "W", swipe_up = "cj_W", long_click = "cj_W" },
+      key { click = "e", label = "e", label_symbol = "E", swipe_up = "cj_E", long_click = "cj_E" },
       key { click = "r", label = "r" },
       key { click = "t", label = "t" },
       key { click = "y", label = "y" },
       key { click = "u", label = "u" },
-      key { click = "i", label = "i", label_symbol = "I", swipe_up = "cj_I" },
-      key { click = "o", label = "o", label_symbol = "O", swipe_up = "cj_O" },
-      key { click = "p", label = "p", label_symbol = "P", swipe_up = "cj_P" }
+      key { click = "i", label = "i", label_symbol = "I", swipe_up = "cj_I", long_click = "cj_I" },
+      key { click = "o", label = "o", label_symbol = "O", swipe_up = "cj_O", long_click = "cj_O" },
+      key { click = "p", label = "p", label_symbol = "P", swipe_up = "cj_P", long_click = "cj_P" }
     }
   },
   row {
     keys = {
       key { width = 0.04, click = "", spacer = true },
-      key { click = "a", label = "a", label_symbol = "A", swipe_up = "cj_A" },
+      key { click = "a", label = "a", label_symbol = "A", swipe_up = "cj_A", long_click = "cj_A" },
       key { click = "s", label = "s" },
-      key { click = "d", label = "d", label_symbol = "D", swipe_up = "cj_D" },
+      key { click = "d", label = "d", label_symbol = "D", swipe_up = "cj_D", long_click = "cj_D" },
       key { click = "f", label = "f" },
-      key { click = "g", label = "g", label_symbol = "G", swipe_up = "cj_G" },
+      key { click = "g", label = "g", label_symbol = "G", swipe_up = "cj_G", long_click = "cj_G" },
       key { click = "h", label = "h" },
-      key { click = "j", label = "j", label_symbol = "J", swipe_up = "cj_J" },
-      key { click = "k", label = "k", label_symbol = "K", swipe_up = "cj_K" },
-      key { click = "l", label = "l", label_symbol = "L", swipe_up = "cj_L" },
+      key { click = "j", label = "j", label_symbol = "J", swipe_up = "cj_J", long_click = "cj_J" },
+      key { click = "k", label = "k", label_symbol = "K", swipe_up = "cj_K", long_click = "cj_K" },
+      key { click = "l", label = "l", label_symbol = "L", swipe_up = "cj_L", long_click = "cj_L" },
       key { width = 0.04, click = "", spacer = true }
     }
   },
@@ -93,10 +95,10 @@ local letter_rows = {
       key { click = "z", label = "z" },
       key { click = "x", label = "x" },
       key { click = "c", label = "c" },
-      key { click = "v", label = "v", label_symbol = "V", swipe_up = "cj_V" },
-      key { click = "b", label = "b", label_symbol = "B", swipe_up = "cj_B" },
-      key { click = "n", label = "n", label_symbol = "N", swipe_up = "cj_N" },
-      key { click = "m", label = "m", label_symbol = "M", swipe_up = "cj_M" },
+      key { click = "v", label = "v", label_symbol = "V", swipe_up = "cj_V", long_click = "cj_V" },
+      key { click = "b", label = "b", label_symbol = "B", swipe_up = "cj_B", long_click = "cj_B" },
+      key { click = "n", label = "n", label_symbol = "N", swipe_up = "cj_N", long_click = "cj_N" },
+      key { click = "m", label = "m", label_symbol = "M", swipe_up = "cj_M", long_click = "cj_M" },
       key { click = "BackSpace", label = "⌫", width = 0.14 }
     }
   }
@@ -129,13 +131,16 @@ local cj_keyboard = {
   ascii_mode = false,
   lock = true,
   keyboard_height = 300,
+  -- 快捷字条（一简替代）放在靠近空格键的底部，而非最顶行：
+  -- 手机软键盘底部锚定，最顶一行最容易被屏幕高度裁切或候选条压住，
+  -- 移到此处可保证一简替代行始终可见。
   rows = {
-    row { height = 30, keys = quickbar_keys },
     row { keys = digit_row },
     letter_rows[1],
     letter_rows[2],
     letter_rows[3],
     row { keys = symbol_row },
+    row { keys = quickbar_keys },
     row { keys = bottom_row }
   }
 }
