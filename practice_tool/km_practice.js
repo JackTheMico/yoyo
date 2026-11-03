@@ -14,9 +14,10 @@ const IS_RIGHT = new Set(Object.values(KM_MIRROR));
 const DIGITS = new Set('0123456789'.split(''));
 
 // 键盘图示的物理排布。空明拳打字母+符号码元不使用数字行，故只画三行（标准 QWERTY 镜像）。
+// 第二行右侧多出 '（次选修饰键），与实际物理键盘一致。
 const KEYBOARD = [
   { left: ['q', 'w', 'e', 'r', 't'], right: ['y', 'u', 'i', 'o', 'p'] },
-  { left: ['a', 's', 'd', 'f', 'g'], right: ['h', 'j', 'k', 'l', ';'] },
+  { left: ['a', 's', 'd', 'f', 'g'], right: ['h', 'j', 'k', 'l', ';', "'"] },
   { left: ['z', 'x', 'c', 'v', 'b'], right: ['n', 'm', ',', '.', '/'] },
 ];
 
@@ -76,27 +77,28 @@ function zigenGlyph(root) {
 /** 单字 / 词组的步骤提示文案（含空明拳具体指法）。 */
 function stepHint(step, allSteps) {
   const spaceText = step.space ? ' + <kbd>Space</kbd>' : '';
+  const apoText = step.apostrophe ? ' + <kbd>\'</kbd>' : '';
   if (step.hand === 'both' && step.target.length === 2) {
     const f0 = fingeringOf(step.target[0]);
     const f1 = fingeringOf(step.target[1]);
     const leftKeys = f0 ? f0.left.join(' ') : '?';
     const rightKeys = f1 ? f1.right.join(' ') : '?';
-    return `两手同时并击${spaceText}：左手 <b>${esc(leftKeys)}</b> 打 <b>${esc(step.target[0])}</b>，`
+    return `两手同时并击${spaceText}${apoText}：左手 <b>${esc(leftKeys)}</b> 打 <b>${esc(step.target[0])}</b>，`
       + `右手 <b>${esc(rightKeys)}</b> 打 <b>${esc(step.target[1])}</b>`;
   }
   if (step.hand === 'left' || step.hand === 'right') {
     const code = step.target[0];
     const f = fingeringOf(code);
-    if (!f) return `${step.hand === 'left' ? '左手' : '右手'}并击${spaceText}，打出 <b>${esc(code)}</b>`;
+    if (!f) return `${step.hand === 'left' ? '左手' : '右手'}并击${spaceText}${apoText}，打出 <b>${esc(code)}</b>`;
     const handName = step.hand === 'left' ? '左手' : '右手';
     const keys = step.hand === 'left' ? f.left : f.right;
-    return `${handName}并击${spaceText}：<b>${esc(keys.join(' '))}</b> 打 <b>${esc(code)}</b>`;
+    return `${handName}并击${spaceText}${apoText}：<b>${esc(keys.join(' '))}</b> 打 <b>${esc(code)}</b>`;
   }
   // either / 其他：左右手都显示
   const code = step.target[0];
   const f = fingeringOf(code);
-  if (!f) return `单手并击${spaceText}，打出 <b>${esc(code)}</b>`;
-  return `单手并击${spaceText}：左手 <b>${esc(f.left.join(' '))}</b> / 右手 <b>${esc(f.right.join(' '))}</b> 打 <b>${esc(code)}</b>`;
+  if (!f) return `单手并击${spaceText}${apoText}，打出 <b>${esc(code)}</b>`;
+  return `单手并击${spaceText}${apoText}：左手 <b>${esc(f.left.join(' '))}</b> / 右手 <b>${esc(f.right.join(' '))}</b> 打 <b>${esc(code)}</b>`;
 }
 
 // ---------------------------------------------------------------- 题库
@@ -121,7 +123,7 @@ function zigenItem(root) {
  *   - 单字：第一击双手并击前两码，第二击（第三码）单手，均不按空格；
  *   - 词组：两击均双手并击，不按空格；
  *   - 一简字词：单手一击直出，不按空格。
- * （yoyo-pure-km 的「主单 / 主词」开关只是候选排序偏好，不改变取码与并击方式。）
+ * 首选/次选按词典权重降序决定，' 选次选的规则与此一致，不改变取码与并击方式。
  */
 function resolveStepSpace(type, stepIndex, steps) {
   return false;
@@ -135,6 +137,7 @@ function charWordItem(item, type) {
     target: s.target,
     space: resolveStepSpace(type, i, item.steps),
     hand: s.hand,
+    apostrophe: s.apostrophe,
   }));
   return {
     key: `${promptText}/${code}`,
@@ -200,7 +203,7 @@ const SPACED_INTERVALS = [2, 4, 8, 12, 20, 40, 60, 100]; // count → 后移位�
 
 const state = {
   mode: 'finger',
-  system: 'pure',  // 纯形统一流 yoyo-pure-km：全程 0 空格并击（主单/主词仅候选排序差异，不改变取码）
+  system: 'pure',  // 纯形统一流 yoyo-pure-km：全程 0 空格并击；首选/次选按词典权重排序
   // 指法练习用顺序队列 + 游标
   queue: [],
   index: 0,
@@ -219,6 +222,7 @@ const state = {
 const pressed = new Set();
 let strokeKeys = new Set();
 let strokeSpace = false;
+let strokeApostrophe = false;
 
 function isSpacedMode(mode) {
   return SPACED_MODES.has(mode || state.mode);
@@ -355,12 +359,15 @@ function settleStroke() {
   if (!item || !step || strokeKeys.size === 0) {
     strokeKeys = new Set();
     strokeSpace = false;
+    strokeApostrophe = false;
     return;
   }
 
   const result = decodeStroke([...strokeKeys], strokeSpace);
+  const hadApostrophe = strokeApostrophe;
   strokeKeys = new Set();
   strokeSpace = false;
+  strokeApostrophe = false;
 
   if (result.invalid) {
     flash('这个组合不是合法指法', 'bad');
@@ -372,6 +379,14 @@ function settleStroke() {
   // 是否要求按空格
   if (step.space !== result.withSpace) {
     flash(step.space ? '这一击需要同时按住空格' : '这一击不需要按空格', 'bad');
+    state.wrongOnThis = true;
+    render();
+    return;
+  }
+
+  // 是否要求按 '（次选修饰键）
+  if (Boolean(step.apostrophe) !== hadApostrophe) {
+    flash(step.apostrophe ? '这一击需要同时按住 \' 选次选' : '这一击不需要按 \'', 'bad');
     state.wrongOnThis = true;
     render();
     return;
@@ -476,11 +491,16 @@ function renderKeyboard(highlight) {
 }
 
 // 多击条目常驻显示「第 i/n 击 · 手别」——只说明该用哪只手，不泄露键位。
+// 若当前击需要按 ' 选次选，也会在徽标里提示。
 const HAND_NAMES = { left: '左手', right: '右手', both: '双手并击', either: '单手' };
 function strokeBadge(item, step) {
-  if (!item.steps || item.steps.length < 2 || !step) return '';
+  if (!item.steps || !step) return '';
+  const multi = item.steps.length >= 2;
+  const apoTag = step.apostrophe ? ' · <b style="color:var(--color-accent)">次选 \'</b>' : '';
+  if (!multi && !step.apostrophe) return '';
   return `<div style="margin-top:10px;font-size:15px;color:var(--text-secondary)">`
-    + `第 ${state.step + 1} / ${item.steps.length} 击 · <b style="color:var(--text-deer)">${HAND_NAMES[step.hand] || '单手'}</b></div>`;
+    + (multi ? `第 ${state.step + 1} / ${item.steps.length} 击 · ` : '')
+    + `<b style="color:var(--text-deer)">${HAND_NAMES[step.hand] || '单手'}</b>${apoTag}</div>`;
 }
 
 function render() {
@@ -526,6 +546,8 @@ function render() {
         }
       }
     }
+    // 次选修饰键 '：与本击同时按下，点亮右手的 ' 键
+    if (step.apostrophe) highlight.right.push("'");
   }
   document.getElementById('km-keyboard').innerHTML = renderKeyboard(highlight);
 
@@ -546,7 +568,7 @@ function render() {
 // ---------------------------------------------------------------- 输入捕获
 
 function isTracked(key) {
-  return key === ' ' || ((IS_LEFT.has(key) || IS_RIGHT.has(key)) && !DIGITS.has(key));
+  return key === ' ' || key === "'" || ((IS_LEFT.has(key) || IS_RIGHT.has(key)) && !DIGITS.has(key));
 }
 
 if (typeof document !== 'undefined') {
@@ -569,6 +591,7 @@ document.addEventListener('keydown', (event) => {
   if (event.repeat) return;
   pressed.add(key);
   if (key === ' ') strokeSpace = true;
+  else if (key === "'") strokeApostrophe = true;
   else strokeKeys.add(key);
   render();
 });
@@ -588,6 +611,7 @@ window.addEventListener('blur', () => {
   pressed.clear();
   strokeKeys = new Set();
   strokeSpace = false;
+  strokeApostrophe = false;
   render();
 });
 }

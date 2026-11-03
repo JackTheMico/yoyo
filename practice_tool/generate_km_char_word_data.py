@@ -81,37 +81,76 @@ def build_single_char_steps(code: str) -> list[dict] | None:
 
 
 def build_word_steps(code: str) -> list[dict] | None:
-    """把词组编码转成练习步骤。"""
-    if not CODE_RE.match(code) or len(code) < 2:
+    """把词组编码转成练习步骤。
+
+    code 末尾可能带一个 '（次选修饰符）：表示该词是此码的次选，
+    实际输入时最后一击需同时按下 ' 才能上屏。此时最后一步标 apostrophe=True。
+    """
+    apostrophe = code.endswith("'")
+    core = code[:-1] if apostrophe else code
+    if not CODE_RE.match(core) or len(core) < 2:
         return None
-    # 词前两码：两手并击
-    steps = [{"target": list(code[0:2]), "hand": "both"}]
-    # 后续每两码一组（词全码四码，共两击）
-    for i in range(2, len(code), 2):
-        chunk = list(code[i : i + 2])
+    steps = [{"target": list(core[0:2]), "hand": "both"}]
+    for i in range(2, len(core), 2):
+        chunk = list(core[i : i + 2])
         if len(chunk) == 2:
             steps.append({"target": chunk, "hand": "both"})
         else:
-            # 三码词：第三码单手，左右手皆可
             steps.append({"target": chunk, "hand": "either"})
+    if apostrophe:
+        steps[-1]["apostrophe"] = True
     return steps
 
 
 def build_jian_steps(code: str) -> list[dict] | None:
-    """把一简码转成练习步骤：单手一击。"""
-    m = JIAN_RE.match(code)
+    """把一简码转成练习步骤：单手一击。
+
+    code 末尾可能带 '（次选修饰符）：表示该一简字词是次选，
+    实际输入时需同时按下 '。此时步骤标 apostrophe=True。
+    """
+    apostrophe = code.endswith("'")
+    core = code[:-1] if apostrophe else code
+    m = JIAN_RE.match(core)
     if not m:
         return None
-    return [
-        {"target": [m.group(1)], "hand": "left" if code[0] == "_" else "right"},
-    ]
+    step = {
+        "target": [m.group(1)],
+        "hand": "left" if core[0] == "_" else "right",
+    }
+    if apostrophe:
+        step["apostrophe"] = True
+    return [step]
+
+
+def build_code_candidate_map(entries) -> dict[str, list[tuple[str, int]]]:
+    """构建 code -> [(text, weight), ...] 的映射，按权重降序排列。"""
+    code_map: dict[str, list[tuple[str, int]]] = {}
+    for text, code, weight in entries:
+        code_map.setdefault(code, []).append((text, weight))
+    for code in code_map:
+        code_map[code].sort(key=lambda x: -x[1])
+    return code_map
+
+
+def is_primary_by_weight(code_map: dict[str, list[tuple[str, int]]], code: str, text: str) -> bool:
+    """判断 text 是否为 code 的首选候选（按权重降序，不区分单字/词组）。
+
+    首选为同码权重最高的候选（pure_popping 自动顶屏），其余需按 ' 选次选。
+    """
+    cands = code_map.get(code)
+    if not cands:
+        return True
+    return cands[0][0] == text
 
 
 def collect_ranked_items(entries, is_char: bool) -> list[dict]:
     """按词频降序生成可练习的条目列表（全部）。
 
     每个字/词优先使用一简码（如果有），否则使用全码/多码。
+    词组若不是所选编码的首选（按权重），则在编码末尾追加 '，
+    表示实际输入时最后一击需同时按 ' 选次选上屏。
     """
+    code_map = build_code_candidate_map(entries)
     if is_char:
         forms: dict[str, list[tuple[str, int]]] = {}
         for text, code, weight in entries:
@@ -161,15 +200,15 @@ def collect_ranked_items(entries, is_char: bool) -> list[dict]:
                 word_forms[text][code] = weight
 
         items = []
-        for text, code_map in sorted(
+        for text, code_map_per_word in sorted(
             word_forms.items(),
             key=lambda kv: -max(kv[1].values()),
         ):
             # 优先一简码
             jian_code = None
-            for code in code_map:
+            for code in code_map_per_word:
                 if JIAN_RE.match(code):
-                    if jian_code is None or code_map[code] > code_map[jian_code]:
+                    if jian_code is None or code_map_per_word[code] > code_map_per_word[jian_code]:
                         jian_code = code
             chosen = None
             steps = None
@@ -178,26 +217,42 @@ def collect_ranked_items(entries, is_char: bool) -> list[dict]:
                 steps = build_jian_steps(jian_code)
             if not steps:
                 # 取权重最高的非一简码（优先4码，其次3码/2码）
-                candidates = {k: v for k, v in code_map.items() if not JIAN_RE.match(k)}
+                candidates = {k: v for k, v in code_map_per_word.items() if not JIAN_RE.match(k)}
                 if candidates:
                     chosen = max(candidates.items(), key=lambda kv: kv[1])[0]
                     steps = build_word_steps(chosen)
             if not steps:
                 continue
+            # 若该词不是所选编码的首选（按权重），则需按 ' 选次选
+            if not is_primary_by_weight(code_map, chosen, text):
+                chosen = chosen + "'"
+                if JIAN_RE.match(chosen[:-1]):
+                    steps = build_jian_steps(chosen)
+                else:
+                    steps = build_word_steps(chosen)
             items.append({"text": text, "code": chosen, "steps": steps})
         return items
 
 
 def collect_jian_items(entries) -> list[dict]:
-    """收集全部一简字词，用于专门的一击上屏练习。"""
+    """收集全部一简字词，用于专门的一击上屏练习。
+
+    若不是该一简码的首选（按权重），则在编码末尾追加 '，
+    表示实际输入时需同时按 ' 选次选上屏。
+    """
+    code_map = build_code_candidate_map(entries)
     items = []
     for text, code, weight in entries:
         steps = build_jian_steps(code)
         if not steps:
             continue
+        final_code = code
+        if len(text) > 1 and not is_primary_by_weight(code_map, code, text):
+            final_code = code + "'"
+            steps = build_jian_steps(final_code)
         items.append({
             "text": text,
-            "code": code,
+            "code": final_code,
             "steps": steps,
             "weight": weight,
             "is_char": len(text) == 1,

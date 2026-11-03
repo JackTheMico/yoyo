@@ -1126,18 +1126,6 @@ const KM_CHARS = [
       ]
     },
     {
-      "char": "元",
-      "code": "+E",
-      "steps": [
-        {
-          "target": [
-            "E"
-          ],
-          "hand": "right"
-        }
-      ]
-    },
-    {
       "char": "们",
       "code": "aI",
       "steps": [
@@ -2104,20 +2092,13 @@ const KM_CHARS = [
     },
     {
       "char": "少",
-      "code": "Etp",
+      "code": "+E",
       "steps": [
         {
           "target": [
-            "E",
-            "t"
+            "E"
           ],
-          "hand": "both"
-        },
-        {
-          "target": [
-            "p"
-          ],
-          "hand": "either"
+          "hand": "right"
         }
       ]
     },
@@ -6483,9 +6464,7 @@ const KM_CHARS = [
           "hand": "either"
         }
       ]
-    }
-  ],
-  [
+    },
     {
       "char": "根",
       "code": "o;",
@@ -6498,7 +6477,9 @@ const KM_CHARS = [
           "hand": "both"
         }
       ]
-    },
+    }
+  ],
+  [
     {
       "char": "兰",
       "code": "Xd",
@@ -13296,9 +13277,7 @@ const KM_CHARS = [
           "hand": "both"
         }
       ]
-    }
-  ],
-  [
+    },
     {
       "char": "弹",
       "code": "PX",
@@ -13311,7 +13290,9 @@ const KM_CHARS = [
           "hand": "both"
         }
       ]
-    },
+    }
+  ],
+  [
     {
       "char": "衣",
       "code": "?i",
@@ -20470,6 +20451,19 @@ const KM_CHARS = [
           "hand": "both"
         }
       ]
+    },
+    {
+      "char": "阅",
+      "code": "IX",
+      "steps": [
+        {
+          "target": [
+            "I",
+            "X"
+          ],
+          "hand": "both"
+        }
+      ]
     }
   ]
 ];
@@ -20479,37 +20473,40 @@ const KM_WORDS = [
   [
     {
       "text": "可以",
-      "code": "_x",
+      "code": "_x'",
       "steps": [
         {
           "target": [
             "x"
           ],
-          "hand": "left"
+          "hand": "left",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "一个",
-      "code": "_f",
+      "code": "_f'",
       "steps": [
         {
           "target": [
             "f"
           ],
-          "hand": "left"
+          "hand": "left",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "自己",
-      "code": "_g",
+      "code": "_g'",
       "steps": [
         {
           "target": [
             "g"
           ],
-          "hand": "left"
+          "hand": "left",
+          "apostrophe": true
         }
       ]
     },
@@ -20527,25 +20524,27 @@ const KM_WORDS = [
     },
     {
       "text": "我们",
-      "code": "_t",
+      "code": "_t'",
       "steps": [
         {
           "target": [
             "t"
           ],
-          "hand": "left"
+          "hand": "left",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "这个",
-      "code": "_v",
+      "code": "_v'",
       "steps": [
         {
           "target": [
             "v"
           ],
-          "hand": "left"
+          "hand": "left",
+          "apostrophe": true
         }
       ]
     },
@@ -20563,85 +20562,92 @@ const KM_WORDS = [
     },
     {
       "text": "中国",
-      "code": "_b",
+      "code": "_b'",
       "steps": [
         {
           "target": [
             "b"
           ],
-          "hand": "left"
+          "hand": "left",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "不错",
-      "code": "_c",
+      "code": "_c'",
       "steps": [
         {
           "target": [
             "c"
           ],
-          "hand": "left"
+          "hand": "left",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "什么",
-      "code": "_a",
+      "code": "_a'",
       "steps": [
         {
           "target": [
             "a"
           ],
-          "hand": "left"
+          "hand": "left",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "进行",
-      "code": "_h",
+      "code": "_h'",
       "steps": [
         {
           "target": [
             "h"
           ],
-          "hand": "left"
+          "hand": "left",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "还是",
-      "code": "+c",
+      "code": "+c'",
       "steps": [
         {
           "target": [
             "c"
           ],
-          "hand": "right"
+          "hand": "right",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "使用",
-      "code": "+a",
+      "code": "+a'",
       "steps": [
         {
           "target": [
             "a"
           ],
-          "hand": "right"
+          "hand": "right",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "数据",
-      "code": "_r",
+      "code": "_r'",
       "steps": [
         {
           "target": [
             "r"
           ],
-          "hand": "left"
+          "hand": "left",
+          "apostrophe": true
         }
       ]
     },
@@ -20659,13 +20665,14 @@ const KM_WORDS = [
     },
     {
       "text": "公司",
-      "code": "_X",
+      "code": "_X'",
       "steps": [
         {
           "target": [
             "X"
           ],
-          "hand": "left"
+          "hand": "left",
+          "apostrophe": true
         }
       ]
     },
@@ -20683,38 +20690,41 @@ const KM_WORDS = [
     },
     {
       "text": "但是",
-      "code": "aw",
+      "code": "aw'",
       "steps": [
         {
           "target": [
             "a",
             "w"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "都是",
-      "code": "_q",
+      "code": "_q'",
       "steps": [
         {
           "target": [
             "q"
           ],
-          "hand": "left"
+          "hand": "left",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "如果",
-      "code": "_Z",
+      "code": "_Z'",
       "steps": [
         {
           "target": [
             "Z"
           ],
-          "hand": "left"
+          "hand": "left",
+          "apostrophe": true
         }
       ]
     },
@@ -20732,13 +20742,14 @@ const KM_WORDS = [
     },
     {
       "text": "时间",
-      "code": "_w",
+      "code": "_w'",
       "steps": [
         {
           "target": [
             "w"
           ],
-          "hand": "left"
+          "hand": "left",
+          "apostrophe": true
         }
       ]
     },
@@ -20756,49 +20767,53 @@ const KM_WORDS = [
     },
     {
       "text": "因为",
-      "code": "_U",
+      "code": "_U'",
       "steps": [
         {
           "target": [
             "U"
           ],
-          "hand": "left"
+          "hand": "left",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "技术",
-      "code": "_i",
+      "code": "_i'",
       "steps": [
         {
           "target": [
             "i"
           ],
-          "hand": "left"
+          "hand": "left",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "时候",
-      "code": "+w",
+      "code": "+w'",
       "steps": [
         {
           "target": [
             "w"
           ],
-          "hand": "right"
+          "hand": "right",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "年月",
-      "code": "_K",
+      "code": "_K'",
       "steps": [
         {
           "target": [
             "K"
           ],
-          "hand": "left"
+          "hand": "left",
+          "apostrophe": true
         }
       ]
     },
@@ -20817,25 +20832,27 @@ const KM_WORDS = [
     },
     {
       "text": "很多",
-      "code": "+g",
+      "code": "+g'",
       "steps": [
         {
           "target": [
             "g"
           ],
-          "hand": "right"
+          "hand": "right",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "一些",
-      "code": "+f",
+      "code": "+f'",
       "steps": [
         {
           "target": [
             "f"
           ],
-          "hand": "right"
+          "hand": "right",
+          "apostrophe": true
         }
       ]
     },
@@ -20878,109 +20895,118 @@ const KM_WORDS = [
     },
     {
       "text": "通过",
-      "code": "_B",
+      "code": "_B'",
       "steps": [
         {
           "target": [
             "B"
           ],
-          "hand": "left"
+          "hand": "left",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "选择",
-      "code": "_m",
+      "code": "_m'",
       "steps": [
         {
           "target": [
             "m"
           ],
-          "hand": "left"
+          "hand": "left",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "现在",
-      "code": "_,",
+      "code": "_,'",
       "steps": [
         {
           "target": [
             ","
           ],
-          "hand": "left"
+          "hand": "left",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "非常",
-      "code": "+t",
+      "code": "+t'",
       "steps": [
         {
           "target": [
             "t"
           ],
-          "hand": "right"
+          "hand": "right",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "所以",
-      "code": "_Q",
+      "code": "_Q'",
       "steps": [
         {
           "target": [
             "Q"
           ],
-          "hand": "left"
+          "hand": "left",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "也是",
-      "code": "_z",
+      "code": "_z'",
       "steps": [
         {
           "target": [
             "z"
           ],
-          "hand": "left"
+          "hand": "left",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "模型",
-      "code": "_o",
+      "code": "_o'",
       "steps": [
         {
           "target": [
             "o"
           ],
-          "hand": "left"
+          "hand": "left",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "用户",
-      "code": "+q",
+      "code": "+q'",
       "steps": [
         {
           "target": [
             "q"
           ],
-          "hand": "right"
+          "hand": "right",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "工作",
-      "code": "_S",
+      "code": "_S'",
       "steps": [
         {
           "target": [
             "S"
           ],
-          "hand": "left"
+          "hand": "left",
+          "apostrophe": true
         }
       ]
     },
@@ -20998,13 +21024,14 @@ const KM_WORDS = [
     },
     {
       "text": "可能",
-      "code": "+x",
+      "code": "+x'",
       "steps": [
         {
           "target": [
             "x"
           ],
-          "hand": "right"
+          "hand": "right",
+          "apostrophe": true
         }
       ]
     },
@@ -21035,61 +21062,66 @@ const KM_WORDS = [
     },
     {
       "text": "推荐",
-      "code": "+i",
+      "code": "+i'",
       "steps": [
         {
           "target": [
             "i"
           ],
-          "hand": "right"
+          "hand": "right",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "发展",
-      "code": "_Y",
+      "code": "_Y'",
       "steps": [
         {
           "target": [
             "Y"
           ],
-          "hand": "left"
+          "hand": "left",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "其他",
-      "code": "_d",
+      "code": "_d'",
       "steps": [
         {
           "target": [
             "d"
           ],
-          "hand": "left"
+          "hand": "left",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "已经",
-      "code": "_P",
+      "code": "_P'",
       "steps": [
         {
           "target": [
             "P"
           ],
-          "hand": "left"
+          "hand": "left",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "味道",
-      "code": "+b",
+      "code": "+b'",
       "steps": [
         {
           "target": [
             "b"
           ],
-          "hand": "right"
+          "hand": "right",
+          "apostrophe": true
         }
       ]
     },
@@ -21158,13 +21190,14 @@ const KM_WORDS = [
     },
     {
       "text": "美国",
-      "code": "+Q",
+      "code": "+Q'",
       "steps": [
         {
           "target": [
             "Q"
           ],
-          "hand": "right"
+          "hand": "right",
+          "apostrophe": true
         }
       ]
     },
@@ -21221,37 +21254,40 @@ const KM_WORDS = [
     },
     {
       "text": "包括",
-      "code": "_.",
+      "code": "_.'",
       "steps": [
         {
           "target": [
             "."
           ],
-          "hand": "left"
+          "hand": "left",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "这样",
-      "code": "+v",
+      "code": "+v'",
       "steps": [
         {
           "target": [
             "v"
           ],
-          "hand": "right"
+          "hand": "right",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "产品",
-      "code": "_C",
+      "code": "_C'",
       "steps": [
         {
           "target": [
             "C"
           ],
-          "hand": "left"
+          "hand": "left",
+          "apostrophe": true
         }
       ]
     },
@@ -21270,13 +21306,14 @@ const KM_WORDS = [
     },
     {
       "text": "大家",
-      "code": "_T",
+      "code": "_T'",
       "steps": [
         {
           "target": [
             "T"
           ],
-          "hand": "left"
+          "hand": "left",
+          "apostrophe": true
         }
       ]
     },
@@ -21328,25 +21365,27 @@ const KM_WORDS = [
     },
     {
       "text": "内容",
-      "code": "+B",
+      "code": "+B'",
       "steps": [
         {
           "target": [
             "B"
           ],
-          "hand": "right"
+          "hand": "right",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "游戏",
-      "code": "+n",
+      "code": "+n'",
       "steps": [
         {
           "target": [
             "n"
           ],
-          "hand": "right"
+          "hand": "right",
+          "apostrophe": true
         }
       ]
     },
@@ -21467,25 +21506,27 @@ const KM_WORDS = [
     },
     {
       "text": "语言",
-      "code": "_u",
+      "code": "_u'",
       "steps": [
         {
           "target": [
             "u"
           ],
-          "hand": "left"
+          "hand": "left",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "就是",
-      "code": "_s",
+      "code": "_s'",
       "steps": [
         {
           "target": [
             "s"
           ],
-          "hand": "left"
+          "hand": "left",
+          "apostrophe": true
         }
       ]
     },
@@ -21503,13 +21544,14 @@ const KM_WORDS = [
     },
     {
       "text": "情况",
-      "code": "_:",
+      "code": "_:'",
       "steps": [
         {
           "target": [
             ":"
           ],
-          "hand": "left"
+          "hand": "left",
+          "apostrophe": true
         }
       ]
     },
@@ -21591,49 +21633,53 @@ const KM_WORDS = [
     },
     {
       "text": "真的",
-      "code": "_e",
+      "code": "_e'",
       "steps": [
         {
           "target": [
             "e"
           ],
-          "hand": "left"
+          "hand": "left",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "设计",
-      "code": "+u",
+      "code": "+u'",
       "steps": [
         {
           "target": [
             "u"
           ],
-          "hand": "right"
+          "hand": "right",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "发现",
-      "code": "+Y",
+      "code": "+Y'",
       "steps": [
         {
           "target": [
             "Y"
           ],
-          "hand": "right"
+          "hand": "right",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "电影",
-      "code": "+U",
+      "code": "+U'",
       "steps": [
         {
           "target": [
             "U"
           ],
-          "hand": "right"
+          "hand": "right",
+          "apostrophe": true
         }
       ]
     },
@@ -21691,13 +21737,14 @@ const KM_WORDS = [
     },
     {
       "text": "个人",
-      "code": "+r",
+      "code": "+r'",
       "steps": [
         {
           "target": [
             "r"
           ],
-          "hand": "right"
+          "hand": "right",
+          "apostrophe": true
         }
       ]
     },
@@ -21716,13 +21763,14 @@ const KM_WORDS = [
     },
     {
       "text": "为什么",
-      "code": "_O",
+      "code": "_O'",
       "steps": [
         {
           "target": [
             "O"
           ],
-          "hand": "left"
+          "hand": "left",
+          "apostrophe": true
         }
       ]
     },
@@ -21740,13 +21788,14 @@ const KM_WORDS = [
     },
     {
       "text": "质量",
-      "code": "_y",
+      "code": "_y'",
       "steps": [
         {
           "target": [
             "y"
           ],
-          "hand": "left"
+          "hand": "left",
+          "apostrophe": true
         }
       ]
     },
@@ -21765,13 +21814,14 @@ const KM_WORDS = [
     },
     {
       "text": "那么",
-      "code": "_A",
+      "code": "_A'",
       "steps": [
         {
           "target": [
             "A"
           ],
-          "hand": "left"
+          "hand": "left",
+          "apostrophe": true
         }
       ]
     },
@@ -21789,13 +21839,14 @@ const KM_WORDS = [
     },
     {
       "text": "关注",
-      "code": "_R",
+      "code": "_R'",
       "steps": [
         {
           "target": [
             "R"
           ],
-          "hand": "left"
+          "hand": "left",
+          "apostrophe": true
         }
       ]
     },
@@ -21910,13 +21961,14 @@ const KM_WORDS = [
     },
     {
       "text": "了解",
-      "code": "+s",
+      "code": "+s'",
       "steps": [
         {
           "target": [
             "s"
           ],
-          "hand": "right"
+          "hand": "right",
+          "apostrophe": true
         }
       ]
     },
@@ -21947,13 +21999,14 @@ const KM_WORDS = [
     },
     {
       "text": "其实",
-      "code": "+d",
+      "code": "+d'",
       "steps": [
         {
           "target": [
             "d"
           ],
-          "hand": "right"
+          "hand": "right",
+          "apostrophe": true
         }
       ]
     },
@@ -22012,14 +22065,15 @@ const KM_WORDS = [
     },
     {
       "text": "国家",
-      "code": "U,",
+      "code": "U,'",
       "steps": [
         {
           "target": [
             "U",
             ","
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -22091,25 +22145,27 @@ const KM_WORDS = [
     },
     {
       "text": "有点",
-      "code": "+e",
+      "code": "+e'",
       "steps": [
         {
           "target": [
             "e"
           ],
-          "hand": "right"
+          "hand": "right",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "地方",
-      "code": "_V",
+      "code": "_V'",
       "steps": [
         {
           "target": [
             "V"
           ],
-          "hand": "left"
+          "hand": "left",
+          "apostrophe": true
         }
       ]
     },
@@ -22238,13 +22294,14 @@ const KM_WORDS = [
     },
     {
       "text": "专业",
-      "code": "_E",
+      "code": "_E'",
       "steps": [
         {
           "target": [
             "E"
           ],
-          "hand": "left"
+          "hand": "left",
+          "apostrophe": true
         }
       ]
     },
@@ -22275,14 +22332,15 @@ const KM_WORDS = [
     },
     {
       "text": "最后",
-      "code": "wF",
+      "code": "wF'",
       "steps": [
         {
           "target": [
             "w",
             "F"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -22308,25 +22366,27 @@ const KM_WORDS = [
     },
     {
       "text": "城市",
-      "code": "+V",
+      "code": "+V'",
       "steps": [
         {
           "target": [
             "V"
           ],
-          "hand": "right"
+          "hand": "right",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "安全",
-      "code": "_j",
+      "code": "_j'",
       "steps": [
         {
           "target": [
             "j"
           ],
-          "hand": "left"
+          "hand": "left",
+          "apostrophe": true
         }
       ]
     },
@@ -22358,13 +22418,14 @@ const KM_WORDS = [
     },
     {
       "text": "之后",
-      "code": "_L",
+      "code": "_L'",
       "steps": [
         {
           "target": [
             "L"
           ],
-          "hand": "left"
+          "hand": "left",
+          "apostrophe": true
         }
       ]
     },
@@ -22603,13 +22664,14 @@ const KM_WORDS = [
     },
     {
       "text": "研究",
-      "code": "+.",
+      "code": "+.'",
       "steps": [
         {
           "target": [
             "."
           ],
-          "hand": "right"
+          "hand": "right",
+          "apostrophe": true
         }
       ]
     },
@@ -22628,26 +22690,28 @@ const KM_WORDS = [
     },
     {
       "text": "平台",
-      "code": "_?",
+      "code": "_?'",
       "steps": [
         {
           "target": [
             "?"
           ],
-          "hand": "left"
+          "hand": "left",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "行业",
-      "code": "gx",
+      "code": "gx'",
       "steps": [
         {
           "target": [
             "g",
             "x"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -22712,13 +22776,14 @@ const KM_WORDS = [
     },
     {
       "text": "实现",
-      "code": "+j",
+      "code": "+j'",
       "steps": [
         {
           "target": [
             "j"
           ],
-          "hand": "right"
+          "hand": "right",
+          "apostrophe": true
         }
       ]
     },
@@ -22764,13 +22829,14 @@ const KM_WORDS = [
     },
     {
       "text": "大学",
-      "code": "+T",
+      "code": "+T'",
       "steps": [
         {
           "target": [
             "T"
           ],
-          "hand": "right"
+          "hand": "right",
+          "apostrophe": true
         }
       ]
     },
@@ -22815,39 +22881,42 @@ const KM_WORDS = [
     },
     {
       "text": "其中",
-      "code": "dq",
+      "code": "dq'",
       "steps": [
         {
           "target": [
             "d",
             "q"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "无法",
-      "code": "zu",
+      "code": "zu'",
       "steps": [
         {
           "target": [
             "z",
             "u"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "里面",
-      "code": "+P",
+      "code": "+P'",
       "steps": [
         {
           "target": [
             "P"
           ],
-          "hand": "right"
+          "hand": "right",
+          "apostrophe": true
         }
       ]
     },
@@ -22911,13 +22980,14 @@ const KM_WORDS = [
     },
     {
       "text": "项目",
-      "code": "+S",
+      "code": "+S'",
       "steps": [
         {
           "target": [
             "S"
           ],
-          "hand": "right"
+          "hand": "right",
+          "apostrophe": true
         }
       ]
     },
@@ -22943,14 +23013,15 @@ const KM_WORDS = [
     },
     {
       "text": "只是",
-      "code": "bX",
+      "code": "bX'",
       "steps": [
         {
           "target": [
             "b",
             "X"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -22995,13 +23066,14 @@ const KM_WORDS = [
     },
     {
       "text": "未来",
-      "code": "+z",
+      "code": "+z'",
       "steps": [
         {
           "target": [
             "z"
           ],
-          "hand": "right"
+          "hand": "right",
+          "apostrophe": true
         }
       ]
     },
@@ -23020,14 +23092,15 @@ const KM_WORDS = [
     },
     {
       "text": "自然",
-      "code": "gi",
+      "code": "gi'",
       "steps": [
         {
           "target": [
             "g",
             "i"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -23046,13 +23119,14 @@ const KM_WORDS = [
     },
     {
       "text": "北京",
-      "code": "+?",
+      "code": "+?'",
       "steps": [
         {
           "target": [
             "?"
           ],
-          "hand": "right"
+          "hand": "right",
+          "apostrophe": true
         }
       ]
     },
@@ -23111,14 +23185,15 @@ const KM_WORDS = [
     },
     {
       "text": "起来",
-      "code": "dP",
+      "code": "dP'",
       "steps": [
         {
           "target": [
             "d",
             "P"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -23215,26 +23290,28 @@ const KM_WORDS = [
     },
     {
       "text": "直接",
-      "code": "+A",
+      "code": "+A'",
       "steps": [
         {
           "target": [
             "A"
           ],
-          "hand": "right"
+          "hand": "right",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "各种",
-      "code": "Yg",
+      "code": "Yg'",
       "steps": [
         {
           "target": [
             "Y",
             "g"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -23291,14 +23368,15 @@ const KM_WORDS = [
     },
     {
       "text": "老师",
-      "code": "qh",
+      "code": "qh'",
       "steps": [
         {
           "target": [
             "q",
             "h"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -23317,14 +23395,15 @@ const KM_WORDS = [
     },
     {
       "text": "更加",
-      "code": "gw",
+      "code": "gw'",
       "steps": [
         {
           "target": [
             "g",
             "w"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -23343,14 +23422,15 @@ const KM_WORDS = [
     },
     {
       "text": "两个",
-      "code": "Yl",
+      "code": "Yl'",
       "steps": [
         {
           "target": [
             "Y",
             "l"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -23460,13 +23540,14 @@ const KM_WORDS = [
     },
     {
       "text": "获得",
-      "code": "_p",
+      "code": "_p'",
       "steps": [
         {
           "target": [
             "p"
           ],
-          "hand": "left"
+          "hand": "left",
+          "apostrophe": true
         }
       ]
     },
@@ -23629,27 +23710,29 @@ const KM_WORDS = [
     },
     {
       "text": "因此",
-      "code": "UT",
+      "code": "UT'",
       "steps": [
         {
           "target": [
             "U",
             "T"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "金融",
-      "code": "zj",
+      "code": "zj'",
       "steps": [
         {
           "target": [
             "z",
             "j"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -23714,14 +23797,15 @@ const KM_WORDS = [
     },
     {
       "text": "那个",
-      "code": "Ai",
+      "code": "Ai'",
       "steps": [
         {
           "target": [
             "A",
             "i"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -23773,13 +23857,14 @@ const KM_WORDS = [
     },
     {
       "text": "当时",
-      "code": "+E",
+      "code": "+E'",
       "steps": [
         {
           "target": [
             "E"
           ],
-          "hand": "right"
+          "hand": "right",
+          "apostrophe": true
         }
       ]
     },
@@ -23883,13 +23968,14 @@ const KM_WORDS = [
     },
     {
       "text": "身体",
-      "code": "+I",
+      "code": "+I'",
       "steps": [
         {
           "target": [
             "I"
           ],
-          "hand": "right"
+          "hand": "right",
+          "apostrophe": true
         }
       ]
     },
@@ -23915,64 +24001,69 @@ const KM_WORDS = [
     },
     {
       "text": "每天",
-      "code": "+K",
+      "code": "+K'",
       "steps": [
         {
           "target": [
             "K"
           ],
-          "hand": "right"
+          "hand": "right",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "过程",
-      "code": "zp",
+      "code": "zp'",
       "steps": [
         {
           "target": [
             "z",
             "p"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "避免",
-      "code": "_W",
+      "code": "_W'",
       "steps": [
         {
           "target": [
             "W"
           ],
-          "hand": "left"
+          "hand": "left",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "你们",
-      "code": "aL",
+      "code": "aL'",
       "steps": [
         {
           "target": [
             "a",
             "L"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "机器",
-      "code": "oq",
+      "code": "oq'",
       "steps": [
         {
           "target": [
             "o",
             "q"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -24096,52 +24187,56 @@ const KM_WORDS = [
     },
     {
       "text": "上海",
-      "code": "xf",
+      "code": "xf'",
       "steps": [
         {
           "target": [
             "x",
             "f"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "由于",
-      "code": "By",
+      "code": "By'",
       "steps": [
         {
           "target": [
             "B",
             "y"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "购买",
-      "code": "+G",
+      "code": "+G'",
       "steps": [
         {
           "target": [
             "G"
           ],
-          "hand": "right"
+          "hand": "right",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "利用",
-      "code": "xW",
+      "code": "xW'",
       "steps": [
         {
           "target": [
             "x",
             "W"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -24160,14 +24255,15 @@ const KM_WORDS = [
     },
     {
       "text": "当然",
-      "code": "EC",
+      "code": "EC'",
       "steps": [
         {
           "target": [
             "E",
             "C"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -24245,14 +24341,15 @@ const KM_WORDS = [
     },
     {
       "text": "政府",
-      "code": "fI",
+      "code": "fI'",
       "steps": [
         {
           "target": [
             "f",
             "I"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -24271,26 +24368,28 @@ const KM_WORDS = [
     },
     {
       "text": "事情",
-      "code": "fb",
+      "code": "fb'",
       "steps": [
         {
           "target": [
             "f",
             "b"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "新闻",
-      "code": "+C",
+      "code": "+C'",
       "steps": [
         {
           "target": [
             "C"
           ],
-          "hand": "right"
+          "hand": "right",
+          "apostrophe": true
         }
       ]
     },
@@ -24334,13 +24433,14 @@ const KM_WORDS = [
     },
     {
       "text": "之间",
-      "code": "+L",
+      "code": "+L'",
       "steps": [
         {
           "target": [
             "L"
           ],
-          "hand": "right"
+          "hand": "right",
+          "apostrophe": true
         }
       ]
     },
@@ -24511,14 +24611,15 @@ const KM_WORDS = [
     },
     {
       "text": "完全",
-      "code": "jE",
+      "code": "jE'",
       "steps": [
         {
           "target": [
             "j",
             "E"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -24590,14 +24691,15 @@ const KM_WORDS = [
     },
     {
       "text": "进入",
-      "code": "hp",
+      "code": "hp'",
       "steps": [
         {
           "target": [
             "h",
             "p"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -24629,27 +24731,29 @@ const KM_WORDS = [
     },
     {
       "text": "别人",
-      "code": "b<",
+      "code": "b<'",
       "steps": [
         {
           "target": [
             "b",
             "<"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "全球",
-      "code": "r,",
+      "code": "r,'",
       "steps": [
         {
           "target": [
             "r",
             ","
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -24780,14 +24884,15 @@ const KM_WORDS = [
     },
     {
       "text": "科技",
-      "code": "xD",
+      "code": "xD'",
       "steps": [
         {
           "target": [
             "x",
             "D"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -25023,14 +25128,15 @@ const KM_WORDS = [
     },
     {
       "text": "水平",
-      "code": "ns",
+      "code": "ns'",
       "steps": [
         {
           "target": [
             "n",
             "s"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -25076,14 +25182,15 @@ const KM_WORDS = [
     },
     {
       "text": "第一",
-      "code": "cP",
+      "code": "cP'",
       "steps": [
         {
           "target": [
             "c",
             "P"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -25122,14 +25229,15 @@ const KM_WORDS = [
     },
     {
       "text": "变化",
-      "code": "Gv",
+      "code": "Gv'",
       "steps": [
         {
           "target": [
             "G",
             "v"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -25181,14 +25289,15 @@ const KM_WORDS = [
     },
     {
       "text": "图像",
-      "code": "U/",
+      "code": "U/'",
       "steps": [
         {
           "target": [
             "U",
             "/"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -25274,13 +25383,14 @@ const KM_WORDS = [
     },
     {
       "text": "英语",
-      "code": "+p",
+      "code": "+p'",
       "steps": [
         {
           "target": [
             "p"
           ],
-          "hand": "right"
+          "hand": "right",
+          "apostrophe": true
         }
       ]
     },
@@ -25359,27 +25469,29 @@ const KM_WORDS = [
     },
     {
       "text": "位于",
-      "code": "aC",
+      "code": "aC'",
       "steps": [
         {
           "target": [
             "a",
             "C"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "组织",
-      "code": "Rq",
+      "code": "Rq'",
       "steps": [
         {
           "target": [
             "R",
             "q"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -25464,14 +25576,15 @@ const KM_WORDS = [
     },
     {
       "text": "台湾",
-      "code": "Bb",
+      "code": "Bb'",
       "steps": [
         {
           "target": [
             "B",
             "b"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -25490,14 +25603,15 @@ const KM_WORDS = [
     },
     {
       "text": "资源",
-      "code": "EG",
+      "code": "EG'",
       "steps": [
         {
           "target": [
             "E",
             "G"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -25543,65 +25657,70 @@ const KM_WORDS = [
     },
     {
       "text": "电脑",
-      "code": "Ud",
+      "code": "Ud'",
       "steps": [
         {
           "target": [
             "U",
             "d"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "首先",
-      "code": "Xg",
+      "code": "Xg'",
       "steps": [
         {
           "target": [
             "X",
             "g"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "单位",
-      "code": "+X",
+      "code": "+X'",
       "steps": [
         {
           "target": [
             "X"
           ],
-          "hand": "right"
+          "hand": "right",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "业务",
-      "code": "/y",
+      "code": "/y'",
       "steps": [
         {
           "target": [
             "/",
             "y"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "找到",
-      "code": "iU",
+      "code": "iU'",
       "steps": [
         {
           "target": [
             "i",
             "U"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -25673,27 +25792,29 @@ const KM_WORDS = [
     },
     {
       "text": "便宜",
-      "code": "ag",
+      "code": "ag'",
       "steps": [
         {
           "target": [
             "a",
             "g"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "产生",
-      "code": "Cy",
+      "code": "Cy'",
       "steps": [
         {
           "target": [
             "C",
             "y"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -25712,13 +25833,14 @@ const KM_WORDS = [
     },
     {
       "text": "必须",
-      "code": "+:",
+      "code": "+:'",
       "steps": [
         {
           "target": [
             ":"
           ],
-          "hand": "right"
+          "hand": "right",
+          "apostrophe": true
         }
       ]
     },
@@ -25770,14 +25892,15 @@ const KM_WORDS = [
     },
     {
       "text": "报告",
-      "code": "iY",
+      "code": "iY'",
       "steps": [
         {
           "target": [
             "i",
             "Y"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -26127,14 +26250,15 @@ const KM_WORDS = [
     },
     {
       "text": "达到",
-      "code": "Tp",
+      "code": "Tp'",
       "steps": [
         {
           "target": [
             "T",
             "p"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -26166,14 +26290,15 @@ const KM_WORDS = [
     },
     {
       "text": "接受",
-      "code": "iC",
+      "code": "iC'",
       "steps": [
         {
           "target": [
             "i",
             "C"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -26318,14 +26443,15 @@ const KM_WORDS = [
     },
     {
       "text": "工具",
-      "code": "Sg",
+      "code": "Sg'",
       "steps": [
         {
           "target": [
             "S",
             "g"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -26648,14 +26774,15 @@ const KM_WORDS = [
     },
     {
       "text": "可是",
-      "code": "xk",
+      "code": "xk'",
       "steps": [
         {
           "target": [
             "x",
             "k"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -26931,14 +27058,15 @@ const KM_WORDS = [
     },
     {
       "text": "越来越",
-      "code": "dz",
+      "code": "dz'",
       "steps": [
         {
           "target": [
             "d",
             "z"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -27003,14 +27131,15 @@ const KM_WORDS = [
     },
     {
       "text": "超过",
-      "code": "du",
+      "code": "du'",
       "steps": [
         {
           "target": [
             "d",
             "u"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -27115,14 +27244,15 @@ const KM_WORDS = [
     },
     {
       "text": "时代",
-      "code": "wz",
+      "code": "wz'",
       "steps": [
         {
           "target": [
             "w",
             "z"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -27228,40 +27358,43 @@ const KM_WORDS = [
     },
     {
       "text": "改变",
-      "code": "Pa",
+      "code": "Pa'",
       "steps": [
         {
           "target": [
             "P",
             "a"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "制作",
-      "code": "mQ",
+      "code": "mQ'",
       "steps": [
         {
           "target": [
             "m",
             "Q"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "带来",
-      "code": "hC",
+      "code": "hC'",
       "steps": [
         {
           "target": [
             "h",
             "C"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -27306,14 +27439,15 @@ const KM_WORDS = [
     },
     {
       "text": "期间",
-      "code": "dH",
+      "code": "dH'",
       "steps": [
         {
           "target": [
             "d",
             "H"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -27339,27 +27473,29 @@ const KM_WORDS = [
     },
     {
       "text": "收集",
-      "code": "Wa",
+      "code": "Wa'",
       "steps": [
         {
           "target": [
             "W",
             "a"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "实际",
-      "code": "jS",
+      "code": "jS'",
       "steps": [
         {
           "target": [
             "j",
             "S"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -27570,14 +27706,15 @@ const KM_WORDS = [
     },
     {
       "text": "哈哈",
-      "code": "bk",
+      "code": "bk'",
       "steps": [
         {
           "target": [
             "b",
             "k"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -27603,14 +27740,15 @@ const KM_WORDS = [
     },
     {
       "text": "快速",
-      "code": ":W",
+      "code": ":W'",
       "steps": [
         {
           "target": [
             ":",
             "W"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -27669,14 +27807,15 @@ const KM_WORDS = [
     },
     {
       "text": "等等",
-      "code": "cV",
+      "code": "cV'",
       "steps": [
         {
           "target": [
             "c",
             "V"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -27796,14 +27935,15 @@ const KM_WORDS = [
     },
     {
       "text": "主题",
-      "code": "O,",
+      "code": "O,'",
       "steps": [
         {
           "target": [
             "O",
             ","
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -27921,27 +28061,29 @@ const KM_WORDS = [
     },
     {
       "text": "按照",
-      "code": "ij",
+      "code": "ij'",
       "steps": [
         {
           "target": [
             "i",
             "j"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "条件",
-      "code": "/o",
+      "code": "/o'",
       "steps": [
         {
           "target": [
             "/",
             "o"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -27987,14 +28129,15 @@ const KM_WORDS = [
     },
     {
       "text": "女性",
-      "code": "Zn",
+      "code": "Zn'",
       "steps": [
         {
           "target": [
             "Z",
             "n"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -28020,14 +28163,15 @@ const KM_WORDS = [
     },
     {
       "text": "通常",
-      "code": "Bq",
+      "code": "Bq'",
       "steps": [
         {
           "target": [
             "B",
             "q"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -28073,14 +28217,15 @@ const KM_WORDS = [
     },
     {
       "text": "请问",
-      "code": "u>",
+      "code": "u>'",
       "steps": [
         {
           "target": [
             "u",
             ">"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -28244,14 +28389,15 @@ const KM_WORDS = [
     },
     {
       "text": "场景",
-      "code": "VA",
+      "code": "VA'",
       "steps": [
         {
           "target": [
             "V",
             "A"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -28395,40 +28541,43 @@ const KM_WORDS = [
     },
     {
       "text": "先生",
-      "code": "mJ",
+      "code": "mJ'",
       "steps": [
         {
           "target": [
             "m",
             "J"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "真是",
-      "code": "eT",
+      "code": "eT'",
       "steps": [
         {
           "target": [
             "e",
             "T"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "下来",
-      "code": "fx",
+      "code": "fx'",
       "steps": [
         {
           "target": [
             "f",
             "x"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -28454,27 +28603,29 @@ const KM_WORDS = [
     },
     {
       "text": "及时",
-      "code": "sj",
+      "code": "sj'",
       "steps": [
         {
           "target": [
             "s",
             "j"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "现场",
-      "code": ",e",
+      "code": ",e'",
       "steps": [
         {
           "target": [
             ",",
             "e"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -28539,14 +28690,15 @@ const KM_WORDS = [
     },
     {
       "text": "法国",
-      "code": "nV",
+      "code": "nV'",
       "steps": [
         {
           "target": [
             "n",
             "V"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -28585,14 +28737,15 @@ const KM_WORDS = [
     },
     {
       "text": "娱乐",
-      "code": "Zb",
+      "code": "Zb'",
       "steps": [
         {
           "target": [
             "Z",
             "b"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -28638,14 +28791,15 @@ const KM_WORDS = [
     },
     {
       "text": "明显",
-      "code": "wH",
+      "code": "wH'",
       "steps": [
         {
           "target": [
             "w",
             "H"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -28671,14 +28825,15 @@ const KM_WORDS = [
     },
     {
       "text": "它们",
-      "code": "jh",
+      "code": "jh'",
       "steps": [
         {
           "target": [
             "j",
             "h"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -28750,14 +28905,15 @@ const KM_WORDS = [
     },
     {
       "text": "员工",
-      "code": "bG",
+      "code": "bG'",
       "steps": [
         {
           "target": [
             "b",
             "G"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -28934,14 +29090,15 @@ const KM_WORDS = [
     },
     {
       "text": "类型",
-      "code": "rT",
+      "code": "rT'",
       "steps": [
         {
           "target": [
             "r",
             "T"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -28960,14 +29117,15 @@ const KM_WORDS = [
     },
     {
       "text": "受到",
-      "code": "Av",
+      "code": "Av'",
       "steps": [
         {
           "target": [
             "A",
             "v"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -28999,14 +29157,15 @@ const KM_WORDS = [
     },
     {
       "text": "于是",
-      "code": "fe",
+      "code": "fe'",
       "steps": [
         {
           "target": [
             "f",
             "e"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -29351,14 +29510,15 @@ const KM_WORDS = [
     },
     {
       "text": "神经",
-      "code": "Nw",
+      "code": "Nw'",
       "steps": [
         {
           "target": [
             "N",
             "w"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -29384,14 +29544,15 @@ const KM_WORDS = [
     },
     {
       "text": "意义",
-      "code": "S:",
+      "code": "S:'",
       "steps": [
         {
           "target": [
             "S",
             ":"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -29476,14 +29637,15 @@ const KM_WORDS = [
     },
     {
       "text": "集团",
-      "code": ",o",
+      "code": ",o'",
       "steps": [
         {
           "target": [
             ",",
             "o"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -29529,14 +29691,15 @@ const KM_WORDS = [
     },
     {
       "text": "美元",
-      "code": "QT",
+      "code": "QT'",
       "steps": [
         {
           "target": [
             "Q",
             "T"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -29562,14 +29725,15 @@ const KM_WORDS = [
     },
     {
       "text": "计算机",
-      "code": "uc",
+      "code": "uc'",
       "steps": [
         {
           "target": [
             "u",
             "c"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -29806,27 +29970,29 @@ const KM_WORDS = [
     },
     {
       "text": "证券",
-      "code": "uf",
+      "code": "uf'",
       "steps": [
         {
           "target": [
             "u",
             "f"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "此外",
-      "code": "Ih",
+      "code": "Ih'",
       "steps": [
         {
           "target": [
             "I",
             "h"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -29938,14 +30104,15 @@ const KM_WORDS = [
     },
     {
       "text": "德国",
-      "code": "ge",
+      "code": "ge'",
       "steps": [
         {
           "target": [
             "g",
             "e"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -30136,14 +30303,15 @@ const KM_WORDS = [
     },
     {
       "text": "满意",
-      "code": "np",
+      "code": "np'",
       "steps": [
         {
           "target": [
             "n",
             "p"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -30426,14 +30594,15 @@ const KM_WORDS = [
     },
     {
       "text": "数量",
-      "code": "rZ",
+      "code": "rZ'",
       "steps": [
         {
           "target": [
             "r",
             "Z"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -30610,14 +30779,15 @@ const KM_WORDS = [
     },
     {
       "text": "是一种",
-      "code": "wf",
+      "code": "wf'",
       "steps": [
         {
           "target": [
             "w",
             "f"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -30749,14 +30919,15 @@ const KM_WORDS = [
     },
     {
       "text": "背景",
-      "code": "?h",
+      "code": "?h'",
       "steps": [
         {
           "target": [
             "?",
             "h"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -30782,14 +30953,15 @@ const KM_WORDS = [
     },
     {
       "text": "节目",
-      "code": "pY",
+      "code": "pY'",
       "steps": [
         {
           "target": [
             "p",
             "Y"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -30888,27 +31060,29 @@ const KM_WORDS = [
     },
     {
       "text": "办法",
-      "code": "<X",
+      "code": "<X'",
       "steps": [
         {
           "target": [
             "<",
             "X"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "指标",
-      "code": "ih",
+      "code": "ih'",
       "steps": [
         {
           "target": [
             "i",
             "h"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -31052,27 +31226,29 @@ const KM_WORDS = [
     },
     {
       "text": "装修",
-      "code": "?r",
+      "code": "?r'",
       "steps": [
         {
           "target": [
             "?",
             "r"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "即可",
-      "code": ";Y",
+      "code": ";Y'",
       "steps": [
         {
           "target": [
             ";",
             "Y"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -31138,14 +31314,15 @@ const KM_WORDS = [
     },
     {
       "text": "稳定",
-      "code": "xL",
+      "code": "xL'",
       "steps": [
         {
           "target": [
             "x",
             "L"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -31184,14 +31361,15 @@ const KM_WORDS = [
     },
     {
       "text": "曾经",
-      "code": "Xe",
+      "code": "Xe'",
       "steps": [
         {
           "target": [
             "X",
             "e"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -31297,14 +31475,15 @@ const KM_WORDS = [
     },
     {
       "text": "费用",
-      "code": "PG",
+      "code": "PG'",
       "steps": [
         {
           "target": [
             "P",
             "G"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -31323,14 +31502,15 @@ const KM_WORDS = [
     },
     {
       "text": "个月",
-      "code": "rc",
+      "code": "rc'",
       "steps": [
         {
           "target": [
             "r",
             "c"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -31402,14 +31582,15 @@ const KM_WORDS = [
     },
     {
       "text": "判断",
-      "code": "Xi",
+      "code": "Xi'",
       "steps": [
         {
           "target": [
             "X",
             "i"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -31628,14 +31809,15 @@ const KM_WORDS = [
     },
     {
       "text": "儿子",
-      "code": "Je",
+      "code": "Je'",
       "steps": [
         {
           "target": [
             "J",
             "e"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -31694,14 +31876,15 @@ const KM_WORDS = [
     },
     {
       "text": "版本",
-      "code": "Oy",
+      "code": "Oy'",
       "steps": [
         {
           "target": [
             "O",
             "y"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -31840,27 +32023,29 @@ const KM_WORDS = [
     },
     {
       "text": "会议",
-      "code": "rN",
+      "code": "rN'",
       "steps": [
         {
           "target": [
             "r",
             "N"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "推广",
-      "code": "i,",
+      "code": "i,'",
       "steps": [
         {
           "target": [
             "i",
             ","
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -31879,14 +32064,15 @@ const KM_WORDS = [
     },
     {
       "text": "打开",
-      "code": "iG",
+      "code": "iG'",
       "steps": [
         {
           "target": [
             "i",
             "G"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -32058,14 +32244,15 @@ const KM_WORDS = [
     },
     {
       "text": "包装",
-      "code": ".P",
+      "code": ".P'",
       "steps": [
         {
           "target": [
             ".",
             "P"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -32256,14 +32443,15 @@ const KM_WORDS = [
     },
     {
       "text": "根本",
-      "code": "o;",
+      "code": "o;'",
       "steps": [
         {
           "target": [
             "o",
             ";"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -32302,14 +32490,15 @@ const KM_WORDS = [
     },
     {
       "text": "共同",
-      "code": "RX",
+      "code": "RX'",
       "steps": [
         {
           "target": [
             "R",
             "X"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -32494,14 +32683,15 @@ const KM_WORDS = [
     },
     {
       "text": "粉丝",
-      "code": "ra",
+      "code": "ra'",
       "steps": [
         {
           "target": [
             "r",
             "a"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -32546,27 +32736,29 @@ const KM_WORDS = [
     },
     {
       "text": "反应",
-      "code": "yv",
+      "code": "yv'",
       "steps": [
         {
           "target": [
             "y",
             "v"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "玩家",
-      "code": ",E",
+      "code": ",E'",
       "steps": [
         {
           "target": [
             ",",
             "E"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -32592,14 +32784,15 @@ const KM_WORDS = [
     },
     {
       "text": "针对",
-      "code": "ze",
+      "code": "ze'",
       "steps": [
         {
           "target": [
             "z",
             "e"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -32718,14 +32911,15 @@ const KM_WORDS = [
     },
     {
       "text": "皮肤",
-      "code": "Hp",
+      "code": "Hp'",
       "steps": [
         {
           "target": [
             "H",
             "p"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -32910,14 +33104,15 @@ const KM_WORDS = [
     },
     {
       "text": "定期",
-      "code": "jC",
+      "code": "jC'",
       "steps": [
         {
           "target": [
             "j",
             "C"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -32943,14 +33138,15 @@ const KM_WORDS = [
     },
     {
       "text": "十分",
-      "code": "es",
+      "code": "es'",
       "steps": [
         {
           "target": [
             "e",
             "s"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -33215,14 +33411,15 @@ const KM_WORDS = [
     },
     {
       "text": "平均",
-      "code": "?X",
+      "code": "?X'",
       "steps": [
         {
           "target": [
             "?",
             "X"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -33281,27 +33478,29 @@ const KM_WORDS = [
     },
     {
       "text": "力量",
-      "code": "<l",
+      "code": "<l'",
       "steps": [
         {
           "target": [
             "<",
             "l"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "去年",
-      "code": "VB",
+      "code": "VB'",
       "steps": [
         {
           "target": [
             "V",
             "B"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -33320,27 +33519,29 @@ const KM_WORDS = [
     },
     {
       "text": "安排",
-      "code": "jZ",
+      "code": "jZ'",
       "steps": [
         {
           "target": [
             "j",
             "Z"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "运行",
-      "code": "Np",
+      "code": "Np'",
       "steps": [
         {
           "target": [
             "N",
             "p"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -33525,14 +33726,15 @@ const KM_WORDS = [
     },
     {
       "text": "才是",
-      "code": "et",
+      "code": "et'",
       "steps": [
         {
           "target": [
             "e",
             "t"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -33737,14 +33939,15 @@ const KM_WORDS = [
     },
     {
       "text": "取得",
-      "code": "Fv",
+      "code": "Fv'",
       "steps": [
         {
           "target": [
             "F",
             "v"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -33936,14 +34139,15 @@ const KM_WORDS = [
     },
     {
       "text": "清楚",
-      "code": "n>",
+      "code": "n>'",
       "steps": [
         {
           "target": [
             "n",
             ">"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -34015,14 +34219,15 @@ const KM_WORDS = [
     },
     {
       "text": "排名",
-      "code": "it",
+      "code": "it'",
       "steps": [
         {
           "target": [
             "i",
             "t"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -34141,14 +34346,15 @@ const KM_WORDS = [
     },
     {
       "text": "购物",
-      "code": "G.",
+      "code": "G.'",
       "steps": [
         {
           "target": [
             "G",
             "."
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -34167,27 +34373,29 @@ const KM_WORDS = [
     },
     {
       "text": "配置",
-      "code": "UP",
+      "code": "UP'",
       "steps": [
         {
           "target": [
             "U",
             "P"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "估计",
-      "code": "a/",
+      "code": "a/'",
       "steps": [
         {
           "target": [
             "a",
             "/"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -34233,14 +34441,15 @@ const KM_WORDS = [
     },
     {
       "text": "牛肉",
-      "code": "mn",
+      "code": "mn'",
       "steps": [
         {
           "target": [
             "m",
             "n"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -34519,14 +34728,15 @@ const KM_WORDS = [
     },
     {
       "text": "战争",
-      "code": "UU",
+      "code": "UU'",
       "steps": [
         {
           "target": [
             "U",
             "U"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -34698,14 +34908,15 @@ const KM_WORDS = [
     },
     {
       "text": "天气",
-      "code": "fT",
+      "code": "fT'",
       "steps": [
         {
           "target": [
             "f",
             "T"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -34837,14 +35048,15 @@ const KM_WORDS = [
     },
     {
       "text": "身边",
-      "code": "Is",
+      "code": "Is'",
       "steps": [
         {
           "target": [
             "I",
             "s"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -34870,14 +35082,15 @@ const KM_WORDS = [
     },
     {
       "text": "拍摄",
-      "code": "id",
+      "code": "id'",
       "steps": [
         {
           "target": [
             "i",
             "d"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -34963,14 +35176,15 @@ const KM_WORDS = [
     },
     {
       "text": "高中",
-      "code": "sg",
+      "code": "sg'",
       "steps": [
         {
           "target": [
             "s",
             "g"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -35115,14 +35329,15 @@ const KM_WORDS = [
     },
     {
       "text": "干净",
-      "code": "?g",
+      "code": "?g'",
       "steps": [
         {
           "target": [
             "?",
             "g"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -35194,14 +35409,15 @@ const KM_WORDS = [
     },
     {
       "text": "获取",
-      "code": "pK",
+      "code": "pK'",
       "steps": [
         {
           "target": [
             "p",
             "K"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -35380,14 +35596,15 @@ const KM_WORDS = [
     },
     {
       "text": "升级",
-      "code": "tp",
+      "code": "tp'",
       "steps": [
         {
           "target": [
             "t",
             "p"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -35479,14 +35696,15 @@ const KM_WORDS = [
     },
     {
       "text": "内部",
-      "code": "Bn",
+      "code": "Bn'",
       "steps": [
         {
           "target": [
             "B",
             "n"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -35684,14 +35902,15 @@ const KM_WORDS = [
     },
     {
       "text": "症状",
-      "code": "lf",
+      "code": "lf'",
       "steps": [
         {
           "target": [
             "l",
             "f"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -35823,14 +36042,15 @@ const KM_WORDS = [
     },
     {
       "text": "俄罗斯",
-      "code": "aO",
+      "code": "aO'",
       "steps": [
         {
           "target": [
             "a",
             "O"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -35876,14 +36096,15 @@ const KM_WORDS = [
     },
     {
       "text": "展示",
-      "code": "yR",
+      "code": "yR'",
       "steps": [
         {
           "target": [
             "y",
             "R"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -36068,14 +36289,15 @@ const KM_WORDS = [
     },
     {
       "text": "歌曲",
-      "code": "xx",
+      "code": "xx'",
       "steps": [
         {
           "target": [
             "x",
             "x"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -36209,14 +36431,15 @@ const KM_WORDS = [
     },
     {
       "text": "似乎",
-      "code": "ah",
+      "code": "ah'",
       "steps": [
         {
           "target": [
             "a",
             "h"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -36675,14 +36898,15 @@ const KM_WORDS = [
     },
     {
       "text": "药物",
-      "code": "pR",
+      "code": "pR'",
       "steps": [
         {
           "target": [
             "p",
             "R"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -36748,14 +36972,15 @@ const KM_WORDS = [
     },
     {
       "text": "连接",
-      "code": "Mp",
+      "code": "Mp'",
       "steps": [
         {
           "target": [
             "M",
             "p"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -36907,14 +37132,15 @@ const KM_WORDS = [
     },
     {
       "text": "二维码",
-      "code": "ER",
+      "code": "ER'",
       "steps": [
         {
           "target": [
             "E",
             "R"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -37039,14 +37265,15 @@ const KM_WORDS = [
     },
     {
       "text": "死亡",
-      "code": "Jh",
+      "code": "Jh'",
       "steps": [
         {
           "target": [
             "J",
             "h"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -37277,14 +37504,15 @@ const KM_WORDS = [
     },
     {
       "text": "离开",
-      "code": "Zl",
+      "code": "Zl'",
       "steps": [
         {
           "target": [
             "Z",
             "l"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -37310,14 +37538,15 @@ const KM_WORDS = [
     },
     {
       "text": "样子",
-      "code": "oQ",
+      "code": "oQ'",
       "steps": [
         {
           "target": [
             "o",
             "Q"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -37416,14 +37645,15 @@ const KM_WORDS = [
     },
     {
       "text": "意大利",
-      "code": "ST",
+      "code": "ST'",
       "steps": [
         {
           "target": [
             "S",
             "T"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -37449,27 +37679,29 @@ const KM_WORDS = [
     },
     {
       "text": "常见",
-      "code": "MQ",
+      "code": "MQ'",
       "steps": [
         {
           "target": [
             "M",
             "Q"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "句子",
-      "code": "Gj",
+      "code": "Gj'",
       "steps": [
         {
           "target": [
             "G",
             "j"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -37588,27 +37820,29 @@ const KM_WORDS = [
     },
     {
       "text": "话题",
-      "code": "ug",
+      "code": "ug'",
       "steps": [
         {
           "target": [
             "u",
             "g"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "房子",
-      "code": "Q<",
+      "code": "Q<'",
       "steps": [
         {
           "target": [
             "Q",
             "<"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -37674,14 +37908,15 @@ const KM_WORDS = [
     },
     {
       "text": "个性化",
-      "code": "r:",
+      "code": "r:'",
       "steps": [
         {
           "target": [
             "r",
             ":"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -37707,27 +37942,29 @@ const KM_WORDS = [
     },
     {
       "text": "流程",
-      "code": "nN",
+      "code": "nN'",
       "steps": [
         {
           "target": [
             "n",
             "N"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "慢慢",
-      "code": ":w",
+      "code": ":w'",
       "steps": [
         {
           "target": [
             ":",
             "w"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -38164,14 +38401,15 @@ const KM_WORDS = [
     },
     {
       "text": "仍然",
-      "code": "aT",
+      "code": "aT'",
       "steps": [
         {
           "target": [
             "a",
             "T"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -38237,14 +38475,15 @@ const KM_WORDS = [
     },
     {
       "text": "火锅",
-      "code": ";h",
+      "code": ";h'",
       "steps": [
         {
           "target": [
             ";",
             "h"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -38390,14 +38629,15 @@ const KM_WORDS = [
     },
     {
       "text": "物流",
-      "code": "m.",
+      "code": "m.'",
       "steps": [
         {
           "target": [
             "m",
             "."
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -38483,14 +38723,15 @@ const KM_WORDS = [
     },
     {
       "text": "就业",
-      "code": "sE",
+      "code": "sE'",
       "steps": [
         {
           "target": [
             "s",
             "E"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -38682,40 +38923,43 @@ const KM_WORDS = [
     },
     {
       "text": "铁路",
-      "code": "zt",
+      "code": "zt'",
       "steps": [
         {
           "target": [
             "z",
             "t"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "直到",
-      "code": "Az",
+      "code": "Az'",
       "steps": [
         {
           "target": [
             "A",
             "z"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "球队",
-      "code": ",f",
+      "code": ",f'",
       "steps": [
         {
           "target": [
             ",",
             "f"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -38841,14 +39085,15 @@ const KM_WORDS = [
     },
     {
       "text": "轻松",
-      "code": "Mv",
+      "code": "Mv'",
       "steps": [
         {
           "target": [
             "M",
             "v"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -38894,14 +39139,15 @@ const KM_WORDS = [
     },
     {
       "text": "足够",
-      "code": "su",
+      "code": "su'",
       "steps": [
         {
           "target": [
             "s",
             "u"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -38987,14 +39233,15 @@ const KM_WORDS = [
     },
     {
       "text": "往往",
-      "code": "gO",
+      "code": "gO'",
       "steps": [
         {
           "target": [
             "g",
             "O"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -39013,14 +39260,15 @@ const KM_WORDS = [
     },
     {
       "text": "游客",
-      "code": "n<",
+      "code": "n<'",
       "steps": [
         {
           "target": [
             "n",
             "<"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -39132,14 +39380,15 @@ const KM_WORDS = [
     },
     {
       "text": "较高",
-      "code": "MZ",
+      "code": "MZ'",
       "steps": [
         {
           "target": [
             "M",
             "Z"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -39205,27 +39454,29 @@ const KM_WORDS = [
     },
     {
       "text": "必要",
-      "code": ":t",
+      "code": ":t'",
       "steps": [
         {
           "target": [
             ":",
             "t"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "世纪",
-      "code": "RA",
+      "code": "RA'",
       "steps": [
         {
           "target": [
             "R",
             "A"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -39251,27 +39502,29 @@ const KM_WORDS = [
     },
     {
       "text": "双方",
-      "code": "ms",
+      "code": "ms'",
       "steps": [
         {
           "target": [
             "m",
             "s"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "列表",
-      "code": "JW",
+      "code": "JW'",
       "steps": [
         {
           "target": [
             "J",
             "W"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -39536,14 +39789,15 @@ const KM_WORDS = [
     },
     {
       "text": "眼睛",
-      "code": "T;",
+      "code": "T;'",
       "steps": [
         {
           "target": [
             "T",
             ";"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -39682,14 +39936,15 @@ const KM_WORDS = [
     },
     {
       "text": "放弃",
-      "code": "<a",
+      "code": "<a'",
       "steps": [
         {
           "target": [
             "<",
             "a"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -39868,14 +40123,15 @@ const KM_WORDS = [
     },
     {
       "text": "元素",
-      "code": "EJ",
+      "code": "EJ'",
       "steps": [
         {
           "target": [
             "E",
             "J"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -39901,14 +40157,15 @@ const KM_WORDS = [
     },
     {
       "text": "黄金",
-      "code": "Rh",
+      "code": "Rh'",
       "steps": [
         {
           "target": [
             "R",
             "h"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -39974,14 +40231,15 @@ const KM_WORDS = [
     },
     {
       "text": "伤害",
-      "code": "aK",
+      "code": "aK'",
       "steps": [
         {
           "target": [
             "a",
             "K"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -40087,14 +40345,15 @@ const KM_WORDS = [
     },
     {
       "text": "查看",
-      "code": "ow",
+      "code": "ow'",
       "steps": [
         {
           "target": [
             "o",
             "w"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -40173,14 +40432,15 @@ const KM_WORDS = [
     },
     {
       "text": "百度",
-      "code": "fd",
+      "code": "fd'",
       "steps": [
         {
           "target": [
             "f",
             "d"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -40392,14 +40652,15 @@ const KM_WORDS = [
     },
     {
       "text": "飞机",
-      "code": "kf",
+      "code": "kf'",
       "steps": [
         {
           "target": [
             "k",
             "f"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -40458,14 +40719,15 @@ const KM_WORDS = [
     },
     {
       "text": "书籍",
-      "code": "AA",
+      "code": "AA'",
       "steps": [
         {
           "target": [
             "A",
             "A"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -40504,14 +40766,15 @@ const KM_WORDS = [
     },
     {
       "text": "海鲜",
-      "code": "nK",
+      "code": "nK'",
       "steps": [
         {
           "target": [
             "n",
             "K"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -40530,27 +40793,29 @@ const KM_WORDS = [
     },
     {
       "text": "某些",
-      "code": "oo",
+      "code": "oo'",
       "steps": [
         {
           "target": [
             "o",
             "o"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "路线",
-      "code": "sY",
+      "code": "sY'",
       "steps": [
         {
           "target": [
             "s",
             "Y"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -40636,14 +40901,15 @@ const KM_WORDS = [
     },
     {
       "text": "南京",
-      "code": "eF",
+      "code": "eF'",
       "steps": [
         {
           "target": [
             "e",
             "F"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -40689,14 +40955,15 @@ const KM_WORDS = [
     },
     {
       "text": "研发",
-      "code": ".f",
+      "code": ".f'",
       "steps": [
         {
           "target": [
             ".",
             "f"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -40775,14 +41042,15 @@ const KM_WORDS = [
     },
     {
       "text": "温度",
-      "code": "nw",
+      "code": "nw'",
       "steps": [
         {
           "target": [
             "n",
             "w"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -40801,14 +41069,15 @@ const KM_WORDS = [
     },
     {
       "text": "另一个",
-      "code": "bf",
+      "code": "bf'",
       "steps": [
         {
           "target": [
             "b",
             "f"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -40854,14 +41123,15 @@ const KM_WORDS = [
     },
     {
       "text": "逻辑",
-      "code": "OS",
+      "code": "OS'",
       "steps": [
         {
           "target": [
             "O",
             "S"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -41020,14 +41290,15 @@ const KM_WORDS = [
     },
     {
       "text": "处于",
-      "code": "/x",
+      "code": "/x'",
       "steps": [
         {
           "target": [
             "/",
             "x"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -41093,14 +41364,15 @@ const KM_WORDS = [
     },
     {
       "text": "维护",
-      "code": "R,",
+      "code": "R,'",
       "steps": [
         {
           "target": [
             "R",
             ","
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -41903,14 +42175,15 @@ const KM_WORDS = [
     },
     {
       "text": "热情",
-      "code": "r;",
+      "code": "r;'",
       "steps": [
         {
           "target": [
             "r",
             ";"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -41956,14 +42229,15 @@ const KM_WORDS = [
     },
     {
       "text": "融资",
-      "code": ">B",
+      "code": ">B'",
       "steps": [
         {
           "target": [
             ">",
             "B"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -42029,14 +42303,15 @@ const KM_WORDS = [
     },
     {
       "text": "气候",
-      "code": "Dq",
+      "code": "Dq'",
       "steps": [
         {
           "target": [
             "D",
             "q"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -42082,14 +42357,15 @@ const KM_WORDS = [
     },
     {
       "text": "论文",
-      "code": "uS",
+      "code": "uS'",
       "steps": [
         {
           "target": [
             "u",
             "S"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -42115,14 +42391,15 @@ const KM_WORDS = [
     },
     {
       "text": "讲述",
-      "code": "uh",
+      "code": "uh'",
       "steps": [
         {
           "target": [
             "u",
             "h"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -42188,14 +42465,15 @@ const KM_WORDS = [
     },
     {
       "text": "夏天",
-      "code": "?/",
+      "code": "?/'",
       "steps": [
         {
           "target": [
             "?",
             "/"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -42261,14 +42539,15 @@ const KM_WORDS = [
     },
     {
       "text": "鸡蛋",
-      "code": "vX",
+      "code": "vX'",
       "steps": [
         {
           "target": [
             "v",
             "X"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -42327,14 +42606,15 @@ const KM_WORDS = [
     },
     {
       "text": "周围",
-      "code": "FJ",
+      "code": "FJ'",
       "steps": [
         {
           "target": [
             "F",
             "J"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -42380,14 +42660,15 @@ const KM_WORDS = [
     },
     {
       "text": "单词",
-      "code": "Xw",
+      "code": "Xw'",
       "steps": [
         {
           "target": [
             "X",
             "w"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -42519,14 +42800,15 @@ const KM_WORDS = [
     },
     {
       "text": "转换",
-      "code": "ME",
+      "code": "ME'",
       "steps": [
         {
           "target": [
             "M",
             "E"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -42632,27 +42914,29 @@ const KM_WORDS = [
     },
     {
       "text": "植物",
-      "code": "oA",
+      "code": "oA'",
       "steps": [
         {
           "target": [
             "o",
             "A"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "亚洲",
-      "code": "f/",
+      "code": "f/'",
       "steps": [
         {
           "target": [
             "f",
             "/"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -43017,27 +43301,29 @@ const KM_WORDS = [
     },
     {
       "text": "难以",
-      "code": "v,",
+      "code": "v,'",
       "steps": [
         {
           "target": [
             "v",
             ","
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "强大",
-      "code": "Pb",
+      "code": "Pb'",
       "steps": [
         {
           "target": [
             "P",
             "b"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -43096,27 +43382,29 @@ const KM_WORDS = [
     },
     {
       "text": "早上",
-      "code": "we",
+      "code": "we'",
       "steps": [
         {
           "target": [
             "w",
             "e"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "摄影",
-      "code": "iF",
+      "code": "iF'",
       "steps": [
         {
           "target": [
             "i",
             "F"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -43155,14 +43443,15 @@ const KM_WORDS = [
     },
     {
       "text": "土地",
-      "code": "Vt",
+      "code": "Vt'",
       "steps": [
         {
           "target": [
             "V",
             "t"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -43321,14 +43610,15 @@ const KM_WORDS = [
     },
     {
       "text": "防止",
-      "code": "Y<",
+      "code": "Y<'",
       "steps": [
         {
           "target": [
             "Y",
             "<"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -43374,14 +43664,15 @@ const KM_WORDS = [
     },
     {
       "text": "倒是",
-      "code": "a.",
+      "code": "a.'",
       "steps": [
         {
           "target": [
             "a",
             "."
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -43493,40 +43784,43 @@ const KM_WORDS = [
     },
     {
       "text": "门口",
-      "code": "Im",
+      "code": "Im'",
       "steps": [
         {
           "target": [
             "I",
             "m"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "群体",
-      "code": "lt",
+      "code": "lt'",
       "steps": [
         {
           "target": [
             "l",
             "t"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
     {
       "text": "又是",
-      "code": "vy",
+      "code": "vy'",
       "steps": [
         {
           "target": [
             "v",
             "y"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -43545,14 +43839,15 @@ const KM_WORDS = [
     },
     {
       "text": "份额",
-      "code": "aa",
+      "code": "aa'",
       "steps": [
         {
           "target": [
             "a",
             "a"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -43664,14 +43959,15 @@ const KM_WORDS = [
     },
     {
       "text": "差异",
-      "code": "QS",
+      "code": "QS'",
       "steps": [
         {
           "target": [
             "Q",
             "S"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -43937,14 +44233,15 @@ const KM_WORDS = [
     },
     {
       "text": "写作",
-      "code": "Cf",
+      "code": "Cf'",
       "steps": [
         {
           "target": [
             "C",
             "f"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -44063,14 +44360,15 @@ const KM_WORDS = [
     },
     {
       "text": "听说",
-      "code": "b/",
+      "code": "b/'",
       "steps": [
         {
           "target": [
             "b",
             "/"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -44502,14 +44800,15 @@ const KM_WORDS = [
     },
     {
       "text": "红色",
-      "code": "RS",
+      "code": "RS'",
       "steps": [
         {
           "target": [
             "R",
             "S"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -44555,14 +44854,15 @@ const KM_WORDS = [
     },
     {
       "text": "梦想",
-      "code": "mS",
+      "code": "mS'",
       "steps": [
         {
           "target": [
             "m",
             "S"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -44768,14 +45068,15 @@ const KM_WORDS = [
     },
     {
       "text": "近期",
-      "code": "/p",
+      "code": "/p'",
       "steps": [
         {
           "target": [
             "/",
             "p"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -44841,14 +45142,15 @@ const KM_WORDS = [
     },
     {
       "text": "千万",
-      "code": "kq",
+      "code": "kq'",
       "steps": [
         {
           "target": [
             "k",
             "q"
           ],
-          "hand": "both"
+          "hand": "both",
+          "apostrophe": true
         }
       ]
     },
@@ -45328,13 +45630,14 @@ const KM_JIAN = [
   },
   {
     "text": "可以",
-    "code": "_x",
+    "code": "_x'",
     "steps": [
       {
         "target": [
           "x"
         ],
-        "hand": "left"
+        "hand": "left",
+        "apostrophe": true
       }
     ],
     "weight": 20283603,
@@ -45412,13 +45715,14 @@ const KM_JIAN = [
   },
   {
     "text": "一个",
-    "code": "_f",
+    "code": "_f'",
     "steps": [
       {
         "target": [
           "f"
         ],
-        "hand": "left"
+        "hand": "left",
+        "apostrophe": true
       }
     ],
     "weight": 16335779,
@@ -45622,13 +45926,14 @@ const KM_JIAN = [
   },
   {
     "text": "自己",
-    "code": "_g",
+    "code": "_g'",
     "steps": [
       {
         "target": [
           "g"
         ],
-        "hand": "left"
+        "hand": "left",
+        "apostrophe": true
       }
     ],
     "weight": 10928418,
@@ -45734,13 +46039,14 @@ const KM_JIAN = [
   },
   {
     "text": "我们",
-    "code": "_t",
+    "code": "_t'",
     "steps": [
       {
         "target": [
           "t"
         ],
-        "hand": "left"
+        "hand": "left",
+        "apostrophe": true
       }
     ],
     "weight": 9668711,
@@ -45776,13 +46082,14 @@ const KM_JIAN = [
   },
   {
     "text": "这个",
-    "code": "_v",
+    "code": "_v'",
     "steps": [
       {
         "target": [
           "v"
         ],
-        "hand": "left"
+        "hand": "left",
+        "apostrophe": true
       }
     ],
     "weight": 9010578,
@@ -45846,13 +46153,14 @@ const KM_JIAN = [
   },
   {
     "text": "中国",
-    "code": "_b",
+    "code": "_b'",
     "steps": [
       {
         "target": [
           "b"
         ],
-        "hand": "left"
+        "hand": "left",
+        "apostrophe": true
       }
     ],
     "weight": 7864575,
@@ -45888,13 +46196,14 @@ const KM_JIAN = [
   },
   {
     "text": "不错",
-    "code": "_c",
+    "code": "_c'",
     "steps": [
       {
         "target": [
           "c"
         ],
-        "hand": "left"
+        "hand": "left",
+        "apostrophe": true
       }
     ],
     "weight": 7572179,
@@ -45902,13 +46211,14 @@ const KM_JIAN = [
   },
   {
     "text": "什么",
-    "code": "_a",
+    "code": "_a'",
     "steps": [
       {
         "target": [
           "a"
         ],
-        "hand": "left"
+        "hand": "left",
+        "apostrophe": true
       }
     ],
     "weight": 7548615,
@@ -45930,13 +46240,14 @@ const KM_JIAN = [
   },
   {
     "text": "进行",
-    "code": "_h",
+    "code": "_h'",
     "steps": [
       {
         "target": [
           "h"
         ],
-        "hand": "left"
+        "hand": "left",
+        "apostrophe": true
       }
     ],
     "weight": 7405210,
@@ -45958,13 +46269,14 @@ const KM_JIAN = [
   },
   {
     "text": "还是",
-    "code": "+c",
+    "code": "+c'",
     "steps": [
       {
         "target": [
           "c"
         ],
-        "hand": "right"
+        "hand": "right",
+        "apostrophe": true
       }
     ],
     "weight": 7365741,
@@ -45972,13 +46284,14 @@ const KM_JIAN = [
   },
   {
     "text": "使用",
-    "code": "+a",
+    "code": "+a'",
     "steps": [
       {
         "target": [
           "a"
         ],
-        "hand": "right"
+        "hand": "right",
+        "apostrophe": true
       }
     ],
     "weight": 7342956,
@@ -45986,13 +46299,14 @@ const KM_JIAN = [
   },
   {
     "text": "数据",
-    "code": "_r",
+    "code": "_r'",
     "steps": [
       {
         "target": [
           "r"
         ],
-        "hand": "left"
+        "hand": "left",
+        "apostrophe": true
       }
     ],
     "weight": 7209667,
@@ -46084,13 +46398,14 @@ const KM_JIAN = [
   },
   {
     "text": "公司",
-    "code": "_X",
+    "code": "_X'",
     "steps": [
       {
         "target": [
           "X"
         ],
-        "hand": "left"
+        "hand": "left",
+        "apostrophe": true
       }
     ],
     "weight": 6807455,
@@ -46140,13 +46455,14 @@ const KM_JIAN = [
   },
   {
     "text": "都是",
-    "code": "_q",
+    "code": "_q'",
     "steps": [
       {
         "target": [
           "q"
         ],
-        "hand": "left"
+        "hand": "left",
+        "apostrophe": true
       }
     ],
     "weight": 6555540,
@@ -46154,13 +46470,14 @@ const KM_JIAN = [
   },
   {
     "text": "如果",
-    "code": "_Z",
+    "code": "_Z'",
     "steps": [
       {
         "target": [
           "Z"
         ],
-        "hand": "left"
+        "hand": "left",
+        "apostrophe": true
       }
     ],
     "weight": 6548816,
@@ -46196,13 +46513,14 @@ const KM_JIAN = [
   },
   {
     "text": "时间",
-    "code": "_w",
+    "code": "_w'",
     "steps": [
       {
         "target": [
           "w"
         ],
-        "hand": "left"
+        "hand": "left",
+        "apostrophe": true
       }
     ],
     "weight": 6469521,
@@ -46252,13 +46570,14 @@ const KM_JIAN = [
   },
   {
     "text": "因为",
-    "code": "_U",
+    "code": "_U'",
     "steps": [
       {
         "target": [
           "U"
         ],
-        "hand": "left"
+        "hand": "left",
+        "apostrophe": true
       }
     ],
     "weight": 6165763,
@@ -46294,13 +46613,14 @@ const KM_JIAN = [
   },
   {
     "text": "技术",
-    "code": "_i",
+    "code": "_i'",
     "steps": [
       {
         "target": [
           "i"
         ],
-        "hand": "left"
+        "hand": "left",
+        "apostrophe": true
       }
     ],
     "weight": 6030657,
@@ -46322,13 +46642,14 @@ const KM_JIAN = [
   },
   {
     "text": "时候",
-    "code": "+w",
+    "code": "+w'",
     "steps": [
       {
         "target": [
           "w"
         ],
-        "hand": "right"
+        "hand": "right",
+        "apostrophe": true
       }
     ],
     "weight": 5896955,
@@ -46350,13 +46671,14 @@ const KM_JIAN = [
   },
   {
     "text": "年月",
-    "code": "_K",
+    "code": "_K'",
     "steps": [
       {
         "target": [
           "K"
         ],
-        "hand": "left"
+        "hand": "left",
+        "apostrophe": true
       }
     ],
     "weight": 5768321,
@@ -46378,13 +46700,14 @@ const KM_JIAN = [
   },
   {
     "text": "很多",
-    "code": "+g",
+    "code": "+g'",
     "steps": [
       {
         "target": [
           "g"
         ],
-        "hand": "right"
+        "hand": "right",
+        "apostrophe": true
       }
     ],
     "weight": 5401033,
@@ -46392,13 +46715,14 @@ const KM_JIAN = [
   },
   {
     "text": "一些",
-    "code": "+f",
+    "code": "+f'",
     "steps": [
       {
         "target": [
           "f"
         ],
-        "hand": "right"
+        "hand": "right",
+        "apostrophe": true
       }
     ],
     "weight": 5318098,
@@ -46434,13 +46758,14 @@ const KM_JIAN = [
   },
   {
     "text": "通过",
-    "code": "_B",
+    "code": "_B'",
     "steps": [
       {
         "target": [
           "B"
         ],
-        "hand": "left"
+        "hand": "left",
+        "apostrophe": true
       }
     ],
     "weight": 5140993,
@@ -46448,13 +46773,14 @@ const KM_JIAN = [
   },
   {
     "text": "选择",
-    "code": "_m",
+    "code": "_m'",
     "steps": [
       {
         "target": [
           "m"
         ],
-        "hand": "left"
+        "hand": "left",
+        "apostrophe": true
       }
     ],
     "weight": 5132905,
@@ -46504,13 +46830,14 @@ const KM_JIAN = [
   },
   {
     "text": "现在",
-    "code": "_,",
+    "code": "_,'",
     "steps": [
       {
         "target": [
           ","
         ],
-        "hand": "left"
+        "hand": "left",
+        "apostrophe": true
       }
     ],
     "weight": 5066698,
@@ -46532,13 +46859,14 @@ const KM_JIAN = [
   },
   {
     "text": "非常",
-    "code": "+t",
+    "code": "+t'",
     "steps": [
       {
         "target": [
           "t"
         ],
-        "hand": "right"
+        "hand": "right",
+        "apostrophe": true
       }
     ],
     "weight": 4964668,
@@ -46546,13 +46874,14 @@ const KM_JIAN = [
   },
   {
     "text": "所以",
-    "code": "_Q",
+    "code": "_Q'",
     "steps": [
       {
         "target": [
           "Q"
         ],
-        "hand": "left"
+        "hand": "left",
+        "apostrophe": true
       }
     ],
     "weight": 4964151,
@@ -46560,13 +46889,14 @@ const KM_JIAN = [
   },
   {
     "text": "也是",
-    "code": "_z",
+    "code": "_z'",
     "steps": [
       {
         "target": [
           "z"
         ],
-        "hand": "left"
+        "hand": "left",
+        "apostrophe": true
       }
     ],
     "weight": 4901548,
@@ -46588,13 +46918,14 @@ const KM_JIAN = [
   },
   {
     "text": "模型",
-    "code": "_o",
+    "code": "_o'",
     "steps": [
       {
         "target": [
           "o"
         ],
-        "hand": "left"
+        "hand": "left",
+        "apostrophe": true
       }
     ],
     "weight": 4841834,
@@ -46602,13 +46933,14 @@ const KM_JIAN = [
   },
   {
     "text": "用户",
-    "code": "+q",
+    "code": "+q'",
     "steps": [
       {
         "target": [
           "q"
         ],
-        "hand": "right"
+        "hand": "right",
+        "apostrophe": true
       }
     ],
     "weight": 4809862,
@@ -46630,13 +46962,14 @@ const KM_JIAN = [
   },
   {
     "text": "工作",
-    "code": "_S",
+    "code": "_S'",
     "steps": [
       {
         "target": [
           "S"
         ],
-        "hand": "left"
+        "hand": "left",
+        "apostrophe": true
       }
     ],
     "weight": 4668059,
@@ -46658,13 +46991,14 @@ const KM_JIAN = [
   },
   {
     "text": "可能",
-    "code": "+x",
+    "code": "+x'",
     "steps": [
       {
         "target": [
           "x"
         ],
-        "hand": "right"
+        "hand": "right",
+        "apostrophe": true
       }
     ],
     "weight": 4618850,
@@ -46699,28 +47033,15 @@ const KM_JIAN = [
     "is_char": false
   },
   {
-    "text": "元",
-    "code": "+E",
-    "steps": [
-      {
-        "target": [
-          "E"
-        ],
-        "hand": "right"
-      }
-    ],
-    "weight": 4430163,
-    "is_char": true
-  },
-  {
     "text": "推荐",
-    "code": "+i",
+    "code": "+i'",
     "steps": [
       {
         "target": [
           "i"
         ],
-        "hand": "right"
+        "hand": "right",
+        "apostrophe": true
       }
     ],
     "weight": 4383297,
@@ -46728,13 +47049,14 @@ const KM_JIAN = [
   },
   {
     "text": "发展",
-    "code": "_Y",
+    "code": "_Y'",
     "steps": [
       {
         "target": [
           "Y"
         ],
-        "hand": "left"
+        "hand": "left",
+        "apostrophe": true
       }
     ],
     "weight": 4247505,
@@ -46742,13 +47064,14 @@ const KM_JIAN = [
   },
   {
     "text": "其他",
-    "code": "_d",
+    "code": "_d'",
     "steps": [
       {
         "target": [
           "d"
         ],
-        "hand": "left"
+        "hand": "left",
+        "apostrophe": true
       }
     ],
     "weight": 4232475,
@@ -46756,13 +47079,14 @@ const KM_JIAN = [
   },
   {
     "text": "已经",
-    "code": "_P",
+    "code": "_P'",
     "steps": [
       {
         "target": [
           "P"
         ],
-        "hand": "left"
+        "hand": "left",
+        "apostrophe": true
       }
     ],
     "weight": 4213416,
@@ -46770,13 +47094,14 @@ const KM_JIAN = [
   },
   {
     "text": "味道",
-    "code": "+b",
+    "code": "+b'",
     "steps": [
       {
         "target": [
           "b"
         ],
-        "hand": "right"
+        "hand": "right",
+        "apostrophe": true
       }
     ],
     "weight": 4198857,
@@ -46812,13 +47137,14 @@ const KM_JIAN = [
   },
   {
     "text": "美国",
-    "code": "+Q",
+    "code": "+Q'",
     "steps": [
       {
         "target": [
           "Q"
         ],
-        "hand": "right"
+        "hand": "right",
+        "apostrophe": true
       }
     ],
     "weight": 4046037,
@@ -46840,13 +47166,14 @@ const KM_JIAN = [
   },
   {
     "text": "包括",
-    "code": "_.",
+    "code": "_.'",
     "steps": [
       {
         "target": [
           "."
         ],
-        "hand": "left"
+        "hand": "left",
+        "apostrophe": true
       }
     ],
     "weight": 3953579,
@@ -46854,13 +47181,14 @@ const KM_JIAN = [
   },
   {
     "text": "这样",
-    "code": "+v",
+    "code": "+v'",
     "steps": [
       {
         "target": [
           "v"
         ],
-        "hand": "right"
+        "hand": "right",
+        "apostrophe": true
       }
     ],
     "weight": 3947930,
@@ -46868,13 +47196,14 @@ const KM_JIAN = [
   },
   {
     "text": "产品",
-    "code": "_C",
+    "code": "_C'",
     "steps": [
       {
         "target": [
           "C"
         ],
-        "hand": "left"
+        "hand": "left",
+        "apostrophe": true
       }
     ],
     "weight": 3933476,
@@ -46882,13 +47211,14 @@ const KM_JIAN = [
   },
   {
     "text": "大家",
-    "code": "_T",
+    "code": "_T'",
     "steps": [
       {
         "target": [
           "T"
         ],
-        "hand": "left"
+        "hand": "left",
+        "apostrophe": true
       }
     ],
     "weight": 3911639,
@@ -46938,13 +47268,14 @@ const KM_JIAN = [
   },
   {
     "text": "内容",
-    "code": "+B",
+    "code": "+B'",
     "steps": [
       {
         "target": [
           "B"
         ],
-        "hand": "right"
+        "hand": "right",
+        "apostrophe": true
       }
     ],
     "weight": 3815710,
@@ -46952,13 +47283,14 @@ const KM_JIAN = [
   },
   {
     "text": "游戏",
-    "code": "+n",
+    "code": "+n'",
     "steps": [
       {
         "target": [
           "n"
         ],
-        "hand": "right"
+        "hand": "right",
+        "apostrophe": true
       }
     ],
     "weight": 3798262,
@@ -47064,13 +47396,14 @@ const KM_JIAN = [
   },
   {
     "text": "语言",
-    "code": "_u",
+    "code": "_u'",
     "steps": [
       {
         "target": [
           "u"
         ],
-        "hand": "left"
+        "hand": "left",
+        "apostrophe": true
       }
     ],
     "weight": 3505047,
@@ -47078,13 +47411,14 @@ const KM_JIAN = [
   },
   {
     "text": "就是",
-    "code": "_s",
+    "code": "_s'",
     "steps": [
       {
         "target": [
           "s"
         ],
-        "hand": "left"
+        "hand": "left",
+        "apostrophe": true
       }
     ],
     "weight": 3487812,
@@ -47120,13 +47454,14 @@ const KM_JIAN = [
   },
   {
     "text": "情况",
-    "code": "_:",
+    "code": "_:'",
     "steps": [
       {
         "target": [
           ":"
         ],
-        "hand": "left"
+        "hand": "left",
+        "apostrophe": true
       }
     ],
     "weight": 3369616,
@@ -47190,13 +47525,14 @@ const KM_JIAN = [
   },
   {
     "text": "真的",
-    "code": "_e",
+    "code": "_e'",
     "steps": [
       {
         "target": [
           "e"
         ],
-        "hand": "left"
+        "hand": "left",
+        "apostrophe": true
       }
     ],
     "weight": 3255744,
@@ -47204,13 +47540,14 @@ const KM_JIAN = [
   },
   {
     "text": "设计",
-    "code": "+u",
+    "code": "+u'",
     "steps": [
       {
         "target": [
           "u"
         ],
-        "hand": "right"
+        "hand": "right",
+        "apostrophe": true
       }
     ],
     "weight": 3245935,
@@ -47218,13 +47555,14 @@ const KM_JIAN = [
   },
   {
     "text": "发现",
-    "code": "+Y",
+    "code": "+Y'",
     "steps": [
       {
         "target": [
           "Y"
         ],
-        "hand": "right"
+        "hand": "right",
+        "apostrophe": true
       }
     ],
     "weight": 3211778,
@@ -47232,13 +47570,14 @@ const KM_JIAN = [
   },
   {
     "text": "电影",
-    "code": "+U",
+    "code": "+U'",
     "steps": [
       {
         "target": [
           "U"
         ],
-        "hand": "right"
+        "hand": "right",
+        "apostrophe": true
       }
     ],
     "weight": 3188492,
@@ -47260,13 +47599,14 @@ const KM_JIAN = [
   },
   {
     "text": "个人",
-    "code": "+r",
+    "code": "+r'",
     "steps": [
       {
         "target": [
           "r"
         ],
-        "hand": "right"
+        "hand": "right",
+        "apostrophe": true
       }
     ],
     "weight": 3160814,
@@ -47288,13 +47628,14 @@ const KM_JIAN = [
   },
   {
     "text": "为什么",
-    "code": "_O",
+    "code": "_O'",
     "steps": [
       {
         "target": [
           "O"
         ],
-        "hand": "left"
+        "hand": "left",
+        "apostrophe": true
       }
     ],
     "weight": 3140065,
@@ -47330,13 +47671,14 @@ const KM_JIAN = [
   },
   {
     "text": "质量",
-    "code": "_y",
+    "code": "_y'",
     "steps": [
       {
         "target": [
           "y"
         ],
-        "hand": "left"
+        "hand": "left",
+        "apostrophe": true
       }
     ],
     "weight": 3105983,
@@ -47344,13 +47686,14 @@ const KM_JIAN = [
   },
   {
     "text": "那么",
-    "code": "_A",
+    "code": "_A'",
     "steps": [
       {
         "target": [
           "A"
         ],
-        "hand": "left"
+        "hand": "left",
+        "apostrophe": true
       }
     ],
     "weight": 3076658,
@@ -47386,13 +47729,14 @@ const KM_JIAN = [
   },
   {
     "text": "关注",
-    "code": "_R",
+    "code": "_R'",
     "steps": [
       {
         "target": [
           "R"
         ],
-        "hand": "left"
+        "hand": "left",
+        "apostrophe": true
       }
     ],
     "weight": 3032170,
@@ -47442,13 +47786,14 @@ const KM_JIAN = [
   },
   {
     "text": "了解",
-    "code": "+s",
+    "code": "+s'",
     "steps": [
       {
         "target": [
           "s"
         ],
-        "hand": "right"
+        "hand": "right",
+        "apostrophe": true
       }
     ],
     "weight": 2930469,
@@ -47484,13 +47829,14 @@ const KM_JIAN = [
   },
   {
     "text": "其实",
-    "code": "+d",
+    "code": "+d'",
     "steps": [
       {
         "target": [
           "d"
         ],
-        "hand": "right"
+        "hand": "right",
+        "apostrophe": true
       }
     ],
     "weight": 2851639,
@@ -47498,13 +47844,14 @@ const KM_JIAN = [
   },
   {
     "text": "有点",
-    "code": "+e",
+    "code": "+e'",
     "steps": [
       {
         "target": [
           "e"
         ],
-        "hand": "right"
+        "hand": "right",
+        "apostrophe": true
       }
     ],
     "weight": 2732127,
@@ -47512,13 +47859,14 @@ const KM_JIAN = [
   },
   {
     "text": "地方",
-    "code": "_V",
+    "code": "_V'",
     "steps": [
       {
         "target": [
           "V"
         ],
-        "hand": "left"
+        "hand": "left",
+        "apostrophe": true
       }
     ],
     "weight": 2723838,
@@ -47568,13 +47916,14 @@ const KM_JIAN = [
   },
   {
     "text": "专业",
-    "code": "_E",
+    "code": "_E'",
     "steps": [
       {
         "target": [
           "E"
         ],
-        "hand": "left"
+        "hand": "left",
+        "apostrophe": true
       }
     ],
     "weight": 2636496,
@@ -47624,13 +47973,14 @@ const KM_JIAN = [
   },
   {
     "text": "城市",
-    "code": "+V",
+    "code": "+V'",
     "steps": [
       {
         "target": [
           "V"
         ],
-        "hand": "right"
+        "hand": "right",
+        "apostrophe": true
       }
     ],
     "weight": 2580552,
@@ -47638,13 +47988,14 @@ const KM_JIAN = [
   },
   {
     "text": "安全",
-    "code": "_j",
+    "code": "_j'",
     "steps": [
       {
         "target": [
           "j"
         ],
-        "hand": "left"
+        "hand": "left",
+        "apostrophe": true
       }
     ],
     "weight": 2578914,
@@ -47652,13 +48003,14 @@ const KM_JIAN = [
   },
   {
     "text": "之后",
-    "code": "_L",
+    "code": "_L'",
     "steps": [
       {
         "target": [
           "L"
         ],
-        "hand": "left"
+        "hand": "left",
+        "apostrophe": true
       }
     ],
     "weight": 2549017,
@@ -47764,27 +48116,43 @@ const KM_JIAN = [
   },
   {
     "text": "研究",
-    "code": "+.",
+    "code": "+.'",
     "steps": [
       {
         "target": [
           "."
         ],
-        "hand": "right"
+        "hand": "right",
+        "apostrophe": true
       }
     ],
     "weight": 2364278,
     "is_char": false
   },
   {
+    "text": "少",
+    "code": "+E",
+    "steps": [
+      {
+        "target": [
+          "E"
+        ],
+        "hand": "right"
+      }
+    ],
+    "weight": 2355655,
+    "is_char": true
+  },
+  {
     "text": "平台",
-    "code": "_?",
+    "code": "_?'",
     "steps": [
       {
         "target": [
           "?"
         ],
-        "hand": "left"
+        "hand": "left",
+        "apostrophe": true
       }
     ],
     "weight": 2346342,
@@ -47820,13 +48188,14 @@ const KM_JIAN = [
   },
   {
     "text": "实现",
-    "code": "+j",
+    "code": "+j'",
     "steps": [
       {
         "target": [
           "j"
         ],
-        "hand": "right"
+        "hand": "right",
+        "apostrophe": true
       }
     ],
     "weight": 2259697,
@@ -47848,13 +48217,14 @@ const KM_JIAN = [
   },
   {
     "text": "大学",
-    "code": "+T",
+    "code": "+T'",
     "steps": [
       {
         "target": [
           "T"
         ],
-        "hand": "right"
+        "hand": "right",
+        "apostrophe": true
       }
     ],
     "weight": 2239795,
@@ -47862,13 +48232,14 @@ const KM_JIAN = [
   },
   {
     "text": "里面",
-    "code": "+P",
+    "code": "+P'",
     "steps": [
       {
         "target": [
           "P"
         ],
-        "hand": "right"
+        "hand": "right",
+        "apostrophe": true
       }
     ],
     "weight": 2209667,
@@ -47890,13 +48261,14 @@ const KM_JIAN = [
   },
   {
     "text": "项目",
-    "code": "+S",
+    "code": "+S'",
     "steps": [
       {
         "target": [
           "S"
         ],
-        "hand": "right"
+        "hand": "right",
+        "apostrophe": true
       }
     ],
     "weight": 2172142,
@@ -47918,13 +48290,14 @@ const KM_JIAN = [
   },
   {
     "text": "未来",
-    "code": "+z",
+    "code": "+z'",
     "steps": [
       {
         "target": [
           "z"
         ],
-        "hand": "right"
+        "hand": "right",
+        "apostrophe": true
       }
     ],
     "weight": 2125156,
@@ -47932,13 +48305,14 @@ const KM_JIAN = [
   },
   {
     "text": "北京",
-    "code": "+?",
+    "code": "+?'",
     "steps": [
       {
         "target": [
           "?"
         ],
-        "hand": "right"
+        "hand": "right",
+        "apostrophe": true
       }
     ],
     "weight": 2106604,
@@ -47974,13 +48348,14 @@ const KM_JIAN = [
   },
   {
     "text": "直接",
-    "code": "+A",
+    "code": "+A'",
     "steps": [
       {
         "target": [
           "A"
         ],
-        "hand": "right"
+        "hand": "right",
+        "apostrophe": true
       }
     ],
     "weight": 2033822,
@@ -48086,13 +48461,14 @@ const KM_JIAN = [
   },
   {
     "text": "获得",
-    "code": "_p",
+    "code": "_p'",
     "steps": [
       {
         "target": [
           "p"
         ],
-        "hand": "left"
+        "hand": "left",
+        "apostrophe": true
       }
     ],
     "weight": 1914085,
@@ -48142,13 +48518,14 @@ const KM_JIAN = [
   },
   {
     "text": "当时",
-    "code": "+E",
+    "code": "+E'",
     "steps": [
       {
         "target": [
           "E"
         ],
-        "hand": "right"
+        "hand": "right",
+        "apostrophe": true
       }
     ],
     "weight": 1788078,
@@ -48170,13 +48547,14 @@ const KM_JIAN = [
   },
   {
     "text": "身体",
-    "code": "+I",
+    "code": "+I'",
     "steps": [
       {
         "target": [
           "I"
         ],
-        "hand": "right"
+        "hand": "right",
+        "apostrophe": true
       }
     ],
     "weight": 1751304,
@@ -48184,13 +48562,14 @@ const KM_JIAN = [
   },
   {
     "text": "每天",
-    "code": "+K",
+    "code": "+K'",
     "steps": [
       {
         "target": [
           "K"
         ],
-        "hand": "right"
+        "hand": "right",
+        "apostrophe": true
       }
     ],
     "weight": 1742511,
@@ -48198,13 +48577,14 @@ const KM_JIAN = [
   },
   {
     "text": "避免",
-    "code": "_W",
+    "code": "_W'",
     "steps": [
       {
         "target": [
           "W"
         ],
-        "hand": "left"
+        "hand": "left",
+        "apostrophe": true
       }
     ],
     "weight": 1722683,
@@ -48226,13 +48606,14 @@ const KM_JIAN = [
   },
   {
     "text": "购买",
-    "code": "+G",
+    "code": "+G'",
     "steps": [
       {
         "target": [
           "G"
         ],
-        "hand": "right"
+        "hand": "right",
+        "apostrophe": true
       }
     ],
     "weight": 1680217,
@@ -48254,13 +48635,14 @@ const KM_JIAN = [
   },
   {
     "text": "新闻",
-    "code": "+C",
+    "code": "+C'",
     "steps": [
       {
         "target": [
           "C"
         ],
-        "hand": "right"
+        "hand": "right",
+        "apostrophe": true
       }
     ],
     "weight": 1605176,
@@ -48310,13 +48692,14 @@ const KM_JIAN = [
   },
   {
     "text": "之间",
-    "code": "+L",
+    "code": "+L'",
     "steps": [
       {
         "target": [
           "L"
         ],
-        "hand": "right"
+        "hand": "right",
+        "apostrophe": true
       }
     ],
     "weight": 1596218,
@@ -48366,13 +48749,14 @@ const KM_JIAN = [
   },
   {
     "text": "英语",
-    "code": "+p",
+    "code": "+p'",
     "steps": [
       {
         "target": [
           "p"
         ],
-        "hand": "right"
+        "hand": "right",
+        "apostrophe": true
       }
     ],
     "weight": 1400956,
@@ -48394,13 +48778,14 @@ const KM_JIAN = [
   },
   {
     "text": "单位",
-    "code": "+X",
+    "code": "+X'",
     "steps": [
       {
         "target": [
           "X"
         ],
-        "hand": "right"
+        "hand": "right",
+        "apostrophe": true
       }
     ],
     "weight": 1346717,
@@ -48408,13 +48793,14 @@ const KM_JIAN = [
   },
   {
     "text": "必须",
-    "code": "+:",
+    "code": "+:'",
     "steps": [
       {
         "target": [
           ":"
         ],
-        "hand": "right"
+        "hand": "right",
+        "apostrophe": true
       }
     ],
     "weight": 1331535,

@@ -25,12 +25,14 @@ global.KM_JIAN = KMCW.KM_JIAN;
 const kmp = require('./km_practice');
 
 // 由 code 推导 yoyo-pure-km 期望的步骤结构（仅 hand/target 数量，不含 space）
+// code 末尾可能带 '（次选修饰符），需先剥离再按核心编码推导结构。
 function expectedSteps(code) {
-  const isJian = /^[_+][a-zA-Z,./;:<>?]$/.test(code);
+  const core = code.endsWith("'") ? code.slice(0, -1) : code;
+  const isJian = /^[_+][a-zA-Z,./;:<>?]$/.test(core);
   if (isJian) {
-    return [{ hand: code[0] === '_' ? 'left' : 'right', len: 1 }];
+    return [{ hand: core[0] === '_' ? 'left' : 'right', len: 1 }];
   }
-  const plain = code.replace(/[_+]/g, '');
+  const plain = core.replace(/[_+]/g, '');
   const steps = [];
   // 前两码（若有）为双手并击
   if (plain.length >= 2) steps.push({ hand: 'both', len: 2 });
@@ -44,7 +46,7 @@ function expectedSteps(code) {
 }
 
 function checkSegment(items, type, segName) {
-  let total = 0, spaceBad = 0, structBad = 0, bad = [];
+  let total = 0, spaceBad = 0, structBad = 0, apoBad = 0, bad = [];
   for (const item of items) {
     const built = kmp.charWordItem(item, type);
     total += built.steps.length;
@@ -68,13 +70,28 @@ function checkSegment(items, type, segName) {
         if (bad.length < 10) bad.push(`${segName} ${JSON.stringify(item.code)} 第${i + 1}步 错误地要求按空格`);
       }
     });
+    // 次选修饰符 ' 校验：仅最后一步可带 apostrophe；单字/词组是否带 apostrophe 取决于权重排序
+    // （权重排序下高频词组可能把单字挤到次选，反之亦然，故不再硬性禁止单字带 apostrophe）
+    built.steps.forEach((s, i) => {
+      const isLast = i === built.steps.length - 1;
+      const codeEndsApo = item.code.endsWith("'");
+      if (s.apostrophe && !isLast) {
+        apoBad++;
+        if (bad.length < 10) bad.push(`${segName} ${JSON.stringify(item.code)} 第${i + 1}步 错误地带 apostrophe（仅最后一步可带）`);
+      }
+      if (isLast && Boolean(s.apostrophe) !== codeEndsApo) {
+        apoBad++;
+        if (bad.length < 10) bad.push(`${segName} ${JSON.stringify(item.code)} 最后一步 apostrophe 标记与 code 末尾 ' 不一致`);
+      }
+    });
   }
-  return { total, spaceBad, structBad, bad };
+  return { total, spaceBad, structBad, apoBad, bad };
 }
 
-let all = { total: 0, spaceBad: 0, structBad: 0, bad: [] };
+let all = { total: 0, spaceBad: 0, structBad: 0, apoBad: 0, bad: [] };
 function merge(r) {
   all.total += r.total; all.spaceBad += r.spaceBad; all.structBad += r.structBad;
+  all.apoBad += r.apoBad;
   all.bad.push(...r.bad);
 }
 
@@ -147,12 +164,13 @@ merge(checkSegment(KM_JIAN, 'word', '一简'));
 console.log(`扫描条目步骤总数: ${all.total}`);
 console.log(`结构不符(yoyo-pure-km模型): ${all.structBad}`);
 console.log(`要求按空格的步骤数 (应为 0): ${all.spaceBad}`);
+console.log(`apostrophe 标记异常数 (应为 0): ${all.apoBad}`);
 if (all.bad.length) {
   console.log('\n问题样例:');
   all.bad.forEach((b) => console.log('  - ' + b));
 }
-if (all.spaceBad === 0 && all.structBad === 0) {
-  console.log('\nPASS: 全部步骤符合纯形统一流 0 空格方案。');
+if (all.spaceBad === 0 && all.structBad === 0 && all.apoBad === 0) {
+  console.log('\nPASS: 全部步骤符合纯形统一流 0 空格方案，apostrophe 标记正确。');
   process.exit(0);
 } else {
   console.log('\nFAIL: 存在不符合 yoyo-pure-km 方案的步骤。');
