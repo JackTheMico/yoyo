@@ -165,16 +165,16 @@ do
   check("ISoY: input='ISoY'", ctx.input == "ISoY", ctx.input, "ISoY")
 end
 
--- T6: 4码非词 slcb → 顶出 sl"了"，留 cb"不"
+-- T6: 4码非词 slcb → 顶出 sl"了得"，留 cb"不(是)"
 -- 收到 'b' 时 input='slc' → words_4code['slcb']=nil → 顶出 sl, push 'c', kNoop → speller push 'b' → 'cb'
-print("\nT6: 4码非词 slcb → 顶出sl\"了\"，留cb\"不\"")
+print("\nT6: 4码非词 slcb → 顶出sl\"了得\"，留cb\"不(是)\"")
 do
   local ctx = MockContext.new(); local env = make_env(ctx)
   sim(env, ctx, "s"); sim(env, ctx, "l"); sim(env, ctx, "c")
   check("slc: no commit", #ctx.committed == 0, #ctx.committed, 0)
 
   sim(env, ctx, "b")  -- input before='slc', incoming='b' → words_4code['slcb']=nil
-  check("recv b: '了' committed", ctx.committed[1] == "了", ctx.committed[1], "了")
+  check("recv b: '了得' committed", ctx.committed[1] == "了得", ctx.committed[1], "了得")
   check("recv b: input='cb'", ctx.input == "cb", ctx.input, "cb")
 end
 
@@ -504,14 +504,15 @@ do
   check("recv i: input='i'", ctx.input == "i", ctx.input, "i")
 end
 
--- T32: 终(R/) 作为 2 码字仍可正常顶出（缝 R/p 修复后，R/ 不应被错误吞掉）
-print("\nT32: 终(R/) 2码字 -> 顶出 终，不误判为 缝(R/p)")
+-- T32: R/ 作为 2 码字仍可正常顶出（缝 R/p 修复后，R/ 不应被错误吞掉）
+-- 按权重排序：终于(747K) > 终(335K)，故 R/ 首选为「终于」
+print("\nT32: R/ 2码字 -> 顶出 终于(权重序)，不误判为 缝(R/p)")
 do
   local ctx = MockContext.new(); local env = make_env(ctx)
   sim(env, ctx, "R"); sim(env, ctx, "/")
   sim(env, ctx, "_")
-  sim(env, ctx, "x")  -- R/_ + x：'R/x' 非 3 码字 -> 顶出 终，restore '_'，incoming 'x' 流入 speller
-  check("recv x: '终' committed", ctx.committed[1] == "终", ctx.committed[1], "终")
+  sim(env, ctx, "x")  -- R/_ + x：'R/x' 非 3 码字 -> 顶出 终于，restore '_'，incoming 'x' 流入 speller
+  check("recv x: '终于' committed", ctx.committed[1] == "终于", ctx.committed[1], "终于")
   check("recv x: input='_x'", ctx.input == "_x", ctx.input, "_x")
 end
 

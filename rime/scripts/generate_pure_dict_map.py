@@ -2,19 +2,38 @@
 """生成纯形顶屏静态映射表 (rime/lua/yoyo/data/pure_dict_map.lua)。
 
 从 rime/yoyo-pure.dict.yaml 提取：
-1. dict_map: 编码 -> 首选中文文本映射
-2. words_4code: 四码词集合（用于状态机区分合法4码词与非词自动切分）
-3. chars_3code: 三码单字集合（用于状态机区分3码单字全码与两码字接一简）
+1. dict_map: 编码 -> 首选中文文本映射（按词典权重降序，字/词不分类）
+2. dict_map_2: 编码 -> 次选中文文本映射（同码第二高频候选）
+3. words_4code: 四码词集合（用于状态机区分合法4码词与非词自动切分）
+4. chars_3code: 三码单字集合（用于状态机区分3码单字全码与两码字接一简）
 从 rime/yoyo-user.dict.yaml（及主词表，防御性）额外提取：
-4. space_brief_map: 空格并击简词映射（码形 %XY / %_X / %+X -> 词）
+5. space_brief_map: 空格并击简词映射（码形 %XY / %_X / %+X -> 词）
    —— 状态机 Pattern S 一击上屏用；% 码同样不进入其他映射。
    %XY = 双手+空格，%_X = 左手+空格，%+X = 右手+空格（见纯形统一心法）。
+
+注：首选/次选严格按词典原始权重排序（yoyo-pure.dict.yaml 的 sort: by_weight），
+不再区分单字/词组。例如 Q/ 编码下「所有」(权重 2.2M) 为首选、「幞」(权重 387) 为次选。
 """
 
 import json
 import sys
 import unicodedata
 from pathlib import Path
+
+
+def _add_cand(cand_list, text, weight, idx):
+    """向候选列表追加 (text, weight, idx)。
+
+    按 text 去重，同一 text 保留权重最高者（同权重保留最先出现者）。
+    weight 为 int，idx 为源文件行序号，用于同权重时稳定排序。
+    """
+    for i, (t, w, j) in enumerate(cand_list):
+        if t == text:
+            if weight > w:
+                cand_list[i] = (text, weight, idx)
+            return
+    cand_list.append((text, weight, idx))
+
 
 SCRIPTS_DIR = Path(__file__).resolve().parent
 RIME_DIR = SCRIPTS_DIR.parent
@@ -40,6 +59,8 @@ def generate():
     chars_3code = set()
     space_brief_map = {}
 
+    idx = 0  # 源文件行序号，用于同权重时的稳定排序（序号小者优先）
+
     for l in lines:
         if "\t" not in l or l.startswith("#"):
             continue
@@ -62,64 +83,53 @@ def generate():
         elif len(clean_code) == 3 and len(text) == 1 and unicodedata.category(text).startswith("L"):
             chars_3code.add(clean_code)
 
-        # 记录候选词列表（按词典原始权重顺序）
+        # 解析权重（第三列，整数）；缺失或非整数按 0 处理
+        weight = 0
+        if len(parts) >= 3:
+            try:
+                weight = int(parts[2])
+            except ValueError:
+                weight = 0
+
+        # 候选词列表：存 (text, weight, idx)，按 text 去重并保留最高权重
         cand_list = code_to_candidates.setdefault(raw_code, [])
-        if text not in cand_list:
-            cand_list.append(text)
+        _add_cand(cand_list, text, weight, idx)
 
         clean_cand_list = clean_to_candidates.setdefault(clean_code, [])
-        if text not in clean_cand_list:
-            clean_cand_list.append(text)
+        _add_cand(clean_cand_list, text, weight, idx)
 
-    # 生成主单 (char_first) 与主词 (word_first) 两种视图
-    cf_top_word = {}
-    cf_second_word = {}
-    wf_top_word = {}
-    wf_second_word = {}
+        idx += 1
 
-    def process_cands(code, cands, top_dict, sec_dict, char_first=True):
-        if not cands:
+    # 单轨：首选/次选严格按权重降序（同权重按文件行序稳定），不区分单字/词组
+    top_word = {}
+    second_word = {}
+
+    def process_cands(code, cands, top_dict, sec_dict):
+        if not cands or code in top_dict:
             return
-        chars = [t for t in cands if len(t) == 1]
-        words = [t for t in cands if len(t) > 1]
-        ordered = (chars + words) if char_first else (words + chars)
-        if ordered and code not in top_dict:
-            top_dict[code] = ordered[0]
-        if len(ordered) > 1 and code not in sec_dict:
-            sec_dict[code] = ordered[1]
+        # 按权重降序、同权重按文件行序升序稳定排序，取首选/次选
+        ordered = sorted(cands, key=lambda x: (-x[1], x[2]))
+        top_dict[code] = ordered[0][0]
+        if len(ordered) > 1:
+            sec_dict[code] = ordered[1][0]
 
     for code, cands in code_to_candidates.items():
-        process_cands(code, cands, cf_top_word, cf_second_word, char_first=True)
-        process_cands(code, cands, wf_top_word, wf_second_word, char_first=False)
+        process_cands(code, cands, top_word, second_word)
 
     for clean, cands in clean_to_candidates.items():
-        process_cands(clean, cands, cf_top_word, cf_second_word, char_first=True)
-        process_cands(clean, cands, wf_top_word, wf_second_word, char_first=False)
+        process_cands(clean, cands, top_word, second_word)
 
     out = [
-        "-- Auto-generated pure shape dictionary dual-track maps & sets",
+        "-- Auto-generated pure shape dictionary maps & sets (weight-ordered, single track)",
         "local M = {",
-        "  char_first = {",
-        "    dict_map = {",
+        "  dict_map = {",
     ]
-    for code, text in sorted(cf_top_word.items()):
-        out.append(f"      [{json.dumps(code, ensure_ascii=False)}] = {json.dumps(text, ensure_ascii=False)},")
-    out.append("    },")
-    out.append("    dict_map_2 = {")
-    for code, text in sorted(cf_second_word.items()):
-        out.append(f"      [{json.dumps(code, ensure_ascii=False)}] = {json.dumps(text, ensure_ascii=False)},")
-    out.append("    },")
+    for code, text in sorted(top_word.items()):
+        out.append(f"    [{json.dumps(code, ensure_ascii=False)}] = {json.dumps(text, ensure_ascii=False)},")
     out.append("  },")
-
-    out.append("  word_first = {")
-    out.append("    dict_map = {")
-    for code, text in sorted(wf_top_word.items()):
-        out.append(f"      [{json.dumps(code, ensure_ascii=False)}] = {json.dumps(text, ensure_ascii=False)},")
-    out.append("    },")
-    out.append("    dict_map_2 = {")
-    for code, text in sorted(wf_second_word.items()):
-        out.append(f"      [{json.dumps(code, ensure_ascii=False)}] = {json.dumps(text, ensure_ascii=False)},")
-    out.append("    },")
+    out.append("  dict_map_2 = {")
+    for code, text in sorted(second_word.items()):
+        out.append(f"    [{json.dumps(code, ensure_ascii=False)}] = {json.dumps(text, ensure_ascii=False)},")
     out.append("  },")
 
     out.append("  words_4code = {")
@@ -137,15 +147,13 @@ def generate():
         out.append(f"    [{json.dumps(code, ensure_ascii=False)}] = {json.dumps(text, ensure_ascii=False)},")
     out.append("  },")
     out.append("}")
-    out.append("M.dict_map = M.char_first.dict_map")
-    out.append("M.dict_map_2 = M.char_first.dict_map_2")
     out.append("return M")
 
     OUTPUT_LUA.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT_LUA.write_text("\n".join(out) + "\n", encoding="utf-8")
     print(f"Successfully generated {OUTPUT_LUA}")
-    print(f"  - char_first dict_map entries: {len(cf_top_word)}")
-    print(f"  - word_first dict_map entries: {len(wf_top_word)}")
+    print(f"  - dict_map entries: {len(top_word)}")
+    print(f"  - dict_map_2 entries: {len(second_word)}")
     print(f"  - words_4code entries: {len(words_4code)}")
     print(f"  - chars_3code entries: {len(chars_3code)}")
     print(f"  - space_brief_map entries: {len(space_brief_map)}")

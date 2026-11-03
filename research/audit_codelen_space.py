@@ -22,7 +22,7 @@
 【候选分类】对一个 2 字符码位上的全部候选词条：
     纯单字  = 所有候选 text 长度均为 1（这类码位是「二简字」位）
     纯多字词 = 所有候选 text 长度均 ≥ 2（这类码位是「一击词」位）
-    混合    = 既有单字又有多字词 → char_first.dict_map_2 会命中它
+    混合    = 既有单字又有多字词 → dict_map_2 会命中它
     （dict_map_2 的定义见 generate_pure_dict_map.py：候选 ≥ 2 时记录次选）
 
 【剩余空位】理论 3720 − 已占用 3620，并列出全部空位码。
@@ -42,7 +42,7 @@ from audit_codelen_common import (  # noqa: E402
     all_2char_slots, iter_lua_table, pct, bar,
 )
 
-TABLE_CF_DICT_MAP_2 = "    dict_map_2 = {"
+TABLE_DICT_MAP_2 = "  dict_map_2 = {"
 
 
 def main():
@@ -112,16 +112,16 @@ def main():
     print(f"  {'合计':<8} 码位 {len(plain):>5}  词条 {sum(ek.values()):>6}")
     print()
 
-    print("── 「单字 + 词」共用同一 2 码位（char_first.dict_map_2 命中口径）──")
+    print("── 「单字 + 词」共用同一 2 码位（dict_map_2 命中口径）──")
     print(f"  命中码位数: {len(mix)}  （普通 XY {len(mix & set(plain))} + 一简 {len(mix & set(yijian))}）")
     for c in sorted(mix)[:8]:
         print(f"    {c!r:<8} -> {[t for t, _ in cmap[c]][:6]}"
               f"{' …' if len(cmap[c]) > 6 else ''}")
     if len(mix) > 8:
         print(f"    … 共 {len(mix)} 位")
-    # 与运行时映射表交叉验证：char_first.dict_map_2 里 2 字符 key 的个数
-    lua2 = sum(1 for k, _ in iter_lua_table(DICT_MAP_LUA, TABLE_CF_DICT_MAP_2) if len(k) == 2)
-    print(f"  交叉验证  : pure_dict_map.lua 的 char_first.dict_map_2 中 2 字符 key = {lua2}"
+    # 与运行时映射表交叉验证：dict_map_2 里 2 字符 key 的个数
+    lua2 = sum(1 for k, _ in iter_lua_table(DICT_MAP_LUA, TABLE_DICT_MAP_2) if len(k) == 2)
+    print(f"  交叉验证  : pure_dict_map.lua 的 dict_map_2 中 2 字符 key = {lua2}"
           f"（口径一致则应 ≈ {len(mix)}）")
     print()
 

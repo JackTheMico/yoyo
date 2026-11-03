@@ -40,9 +40,6 @@ __patch:
     - name: instant_commit_3code
       states: [ 顶屏, 直出 ]
       reset: 0
-    - name: word_priority
-      states: [ 主单, 主词 ]
-      reset: 0
     # 取反命名，未声明也默认显示字根；见 yoyo.yaml 同项注释
     - name: no_zigen
       states: [ 显示字根, 纯码 ]
@@ -64,7 +61,6 @@ __patch:
     - express_editor
 
   engine/filters:
-    - lua_filter@*yoyo.priority_filter
     - uniquifier
     - simplifier
 
@@ -72,7 +68,6 @@ __patch:
     bindings:
       - { when: composing, accept: BackSpace, send: Escape }
       - { when: composing, accept: Return, send: Escape }
-      - { accept: "Control+Shift+C", toggle: word_priority, when: always }
 
   chord_composer:
     alphabet: "qwertasdfgzxcvb yuiophjkl;nm,./:'"

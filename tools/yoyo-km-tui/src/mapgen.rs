@@ -1,7 +1,7 @@
 //! 重生成 `pure_dict_map.lua`（深模块）。
 //!
 //! 忠实移植 `rime/scripts/generate_pure_dict_map.py`：从词表并集构建
-//! 双轨 dict_map（char_first / word_first，各含 dict_map / dict_map_2）、
+//! 单轨 dict_map（按权重降序，字/词不分类）、dict_map_2（同码次选）、
 //! `words_4code`（4码词集，状态机据此区分合法4码词与自动切分）、
 //! `chars_3code`（3码单字集）、`brief_map`（前置单引号扩展简词 '_X / '+X / 'XY）、
 //! `space_brief_map`（空格并击简词 %XY / %_X / %+X）。
@@ -14,8 +14,7 @@ use std::io::Write;
 use std::path::Path;
 
 pub struct MapStats {
-    pub char_first: usize,
-    pub word_first: usize,
+    pub dict_map: usize,
     pub words_4code: usize,
     pub chars_3code: usize,
     pub brief_map: usize,
@@ -40,18 +39,8 @@ fn is_letter(ch: char) -> bool {
     ch.is_alphabetic()
 }
 
-fn pick(cands: &[String], char_first: bool) -> (Option<String>, Option<String>) {
-    if cands.is_empty() {
-        return (None, None);
-    }
-    let chars: Vec<String> = cands.iter().filter(|t| t.chars().count() == 1).cloned().collect();
-    let words: Vec<String> = cands.iter().filter(|t| t.chars().count() > 1).cloned().collect();
-    let ordered: Vec<String> = if char_first {
-        chars.into_iter().chain(words).collect()
-    } else {
-        words.into_iter().chain(chars).collect()
-    };
-    (ordered.first().cloned(), ordered.get(1).cloned())
+fn pick(cands: &[String]) -> (Option<String>, Option<String>) {
+    (cands.first().cloned(), cands.get(1).cloned())
 }
 
 pub fn generate(entries: &[Entry], out: &Path) -> color_eyre::Result<MapStats> {
@@ -96,70 +85,40 @@ pub fn generate(entries: &[Entry], out: &Path) -> color_eyre::Result<MapStats> {
         v.dedup();
     }
 
-    let mut cf_top: HashMap<String, String> = HashMap::new();
-    let mut cf_sec: HashMap<String, String> = HashMap::new();
-    let mut wf_top: HashMap<String, String> = HashMap::new();
-    let mut wf_sec: HashMap<String, String> = HashMap::new();
+    let mut top: HashMap<String, String> = HashMap::new();
+    let mut sec: HashMap<String, String> = HashMap::new();
 
     for (code, cands) in &code_to_cands {
-        let (t, s) = pick(cands, true);
+        let (t, s) = pick(cands);
         if let Some(x) = t {
-            cf_top.entry(code.clone()).or_insert(x);
+            top.entry(code.clone()).or_insert(x);
         }
         if let Some(x) = s {
-            cf_sec.entry(code.clone()).or_insert(x);
-        }
-        let (t, s) = pick(cands, false);
-        if let Some(x) = t {
-            wf_top.entry(code.clone()).or_insert(x);
-        }
-        if let Some(x) = s {
-            wf_sec.entry(code.clone()).or_insert(x);
+            sec.entry(code.clone()).or_insert(x);
         }
     }
     for (code, cands) in &clean_to_cands {
-        let (t, s) = pick(cands, true);
+        let (t, s) = pick(cands);
         if let Some(x) = t {
-            cf_top.entry(code.clone()).or_insert(x);
+            top.entry(code.clone()).or_insert(x);
         }
         if let Some(x) = s {
-            cf_sec.entry(code.clone()).or_insert(x);
-        }
-        let (t, s) = pick(cands, false);
-        if let Some(x) = t {
-            wf_top.entry(code.clone()).or_insert(x);
-        }
-        if let Some(x) = s {
-            wf_sec.entry(code.clone()).or_insert(x);
+            sec.entry(code.clone()).or_insert(x);
         }
     }
 
     let mut out_lines: Vec<String> = Vec::new();
-    out_lines.push("-- Auto-generated pure shape dictionary dual-track maps & sets".into());
+    out_lines.push("-- Auto-generated pure shape dictionary maps & sets (weight-ordered, single track)".into());
     out_lines.push("local M = {".into());
-    out_lines.push("  char_first = {".into());
-    out_lines.push("    dict_map = {".into());
-    for (code, text) in sorted(&cf_top) {
-        out_lines.push(format!("      [{}] = {},", lua_str(&code), lua_str(&text)));
+    out_lines.push("  dict_map = {".into());
+    for (code, text) in sorted(&top) {
+        out_lines.push(format!("    [{}] = {},", lua_str(&code), lua_str(&text)));
     }
-    out_lines.push("    },".into());
-    out_lines.push("    dict_map_2 = {".into());
-    for (code, text) in sorted(&cf_sec) {
-        out_lines.push(format!("      [{}] = {},", lua_str(&code), lua_str(&text)));
-    }
-    out_lines.push("    },".into());
     out_lines.push("  },".into());
-    out_lines.push("  word_first = {".into());
-    out_lines.push("    dict_map = {".into());
-    for (code, text) in sorted(&wf_top) {
-        out_lines.push(format!("      [{}] = {},", lua_str(&code), lua_str(&text)));
+    out_lines.push("  dict_map_2 = {".into());
+    for (code, text) in sorted(&sec) {
+        out_lines.push(format!("    [{}] = {},", lua_str(&code), lua_str(&text)));
     }
-    out_lines.push("    },".into());
-    out_lines.push("    dict_map_2 = {".into());
-    for (code, text) in sorted(&wf_sec) {
-        out_lines.push(format!("      [{}] = {},", lua_str(&code), lua_str(&text)));
-    }
-    out_lines.push("    },".into());
     out_lines.push("  },".into());
     out_lines.push("  words_4code = {".into());
     let mut w4: Vec<&String> = words_4code.iter().collect();
@@ -190,8 +149,6 @@ pub fn generate(entries: &[Entry], out: &Path) -> color_eyre::Result<MapStats> {
     }
     out_lines.push("  },".into());
     out_lines.push("}".into());
-    out_lines.push("M.dict_map = M.char_first.dict_map".into());
-    out_lines.push("M.dict_map_2 = M.char_first.dict_map_2".into());
     out_lines.push("return M".into());
 
     if let Some(parent) = out.parent() {
@@ -201,8 +158,7 @@ pub fn generate(entries: &[Entry], out: &Path) -> color_eyre::Result<MapStats> {
     writeln!(f, "{}", out_lines.join("\n"))?;
 
     Ok(MapStats {
-        char_first: cf_top.len(),
-        word_first: wf_top.len(),
+        dict_map: top.len(),
         words_4code: words_4code.len(),
         chars_3code: chars_3code.len(),
         brief_map: brief_map.len(),

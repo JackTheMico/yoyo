@@ -1,15 +1,11 @@
 #!/usr/bin/env python3
-"""候选词分类重排过滤器 (priority_filter.lua) 单元测试。
+"""候选词过滤器 (priority_filter.lua) 单元测试。
 
+直通模式：过滤器不再按单字/词组分类重排，候选按翻译器原始权重顺序原样输出。
 验证场景：
-1. 主单模式 (word_priority=false/nil)：
-   - 输入候选列表包含单字与词组（如 ["简单", "简"]）-> 重排为 ["简", "简单"]
-   - 输入候选列表（如 ["没有", "没"]）-> 重排为 ["没", "没有"]
-   - 输入候选列表（如 ["在", "真的"]）-> 保持 ["在", "真的"]
-2. 主词模式 (word_priority=true)：
-   - 输入候选列表（如 ["在", "真的"]）-> 重排为 ["真的", "在"]
-   - 输入候选列表（如 ["简", "简单"]）-> 重排为 ["简单", "简"]
-3. 纯单字或纯词组候选列表在两种模式下均保持原有顺序不变。
+1. 混合字/词候选列表保持原始顺序不变（如 ["简单", "简"] -> ["简单", "简"]）
+2. 纯单字候选列表保持原序
+3. 纯词组候选列表保持原序
 """
 
 import subprocess
@@ -47,24 +43,12 @@ local function make_input_iter(texts)
   }
 end
 
-local function run_filter(texts, is_word_priority)
+local function run_filter(texts)
   local input = make_input_iter(texts)
-  local env = {
-    engine = {
-      context = {
-        get_option = function(self, opt)
-          if opt == "word_priority" then return is_word_priority end
-          return false
-        end
-      }
-    }
-  }
+  local env = { engine = { context = {} } }
   if priority_filter.init then priority_filter.init(env) end
 
   local results = {}
-  -- 在测试环境下模拟 yield
-  local old_yield = yield
-  -- 使用 coroutine 捕获 yield
   local co = coroutine.create(function()
     priority_filter.func(input, env)
   end)
@@ -96,26 +80,17 @@ local function check(name, got, exp)
   end
 end
 
-print("\n🧪 开始执行 priority_filter 单元测试\n")
+print("\n🧪 开始执行 priority_filter 直通单元测试\n")
 
--- 1. 主单模式 (word_priority = false)
-print("1. 主单模式 (word_priority = false)")
-check("简单/简 -> 简/简单", run_filter({"简单", "简"}, false), {"简", "简单"})
-check("没有/没 -> 没/没有", run_filter({"没有", "没"}, false), {"没", "没有"})
-check("在/真的 -> 在/真的", run_filter({"在", "真的"}, false), {"在", "真的"})
-check("问题/此 -> 此/问题", run_filter({"问题", "此"}, false), {"此", "问题"})
+-- 直通：不做字/词重排，保持原始权重顺序
+print("1. 混合字/词保持原始顺序（权重序）")
+check("简单/简 -> 简单/简", run_filter({"简单", "简"}), {"简单", "简"})
+check("没有/没 -> 没有/没", run_filter({"没有", "没"}), {"没有", "没"})
+check("所有/幞 -> 所有/幞", run_filter({"所有", "幞"}), {"所有", "幞"})
 
--- 2. 主词模式 (word_priority = true)
-print("\n2. 主词模式 (word_priority = true)")
-check("在/真的 -> 真的/在", run_filter({"在", "真的"}, true), {"真的", "在"})
-check("简/简单 -> 简单/简", run_filter({"简", "简单"}, true), {"简单", "简"})
-check("没/没有 -> 没有/没", run_filter({"没", "没有"}, true), {"没有", "没"})
-check("此/问题 -> 问题/此", run_filter({"此", "问题"}, true), {"问题", "此"})
-
--- 3. 纯单字或纯词组保持相对顺序不变
-print("\n3. 纯单字与纯词组顺序不变性")
-check("纯单字 ['甲', '乙', '丙']", run_filter({"甲", "乙", "丙"}, false), {"甲", "乙", "丙"})
-check("纯词组 ['可以', '类似', '我们']", run_filter({"可以", "类似", "我们"}, true), {"可以", "类似", "我们"})
+print("\n2. 纯单字与纯词组顺序不变")
+check("纯单字 ['甲', '乙', '丙']", run_filter({"甲", "乙", "丙"}), {"甲", "乙", "丙"})
+check("纯词组 ['可以', '类似', '我们']", run_filter({"可以", "类似", "我们"}), {"可以", "类似", "我们"})
 
 print(string.format("\n%s %d/%d 通过\n", FAIL==0 and "🎉" or "💥", PASS, PASS+FAIL))
 if FAIL > 0 then os.exit(1) end

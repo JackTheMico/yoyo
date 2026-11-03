@@ -178,22 +178,20 @@ def test_integration():
     assert r_2nd_i == "+e'", f"Expected '+e'', got '{r_2nd_i}'"
     print(f"✓ [一简·次选] 并击 'i'' -> 产出码元 '{r_2nd_i}' (由 pure_popping 瞬间直出 '有点')")
 
-    # 4.8 验证 Schema 主单/主词开关配置与 Filter 挂载
+    # 4.8 验证 Schema 已移除主单/主词双轨模式（word_priority 开关与 priority_filter 均已注销）
     switches = km_data.get("__patch", {}).get("switches", [])
     wp_switch = next((s for s in switches if s.get("name") == "word_priority"), None)
-    assert wp_switch is not None, "word_priority switch not found in schema"
-    assert wp_switch.get("states") == ["主单", "主词"], f"Unexpected states: {wp_switch.get('states')}"
-    print("✓ [Schema 开关] word_priority 开关定义完整 (states: [主单, 主词])")
+    assert wp_switch is None, "word_priority switch should be removed (single-track weight ordering)"
+    print("✓ [Schema 开关] word_priority 双轨开关已移除（改为按权重单轨排序）")
 
     filters = km_data.get("__patch", {}).get("engine/filters", [])
-    assert "lua_filter@*yoyo.priority_filter" in filters, "priority_filter not found in engine/filters"
-    print("✓ [Schema Filter] lua_filter@*yoyo.priority_filter 挂载正常")
+    assert "lua_filter@*yoyo.priority_filter" not in filters, "priority_filter should be removed from engine/filters"
+    print("✓ [Schema Filter] priority_filter 已从 engine/filters 注销（候选按翻译器权重序输出）")
 
     bindings = km_data.get("__patch", {}).get("key_binder/+", {}).get("bindings", [])
     wp_binding = next((b for b in bindings if b.get("toggle") == "word_priority"), None)
-    assert wp_binding is not None, "word_priority hotkey binding not found"
-    assert wp_binding.get("accept") == "Control+Shift+C", f"Unexpected hotkey: {wp_binding.get('accept')}"
-    print("✓ [Schema 快捷键] Control+Shift+C 动态切换 word_priority 绑定正常")
+    assert wp_binding is None, "word_priority hotkey binding should be removed"
+    print("✓ [Schema 快捷键] Control+Shift+C word_priority 绑定已移除")
 
     print("\n==================================================")
     print("🎉 端到端集成测试全部通过！纯形统一流击键链路完美闭环！")

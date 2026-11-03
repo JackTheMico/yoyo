@@ -49,10 +49,7 @@ local function commit_pending_input(env)
   local input = yoyo.current(ctx)
   if not input or input == "" then return end
 
-  local is_word_priority = ctx:get_option("word_priority")
-  local active_tables = (is_word_priority and pure_data.word_first) and pure_data.word_first or (pure_data.char_first or pure_data)
-  local dict_map = active_tables and active_tables.dict_map or pure_data.dict_map
-
+  local dict_map = pure_data.dict_map
   local clean = input:gsub("[_+]", "")
   local text = dict_map and (dict_map[input] or dict_map[clean])
   if text then

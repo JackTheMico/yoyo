@@ -41,8 +41,8 @@ local mock_dict = {
   ["rTah"] = {"类似"},
   ["IS"] = {"空间"},
   ["ISoY"] = {"空格"},
-  ["sl"] = {"了"},
-  ["cb"] = {"不"},
+  ["sl"] = {"了得"},
+  ["cb"] = {"不是"},
   ["bX"] = {"鸣"},
   ["bX_n"] = {"鸣"},
   ["_;"] = {"感觉", "成"},
@@ -164,7 +164,7 @@ do
   simulate_stroke(ctx, env, "s", "sl")
   simulate_stroke(ctx, env, "c", "cb")
   assert_eq(#ctx.committed, 1, "T5: '了' committed")
-  assert_eq(ctx.committed[1], "了", "T5: text '了'")
+  assert_eq(ctx.committed[1], "了得", "T5: text '了得'")
   assert_eq(ctx.input, "cb", "T5: input 'cb'")
   print("✓ Test 5 Passed: 4 码未命中自动切分回退正常")
 end

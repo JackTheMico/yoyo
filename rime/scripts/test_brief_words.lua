@@ -70,9 +70,6 @@ do
   add(pure_data.dict_map)
   add(pure_data.dict_map_2)
   add(pure_data.space_brief_map)
-  local cf = pure_data.char_first or {}
-  add(cf.dict_map)
-  add(cf.dict_map_2)
   for c in pairs(pure_data.words_4code or {}) do space_prism[c] = true end
   for c in pairs(pure_data.chars_3code or {}) do space_prism[c] = true end
 end

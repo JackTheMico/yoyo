@@ -39,7 +39,6 @@ __patch:
     - express_editor
 
   engine/filters:
-    - lua_filter@*yoyo.priority_filter
     - uniquifier
     - simplifier
 

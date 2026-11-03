@@ -10,6 +10,10 @@
 5. 单击 e (首选) + 下一击 d -> 顶出 "在"，input 留 "_d"
 6. 串击 e 弹出菜单后按 KP_2 / ' -> 选出 "真的"
 7. 连续并击次选：e' + w' -> 依次直接直出 "真的" 和 "时间"
+
+首选/次选按词典权重降序排列（不区分单字/词组）：
+- _n 首选=没有、次选=没
+- cI 首选=简单、次选=简
 """
 
 import subprocess
@@ -153,79 +157,34 @@ do
   check("input='_d'", ctx.input == "_d", ctx.input, "_d")
 end
 
--- T6: 主单模式下按 n 出单字 "没"，并击 n' 直出 "没有"
-print("\nT6: 主单模式下按 n' -> 直出 '没有'，单按 n -> 顶出 '没'")
+-- T6: 按 n 首选「没有」随下一击顶屏，并击 n' 直出次选「没」
+print("\nT6: n' -> 直出 '没'，n + d -> 顶出 '没有'")
 do
   local ctx = MockContext.new(); local env = make_env(ctx)
   -- 次选直出
   sim(env, ctx, "_"); sim(env, ctx, "n"); sim(env, ctx, "'")
-  check("n': '没有' committed", ctx.committed[1] == "没有", ctx.committed[1], "没有")
+  check("n': '没' committed", ctx.committed[1] == "没", ctx.committed[1], "没")
   check("n': input empty", ctx.input == "", ctx.input, "")
 
   -- 首选顶屏
   sim(env, ctx, "_"); sim(env, ctx, "n")
   sim(env, ctx, "_"); sim(env, ctx, "d")
-  check("n + d: '没' committed", ctx.committed[2] == "没", ctx.committed[2], "没")
+  check("n + d: '没有' committed", ctx.committed[2] == "没有", ctx.committed[2], "没有")
 end
 
--- T7: 主单模式下按 cI 出单字 "简"，并击 cI' 直出 "简单"
-print("\nT7: 主单模式下 cI' -> 直出 '简单'，cI + d -> 顶出 '简'")
+-- T7: 按 cI 首选「简单」随下一击顶屏，并击 cI' 直出次选「简」
+print("\nT7: cI' -> 直出 '简'，cI + d -> 顶出 '简单'")
 do
   local ctx = MockContext.new(); local env = make_env(ctx)
   -- 次选直出
   sim(env, ctx, "c"); sim(env, ctx, "I"); sim(env, ctx, "'")
-  check("cI': '简单' committed", ctx.committed[1] == "简单", ctx.committed[1], "简单")
+  check("cI': '简' committed", ctx.committed[1] == "简", ctx.committed[1], "简")
   check("cI': input empty", ctx.input == "", ctx.input, "")
 
   -- 首选顶屏
   sim(env, ctx, "c"); sim(env, ctx, "I")
   sim(env, ctx, "_"); sim(env, ctx, "d")
-  check("cI + d: '简' committed", ctx.committed[2] == "简", ctx.committed[2], "简")
-end
-
--- T8: 主词模式 (word_priority=true) 下 e' -> 直出单字 '在'，e -> 顶出词组 '真的'
-print("\nT8: 主词模式下 e' -> 直出单字 '在'，e + d -> 顶出词组 '真的'")
-do
-  local ctx = MockContext.new(); ctx.options["word_priority"] = true; local env = make_env(ctx)
-  -- 次选直出
-  sim(env, ctx, "_"); sim(env, ctx, "e"); sim(env, ctx, "'")
-  check("word_priority e': '在' committed", ctx.committed[1] == "在", ctx.committed[1], "在")
-  check("word_priority e': input empty", ctx.input == "", ctx.input, "")
-
-  -- 首选顶屏
-  sim(env, ctx, "_"); sim(env, ctx, "e")
-  sim(env, ctx, "_"); sim(env, ctx, "d")
-  check("word_priority e + d: '真的' committed", ctx.committed[2] == "真的", ctx.committed[2], "真的")
-end
-
--- T9: 主词模式 (word_priority=true) 下 n' -> 直出单字 '没'，n -> 顶出词组 '没有'
-print("\nT9: 主词模式下 n' -> 直出单字 '没'，n + d -> 顶出词组 '没有'")
-do
-  local ctx = MockContext.new(); ctx.options["word_priority"] = true; local env = make_env(ctx)
-  -- 次选直出
-  sim(env, ctx, "_"); sim(env, ctx, "n"); sim(env, ctx, "'")
-  check("word_priority n': '没' committed", ctx.committed[1] == "没", ctx.committed[1], "没")
-  check("word_priority n': input empty", ctx.input == "", ctx.input, "")
-
-  -- 首选顶屏
-  sim(env, ctx, "_"); sim(env, ctx, "n")
-  sim(env, ctx, "_"); sim(env, ctx, "d")
-  check("word_priority n + d: '没有' committed", ctx.committed[2] == "没有", ctx.committed[2], "没有")
-end
-
--- T10: 主词模式 (word_priority=true) 下 cI' -> 直出单字 '简'，cI -> 顶出词组 '简单'
-print("\nT10: 主词模式下 cI' -> 直出单字 '简'，cI + d -> 顶出词组 '简单'")
-do
-  local ctx = MockContext.new(); ctx.options["word_priority"] = true; local env = make_env(ctx)
-  -- 次选直出
-  sim(env, ctx, "c"); sim(env, ctx, "I"); sim(env, ctx, "'")
-  check("word_priority cI': '简' committed", ctx.committed[1] == "简", ctx.committed[1], "简")
-  check("word_priority cI': input empty", ctx.input == "", ctx.input, "")
-
-  -- 首选顶屏
-  sim(env, ctx, "c"); sim(env, ctx, "I")
-  sim(env, ctx, "_"); sim(env, ctx, "d")
-  check("word_priority cI + d: '简单' committed", ctx.committed[2] == "简单", ctx.committed[2], "简单")
+  check("cI + d: '简单' committed", ctx.committed[2] == "简单", ctx.committed[2], "简单")
 end
 
 print(string.format("\n%s %d/%d 通过\n", FAIL==0 and "🎉" or "💥", PASS, PASS+FAIL))
