@@ -44,7 +44,7 @@ function check(name, cond, detail) {
 }
 
 // ---- 1. 数据完整性（空格并击版）----
-check('空格简词 992 条', KM_BRIEF_SPACE.length === 992, String(KM_BRIEF_SPACE.length));
+check('空格简词 3720 条', KM_BRIEF_SPACE.length === 3720, String(KM_BRIEF_SPACE.length));
 check('% 版 码形 3 字符且前缀正确',
   KM_BRIEF_SPACE.every((w) => w.code.length === 3 && w.code[0] === '%'));
 check('% 版 码元均在 KM_BEST_CHORD 中',

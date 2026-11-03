@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""简词码位分配器：把第一档空明码一击词写入 yoyo-user.dict.yaml。
+"""简词码位分配器：把高频 2 字词（yoyo-yx-word 词频源，替代旧 TIER1 子集）作为空格并击简词写入 yoyo-user.dict.yaml。
 
 码形：%XY（双手+空格）/ %_X（左手+空格）/ %+X（右手+空格），空格与码元同时并击，
 末字符到达即一击上屏（由 pure_popping 的 Pattern S 提交并吞掉）。
@@ -36,6 +36,7 @@ RIME_DIR = SCRIPTS_DIR.parent
 PURE_DICT = RIME_DIR / "yoyo-pure.dict.yaml"
 USER_DICT = RIME_DIR / "yoyo-user.dict.yaml"
 TIER1 = SCRIPTS_DIR.parent.parent / "research" / "km_one_chord_tier1.txt"
+YX_WORD = RIME_DIR / "yoyo-yx-word.dict.yaml"   # L1: 全量 2 字词词频源（替代 TIER1 子集）
 
 ONE_HAND_SLOTS = 60          # 单手+空格位：左手 60 + 右手 60
 MARK_SPACE = "%"
@@ -172,18 +173,27 @@ def main():
     assert len(slots) == 3720 and len({c for _, c in slots}) == 3720
     print(f"码位总数: {len(slots)}（应 3720）")
 
-    # 读第一档并应用规则 1
+    # 读词源（L1：yoyo-yx-word 全量 2 字词，词频降序）并应用规则 1
     words, skipped = [], []
-    for line in TIER1.read_text(encoding="utf-8").splitlines():
-        if not line.strip():
+    for line in YX_WORD.read_text(encoding="utf-8").splitlines():
+        if not line.strip() or line.lstrip().startswith("#"):
             continue
-        w, f, _src = line.split("\t")
-        if all(ch in yijian for ch in w):
+        p = line.split("\t")
+        if len(p) < 3:
+            continue
+        w = p[0]
+        try:
+            f = int(p[2])          # 词频（weight 列）
+        except ValueError:
+            continue
+        if f == 0 or len(w) != 2:  # 仅取带词频的 2 字词（跳过全码 weight=0 行 / 单字）
+            continue
+        if all(ch in yijian for ch in w):   # 规则 1：双字皆一简 -> 跳过
             skipped.append(w)
             continue
-        words.append((w, int(f)))
+        words.append((w, f))
     words.sort(key=lambda x: (-x[1], x[0]))
-    print(f"第一档 {len(words) + len(skipped)} → 规则1剔除 {len(skipped)} → 待分配 {len(words)}")
+    print(f"yx-word 2 字词 候选 {len(words) + len(skipped)} → 规则1剔除 {len(skipped)} → 待分配 {len(words)}")
 
     # 读取已有手动简词段（加词工具写入），重跑保留 + 预占码位（手动优先）
     regular_lines, manual_lines = _parse_user_dict(USER_DICT)
@@ -194,6 +204,11 @@ def main():
     }
     if manual_codes:
         print(f"手动简词段：{len(manual_codes)} 条（重跑保留，码位预占）")
+
+    # L1: 候选池截断到可用码位数，避免 over-fill 触发「码位耗尽」assert
+    avail = 3720 - len(manual_codes)
+    if len(words) > avail:
+        words = words[:avail]
 
     used, assigned, fallback = set(manual_codes), [], []
 
