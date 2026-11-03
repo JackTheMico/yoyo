@@ -1,30 +1,43 @@
 #!/usr/bin/env bash
-# 部署 yoyo 方案（含空明拳变体 yoyo-bm-km / yoyo-wx-km）到 fcitx5-rime
+# 部署 yoyo 方案（含空明拳变体 yoyo-bm-km / yoyo-wx-km）到 fcitx5-rime 和 xsime(rimes)
 #
 # 用法：
-#   ./deploy_to_fcitx5.sh                          # 部署到默认目录 ~/.local/share/fcitx5/rime
-#   FCITX5_RIME_DIR=... ./deploy_to_fcitx5.sh      # 指定目标目录（测试/自定义路径）
-#   FCITX5_NO_RESTART=1 ./deploy_to_fcitx5.sh      # 只同步文件，不重启 fcitx5
+#   ./deploy_to_fcitx5.sh                          # 部署到 fcitx5/rime + xsime(rimes/data)
+#   FCITX5_RIME_DIR=... ./deploy_to_fcitx5.sh      # 指定 fcitx5 原生 rime 目标目录
+#   RIMES_DATA_DIR=...  ./deploy_to_fcitx5.sh      # 指定 xsime 数据目录
+#   FCITX5_NO_RESTART=1 ./deploy_to_fcitx5.sh      # 只同步文件+构建，不重启 fcitx5
+#   SKIP_RIMES=1        ./deploy_to_fcitx5.sh      # 跳过 xsime 同步（只做 fcitx5 原生 rime）
+#
+# 架构说明：
+#   fcitx5 上有两个独立 rime 输入法，各自维护独立数据：
+#     rime   — fcitx5 官方原生插件  → ~/.local/share/fcitx5/rime/
+#     rimes  — xsime 犀术IME 插件  → ~/.local/share/rimes/data/
+#   脚本会同时同步两边，一次重启 fcitx5 让两边都生效。
 #
 # 行为（均幂等，可重复执行）：
-#   1. 同步 rime/ 下 yoyo* 相关 yaml 与 lua/ 到目标目录（不删目标多余文件，不覆盖用户 default.yaml）
-#   2. 在 default.custom.yaml 的 schema_list 注册 yoyo-bm-km / yoyo-wx-km
-#   3. 调用 rime_deployer 构建部署产物（确保新 schema 有 build 产物，选单显示中文名、可正常输入）
-#   4. 触发 fcitx5 重新部署（fcitx5-remote -r）使方案生效
+#   1. 同步 rime/ 下 yoyo* 相关 yaml 与 lua/ 到 fcitx5/rime 目标目录
+#   2. 陈旧守卫：反查分片、并击标点键位表（仅告警不阻断）
+#   3. 在 fcitx5/rime 的 default.custom.yaml 注册 yoyo 方案
+#   4. 构建 fcitx5/rime 部署产物
+#   5. 同步相同文件到 xsime(rimes) 独立数据目录（自动检测，可 SKIP_RIMES=1 跳过）
+#   6. 触发 fcitx5 重启——原生 rime 和 xsime 各自重新部署
 set -euo pipefail
 
 SRC_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 DST_DIR="${FCITX5_RIME_DIR:-$HOME/.local/share/fcitx5/rime}"
+RIMES_DIR="${RIMES_DATA_DIR:-$HOME/.local/share/rimes/data}"
 
-echo "== 源目录:   $SRC_DIR"
-echo "== 目标目录: $DST_DIR"
+echo "== 源目录:       $SRC_DIR"
+echo "== fcitx5/rime:  $DST_DIR"
+echo "== xsime/rimes:  $RIMES_DIR"
 mkdir -p "$DST_DIR"
 
-# ---- 1. 同步方案文件（yaml + lua）----
+# ---- 1. 同步方案文件（yaml + dict.yaml + lua）----
 echo "== 同步 yoyo 方案文件 =="
 rsync -a --ignore-times "$SRC_DIR"/yoyo*.yaml "$DST_DIR"/
+rsync -a --ignore-times "$SRC_DIR"/yoyo*.dict.yaml "$DST_DIR"/
 rsync -a --ignore-times "$SRC_DIR"/lua/ "$DST_DIR"/lua/
-echo "已同步 yoyo*.yaml 与 lua/（不删目标多余文件，不覆盖用户 default.yaml）"
+echo "已同步 yoyo*.yaml / yoyo*.dict.yaml / lua/（不删目标多余文件，不覆盖用户 default.yaml）"
 
 # ---- 1.5 陈旧守卫：反查分片是否跟上了数据源 ----
 # 分片是 tracked 的生成物，过期不会报错，只会让反查按旧数据出候选（注释里丢字根/丢简码）。
@@ -135,13 +148,58 @@ else
   echo "警告：未找到 $RIME_DEPLOYER，跳过构建——请手动运行 rime_deployer 或重启 fcitx5 触发自动构建"
 fi
 
-# ---- 4. 触发 fcitx5 重新部署 ----
+# ---- 5. 同步到 xsime(rimes) 独立数据目录 ----
+# xsime 是 fcitx5 上另一个 rime 插件（/usr/lib/fcitx5/rimes.so），
+# 它不读 ~/.local/share/fcitx5/rime/，而是维护自己的数据目录 ~/.local/share/rimes/data/。
+# 两边文件必须分别同步，一次 fcitx5 重启后各自重新部署。
+# 自动检测：rimes data 目录存在 → 同步；不存在 → 跳过（说明没装 xsime）。
+# 也可强制：SKIP_RIMES=1 跳过，RIMES_DATA_DIR=/custom/path 指定路径。
+if [ "${SKIP_RIMES:-0}" = "1" ]; then
+  echo "== 跳过 xsime 同步（SKIP_RIMES=1） =="
+elif [ -f "$RIMES_DIR/default.yaml" ] || [ -f "$RIMES_DIR/yoyo.yaml" ]; then
+  echo "== 同步到 xsime(rimes) 数据目录 =="
+  mkdir -p "$RIMES_DIR"
+  rsync -a --ignore-times \
+    --include='yoyo*.yaml' \
+    --include='yoyo*.dict.yaml' \
+    --include='yoyo-user.dict.yaml' \
+    --include='lua/' \
+    --include='lua/yoyo/' \
+    --include='lua/yoyo/**' \
+    --exclude='*' \
+    "$SRC_DIR"/ "$RIMES_DIR"/
+  echo "已同步 yoyo*.yaml + lua/yoyo/ 到 $RIMES_DIR"
+
+  # 构建 xsime 的 rime 部署产物（如果有 rime_deployer）
+  if command -v "$RIME_DEPLOYER" >/dev/null 2>&1; then
+    echo "-- 构建 xsime(rimes) 部署产物 --"
+    rm -rf "$RIMES_DIR/build"
+    "$RIME_DEPLOYER" --build "$RIMES_DIR" "$RIMES_DIR/build" "$RIMES_DIR/build" 2>&1 | grep -iE "error building|failed to save" || true
+    # 验证关键产物
+    rimes_missing=()
+    for s in yoyo-pure-km yoyo-user; do
+      [ -f "$RIMES_DIR/build/${s}.schema.yaml" ] || rimes_missing+=("$s")
+    done
+    if [ ${#rimes_missing[@]} -eq 0 ]; then
+      echo "xsime 构建产物就绪 (build/yoyo-pure-km, yoyo-user)"
+    else
+      echo "警告：xsime ${rimes_missing[*]} 构建产物缺失"
+    fi
+  else
+    echo "跳过 xsime 构建（无 rime_deployer），xsime 启动时会自动构建"
+  fi
+else
+  echo "== 跳过 xsime 同步（$RIMES_DIR 不存在或不是 xsime 数据目录） =="
+  echo "   提示：若你安装了 xsime 犀术IME，它的数据目录应该在 $RIMES_DIR"
+fi
+
+# ---- 6. 触发 fcitx5 重新部署 ----
 echo "== 触发 fcitx5 重新部署 =="
 if [ "${FCITX5_NO_RESTART:-0}" = "1" ]; then
   echo "已跳过 fcitx5 重启（FCITX5_NO_RESTART=1），方案将在下次 fcitx5 重启/重新部署时生效"
 elif command -v fcitx5-remote >/dev/null 2>&1 && fcitx5-remote >/dev/null 2>&1; then
   fcitx5-remote -r
-  echo "已触发 fcitx5 重启，rime 将自动重新部署"
+  echo "已触发 fcitx5 重启——原生 rime 和 xsime 各自重新部署"
 else
   echo "fcitx5 未在运行：请手动重新部署 Rime（fcitx5 托盘 → 重新部署，或 Ctrl+\` → 重新部署）"
 fi
